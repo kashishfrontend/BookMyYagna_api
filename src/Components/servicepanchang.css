@@ -1,0 +1,32 @@
+.services-section {
+    background-color: #fffaf0; /* Soft cream */
+    padding: 60px 0;
+    font-family: 'Noto Serif', serif;
+    color: #4b2e2e; /* Deep maroon-brown for spiritual tone */
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    color: #8b0000; /* Dark maroon-red */
+    font-weight: bold;
+}
+
+.service-card {
+    background-color: #fef6e4;
+    color: #5a3e36;
+    transition: transform 0.3s ease;
+}
+
+.service-icon-wrapper {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 20px;
+    color: #d2691e; /* Saffron brown */
+}
+.card-footer a {
+    color: #8b0000;
+    transition: color 0.3s ease;
+}
+.card-footer a:hover {
+    color: #d2691e;
+}

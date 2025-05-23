@@ -1,0 +1,39 @@
+/* Glowing Button Effect */
+.floating-glow {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1050;
+  border-radius: 50px;
+  padding: 10px 16px;
+  background-color: #28a745; /* Green button color */
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: glowEffect 2s infinite ease-in-out; /* Continuous glow animation */
+}
+
+/* Glowing Effect Animation */
+@keyframes glowEffect {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+  }
+}
+
+/* Optional: Glowing Effect on Hover (stronger glow) */
+.floating-glow:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 0, 1);
+  transform: scale(1.05); /* Slightly increase the size on hover */
+}
+
+/* Static Phone Icon (no movement or rotation) */
+.floating-glow > svg {
+  display: inline-block;
+  font-size: 1.5rem; /* Adjust size of the phone icon */
+}

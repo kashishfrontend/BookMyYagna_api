@@ -1,0 +1,230 @@
+.custom-calendar-container {
+    max-width: 340px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'YourFontFamily', sans-serif;
+    color: #1c1c1c;
+}
+
+.react-calendar {
+    border: none;
+    width: 100%;
+    font-family: inherit;
+}
+
+.react-calendar__tile {
+    padding: 12px 0;
+    text-align: center;
+    background: none;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2b2b2b;
+}
+
+.react-calendar__tile--active {
+    background: #e6d4b6;
+    color: #000;
+    font-weight: bold;
+}
+
+.react-calendar__tile:hover {
+    background-color: #f1e6d0;
+}
+
+.react-calendar__navigation button {
+    color: #222;
+    background: none;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.react-calendar__month-view__weekdays {
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #8c6d45;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+
+.ornament-line {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.ornament-line .om-symbol {
+    font-size: 3rem;
+    color: #f39c12;
+}
+
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.panchang-details {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid brown;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.info-heading {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-section h5 {
+    font-size: 1.2rem;
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.info-section p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.info-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.info-section ul li {
+    font-size: 1rem;
+    color: #555;
+}
+
+strong {
+    color: #f39c12;
+}
+
+.panchang-details {
+    background: #fffdf7;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+    font-family: 'YourFontFamily', sans-serif;
+    color: #3d2e15;
+    transition: all 0.3s ease;
+}
+
+.info-heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #513a1d;
+    text-align: center;
+}
+
+.info-section {
+    margin-bottom: 20px;
+}
+
+.info-section h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #7a5523;
+}
+
+.info-section p {
+    font-size: 16px;
+    margin: 0;
+    color: #4e3d28;
+    line-height: 1.6;
+}
+
+
+.info-loading {
+    text-align: center;
+    color: #8b5e34;
+    font-style: italic;
+}
+.calendar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .panchang-details {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .info-section {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .info-heading {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .react-calendar__tile {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .react-calendar__navigation button {
+    font-size: 16px;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 12px;
+  }
+
+  .section-header p {
+    font-size: 14px;
+    padding: 0 10px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .info-heading {
+    font-size: 18px;
+  }
+
+  .info-section h5 {
+    font-size: 16px;
+  }
+
+  .info-section p {
+    font-size: 14px;
+  }
+
+  .ornament-line .om-symbol {
+    font-size: 2.5rem;
+  }
+
+  .calendar-wrapper {
+    padding: 0 10px;
+  }
+
+  .panchang-calendar-section {
+    padding: 0 15px;
+  }
+}

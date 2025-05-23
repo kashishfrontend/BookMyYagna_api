@@ -1,0 +1,49 @@
+.privacy-policy-section {
+    padding: 50px 0;
+    /* background-color: q; */
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header .ornament-line {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.om-symbol {
+    font-size: 36px;
+    color: #3a3a3a;
+}
+
+.section-title h3 {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+.privacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #333;
+}
+
+.privacy-heading {
+    font-size: 20px;
+    color: #222;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.privacy-content p {
+    font-size: 16px;
+    color: #555;
+}
+
+.privacy-content strong {
+    font-weight: bold;
+}

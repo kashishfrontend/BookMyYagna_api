@@ -1,0 +1,40 @@
+.yagna-info-section {
+  padding: 60px 0;
+  background-color: #fffaf2ea;
+  color: #333;
+}
+
+.om-symbol {
+  font-size: 40px;
+  color: #ff6b00;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.section-title h3 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-title h3 span {
+  color: #ff6b00;
+}
+
+.info-heading {
+  font-size: 24px;
+  margin-top: 30px;
+  color: #222;
+}
+
+.info-section h5 {
+  font-weight: bold;
+  margin-top: 20px;
+  color: #ff6b00;
+}
+
+.info-section p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}

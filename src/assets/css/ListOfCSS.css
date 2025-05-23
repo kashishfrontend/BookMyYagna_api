@@ -1,0 +1,516 @@
+/* Pooja Slider Styles */
+.pooja-slider-section {
+    padding: 80px 0;
+    background-color: #fff9f2;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sacred symbols pattern background */
+.pooja-slider-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23FF8C00' fill-opacity='0.05'%3E॥%3C/text%3E%3Ctext x='25%' y='25%' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23FF8C00' fill-opacity='0.05'%3Eॐ%3C/text%3E%3Ctext x='75%' y='75%' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23FF8C00' fill-opacity='0.05'%3Eॐ%3C/text%3E%3Ctext x='25%' y='75%' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23FF8C00' fill-opacity='0.05'%3E🕉️%3C/text%3E%3Ctext x='75%' y='25%' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23FF8C00' fill-opacity='0.05'%3E🕉️%3C/text%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Section title */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.title-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: #FF6D00;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Yatra One', cursive;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.divider-line {
+    height: 3px;
+    width: 150px;
+    background: linear-gradient(to right, transparent, #FF8C00, transparent);
+    margin: 0 auto;
+    position: relative;
+}
+
+.divider-line::before,
+.divider-line::after {
+    content: "✦";
+    position: absolute;
+    top: -10px;
+    color: #FF8C00;
+    font-size: 20px;
+}
+
+.divider-line::before {
+    left: 40px;
+}
+
+.divider-line::after {
+    right: 40px;
+}
+
+/* Swiper Styling */
+.pooja-swiper {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 400px;
+    transition: transform 0.3s ease;
+}
+
+/* Pooja Card Styling */
+.pooja-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pooja-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 109, 0, 0.2);
+}
+
+.pooja-image-wrapper {
+    position: relative;
+    height: 65%;
+    overflow: hidden;
+}
+
+.pooja-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.pooja-card:hover .pooja-image {
+    transform: scale(1.1);
+}
+
+/* Temple-inspired hover effect */
+.pooja-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 140, 0, 0.1), rgba(255, 109, 0, 0.7));
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.pooja-card:hover .pooja-overlay {
+    opacity: 1;
+}
+
+.overlay-content {
+    text-align: center;
+    color: #fff;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+.pooja-card:hover .overlay-content {
+    transform: translateY(0);
+}
+
+.pooja-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.overlay-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.overlay-content p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.pooja-info {
+    /* height: 35%; */
+    padding: 15px;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+}
+
+.pooja-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, #FFB74D, #FF8C00, #FFB74D);
+}
+
+.pooja-info h4 {
+    font-size: 1rem;
+    color: #FF6D00;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.pooja-info h5 {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.pooja-info p {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-now-btn1 {
+    /* position: absolute;  */
+    /* top: 5% ; */
+    bottom: 0.1px;  
+    /* right:36%; */
+  /* display: flex;
+  justify-content: center; 
+  align-items: center;  */
+    padding: 5px 15px;
+    background-color: #FF6D00;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.book-now-btn1:hover {
+    background-color: #FF8C00;
+    transform: scale(1.05);
+}
+
+/* Pooja Grid Styling */
+.pooja-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.pooja-tile {
+    position: relative;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.pooja-tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pooja-tile:hover .pooja-tile-inner {
+    transform: rotateY(180deg);
+}
+
+.pooja-tile-front,
+.pooja-tile-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.pooja-tile-front {
+    background-color: #f8f8f8;
+}
+
+.pooja-tile-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.pooja-tile:hover .pooja-tile-front img {
+    transform: scale(1.1);
+}
+
+.pooja-tile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.pooja-tile-overlay h3 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.pooja-tile-back {
+    background: linear-gradient(45deg, #FF6D00, #FF8C00);
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.tile-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.pooja-tile-back h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.pooja-tile-back h5 {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.pooja-tile-back p {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.tile-book-btn {
+    padding: 7px 15px;
+    background-color: #fff;
+    color: #FF6D00;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tile-book-btn:hover {
+    background-color: #FFF3E0;
+    transform: scale(1.05);
+}
+
+/* Temple decorations */
+.temple-decoration {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    opacity: 0.1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.top-left {
+    top: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50,0 L100,50 L50,100 L0,50 Z' fill='%23FF6D00'/%3E%3Cpath d='M50,10 L90,50 L50,90 L10,50 Z' fill='none' stroke='%23FF6D00' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23FF6D00'/%3E%3C/svg%3E");
+    transform: rotate(-30deg);
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='80' fill='%23FF6D00'%3Eॐ%3C/text%3E%3C/svg%3E");
+}
+
+.bottom-left {
+    bottom: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='80' fill='%23FF6D00'%3Eॐ%3C/text%3E%3C/svg%3E");
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50,0 L100,50 L50,100 L0,50 Z' fill='%23FF6D00'/%3E%3Cpath d='M50,10 L90,50 L50,90 L10,50 Z' fill='none' stroke='%23FF6D00' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23FF6D00'/%3E%3C/svg%3E");
+    transform: rotate(30deg);
+}
+
+.swiper-button-prev{
+    color: #FF6D00 !important;
+}
+.swiper-button-next{
+    color: #FF6D00 !important;
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+    }
+}
+
+/* Temple bell sound effect hover - purely CSS animation */
+.swiper-slide::after {
+    content: "🔔";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.swiper-slide:hover::after {
+    opacity: 1;
+    animation: bellRing 1s ease;
+}
+
+@keyframes bellRing {
+
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+
+    20%,
+    60% {
+        transform: rotate(25deg);
+    }
+
+    40%,
+    80% {
+        transform: rotate(-25deg);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .pooja-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        width: 250px;
+        /* height: 350px; */
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .temple-decoration {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pooja-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .pooja-tile {
+        /* height: 200px; */
+    }
+
+    .swiper-slide {
+        width: 220px;
+        /* height: 320px; */
+    }
+}
