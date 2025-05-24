@@ -6,13 +6,14 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../../assets/css/DashBord.css';
 // import poojaVideo from '../../assets/videos/pooja-video.mp4'
-import { div } from 'framer-motion/client';
-import axios from 'axios';
+import axios from '../../Api/axios/axios_config';
+import { useAuth } from '../../context/authContext';
 
 const Dashboard = () => {
     const [showSidebar, setShowSidebar] = useState(true);
     const [activeNavItem, setActiveNavItem] = useState('dashboard');
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const { logout } = useAuth();
     // User profile data
     const [userData, setUserData] = useState({
         name: 'Nakul Rana',
@@ -41,6 +42,11 @@ const Dashboard = () => {
         // Clean up
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    const handleLogout = async () => {
+  await logout(); 
+  navigate('/');
+};
 
     useEffect(() => {
         // Initialize AOS animation library
@@ -159,9 +165,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('https://bookmyyogna.onrender.com/user/getUserProfile',{
-            withCredentials:true
-        });
+        const response = await axios.get('/user/getUserProfile');
         if (response.data.success) {
           setUser(response.data.user);
         }
@@ -238,7 +242,7 @@ const Dashboard = () => {
                         <MdSettings size={22} />
                         <span>Settings</span>
                     </div>
-                    <div className="menu-item logout">
+                    <div className="menu-item logout"  onClick={()=> handleLogout()} >
                         <MdLogout size={22} />
                         <span>Logout</span>
                     </div>
@@ -308,7 +312,7 @@ const Dashboard = () => {
                             <MdSettings size={22} />
                             <span>Settings</span>
                         </div>
-                        <div className="menu-item logout">
+                        <div className="menu-item logout" onClick={()=> handleLogout()} >
                             <MdLogout size={22} />
                             <span>Logout</span>
                         </div>
