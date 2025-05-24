@@ -14,14 +14,14 @@ const Dashboard = () => {
     const [activeNavItem, setActiveNavItem] = useState('dashboard');
     const [showProfileModal, setShowProfileModal] = useState(false);
     const { logout } = useAuth();
-    // User profile data
-    const [userData, setUserData] = useState({
-        name: 'Nakul Rana',
-        email: 'Nakul.rana@example.com',
-        phone: '+91 00000000000',
-        address: 'DLF, ROhtak',
-        profileImage: '/images/user-avatar.jpg'
-    });
+    // // User profile data
+    // const [userData, setUserData] = useState({
+    //     name: 'Nakul Rana',
+    //     email: 'Nakul.rana@example.com',
+    //     phone: '+91 00000000000',
+    //     address: 'DLF, ROhtak',
+    //     profileImage: '/images/user-avatar.jpg'
+    // });
 
     // Handle window resize for responsive behavior
     useEffect(() => {
@@ -144,8 +144,9 @@ const Dashboard = () => {
                 return renderProfileContent();
             case 'bookings':
                 return renderMyBookingDetals()
-            case 'temples':
-                return randerTempleContent();
+            case 'book':
+                return renderBookContent();
+                
             default:
                 return (
                     <div className="content-placeholder">
@@ -160,23 +161,54 @@ const Dashboard = () => {
     };
 
 
-     const [user, setUser] = useState(null);
+//      const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get('/user/getUserProfile');
-        if (response.data.success) {
-          setUser(response.data.user);
-        }
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-      }
-    };
+//   useEffect(() => {
+//     const fetchUserProfile = async () => {
+//       try {
+//         const response = await axios.get('/user/getUserProfile');
+//         if (response.data.success) {
+//           setUser(response.data.user);
+//         }
+//       } catch (error) {
+//         console.error('Error fetching user profile:', error);
+//       }
+//     };
 
-    fetchUserProfile();
-  }, []);
+//     fetchUserProfile();
+//   }, []);
     
+const [user, setUser] = useState(null);
+const [userData, setUserData] = useState({
+  name: '',
+  email: '',
+  phone: '+91 00000000000',
+  address: 'DLF, Rohtak',
+  profileImage: '/images/user-avatar.jpg'
+});
+
+useEffect(() => {
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get('/user/getUserProfile');
+      if (response.data.success) {
+        const fetchedUser = response.data.user;
+        setUser(fetchedUser);
+        setUserData(prevData => ({
+          ...prevData,
+          name: fetchedUser.fullName,
+          email: fetchedUser.email
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  fetchUserProfile();
+}, []);
+
+
     return (
         <>
             <div className="dashboard-container ">
@@ -277,27 +309,7 @@ const Dashboard = () => {
                             <FaCalendarAlt size={20} />
                             <span>My Bookings</span>
                         </div>
-                        <div
-                            className={`menu-item ${activeNavItem === 'priests' ? 'active' : ''}`}
-                            onClick={() => handleNavItemClick('priests')}
-                        >
-                            <FaUsers size={20} />
-                            <span>Priests</span>
-                        </div>
-                        <div
-                            className={`menu-item ${activeNavItem === 'temples' ? 'active' : ''}`}
-                            onClick={() => handleNavItemClick('temples')}
-                        >
-                            {/* <FaTempleHindu size={20} /> */}
-                            <span>Temples</span>
-                        </div>
-                        <div
-                            className={`menu-item ${activeNavItem === 'payments' ? 'active' : ''}`}
-                            onClick={() => handleNavItemClick('payments')}
-                        >
-                            <MdPayment size={22} />
-                            <span>Payments</span>
-                        </div>
+                        
                         <div
                             className={`menu-item ${activeNavItem === 'profile' ? 'active' : ''}`}
                             onClick={() => handleNavItemClick('profile')}
@@ -479,78 +491,12 @@ const Dashboard = () => {
             </>
         )
     }
-    function randerTempleContent() {
+    function renderBookContent() {
 
 
         return (
             <>
-                <div className="container py-5">
-                    {/* Heading */}
-                    <h2
-                        className="text-center mb-4"
-                        style={{
-                            background: 'linear-gradient(to right, transparent, #FF8C00, transparent)',
-                            WebkitBackgroundClip: 'text',
-                            color: 'transparent',
-                            fontWeight: 'bold',
-                            fontSize: '2rem',
-                        }}
-                    >
-                        🎥 Video Library
-                    </h2>
-
-                    {/* Video Grid */}
-                    <div className="row">
-                        {importedVideos.map((video, index) => (
-                            <div className="col-md-4 mb-4" key={index}>
-                                <div
-                                    className="card shadow"
-                                    ref={el => fullscreenRefs.current[index] = el}
-                                    style={{ border: '2px solid #FF8C00', borderRadius: '10px', position: 'relative' }}
-                                >
-                                    {/* Exit Fullscreen Button */}
-                                    <button
-                                        onClick={exitFullScreen}
-                                        className="btn btn-danger position-absolute top-0 end-0 m-2"
-                                        style={{ zIndex: 1000, borderRadius: '50%' }}
-                                    >
-                                        ✖
-                                    </button>
-
-                                    {/* Video Thumbnail */}
-                                    <video
-                                        src={video.url}
-                                        controls
-                                        className="card-img-top rounded"
-                                        style={{ maxHeight: '90%', objectFit: 'cover' }}
-                                    />
-
-                                    {/* Actions */}
-                                    <div className="card-body d-flex justify-content-between flex-wrap gap-2">
-                                        <button
-                                            className="btn btn-warning text-white"
-                                            onClick={() => enterFullScreen(index)}
-                                        >
-                                            🔎 Fullscreen
-                                        </button>
-
-                                        <a
-                                            href={video.url}
-                                            download={video.name}
-                                            className="btn btn-success"
-                                        >
-                                            ⬇️ Download
-                                        </a>
-                                    </div>
-                                    <div className=' d-flex justify-content-between p-3'>
-                                        <p><b> Video Name: </b></p>
-                                        <p><b> Date : 10:10:2025 </b></p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                
             </>
         )
     }
