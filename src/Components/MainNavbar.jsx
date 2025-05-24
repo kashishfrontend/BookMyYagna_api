@@ -11,9 +11,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import { NavDropdown,  } from 'react-bootstrap';
 // import { PersonCircle } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
 
 const MainNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  
+const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,20 +32,18 @@ const MainNavbar = () => {
     };
   }, []);
 
-   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loginStatus = localStorage.getItem('isLoggedIn');
-    setIsLoggedIn(loginStatus === 'true');
-  }, []);
+  // useEffect(() => {
+  //   const loginStatus = localStorage.getItem('isLoggedIn');
+  //   setIsLoggedIn(loginStatus === 'true');
+  // }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userData');
-    setIsLoggedIn(false);
-    navigate('/');
-  };
+ const handleLogout = async () => {
+  await logout(); 
+  navigate('/');
+};
   return (
     <div className='container ' style={{ padding: "0px 0px" }}>
       <motion.div
@@ -105,7 +106,7 @@ const MainNavbar = () => {
                 </Nav.Link>
               </motion.div> */}
 
- {!isLoggedIn ? (
+ {!isAuthenticated ? (
         <motion.div whileHover={{ scale: 1.1 }}>
           <Nav.Link href="/login" className="nav-link">
             <PersonCircle className="icon" /> Login

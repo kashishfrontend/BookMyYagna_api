@@ -6,6 +6,7 @@ import { div } from 'framer-motion/client';
 // import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
 
 const LoginPage = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -19,8 +20,9 @@ const LoginPage = () => {
     });
     const [errors, setErrors] = useState({});
 
+    const { login } = useAuth();
+
     useEffect(() => {
-        // Reset form data and errors when switching between login and signup
         setFormData({
             email: '',
             password: '',
@@ -84,71 +86,90 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     const newErrors = validateForm();
+    //     if (Object.keys(newErrors).length > 0) {
+    //         setErrors(newErrors);
+    //         return;
+    //     }
+
+    //     if (isLogin) {
+    //         // Login logic
+    //         try {
+    //             const response = await axios.post('https://bookmyyogna.onrender.com/user/loginUser', {
+    //                 email: formData.email,
+    //                 password: formData.password
+    //             });
+
+    //             const userData = response.data;
+
+    //             if (response.status === 200 && userData.success) {
+    //                 alert(userData.Message || 'Login successful!');
+    //                 console.log('Login successful:', userData);
+    //                 navigate('/', { state: { user: userData } });
+    //                 // Save to localStorage
+    //                 localStorage.setItem('isLoggedIn', true);
+    //                 localStorage.setItem('userData', JSON.stringify(userData))
+    //             } else {
+    //                 console.log('Login error:', userData.error);
+    //                 alert(userData.error || 'Login failed!');
+    //             }
+
+    //         } catch (error) {
+    //             const errorMessage = error.response?.data?.error || 'Login failed due to server error!';
+    //             console.log('Login failed:', errorMessage);
+    //             alert(errorMessage);
+    //         }
+
+    //     } else {
+    //         // ✅ Register logic using correct API field: fullName
+    //         try {
+    //             const response = await axios.post('https://bookmyyogna.onrender.com/user/registerUser', {
+    //                 fullName: formData.name,
+    //                 email: formData.email,
+    //                 password: formData.password
+    //             });
+
+    //             const userData = response.data;
+
+    //             if (response.status === 201 || userData.success) {
+    //                 alert(userData.Message || 'Registration successful!');
+    //                 console.log('Registration successful:', userData);
+    //                 setIsLogin(true); // Switch to login mode
+    //             } else {
+    //                 console.log('Registration error:', userData.error);
+    //                 alert(userData.error || 'Registration failed!');
+    //             }
+
+    //         } catch (error) {
+    //             const errorMessage = error.response?.data?.error || 'Registration failed due to server error!';
+    //             console.log('Registration failed:', errorMessage);
+    //             alert(errorMessage);
+    //         }
+    //     }
+    // };
+
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
+  e.preventDefault();
 
-        const newErrors = validateForm();
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
+  try {
+    await login({
+      email: formData.email,
+      password: formData.password
+    });
 
-        if (isLogin) {
-            // Login logic
-            try {
-                const response = await axios.post('https://bookmyyogna.onrender.com/user/loginUser', {
-                    email: formData.email,
-                    password: formData.password
-                });
+    // Login successful, navigate to home or dashboard
+    navigate('/');
+  } catch (err) {
+    console.error("Login failed:", err);
 
-                const userData = response.data;
-
-                if (response.status === 200 && userData.success) {
-                    alert(userData.Message || 'Login successful!');
-                    console.log('Login successful:', userData);
-                    navigate('/', { state: { user: userData } });
-                    // Save to localStorage
-                    localStorage.setItem('isLoggedIn', true);
-                    localStorage.setItem('userData', JSON.stringify(userData))
-                } else {
-                    console.log('Login error:', userData.error);
-                    alert(userData.error || 'Login failed!');
-                }
-
-            } catch (error) {
-                const errorMessage = error.response?.data?.error || 'Login failed due to server error!';
-                console.log('Login failed:', errorMessage);
-                alert(errorMessage);
-            }
-
-        } else {
-            // ✅ Register logic using correct API field: fullName
-            try {
-                const response = await axios.post('https://bookmyyogna.onrender.com/user/registerUser', {
-                    fullName: formData.name,
-                    email: formData.email,
-                    password: formData.password
-                });
-
-                const userData = response.data;
-
-                if (response.status === 201 || userData.success) {
-                    alert(userData.Message || 'Registration successful!');
-                    console.log('Registration successful:', userData);
-                    setIsLogin(true); // Switch to login mode
-                } else {
-                    console.log('Registration error:', userData.error);
-                    alert(userData.error || 'Registration failed!');
-                }
-
-            } catch (error) {
-                const errorMessage = error.response?.data?.error || 'Registration failed due to server error!';
-                console.log('Registration failed:', errorMessage);
-                alert(errorMessage);
-            }
-        }
-    };
-
+    // Optionally show user-friendly message
+    alert("Login failed. Please check your credentials or try again later.");
+  }
+  };
     const variants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },

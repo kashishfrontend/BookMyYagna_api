@@ -11,8 +11,8 @@ function App() {
   return (
     <>
      <AppRoutes/>
-     {/* <FloatingContactButton /> */}
-     <ChatbotWidget/>
+     <FloatingContactButton />
+     {/* <ChatbotWidget/> */}
     </>
   )
 }

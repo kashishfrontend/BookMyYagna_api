@@ -170,26 +170,30 @@
 
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../Api/axios/axios_config';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { FaStar, FaGraduationCap, FaLanguage } from 'react-icons/fa';
 
 const PopularPriests = () => {
-  const [priests, setPriests] = useState([]);
+const [priests, setPriests] = useState([]);
+ useEffect(() => {
+  const fetchPandits = async () => {
+    try {
+      const res = await axios.get('/pandit/getAllPandits');
+      if (res.data.success && res.data.pandits) {
+        setPriests(res.data.pandits);
+      } else {
+        console.error('No pandits data found');
+      }
+    } catch (error) {
+      console.error('Error fetching pandits:', error);
+    }
+  };
 
-  useEffect(() => {
-    axios
-      .get('https://bookmyyogna.onrender.com/pandit/getAllPandits')
-      .then((response) => {
-        if (response.data.success) {
-          setPriests(response.data.pandits);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching pandits:', error);
-      });
-  }, []);
+  fetchPandits();
+}, []);
+
 
   const sectionVariants = {
     hidden: { opacity: 0 },

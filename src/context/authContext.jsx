@@ -1,23 +1,29 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authService } from '../Api/service/authService';
+import React, { createContext, useContext, useState } from 'react';
+import axios from '../Api/axios/axios_config';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    setIsAuthenticated(authService.isAuthenticated());
-  }, []);
-
-  const login = (token) => {
-    authService.login(token);
-    setIsAuthenticated(true);
+  const login = async (credentials) => {
+    try {
+      await axios.post('/user/loginUser',credentials , { withCredentials: true });
+      setIsAuthenticated(true); 
+    } catch (err) {
+      console.error('Login failed', err);
+      setIsAuthenticated(false);
+    }
   };
 
-  const logout = () => {
-    authService.logout();
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      await axios.post('/user/logoutUser', {}, { withCredentials: true });
+    } catch (err) {
+      console.error('Logout error', err);
+    } finally {
+      setIsAuthenticated(false);
+    }
   };
 
   return (
@@ -28,4 +34,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
