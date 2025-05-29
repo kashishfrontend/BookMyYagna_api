@@ -8,15 +8,17 @@ import img from "../assets/img/logo.png"
 import DivineJournal from '../Page/DivineJournal'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import { NavDropdown,  } from 'react-bootstrap';
-// import { PersonCircle } from 'react-bootstrap-icons';
+
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/action/authAction';
+
 
 const MainNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   
-const { isAuthenticated, logout } = useAuth();
+ const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,18 +34,15 @@ const { isAuthenticated, logout } = useAuth();
     };
   }, []);
 
-  //  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const loginStatus = localStorage.getItem('isLoggedIn');
-  //   setIsLoggedIn(loginStatus === 'true');
-  // }, []);
+ 
+  const handleLogout = () => {
+    dispatch(logout()); 
+    navigate('/');
+  };
 
- const handleLogout = async () => {
-  await logout(); 
-  navigate('/');
-};
+ 
   return (
     <div className='container ' style={{ padding: "0px 0px" }}>
       <motion.div
