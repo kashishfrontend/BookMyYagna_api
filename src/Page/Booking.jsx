@@ -12,11 +12,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import gf from "../assets/img/pandit-1.jpeg";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Booking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPuja, setSelectedPuja] = useState(null);
   const [numberOfPeople, setNumberOfPeople] = useState(5);
+  const [poojaData, setPoojaData] = useState(null);
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,10 +27,36 @@ const Booking = () => {
   const [specialRequirements, setSpecialRequirements] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [type, setType] = useState('');
+  const [type, setType] = useState("");
   const handlePujaSelection = (puja) => {
     setSelectedPuja(puja);
   };
+  const location = useLocation();
+  const { poojaId } = location.state || {};
+  console.log("pooja id", poojaId);
+
+  useEffect(() => {
+    if (poojaId) {
+      axios
+        .get(`https://bookmyyogna.onrender.com/pooja/getPooja/${poojaId}`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            setPoojaData(response.data.pooja);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching pooja:", error);
+        });
+    }
+  }, [poojaId]);
+
+  // Log poojaData after it's updated
+  useEffect(() => {
+    if (poojaData) {
+      console.log("Packages Data:", poojaData.poojaPlans);
+    }
+  }, [poojaData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -160,7 +189,7 @@ const Booking = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img src={gf} style={{ width: "95%" }} />
+                    <img src={poojaData?.image} style={{ width: "95%" }} />
                   </div>
                   <div
                     style={{
@@ -176,14 +205,18 @@ const Booking = () => {
                         fontWeight: "600",
                       }}
                     >
-                      Heading
+                      {poojaData?.heading}
                     </div>
-                    <div style={{ fontSize: "20px" }}>Sub Heading</div>
-                    <div>Rating:- 10</div>
+                    <div style={{ fontSize: "20px" }}>
+                      {poojaData?.subHeading}
+                    </div>
+                    <div>{poojaData?.rating}</div>
                     <div>
                       <h6>Benifites</h6>
                       <ul>
-                        <li>Fast</li>
+                        {poojaData?.benefitsOfPooja?.map((benefit) => (
+                          <li>{benefit}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -202,8 +235,8 @@ const Booking = () => {
                     <div style={{ fontSize: "20px", fontWeight: "600" }}>
                       Plan Details
                     </div>
-                    <div>Heading</div>
-
+                    <div>{poojaData?.poojaPlans.heading}</div>
+                    <div>test</div>
                     <div>Amount</div>
                     <div>
                       <h6>Benifites</h6>
@@ -215,7 +248,6 @@ const Booking = () => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-
                   {/* <div className="form-group">
                     <label>
                       <FaUsers /> Number of Attendees:
@@ -288,18 +320,17 @@ const Booking = () => {
                     />
                   </div>
                   <div className="form-group">
-  <label>Select Type:</label>
-  <select
-    value={type}
-    onChange={(e) => setType(e.target.value)}
-    required
-  >
-    <option value="">Select type</option>
-    <option value="online">Online</option>
-    <option value="offline">Offline</option>
-  </select>
-</div>
-
+                    <label>Select Type:</label>
+                    <select
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                      required
+                    >
+                      <option value="">Select type</option>
+                      <option value="online">Online</option>
+                      <option value="offline">Offline</option>
+                    </select>
+                  </div>
 
                   <div className="form-group">
                     <label>Address:</label>
@@ -310,7 +341,6 @@ const Booking = () => {
                     ></textarea>
                   </div>
 
-                 
                   <motion.button
                     type="submit"
                     className="book-now-btn"
