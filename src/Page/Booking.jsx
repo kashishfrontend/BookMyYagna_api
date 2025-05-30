@@ -11,53 +11,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
-// import "./BookingComponent.css";
-
-// const poojaTypes = [
-//   {
-//     id: 1,
-//     name: "Satyanarayan Puja",
-//     description:
-//       "A Hindu ritual performed to seek the blessings of Lord Vishnu",
-//     duration: "3 hours",
-//     price: 5100,
-//   },
-//   {
-//     id: 2,
-//     name: "Griha Pravesh",
-//     description: "Housewarming ceremony to bless new homes",
-//     duration: "4 hours",
-//     price: 7500,
-//   },
-//   {
-//     id: 3,
-//     name: "Ganesh Puja",
-//     description: "Ritual to honor Lord Ganesha",
-//     duration: "2 hours",
-//     price: 3100,
-//   },
-//   {
-//     id: 4,
-//     name: "Diwali Puja",
-//     description: "Special ritual during Diwali festival",
-//     duration: "2 hours",
-//     price: 3500,
-//   },
-//   {
-//     id: 5,
-//     name: "Navgraha Shanti",
-//     description: "Ritual to appease the nine planets",
-//     duration: "3 hours",
-//     price: 5500,
-//   },
-//   {
-//     id: 6,
-//     name: "Rudrabhishek",
-//     description: "Sacred ritual to honor Lord Shiva",
-//     duration: "4 hours",
-//     price: 6100,
-//   },
-// ];
+import gf from "../assets/img/pandit-1.jpeg";
 
 const Booking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -70,7 +24,7 @@ const Booking = () => {
   const [specialRequirements, setSpecialRequirements] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const [type, setType] = useState('');
   const handlePujaSelection = (puja) => {
     setSelectedPuja(puja);
   };
@@ -178,13 +132,62 @@ const Booking = () => {
           ) : (
             <div className="booking-container">
               <motion.div
-                className="puja-types "
+                className="booking-form "
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
               >
-                <h2>go and select pooja type</h2>
-        
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "23px",
+                      color: "#FF8000",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Your Selected Puja
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: " center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src={gf} style={{ width: "95%" }} />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "5px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "23px",
+                        color: "#FF8000",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Heading
+                    </div>
+                    <div style={{ fontSize: "20px" }}>Sub Heading</div>
+                    <div>Rating:- 10</div>
+                    <div>
+                      <h6>Benifites</h6>
+                      <ul>
+                        <li>Fast</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
 
               <motion.div
@@ -194,27 +197,26 @@ const Booking = () => {
                 animate="visible"
               >
                 <h3>Enter Booking Details</h3>
-                {/* <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label>
-                      <FaCalendarAlt /> Select Date and Time:
-                    </label>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={30}
-                      timeCaption="Time"
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      placeholderText="Choose an auspicious date"
-                      className="date-picker"
-                      minDate={new Date()}
-                      required
-                    />
-                  </div>
+                <div>
+                  <div>
+                    <div style={{ fontSize: "20px", fontWeight: "600" }}>
+                      Plan Details
+                    </div>
+                    <div>Heading</div>
 
-                  <div className="form-group">
+                    <div>Amount</div>
+                    <div>
+                      <h6>Benifites</h6>
+                      <ul>
+                        <li>Fast</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSubmit}>
+
+                  {/* <div className="form-group">
                     <label>
                       <FaUsers /> Number of Attendees:
                     </label>
@@ -249,7 +251,7 @@ const Booking = () => {
                       placeholder="Enter the complete address where you want the ceremony to be performed"
                       required
                     ></textarea>
-                  </div>
+                  </div> */}
 
                   <div className="form-row">
                     <div className="form-group">
@@ -285,9 +287,22 @@ const Booking = () => {
                       required
                     />
                   </div>
+                  <div className="form-group">
+  <label>Select Type:</label>
+  <select
+    value={type}
+    onChange={(e) => setType(e.target.value)}
+    required
+  >
+    <option value="">Select type</option>
+    <option value="online">Online</option>
+    <option value="offline">Offline</option>
+  </select>
+</div>
+
 
                   <div className="form-group">
-                    <label>Special Requirements:</label>
+                    <label>Address:</label>
                     <textarea
                       value={specialRequirements}
                       onChange={(e) => setSpecialRequirements(e.target.value)}
@@ -295,49 +310,7 @@ const Booking = () => {
                     ></textarea>
                   </div>
 
-                  <motion.div
-                    className="price-quote"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: selectedPuja ? 1 : 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {selectedPuja && (
-                      <>
-                        <h4>Price Quote</h4>
-                        <div className="price-details">
-                          <div className="price-row">
-                            <span>{selectedPuja.name}</span>
-                            <span>
-                              <FaRupeeSign /> {selectedPuja.price}
-                            </span>
-                          </div>
-                          <div className="price-row">
-                            <span>Samagri (Puja Materials)</span>
-                            <span>
-                              <FaRupeeSign />{" "}
-                              {Math.round(selectedPuja.price * 0.15)}
-                            </span>
-                          </div>
-                          <div className="price-row">
-                            <span>Travel Charges</span>
-                            <span>
-                              <FaRupeeSign /> 500
-                            </span>
-                          </div>
-                          <div className="price-row total">
-                            <span>Total</span>
-                            <span>
-                              <FaRupeeSign />{" "}
-                              {selectedPuja.price +
-                                Math.round(selectedPuja.price * 0.15) +
-                                500}
-                            </span>
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </motion.div>
-
+                 
                   <motion.button
                     type="submit"
                     className="book-now-btn"
@@ -351,7 +324,7 @@ const Booking = () => {
                       "Book Now"
                     )}
                   </motion.button>
-                </form> */}
+                </form>
               </motion.div>
             </div>
           )}
