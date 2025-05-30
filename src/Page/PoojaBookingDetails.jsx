@@ -27,8 +27,6 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const PoojaBookingDetails = () => {
-  // const [selectedPackage, setSelectedPackage] = useState('standard');
-  // const [poojadata, setpoojadata] = useState([]);
   const [poojaData, setPoojaData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,9 +43,15 @@ const PoojaBookingDetails = () => {
     });
   }, []);
 
-  const handleBookNow = () => {
-    navigate("/booking", { state: { poojaId } });
-  };
+ const handleBookNow = () => {
+  if (selectedPackage !== null && poojaData?.poojaPlans[selectedPackage]) {
+    const selectedPlanId = poojaData.poojaPlans[selectedPackage]._id;
+    navigate("/booking", { state: { poojaId, selectedPlanId } });
+  } else {
+    alert("Please select a package before booking.");
+  }
+};
+
 
   const faqs = [
     {
@@ -102,56 +106,6 @@ const PoojaBookingDetails = () => {
     },
   ];
 
-  //  const packages = {
-  //         basic: {
-  //             name: 'Basic',
-  //             price: '₹ 5,100',
-  //             features: [
-  //                 'Pandit ji (1 pandits)',
-  //                 'All Havan Items',
-  //                 'All Puja Items',
-  //                 'Flowers',
-  //                 'Fruits',
-  //                 'Hawan Kunda',
-  //                 'Maha mantra chantings',
-  //                 'Pandit Ji Travel Charges'
-  //             ],
-  //             days: 1,
-  //             hours: 3
-  //         },
-  //         standard: {
-  //             name: 'Standard',
-  //             price: '₹ 10,400',
-  //             features: [
-  //                 'Pandit ji (2 pandits)',
-  //                 'All Havan Items',
-  //                 'All Puja Items',
-  //                 'Flowers',
-  //                 'Fruits',
-  //                 'Hawan Kunda',
-  //                 'Maha mantra chantings',
-  //                 'Pandit Ji Travel Charges'
-  //             ],
-  //             days: 3,
-  //             hours: 5
-  //         },
-  //         premium: {
-  //             name: 'Premium',
-  //             price: '₹ 15,000',
-  //             features: [
-  //                 'Pandit ji (3 pandits)',
-  //                 'All Havan Items',
-  //                 'All Puja Items',
-  //                 'Flowers',
-  //                 'Fruits',
-  //                 'Hawan Kunda',
-  //                 'Maha mantra chantings',
-  //                 'Pandit Ji Travel Charges'
-  //             ],
-  //             days: 7,
-  //             hours: 5
-  //         }
-  //     };
 
   useEffect(() => {
     if (poojaId) {

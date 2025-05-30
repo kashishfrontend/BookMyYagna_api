@@ -32,8 +32,9 @@ const Booking = () => {
     setSelectedPuja(puja);
   };
   const location = useLocation();
-  const { poojaId } = location.state || {};
+  const { poojaId, selectedPlanId } = location.state || {};
   console.log("pooja id", poojaId);
+  console.log("Selected Plan ID:", selectedPlanId);
 
   useEffect(() => {
     if (poojaId) {
@@ -50,6 +51,10 @@ const Booking = () => {
         });
     }
   }, [poojaId]);
+
+  const selectedPlan = poojaData?.poojaPlans?.find(
+  (plan) => plan._id === selectedPlanId
+);
 
   // Log poojaData after it's updated
   useEffect(() => {
@@ -232,19 +237,19 @@ const Booking = () => {
                 <h3>Enter Booking Details</h3>
                 <div>
                   <div>
-                    <div style={{ fontSize: "20px", fontWeight: "600" }}>
-                      Plan Details
-                    </div>
-                    <div>{poojaData?.poojaPlans.heading}</div>
-                    <div>test</div>
-                    <div>Amount</div>
-                    <div>
-                      <h6>Benifites</h6>
-                      <ul>
-                        <li>Fast</li>
-                      </ul>
-                    </div>
-                  </div>
+    <div style={{ fontSize: "20px", fontWeight: "600" }}>Plan Details</div>
+    <div>{selectedPlan?.heading}</div>
+    <div>Amount: ₹{selectedPlan?.amount}</div>
+
+    <div>
+      <h6>Benefits</h6>
+      <ul>
+        {selectedPlan?.features?.map((feature, index) => (
+          <li key={index}>{feature}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
                 </div>
 
                 <form onSubmit={handleSubmit}>
