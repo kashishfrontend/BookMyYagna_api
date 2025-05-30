@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, NavDropdown, Button, Dropdown } from 'react-boo
 import { motion } from 'framer-motion';
 import { BellFill, CalendarCheck, PersonCircle, House } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import img from "../assets/img/logo.png"
+// import img from "../assets/img/logo.png"
 import DivineJournal from '../Page/DivineJournal'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
-
+import img from '../assets/img/image.png';
 
 const MainNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -52,22 +52,28 @@ const MainNavbar = () => {
       >
         <Navbar
           expand="lg"
-          className={`custom-navbar  ${scrolled ? 'scrolled' : ''}`}
+          className={ ` custom-navbar py-0  ${scrolled ? 'scrolled' : ''}`}
           fixed="top"
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            style={{ padding: "0px 70px" }}
+            className='padding-class'
           >
-            <Navbar.Brand href="#home" className="brand">
+            <Navbar.Brand href="#home" className="brand d-flex  align-items-center d-block p-1">
               <img
                 src={img}
                 width="30"
                 height="30"
                 alt="Om Symbol"
+                style={{
+                  // borderRadius: '50%', // makes it circular
+                  // boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)' // tight shadow around shape
+                }}
                 className="d-inline-block align-top me-2 pl-2 ml-2"
               />
-              <span className="brand-text p-2">Bookmy<span className="highlight">Yagna</span></span>
+              {/* <span className="brand-text p-2">Bookmy<span className="highlight">Yagna</span></span> */}
             </Navbar.Brand>
           </motion.div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

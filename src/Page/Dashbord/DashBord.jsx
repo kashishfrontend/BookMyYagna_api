@@ -29,7 +29,7 @@ import {
 } from "react-icons/md";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import "../../assets/css/DashBord.css";
+import "../../assets/css/Dashbord.css";
 // import poojaVideo from '../../assets/videos/pooja-video.mp4'
 import axios from "../../Api/axios/axios_config";
 import { logout } from "../../redux/action/authAction";
