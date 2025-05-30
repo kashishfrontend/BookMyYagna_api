@@ -37,7 +37,7 @@
 }
 
 .nav-link {
-  color: #fff !important;
+  /* background-color: rgba(199, 189, 189, 0.6) !important; */
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin: 0 8px;
@@ -45,6 +45,7 @@
   border-radius: 4px;
   transition: all 0.3s ease;
   display: flex;
+  border:  0.2px solid  rgba(0, 0, 0, 0.5) !important;
   align-items: center;
 }
 

@@ -80,20 +80,22 @@ const MainNavbar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center ">
               <motion.div whileHover={{ scale: 1.1 }}>
-                <Nav.Link href="/" className="nav-link">
+                <Nav.Link href="/" className="nav-link shadow">
                   <House className="icon" /> Home
                 </Nav.Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <NavDropdown
+                
                   title={
                     <>
+                    
                       <BellFill className="icon me-1" />
                       Services
                     </>
                   }
                   id="nav-dropdown-services"
-                  className=" d-flex align-content-center justify-content-center"
+                  className=" d-flex align-content-center justify-content-center "
                 >
                   <Dropdown.Item className='text-light nav-service-link' href="./listOfPooja">List of Pooja</Dropdown.Item>
                   <Dropdown.Item className='text-light nav-service-link' href="/panchang">Panchang</Dropdown.Item>

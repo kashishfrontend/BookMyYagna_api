@@ -36,6 +36,8 @@ const Booking = () => {
   console.log("pooja id", poojaId);
   console.log("Selected Plan ID:", selectedPlanId);
 
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     if (poojaId) {
       axios
@@ -53,8 +55,8 @@ const Booking = () => {
   }, [poojaId]);
 
   const selectedPlan = poojaData?.poojaPlans?.find(
-  (plan) => plan._id === selectedPlanId
-);
+    (plan) => plan._id === selectedPlanId
+  );
 
   // Log poojaData after it's updated
   useEffect(() => {
@@ -79,7 +81,7 @@ const Booking = () => {
         setSelectedPuja(null);
         setNumberOfPeople(5);
         setAddress("");
-        setName("");
+
         setPhone("");
         setEmail("");
         setSpecialRequirements("");
@@ -125,6 +127,30 @@ const Booking = () => {
     },
   };
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(
+          "https://bookmyyogna.onrender.com/user/getUserProfile",
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          const userData = response.data.user;
+          setUser(userData);
+          setName(userData.fullName); // <-- correct field
+          setEmail(userData.email);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  
   return (
     <>
       <div className="booking-section mt-5">
@@ -237,59 +263,24 @@ const Booking = () => {
                 <h3>Enter Booking Details</h3>
                 <div>
                   <div>
-    <div style={{ fontSize: "20px", fontWeight: "600" }}>Plan Details</div>
-    <div>{selectedPlan?.heading}</div>
-    <div>Amount: ₹{selectedPlan?.amount}</div>
+                    <div style={{ fontSize: "20px", fontWeight: "600" }}>
+                      Plan Details
+                    </div>
+                    <div>{selectedPlan?.heading}</div>
+                    <div>Amount: ₹{selectedPlan?.amount}</div>
 
-    <div>
-      <h6>Benefits</h6>
-      <ul>
-        {selectedPlan?.features?.map((feature, index) => (
-          <li key={index}>{feature}</li>
-        ))}
-      </ul>
-    </div>
-  </div>
+                    <div>
+                      <h6>Benefits</h6>
+                      <ul>
+                        {selectedPlan?.features?.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                  {/* <div className="form-group">
-                    <label>
-                      <FaUsers /> Number of Attendees:
-                    </label>
-                    <div className="people-counter">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setNumberOfPeople(Math.max(1, numberOfPeople - 1))
-                        }
-                        className="counter-btn"
-                      >
-                        -
-                      </button>
-                      <span>{numberOfPeople}</span>
-                      <button
-                        type="button"
-                        onClick={() => setNumberOfPeople(numberOfPeople + 1)}
-                        className="counter-btn"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label>
-                      <FaMapMarkerAlt /> Venue Address:
-                    </label>
-                    <textarea
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Enter the complete address where you want the ceremony to be performed"
-                      required
-                    ></textarea>
-                  </div> */}
-
                   <div className="form-row">
                     <div className="form-group">
                       <label>Your Name:</label>
@@ -298,6 +289,19 @@ const Booking = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Enter your full name"
+                        required
+                      />
+                    </div>
+                    </div>
+
+                     <div className="form-row">
+                    <div className="form-group">
+                      <label>Your Email:</label>
+                      <input
+                        type="email"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter your email name"
                         required
                       />
                     </div>
@@ -314,16 +318,16 @@ const Booking = () => {
                     </div>
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label>Email Address:</label>
                     <input
                       type="email"
-                      value={email}
+                      value={user.email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address"
                       required
                     />
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <label>Select Type:</label>
                     <select
