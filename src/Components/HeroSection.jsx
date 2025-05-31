@@ -189,7 +189,7 @@ const HeroSection = () => {
                         <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
                           <Calendar2Check className="btn-icon" /> Book Pooja Now
                         </Button>
-                        <Button variant="outline-light" className="secondary-cta-btn">
+                        <Button variant="outline-light" className="secondary-cta-btn" onClick={()=> navigate('/listofpooja')}>
                           <Bell className="btn-icon" /> Explore Services
                         </Button>
                       </motion.div>

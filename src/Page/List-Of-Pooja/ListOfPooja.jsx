@@ -47,13 +47,7 @@ const PoojaSlider = () => {
   }, []);
 
 
-  const handleBookingClick = ()=>{
-    if(isAuthenticated){
-        navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } })
-    }else{
-      navigate('/login')
-    }
-  }
+
 
   return (
     <>
@@ -123,7 +117,7 @@ const PoojaSlider = () => {
                           {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
   className='book-now-btn1 text-center text-decoration-none'
-  onClick={handleBookingClick}
+   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
 >
   Book Now
 </button>
@@ -168,7 +162,7 @@ const PoojaSlider = () => {
                         </button> */}
                         <button
   className="tile-book-btn"
-  onClick={handleBookingClick}
+   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
 >
   <span className='text-decoration-none text-dark'>Book This Pooja</span>
 </button>
