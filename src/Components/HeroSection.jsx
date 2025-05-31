@@ -11,8 +11,13 @@ import pandit from '../assets/img/pundit.png';
 import vdo1 from '../assets/videos/pooja1.mp4';
 import vdo2 from '../assets/videos/pooja2.mp4'
 import vdo3 from '../assets/videos/bg-video.mp4'
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+   const { isAuthenticated } = useSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
   const controls = useAnimation();
 
@@ -90,7 +95,13 @@ const HeroSection = () => {
       bgVideo: vdo3
     }
   ];
-
+      const handleBookingClick = ()=>{
+        if(isAuthenticated){
+            navigate('/listofpooja')
+        } else {
+          navigate('/login')
+        }
+      }
   return (
     <div className="enhanced-hero-section">
       {/* Floating God Image */}
@@ -175,7 +186,7 @@ const HeroSection = () => {
                       </motion.p>
                       
                       <motion.div variants={slideTextVariants} className="cta-buttons d-flex flex-row">
-                        <Button variant="primary" className="main-cta-btn">
+                        <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
                           <Calendar2Check className="btn-icon" /> Book Pooja Now
                         </Button>
                         <Button variant="outline-light" className="secondary-cta-btn">

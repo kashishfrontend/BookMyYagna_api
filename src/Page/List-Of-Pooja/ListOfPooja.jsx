@@ -15,9 +15,10 @@ import hanumanpic from '../../assets/img/hanumanjiPic.jpg';
 import axios from 'axios';
 // import './PoojaSlider.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector , useDispatch } from 'react-redux';
 
 const PoojaSlider = () => {
-
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
 
@@ -32,81 +33,6 @@ const PoojaSlider = () => {
     });
   }, []);
 
-  const poojaServices = [
-    {
-      id: 1,
-      name: 'Rudra Abhishekam',
-      subTitle: 'Shiva Pooja',
-      description: 'A divine ritual to honor Lord Shiva with the sacred Abhishekam using milk, honey, curd, ghee, and water.',
-      image: hanumanpic,
-      icon: '🔱'
-    },
-    {
-      id: 2,
-      name: 'Gayatri Japam',
-      subTitle: 'Havan',
-      description: 'Sacred recitation of the Gayatri Mantra with a purifying fire ceremony to invoke divine blessings.',
-      image: hanumanpic,
-      icon: '🔥'
-    },
-    {
-      id: 3,
-      name: 'Sudarshana Homa',
-      subTitle: 'Vishnu Pooja',
-      description: 'A powerful fire ritual dedicated to the Sudarshana Chakra of Lord Vishnu to remove obstacles.',
-      image: hanumanpic,
-      icon: '☸️'
-    },
-    {
-      id: 4,
-      name: 'Navagraha Pooja',
-      subTitle: 'Planetary Worship',
-      description: 'Worship of the nine planetary deities to mitigate negative influences and enhance positive energies.',
-      image: hanumanpic,
-      icon: '✨'
-    },
-    {
-      id: 5,
-      name: 'Satyanarayan Pooja',
-      subTitle: 'Vishnu Katha',
-      description: 'A sacred ceremony dedicated to Lord Satyanarayan (Vishnu) for prosperity and well-being.',
-      image: hanumanpic,
-      icon: '🙏'
-    },
-    {
-      id: 6,
-      name: 'Durga Saptashati Path',
-      subTitle: 'Chandi Pooja',
-      description: 'Recitation of 700 verses glorifying the Divine Mother Durga for protection and strength.',
-      image: hanumanpic,
-      icon: '🔺'
-    },
-    {
-      id: 7,
-      name: 'Hanuman Chalisa Paath',
-      subTitle: 'Hanuman Pooja',
-      description: 'Devotional recitation of forty verses dedicated to Lord Hanuman for courage and protection.',
-      image: hanumanpic,
-      icon: '💪'
-    },
-    {
-      id: 8,
-      name: 'Bhagavad Gita Path',
-      subTitle: 'Krishna Pooja',
-      description: 'Sacred recitation of the divine song of Lord Krishna, imparting timeless wisdom and guidance.',
-      image: hanumanpic,
-      icon: '📜'
-    },
-    {
-      id: 9,
-      name: 'Shree Yantra Pooja',
-      subTitle: 'Lalita Sahasranama Archana',
-      description: 'Worship of the sacred geometric symbol representing the cosmos and recitation of 1000 names of Divine Mother.',
-      image: hanumanpic,
-      icon: '🔯'
-    }
-  ];
-
   useEffect(() => {
     axios
       .get('https://bookmyyogna.onrender.com/pooja/getAllPoojas')
@@ -119,6 +45,15 @@ const PoojaSlider = () => {
         console.error('Error fetching pandits:', error);
       });
   }, []);
+
+
+  const handleBookingClick = ()=>{
+    if(isAuthenticated){
+        navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } })
+    }else{
+      navigate('/login')
+    }
+  }
 
   return (
     <>
@@ -188,7 +123,7 @@ const PoojaSlider = () => {
                           {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
   className='book-now-btn1 text-center text-decoration-none'
-  onClick={() => navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } })}
+  onClick={handleBookingClick}
 >
   Book Now
 </button>
@@ -233,7 +168,7 @@ const PoojaSlider = () => {
                         </button> */}
                         <button
   className="tile-book-btn"
-  onClick={() => navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } })}
+  onClick={handleBookingClick}
 >
   <span className='text-decoration-none text-dark'>Book This Pooja</span>
 </button>

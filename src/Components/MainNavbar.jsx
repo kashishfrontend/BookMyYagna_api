@@ -20,6 +20,14 @@ const MainNavbar = () => {
  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
+  const handleBookingClick = () => {
+    if (isAuthenticated) {
+      navigate("/listofpooja");
+    } else {
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -140,7 +148,7 @@ const MainNavbar = () => {
               >
                 <Button
                   as="a"
-                  href="/booking"
+                  onClick={handleBookingClick}
                   variant="outline-light m-2"
                   className="book-now-btn ms-2"
                 >
