@@ -14,11 +14,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
 import img from '../assets/img/image.png';
 
-const MainNavbar = () => {
+const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
-  
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const navTextColor = isHeroVisible ? 'text-light  ' : 'text-dark';
 
   const handleBookingClick = () => {
     if (isAuthenticated) {
@@ -37,20 +39,14 @@ const MainNavbar = () => {
       }
     };
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigate = useNavigate();
-
- 
   const handleLogout = () => {
-    dispatch(logout()); 
+    dispatch(logout());
     navigate('/');
   };
 
- 
   return (
     <div className='container ' style={{ padding: "0px 0px" }}>
       <motion.div
@@ -60,7 +56,7 @@ const MainNavbar = () => {
       >
         <Navbar
           expand="lg"
-          className={ ` custom-navbar py-0  ${scrolled ? 'scrolled' : ''}`}
+          className={` custom-navbar py-0  ${scrolled ? 'scrolled' : ''}`}
           fixed="top"
         >
           <motion.div
@@ -87,32 +83,38 @@ const MainNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center ">
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <Nav.Link href="/" className="nav-link shadow">
+              <motion.div   >
+                <Nav.Link whileHover={{ scale: 1.1 }} href="/" className={`nav-link   ${navTextColor}`}>
                   <House className="icon" /> Home
                 </Nav.Link>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }}>
+              <motion.div className={` shadow-none border-0 ${navTextColor}`}  >
                 <NavDropdown
-                
+
                   title={
                     <>
-                    
-                      <BellFill className="icon me-1" />
-                      Services
+
+                      <BellFill className={` icon me-1 ${navTextColor}`} />
+                      <span className={` hover_class border-0 ${navTextColor}`}>
+                        Services
+
+                      </span>
+
                     </>
                   }
+                  whileHover={{ scale: 1.1 }}
                   id="nav-dropdown-services"
-                  className=" d-flex align-content-center justify-content-center "
+                  // style={{ border: '0.2px solid rgba(0, 0, 0, 0.5)' }}
+                  className=" d-flex align-content-center justify-content-center"
                 >
-                  <Dropdown.Item className='text-light nav-service-link' href="./listOfPooja">List of Pooja</Dropdown.Item>
-                  <Dropdown.Item className='text-light nav-service-link' href="/panchang">Panchang</Dropdown.Item>
+                  <Dropdown.Item  className={` text-light nav-service-link ${navTextColor}`} href="./listOfPooja">List of Pooja</Dropdown.Item>
+                  <Dropdown.Item className={` text-light nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
 
                 </NavDropdown>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <Nav.Link href="/about-us" className="nav-link">
-                  <CalendarCheck className="icon" /> About Us 
+              <motion.div >
+                <Nav.Link href="/about-us" className={`nav-link   ${navTextColor}`}>
+                  <CalendarCheck className="icon" /> About Us
                 </Nav.Link>
               </motion.div>
               {/* <motion.div whileHover={{ scale: 1.1 }}>
@@ -121,26 +123,29 @@ const MainNavbar = () => {
                 </Nav.Link>
               </motion.div> */}
 
- {!isAuthenticated ? (
-        <motion.div whileHover={{ scale: 1.1 }}>
-          <Nav.Link href="/login" className="nav-link">
-            <PersonCircle className="icon" /> Login
-          </Nav.Link>
-        </motion.div>
-      ) : (
-        // <NavDropdown title="Account" id="account-dropdown">
-          <NavDropdown
-    title={
-      <>
-        <PersonCircle className="icon" /> Account
-      </>
-    }
-    id="account-dropdown"
-  >
-          <NavDropdown.Item onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
-          <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-        </NavDropdown>
-      )}
+              {!isAuthenticated ? (
+                <motion.div>
+                  <Nav.Link href="/login" className={`${navTextColor}`}>
+                    <PersonCircle className={` icon${navTextColor}`} /> Login
+                  </Nav.Link>
+                </motion.div>
+              ) : (
+                // <NavDropdown title="Account" id="account-dropdown">
+                <NavDropdown
+                  title={
+                    <>
+                      <PersonCircle className={` icon ${navTextColor}`} />
+                      <span className={` ${navTextColor}`}>
+                        Account
+                      </span>
+                    </>
+                  }
+                  id="account-dropdown"
+                >
+                  <NavDropdown.Item  className={` text-light nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item  className={` text-light nav-service-link ${navTextColor}`} onClick={handleLogout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              )}
 
               <motion.div
                 whileHover={{ scale: 1.05 }}

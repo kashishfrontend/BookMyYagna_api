@@ -1,5 +1,5 @@
 // EnhancedHeroSection.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef  } from 'react';
 import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
@@ -14,13 +14,36 @@ import vdo3 from '../assets/videos/bg-video.mp4'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const HeroSection = () => {
+const HeroSection = ({onHeroVisibleChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
    const { isAuthenticated } = useSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
   const controls = useAnimation();
 
+   const heroRef = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onHeroVisibleChange(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        // Adjust based on how much should be visible
+      }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
   // Animation variants for elements
   const floatingGodVariants = {
     animate: {
@@ -103,7 +126,7 @@ const HeroSection = () => {
         }
       }
   return (
-    <div className="enhanced-hero-section">
+    <div ref={heroRef} className="enhanced-hero-section">
       {/* Floating God Image */}
       <motion.div 
         className="floating-god-container"

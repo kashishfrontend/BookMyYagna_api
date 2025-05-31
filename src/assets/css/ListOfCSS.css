@@ -1,6 +1,7 @@
 /* Pooja Slider Styles */
 .pooja-slider-section {
-    padding: 80px 0;
+    margin-top: 8%;
+    /* padding: 80px 0; */
     background-color: #fff9f2;
     position: relative;
     overflow: hidden;
@@ -496,6 +497,9 @@
     .temple-decoration {
         width: 100px;
         height: 100px;
+    }
+    .pooja-slider-section{
+        margin-top: 30% !important;
     }
 }
 

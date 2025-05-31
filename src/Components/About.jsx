@@ -3,13 +3,14 @@ import { Container, Row, Col } from 'react-bootstrap';
 import AOS from 'aos';
 import { FaOm, FaHandsHelping, FaPrayingHands, FaHeart } from 'react-icons/fa';
 import about from '../assets/img/bg-3.png'
+import '../assets/css/About.css'
 const AboutUs = () => {
     useEffect(() => {
         AOS.init({ duration: 1000, once: true });
     }, []);
 
     return (
-        <section id="about-us" className="about-us-section my-5" style={{padding:"42px 0"}}>
+        <section id="about-us" className="about-us-section" >
             <Container>
                 {/* Section Title */}
                 <div className="section-title text-center" data-aos="fade-down">

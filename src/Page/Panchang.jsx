@@ -87,7 +87,7 @@ const PanchangCalendar = () => {
   const handleDateChange = (newDate) => setDate(newDate);
 
   return (
-    <section className="panchang-calendar-section mt-5">
+    <section className="panchang-calendar-section " style={{marginTop:"5%"}}>
       <Container>
         <div className="section-header">
           <div className="ornament-line" style={{paddingTop:"35px"}}>
