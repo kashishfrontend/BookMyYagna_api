@@ -6,15 +6,16 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = async (credentials) => {
-    try {
-      await axios.post('/user/loginUser',credentials , { withCredentials: true });
-      setIsAuthenticated(true); 
-    } catch (err) {
-      console.error('Login failed', err);
-      setIsAuthenticated(false);
-    }
-  };
+ const login = async (credentials) => {
+  try {
+    await axios.post('/user/loginUser', credentials, { withCredentials: true });
+    setIsAuthenticated(true);
+  } catch (err) {
+    setIsAuthenticated(false);
+    throw err; // Rethrow to let LoginPage handle it
+  }
+};
+
 
   const logout = async () => {
     try {

@@ -3,11 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
-// import './EnhancedHeroSection.css';
-import image from  '../assets/img/om-123.png'; 
+ import image from  '../assets/img/om-123.png'; 
 import bg1 from  '../assets/img/bg-3-new.jpeg'; 
 import bg2 from  '../assets/img/bg-3.png'; 
 import bg3 from  '../assets/img/bg--2.png'; 
+import pandit from '../assets/img/pundit.png';
+import vdo1 from '../assets/videos/pooja1.mp4';
+import vdo2 from '../assets/videos/pooja2.mp4'
+import vdo3 from '../assets/videos/bg-video.mp4'
+
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const controls = useAnimation();
@@ -66,24 +70,24 @@ const HeroSection = () => {
     {
       badge: "Auspicious Ceremonies",
       title: "Welcome to  <span class='highlight-text'>BookMyYagna</span>  A Sacred Connection to the Divine",
-      subtitle: 'In the hustle and bustle of our daily lives, we often forget the true essence of life: our connection to the Divine. We live in a world of endless distractions, far from the peace and solace that spiritual practices offer. Yet, deep inside, we feel the need for something more—something sacred, something that aligns us with the universe.',
+      subtitle: 'In the hustle and bustle of our daily lives, we often forget the true essence of life...',
       image: image,
-      bgImage: bg1
+      bgVideo: vdo1
     },
     {
       badge: "Festival Celebrations",
       title: "Celebrate <span class='highlight-text'>Festivals</span> with Traditional Rituals",
-      subtitle: "At BookMyYagna, we believe that Yagna and Pooja ceremonies are not just rituals—they are the threads that bind us to the divine energy of the universe. Whether you are celebrating life's most beautiful moments or navigating through tough times, a Yagna can provide you with peace, healing, and guidance",
-      image:image,
-      bgImage: bg2,
-      text:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, quod nihil totam mollitia tempora optio corrupti fuga vitae, veritatis amet soluta harum culpa eveniet in voluptates atque voluptatem dolorem ab."
+      subtitle: "At BookMyYagna, we believe that Yagna and Pooja ceremonies are not just rituals...",
+      image: image,
+      bgVideo: vdo2,
+      text: "Lorem ipsum, dolor sit amet consectetur..."
     },
     {
       badge: "Home Ceremonies",
       title: "Bring <span class='highlight-text'>Blessings</span> to Your Home",
-      subtitle: "Schedule Griha Pravesh, Vastu Shanti, or other home ceremonies performed with proper Vedic traditions by our expert pandits.",
-      image:image,
-      bgImage: bg3
+      subtitle: "Schedule Griha Pravesh, Vastu Shanti, or other home ceremonies...",
+      image: image,
+      bgVideo: vdo3
     }
   ];
 
@@ -121,6 +125,29 @@ const HeroSection = () => {
               className="hero-slide" 
               style={{ backgroundImage: `url(${slide.bgImage})` }}
             >
+              <video
+                className="background-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source className='w-100' src={slide.bgVideo} type="video/mp4" />
+                <img
+                  src={bg1}
+                  alt="Fallback Background"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 0
+                  }}
+                />
+                Your browser does not support the video tag.
+              </video>
               <div className="slide-overlay"></div>
               <Container className="slide-content">
                 <Row className="align-items-center">
@@ -131,7 +158,7 @@ const HeroSection = () => {
                       initial="hidden"
                       animate={controls}
                     >
-                      <motion.div variants={slideTextVariants} className="hero-badge">
+                      <motion.div variants={slideTextVariants} className="hero-badge mt-5 mb-3">
                         <Star className="badge-icon" /> {slide.badge}
                       </motion.div>
                       
@@ -179,7 +206,8 @@ const HeroSection = () => {
                     </motion.div>
                   </Col>
                   
-                  <Col lg={6} md={12} className={`mt-0 mt-md-0 mt-lg-0 ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"}`}>
+                  <Col lg={6} md={12} className={`mt-0 mt-md-0 mt-lg-0 d-none d-md-block
+                    ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"}`}>
                     <motion.div 
                       key={`image-${activeIndex}`}
                       className="hero-image-container"

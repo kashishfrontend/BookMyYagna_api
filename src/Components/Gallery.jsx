@@ -3,6 +3,17 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaSearchPlus, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.jpg' ;
+import GaneshChaturthiCelebration  from '../assets/img/Ganesh-Chaturthi-Celebration.jpg';
+import SacredWeddingRituals  from '../assets/img/Sacred-Wedding-Rituals.jpg';
+// import DiwaliLampCeremony from '../assets/img/Diwali-Lamp-Ceremony.jpg';
+import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.jpg';
+import MorningPrayerRitual  from '../assets/img/Morning-Prayer-Ritual.jpg'
+import DivineAartiCeremony  from '../assets/img/Divine-Aarti-Ceremony.jpg'
+import VibrantHoliFestival  from '../assets/img/Vibrant-Holi-Festival.jpg'
+import SacredTempleRituals  from '../assets/img/Sacred-Temple-Rituals.jpg'
+import TraditionalWeddingDecorations  from '../assets/img/Traditional-Wedding-Decorations.jpg'
+import Ganeshestival from '../assets/img/Ganesh-Festival.jpg'
 
 const Gallery = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -14,70 +25,69 @@ const Gallery = () => {
             duration: 1000,
             once: false,
             mirror: true
-        });
-    }, []);
+        });    }, []);
 
     // Gallery images with categories
     const galleryImages = [
         {
             id: 1,
-            src: "https://img.freepik.com/free-photo/indian-hindu-wedding-ceremony_93675-132464.jpg",
+            src: TraditionalHinduWedding,
             alt: "Hindu Wedding Ceremony",
             category: "ceremonies",
             title: "Traditional Hindu Wedding"
         },
         {
             id: 2,
-            src: "https://img.freepik.com/free-photo/traditional-indian-wedding-ceremony_8353-9765.jpg",
+            src: GaneshChaturthiCelebration,
             alt: "Ganesh Pooja",
             category: "pooja",
             title: "Ganesh Chaturthi Celebration"
         },
         {
             id: 3,
-            src: "https://img.freepik.com/free-photo/indian-wedding-ritual-with-coconut_8353-9769.jpg",
+            src:SacredWeddingRituals,
             alt: "Wedding Ritual",
             category: "ceremonies",
             title: "Sacred Wedding Rituals"
         },
         {
             id: 4,
-            src: "https://img.freepik.com/free-photo/oil-lamp-with-diwali-festival_1340-33551.jpg",
+            src: DiwaliLampCeremony,
             alt: "Diwali Celebration",
             category: "festivals",
             title: "Diwali Lamp Ceremony"
         },
         {
             id: 5,
-            src: "https://img.freepik.com/free-photo/young-indian-man-traditional-wear-praying_23-2149413863.jpg",
+            src: MorningPrayerRitual,
             alt: "Prayer Ceremony",
             category: "pooja",
             title: "Morning Prayer Ritual"
         },
         {
             id: 6,
-            src: "https://img.freepik.com/free-photo/young-indian-man-traditional-wear-praying_23-2149413863.jpg",
+            src: DivineAartiCeremony,
             alt: "Aarti Ceremony",
             category: "pooja",
             title: "Divine Aarti Ceremony"
         },
         {
             id: 7,
-            src: "https://img.freepik.com/free-photo/colored-powder-holi-festival_23-2148170311.jpg",
+            src:VibrantHoliFestival,
             alt: "Holi Celebration",
             category: "festivals",
             title: "Vibrant Holi Festival"
         },
         {
             id: 8,
-            src: "https://img.freepik.com/free-photo/priest-performing-ceremony-temple_1157-33500.jpg",
+            src: SacredTempleRituals,
             alt: "Temple Ceremony",
             category: "ceremonies",
             title: "Sacred Temple Rituals"
         },
         {
             id: 9,
-            src: "https://img.freepik.com/free-photo/indian-wedding-arrangement_8353-851.jpg",
+            src: TraditionalWeddingDecorations,
             alt: "Wedding Decoration",
             category: "decorations",
             title: "Traditional Wedding Decorations"
@@ -91,7 +101,7 @@ const Gallery = () => {
         },
         {
             id: 11,
-            src: "https://img.freepik.com/free-photo/ganesh-chaturthi-festival-celebration-concept_93675-84353.jpg",
+            src: Ganeshestival,
             alt: "Ganesh Festival",
             category: "festivals",
             title: "Ganesh Chaturthi Festival"
@@ -105,7 +115,7 @@ const Gallery = () => {
         }
     ];
 
-    // Filter images based on selected category
+    // Filter images based on selected category6
     const filteredImages = filterCategory === 'all'
         ? galleryImages
         : galleryImages.filter(img => img.category === filterCategory);
@@ -163,32 +173,35 @@ const Gallery = () => {
 
                 <div className="gallery-filter" data-aos="fade-up">
                     <button
-                        className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                       className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+
                         onClick={() => setFilterCategory('all')}
                     >
                         All
                     </button>
                     <button
-                        className={`filter-btn ${filterCategory === 'pooja' ? 'active' : ''}`}
+                        className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
                         onClick={() => setFilterCategory('pooja')}
                     >
                         Poojas
                     </button>
                     <button
-                        className={`filter-btn ${filterCategory === 'ceremonies' ? 'active' : ''}`}
+                        className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+
                         onClick={() => setFilterCategory('ceremonies')}
                     >
                         Ceremonies
                     </button>
                     <button
-                        className={`filter-btn ${filterCategory === 'festivals' ? 'active' : ''}`}
+                       className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+
                         onClick={() => setFilterCategory('festivals')}
                     >
                         Festivals
                     </button>
                     <button
-                        className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}`}
-                        onClick={() => setFilterCategory('decorations')}
+                        className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}}
+                        onClick={() => setFilterCategory('decorations')`}
                     >
                         Decorations
                     </button>

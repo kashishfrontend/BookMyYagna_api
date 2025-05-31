@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+
 .dashbord {
   background: linear-gradient(15deg, #ff8c00, #b22222, #fdd835);
 }
@@ -7,7 +8,7 @@
 /* Navbar.css */
 
 .custom-navbar {
-  background: linear-gradient(15deg, #ff8c00, #b22222, #fdd835);
+ background: rgba(255, 255, 255, 0.2);
   padding: 15px 0;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -16,8 +17,11 @@
 
 .custom-navbar.scrolled {
   padding: 10px 0;
-  background-color: rgba(255, 103, 0, 0.98);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 109, 0, 0.3); /* same as your logo, but semi-transparent */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand-text {
@@ -33,7 +37,7 @@
 }
 
 .nav-link {
-  color: #fff !important;
+  /* background-color: rgba(199, 189, 189, 0.6) !important; */
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin: 0 8px;
@@ -41,6 +45,7 @@
   border-radius: 4px;
   transition: all 0.3s ease;
   display: flex;
+  border:  0.2px solid  rgba(0, 0, 0, 0.5) !important;
   align-items: center;
 }
 
@@ -130,15 +135,29 @@
     padding: 15px 0 !important;
 
   }
+  .padding-class{
+    padding: 0px 20px  !important;
+  }
 }
+
 
 
 /* EnhancedHeroSection.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
 .enhanced-hero-section {
   position: relative;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   overflow: hidden;
   height: 98vh !important;
 }
@@ -242,7 +261,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
   z-index: 1;
 }
 
@@ -385,8 +404,8 @@
 }
 
 .feature-icon-wrapper {
-  width: 22px;
-  height: 22px;
+  width: 45px;
+  height: 45px;
   margin-right: 8px;
   display: flex;
   align-items: center;
@@ -397,7 +416,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  /* filter: brightness(0) invert(1); */
 }
 
 .hero-image-container {
@@ -3460,7 +3479,6 @@
   background: #cccccc;
   cursor: not-allowed;
 }
-
 .book-now-btn::before {
   content: '';
   position: absolute;

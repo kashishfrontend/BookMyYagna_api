@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 import 'aos/dist/aos.css';
+// import '../../assets/css/ListOfCSS.css';
 import '../../assets/css/ListOfCSS.css';
 import MainNavbar from '../../Components/MainNavbar';
 import Footer from '../../Components/Footer';
