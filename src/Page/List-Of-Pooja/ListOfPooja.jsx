@@ -122,7 +122,7 @@ const PoojaSlider = () => {
 
   return (
     <>
-      <section className="pooja-slider-section">
+      <section className="pooja-slider-section mb-5">
         <div className="container">
           <div className="row">
             <div className="col-12">

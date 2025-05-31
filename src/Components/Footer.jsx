@@ -9,14 +9,15 @@ const Footer = () => {
       <div className="footer-top">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info">
+            <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info " style={{padding:"10px 50px"}}>
+              
               <div className="footer-logo d-flex align-content-center justify-content-center">
                 <FaOm className="om-icon" />
                 <h3>BookmyYagna
                 </h3>
               </div>
               <p>Connecting devotees with authentic Hindu rituals and spiritual experiences. Book your pooja services online and experience the divine blessings.</p>
-              <div className="social-links">
+              <div className="social-links ">
                 <a href="#" className="social-icon"><FaFacebookF /></a>
                 <a href="#" className="social-icon"><FaTwitter /></a>
                 <a href="#" className="social-icon"><FaInstagram /></a>

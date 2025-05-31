@@ -164,6 +164,16 @@ strong {
   margin-bottom: 20px;
 }
 
+/* =============key animation=================== */
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* adjust zoom level */
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .panchang-details {
@@ -226,5 +236,6 @@ strong {
 
   .panchang-calendar-section {
     padding: 0 15px;
+    margin-top: 20% !important;
   }
 }

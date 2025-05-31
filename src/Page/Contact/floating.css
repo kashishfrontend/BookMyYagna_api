@@ -1,39 +1,58 @@
-/* Glowing Button Effect */
-.floating-glow {
+.phone-wave {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  z-index: 1050;
-  border-radius: 50px;
-  padding: 10px 16px;
-  background-color: #28a745; /* Green button color */
+  bottom: 20px;
+  right: 20px;
+  background-color: #FF5722;
   color: white;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  animation: glowEffect 2s infinite ease-in-out; /* Continuous glow animation */
+  border-radius: 50%;
+  overflow: visible;
+  animation: glowPulse 2s infinite ease-in-out;
 }
 
-/* Glowing Effect Animation */
-@keyframes glowEffect {
-  0% {
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 255, 0, 1);
-  }
+.phone-wave:hover {
+  transform: scale(1.05);
+}
+
+/* Glowing ring animation */
+@keyframes glowPulse {
+
+  0%,
   100% {
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 10px  #FF5722;
+  }
+
+  50% {
+    box-shadow: 0 0 20px #FF5722;
   }
 }
 
-/* Optional: Glowing Effect on Hover (stronger glow) */
-.floating-glow:hover {
-  box-shadow: 0 0 30px rgba(0, 255, 0, 1);
-  transform: scale(1.05); /* Slightly increase the size on hover */
+/* Wave ripple animation */
+.wave-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #FF5722;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  animation: waveRipple 1s infinite ease-out;
+  z-index: 1;
 }
 
-/* Static Phone Icon (no movement or rotation) */
-.floating-glow > svg {
-  display: inline-block;
-  font-size: 1.5rem; /* Adjust size of the phone icon */
+.wave-circle.delay-1 {
+  animation-delay: 1s;
+}
+
+/* Keyframe for expanding waves */
+@keyframes waveRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }

@@ -209,8 +209,7 @@ const Dashboard = () => {
         return renderProfileContent();
       case "bookings":
         return renderMyBookingDetals();
-      case "temples":
-        return randerTempleContent();
+      
       default:
         return (
           <div className="content-placeholder">
@@ -285,33 +284,9 @@ const Dashboard = () => {
             <FaCalendarAlt size={20} />
             <span>My Bookings</span>
           </div>
-          <div
-            className={`menu-item ${
-              activeNavItem === "priests" ? "active" : ""
-            }`}
-            onClick={() => handleNavItemClick("priests")}
-          >
-            <FaUsers size={20} />
-            <span>Priests</span>
-          </div>
-          <div
-            className={`menu-item ${
-              activeNavItem === "temples" ? "active" : ""
-            }`}
-            onClick={() => handleNavItemClick("temples")}
-          >
-            {/* <FaTempleHindu size={20} /> */}
-            <span>Temples</span>
-          </div>
-          <div
-            className={`menu-item ${
-              activeNavItem === "payments" ? "active" : ""
-            }`}
-            onClick={() => handleNavItemClick("payments")}
-          >
-            <MdPayment size={22} />
-            <span>Payments</span>
-          </div>
+        
+          
+         
           <div
             className={`menu-item ${
               activeNavItem === "profile" ? "active" : ""
@@ -321,15 +296,7 @@ const Dashboard = () => {
             <FaUserCircle size={20} />
             <span>My Profile</span>
           </div>
-          <div
-            className={`menu-item ${
-              activeNavItem === "settings" ? "active" : ""
-            }`}
-            onClick={() => handleNavItemClick("settings")}
-          >
-            <MdSettings size={22} />
-            <span>Settings</span>
-          </div>
+         
           <div className="menu-item logout" onClick={() => handleLogout()}>
             <MdLogout size={22} />
             <span>Logout</span>
@@ -372,33 +339,7 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>My Bookings</span>
             </div>
-            <div
-              className={`menu-item ${
-                activeNavItem === "priests" ? "active" : ""
-              }`}
-              onClick={() => handleNavItemClick("priests")}
-            >
-              <FaUsers size={20} />
-              <span>Priests</span>
-            </div>
-            <div
-              className={`menu-item ${
-                activeNavItem === "temples" ? "active" : ""
-              }`}
-              onClick={() => handleNavItemClick("temples")}
-            >
-              {/* <FaTempleHindu size={20} /> */}
-              <span>Temples</span>
-            </div>
-            <div
-              className={`menu-item ${
-                activeNavItem === "payments" ? "active" : ""
-              }`}
-              onClick={() => handleNavItemClick("payments")}
-            >
-              <MdPayment size={22} />
-              <span>Payments</span>
-            </div>
+       
             <div
               className={`menu-item ${
                 activeNavItem === "profile" ? "active" : ""
@@ -408,15 +349,7 @@ const Dashboard = () => {
               <FaUserCircle size={20} />
               <span>My Profile</span>
             </div>
-            <div
-              className={`menu-item ${
-                activeNavItem === "settings" ? "active" : ""
-              }`}
-              onClick={() => handleNavItemClick("settings")}
-            >
-              <MdSettings size={22} />
-              <span>Settings</span>
-            </div>
+           
             <div className="menu-item logout" onClick={() => handleLogout()}>
               <MdLogout size={22} />
               <span>Logout</span>
@@ -601,88 +534,7 @@ const Dashboard = () => {
       </>
     );
   }
-  function randerTempleContent() {
-    return (
-      <>
-        <div className="container py-5">
-          {/* Heading */}
-          <h2
-            className="text-center mb-4"
-            style={{
-              background:
-                "linear-gradient(to right, transparent, #FF8C00, transparent)",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-              fontWeight: "bold",
-              fontSize: "2rem",
-            }}
-          >
-            🎥 Video Library
-          </h2>
-
-          {/* Video Grid */}
-          <div className="row">
-            {importedVideos.map((video, index) => (
-              <div className="col-md-4 mb-4" key={index}>
-                <div
-                  className="card shadow"
-                  ref={(el) => (fullscreenRefs.current[index] = el)}
-                  style={{
-                    border: "2px solid #FF8C00",
-                    borderRadius: "10px",
-                    position: "relative",
-                  }}
-                >
-                  {/* Exit Fullscreen Button */}
-                  <button
-                    onClick={exitFullScreen}
-                    className="btn btn-danger position-absolute top-0 end-0 m-2"
-                    style={{ zIndex: 1000, borderRadius: "50%" }}
-                  >
-                    ✖
-                  </button>
-
-                  {/* Video Thumbnail */}
-                  <video
-                    src={video.url}
-                    controls
-                    className="card-img-top rounded"
-                    style={{ maxHeight: "90%", objectFit: "cover" }}
-                  />
-
-                  {/* Actions */}
-                  <div className="card-body d-flex justify-content-between flex-wrap gap-2">
-                    <button
-                      className="btn btn-warning text-white"
-                      onClick={() => enterFullScreen(index)}
-                    >
-                      🔎 Fullscreen
-                    </button>
-
-                    <a
-                      href={video.url}
-                      download={video.name}
-                      className="btn btn-success"
-                    >
-                      ⬇️ Download
-                    </a>
-                  </div>
-                  <div className=" d-flex justify-content-between p-3">
-                    <p>
-                      <b> Video Name: </b>
-                    </p>
-                    <p>
-                      <b> Date : 10:10:2025 </b>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </>
-    );
-  }
+ 
 
   // Dashboard content render function
   function renderDashboardContent() {

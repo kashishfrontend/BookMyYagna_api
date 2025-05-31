@@ -1,0 +1,19 @@
+.about-us-section{
+    margin-top: 10%;
+}/* Mobile Phones (up to 576px) */
+@media (max-width: 576px) {
+.about-us-section{
+    margin-top: 30%;
+  }
+}
+
+/* Tablets (between 577px and 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  
+}
+
+/* Larger tablets and desktops (768px+) */
+@media (width: 769px) {
+  
+}
+

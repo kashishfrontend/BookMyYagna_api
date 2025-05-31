@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"
 
 import MainNavbar from "./MainNavbar";
 import HeroSection from "./HeroSection";
@@ -15,9 +15,12 @@ import { Link } from "react-router-dom";
 // import DivineJournal from '../Page/DivineJournal'
 
 function HomePage() {
+    const [isHeroVisible, setIsHeroVisible] = useState(true);
+
   return (
     <div>
-      <HeroSection />
+      <MainNavbar isHeroVisible={isHeroVisible} />
+      <HeroSection   onHeroVisibleChange={setIsHeroVisible}/>
       <AdBanner />
       <Services />
       <WhyYagna />
