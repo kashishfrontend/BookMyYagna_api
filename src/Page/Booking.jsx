@@ -14,6 +14,8 @@ import Footer from "../Components/Footer";
 import gf from "../assets/img/pandit-1.jpeg";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const Booking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -150,7 +152,84 @@ const Booking = () => {
     fetchUserProfile();
   }, []);
 
-  
+
+const handleOrderedSubmit = async (e) => {
+  e.preventDefault();
+
+  if ( !type || !specialRequirements || !phone || !name) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  const bookingData = {
+    poojaId: poojaId,
+    planId: selectedPlanId,
+    name: name,
+    phoneNumber: phone,
+    address: specialRequirements,
+    amount: selectedPlan?.amount || 0,
+    poojaMode: type,
+    dateOfDelivery: selectedDate?.toISOString().split("T")[0], 
+  };
+
+  try {
+    const response = await axios.post(
+    "https://bookmyyogna.onrender.com/bookings/createBooking",
+  bookingData,
+  {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true, 
+  }
+);
+
+if (response.data.success) {
+  console.log("Booking successful:", response.data);
+  setIsSuccess(true);
+
+  setTimeout(() => {
+    setIsSuccess(false);
+    setSelectedDate(null);
+    setSelectedPuja(null);
+    setNumberOfPeople(5);
+    setAddress("");
+    setPhone("");
+    setEmail("");
+    setSpecialRequirements("");
+    setType("");
+  }, 3000);
+} else {
+  alert("Booking failed. Please try again.");
+}
+
+
+    if (!response.ok) {
+      throw new Error("Booking failed!");
+    }
+
+    const result = await response.json();
+    console.log("Booking successful:", result);
+
+    setIsSuccess(true);
+
+    // Clear form after success
+    setTimeout(() => {
+      setIsSuccess(false);
+      setSelectedDate(null);
+      setSelectedPuja(null);
+      setNumberOfPeople(5);
+      setAddress("");
+      setPhone("");
+      setEmail("");
+      setSpecialRequirements("");
+      setType("");
+    }, 3000);
+  } catch (error) {
+    console.error("Error while booking:", error.message);
+    alert("Booking failed. Please try again.");
+  }
+}; 
   return (
     <>
       <div className="booking-section mt-5">
@@ -280,7 +359,7 @@ const Booking = () => {
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleOrderedSubmit}>
                   <div className="form-row">
                     <div className="form-group">
                       <label>Your Name:</label>
@@ -299,8 +378,8 @@ const Booking = () => {
                       <label>Your Email:</label>
                       <input
                         type="email"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email name"
                         required
                       />
@@ -317,18 +396,8 @@ const Booking = () => {
                       />
                     </div>
                   </div>
-
-                  {/* <div className="form-group">
-                    <label>Email Address:</label>
-                    <input
-                      type="email"
-                      value={user.email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address"
-                      required
-                    />
-                  </div> */}
-                  <div className="form-group">
+                  <div className="form-row">
+                    <div className="form-group col-6">
                     <label>Select Type:</label>
                     <select
                       value={type}
@@ -339,6 +408,21 @@ const Booking = () => {
                       <option value="online">Online</option>
                       <option value="offline">Offline</option>
                     </select>
+                  </div>
+
+  <div className="form-group col-6" >
+    <label>Select Date of Puja:</label>
+    <DatePicker
+    style={{width:'275px'}}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
+      dateFormat="yyyy-MM-dd"
+      minDate={new Date()}
+      placeholderText="Select a date"
+      className="form-control col-6"
+      required
+    />
+  </div>
                   </div>
 
                   <div className="form-group">
@@ -355,7 +439,6 @@ const Booking = () => {
                     className="book-now-btn"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    disabled={!selectedPuja || !selectedDate || isSubmitting}
                   >
                     {isSubmitting ? (
                       <span className="loader"></span>
