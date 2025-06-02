@@ -638,8 +638,8 @@ body {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content:center  ;
+    align-items: flex-end;
 }
 
 .footer-content p {
@@ -895,4 +895,29 @@ body {
 .profile-card .nav-pills .nav-link:hover {
   background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
   color: white;
+}
+/* =============booked pooja css=========== */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+}
+
+.custom-table th {
+  background-color: #FF9955;
+  color: white;
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.custom-table td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }

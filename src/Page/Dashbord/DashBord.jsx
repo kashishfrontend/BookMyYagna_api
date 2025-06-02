@@ -37,7 +37,47 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
+
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [completedPuja, setCompletePuja] = useState([]);
+
+
+
+  const [bookedPuja, setBookedPuja] = useState([]);
+  useEffect(() => {
+    const allBookingData = async () => {
+      try {
+        const response = await axios.post("/bookings/getAllBookingForUser", {
+          startDate: '',
+          endDate: '',
+          status: ''
+        });
+
+        if (response.data.success) {
+          const allBookings = response.data.data;
+
+          // Filter based on status from each item
+          const pendingOrActive = allBookings.filter(booking =>
+            ['bookingPending', 'bookingConfirmed', 'bookingCancelled'].includes(booking.status)
+          );
+
+          const completed = allBookings.filter(booking =>
+            booking.status === 'completed'
+          );
+
+          setBookedPuja(pendingOrActive);
+          setCompletePuja(completed);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    allBookingData();
+  }, []);
+
+
+
   const navigate = useNavigate();
   // User profile data
   const [userData, setUserData] = useState({
@@ -106,60 +146,60 @@ const Dashboard = () => {
   };
 
   // Mock data for the dashboard
-  const upcomingBookings = [
-    {
-      id: 1,
-      pooja: "Satyanarayan Katha",
-      date: "30 April 2025",
-      priest: "Pandit Ramesh Sharma",
-      status: "Confirmed",
-    },
-    {
-      id: 2,
-      pooja: "Griha Pravesh",
-      date: "5 May 2025",
-      priest: "Pandit Suresh Joshi",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      pooja: "Ganesh Pooja",
-      date: "12 May 2025",
-      priest: "Pandit Krishna Gupta",
-      status: "Confirmed",
-    },
-  ];
+  // const upcomingBookings = [
+  //   {
+  //     id: 1,
+  //     pooja: "Satyanarayan Katha",
+  //     date: "30 April 2025",
+  //     priest: "Pandit Ramesh Sharma",
+  //     status: "Confirmed",
+  //   },
+  //   {
+  //     id: 2,
+  //     pooja: "Griha Pravesh",
+  //     date: "5 May 2025",
+  //     priest: "Pandit Suresh Joshi",
+  //     status: "Pending",
+  //   },
+  //   {
+  //     id: 3,
+  //     pooja: "Ganesh Pooja",
+  //     date: "12 May 2025",
+  //     priest: "Pandit Krishna Gupta",
+  //     status: "Confirmed",
+  //   },
+  // ];
 
-  const popularPoojas = [
-    {
-      id: 1,
-      name: "Satyanarayan Katha",
-      duration: "3 hours",
-      price: "₹5,100",
-      image: "/images/satyanarayan.jpg",
-    },
-    {
-      id: 2,
-      name: "Griha Pravesh",
-      duration: "4 hours",
-      price: "₹7,500",
-      image: "/images/grihapravesh.jpg",
-    },
-    {
-      id: 3,
-      name: "Ganesh Pooja",
-      duration: "2 hours",
-      price: "₹3,100",
-      image: "/images/ganesh.jpg",
-    },
-    {
-      id: 4,
-      name: "Diwali Lakshmi Pooja",
-      duration: "2.5 hours",
-      price: "₹4,500",
-      image: "/images/lakshmi.jpg",
-    },
-  ];
+  // const popularPoojas = [
+  //   {
+  //     id: 1,
+  //     name: "Satyanarayan Katha",
+  //     duration: "3 hours",
+  //     price: "₹5,100",
+  //     image: "/images/satyanarayan.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Griha Pravesh",
+  //     duration: "4 hours",
+  //     price: "₹7,500",
+  //     image: "/images/grihapravesh.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Ganesh Pooja",
+  //     duration: "2 hours",
+  //     price: "₹3,100",
+  //     image: "/images/ganesh.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Diwali Lakshmi Pooja",
+  //     duration: "2.5 hours",
+  //     price: "₹4,500",
+  //     image: "/images/lakshmi.jpg",
+  //   },
+  // ];
 
   const importedVideos = [
     {
@@ -177,28 +217,8 @@ const Dashboard = () => {
     // ➕ Add more as needed
   ];
 
-  const fullscreenRefs = useRef([]);
 
-  const enterFullScreen = (index) => {
-    const element = fullscreenRefs.current[index];
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  };
 
-  const exitFullScreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  };
 
   // Render content based on active nav item
   const renderContent = () => {
@@ -209,7 +229,9 @@ const Dashboard = () => {
         return renderProfileContent();
       case "bookings":
         return renderMyBookingDetals();
-      
+
+      case "book":
+        return renderMyBookedDetals();
       default:
         return (
           <div className="content-placeholder">
@@ -260,9 +282,8 @@ const Dashboard = () => {
           className={`sidebar d-block d-md-none ${showSidebar ? "active" : ""}`}
         >
           <div
-            className={`menu-item ${
-              activeNavItem === "dashboard" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("dashboard")}
           >
             <MdDashboard size={22} />
@@ -276,27 +297,25 @@ const Dashboard = () => {
             <span>Book Pooja</span>
           </div>
           <div
-            className={`menu-item ${
-              activeNavItem === "bookings" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("bookings")}
           >
             <FaCalendarAlt size={20} />
-            <span>My Bookings</span>
+            <span>Completed Pooja</span>
           </div>
-        
-          
-         
+
+
+
           <div
-            className={`menu-item ${
-              activeNavItem === "profile" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "profile" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("profile")}
           >
             <FaUserCircle size={20} />
             <span>My Profile</span>
           </div>
-         
+
           <div className="menu-item logout" onClick={() => handleLogout()}>
             <MdLogout size={22} />
             <span>Logout</span>
@@ -313,43 +332,39 @@ const Dashboard = () => {
           </div>
           <div className="sidebar-menu">
             <div
-              className={`menu-item ${
-                activeNavItem === "dashboard" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("dashboard")}
             >
               <MdDashboard size={22} />
               <span>Dashboard</span>
             </div>
             <div
-              className={`menu-item ${
-                activeNavItem === "book" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "book" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("book")}
             >
               <FaPrayingHands size={20} />
-              <span>Book Pooja</span>
+              <span>Booked Pooja</span>
             </div>
             <div
-              className={`menu-item ${
-                activeNavItem === "bookings" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("bookings")}
             >
               <FaCalendarAlt size={20} />
-              <span>My Bookings</span>
+              <span>Completed Pooja</span>
             </div>
-       
+
             <div
-              className={`menu-item ${
-                activeNavItem === "profile" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "profile" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("profile")}
             >
               <FaUserCircle size={20} />
               <span>My Profile</span>
             </div>
-           
+
             <div className="menu-item logout" onClick={() => handleLogout()}>
               <MdLogout size={22} />
               <span>Logout</span>
@@ -496,45 +511,77 @@ const Dashboard = () => {
           </Modal>
         </div>
       </div>
-      <footer className="dashboard-footer">
-        <div className="footer-content">
-          <p>&copy; 2025 BookmyYagna . All rights reserved.</p>
-          <div className="footer-links">
+      <footer className="dashboard-footer position-fixed bottom-0 w-100">
+        <div className="footer-content text-center">
+          <p className="mb-1">&copy; 2025 BookmyYagna. All rights reserved.</p>
+          <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
             <a href="#contact">Contact Us</a>
           </div>
         </div>
       </footer>
+
     </>
   );
 
   function renderMyBookingDetals() {
     return (
       <>
+
         <div className="container py-5">
           <div className="row">
-            <div className="col-md-6">
-              <select name="" id="">
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-              </select>
+            <div className="text-center fs-1">
+              <h2>Completed Pooja</h2>
             </div>
+            <table className="custom-table table-responsive">
+              <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Plan Name</th>
+                  <th>Amount</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Pooja Mod</th>
+                  <th>Date of Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedPuja?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.userId.fullName}</td>
+                    <td>{data.planId.heading}</td>
+                    <td>{data.planId.amount}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.address}</td>
+                    <td>{data.status}</td>
+                    <td>{data.poojaMode}</td>
+                    <td>
+                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </td>
+
+
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
           </div>
+
         </div>
       </>
     );
   }
- 
+
 
   // Dashboard content render function
   function renderDashboardContent() {
@@ -560,7 +607,7 @@ const Dashboard = () => {
           {/* Stats Cards */}
           <Row className="stats-row">
             <Col
-              lg={3}
+              lg={4}
               md={6}
               className="stats-col col-6"
               data-aos="zoom-in"
@@ -573,13 +620,13 @@ const Dashboard = () => {
                   </div>
                   <div className="stats-info">
                     <h5>Upcoming Poojas</h5>
-                    <h2>03</h2>
+                    <h2>{bookedPuja.length}</h2>
                   </div>
                 </Card.Body>
               </Card>
             </Col>
             <Col
-              lg={3}
+              lg={4}
               md={6}
               className="stats-col col-6"
               data-aos="zoom-in"
@@ -592,31 +639,14 @@ const Dashboard = () => {
                   </div>
                   <div className="stats-info">
                     <h5>Completed Poojas</h5>
-                    <h2>12</h2>
+                    <h2>{completedPuja.length}</h2>
                   </div>
                 </Card.Body>
               </Card>
             </Col>
+
             <Col
-              lg={3}
-              md={6}
-              sm={6}
-              className="stats-col col-6"
-              data-aos="zoom-in"
-              data-aos-delay="300"
-            >
-              <Card className="stats-card">
-                <Card.Body>
-                  <div className="stats-icon">{/* <FaTempleHindu /> */}</div>
-                  <div className="stats-info">
-                    <h5>Sacred Points</h5>
-                    <h2>108</h2>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col
-              lg={3}
+              lg={4}
               md={6}
               sm={6}
               className="stats-col col-6"
@@ -639,228 +669,56 @@ const Dashboard = () => {
 
           {/* Upcoming Bookings */}
           <Row className="mt-4">
-            <Col lg={7} data-aos="fade-up">
-              <Card className="booking-card">
-                <Card.Header className="booking-header">
-                  <h3>Upcoming Pooja Bookings</h3>
-                  <Button variant="link" className="view-all-btn">
-                    View All
-                  </Button>
-                </Card.Header>
-                <Card.Body className="p-0">
-                  <div className="booking-list">
-                    {upcomingBookings.map((booking) => (
-                      <div
-                        key={booking.id}
-                        className="booking-item"
-                        data-aos="fade-up"
-                        data-aos-delay={booking.id * 100}
-                      >
-                        <div className="booking-icon">
-                          <FaPrayingHands />
-                        </div>
-                        <div className="booking-details">
-                          <h4>{booking.pooja}</h4>
-                          <p>
-                            <FaCalendarAlt /> {booking.date}
-                          </p>
-                          <p className="priest-name">
-                            <FaUsers /> {booking.priest}
-                          </p>
-                        </div>
-                        <div className="booking-status">
-                          <span
-                            className={`status ${booking.status.toLowerCase()}`}
-                          >
-                            {booking.status}
-                          </span>
-                          <Button
-                            variant="outline-primary"
-                            className="details-btn"
-                          >
-                            Details
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
+            <div className="container py-5">
+              <div className="row">
+                <div className="text-center fs-1">
+                  <h2>Booked Pooja</h2>
+                </div>
+                <table class="custom-table table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Account Name</th>
+                      <th>Plan Name</th>
+                      <th>Amount</th>
+                      <th>Phone Number</th>
+                      <th>Address</th>
+                      <th>Status</th>
+                      <th>Pooja Mod</th>
+                      <th>Date of Pooja</th>
+                    </tr>
+                  </thead>
+                  {completedPuja?.map((data, index) => (
+                    <tr key={index}>
+                      <td>{data.userId.fullName}</td>
+                      <td>{data.planId.heading}</td>
+                      <td>{data.planId.amount}</td>
+                      <td>{data.phoneNumber}</td>
+                      <td>{data.address}</td>
+                      <td>{data.status}</td>
+                      <td>{data.poojaMode}</td>
+                      <td>
+                        {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true
+                        })}
+                      </td>
+
+                    </tr>
+                  ))}
+                </table>
+
+              </div>
+
+            </div>
 
             {/* Calendar Card */}
-            <Col lg={5} data-aos="fade-up" data-aos-delay="200">
-              <Card className="calendar-card">
-                <Card.Header className="calendar-header">
-                  <h3>Auspicious Dates</h3>
-                  <Button variant="link" className="view-all-btn">
-                    Full Calendar
-                  </Button>
-                </Card.Header>
-                <Card.Body>
-                  <div className="auspicious-dates">
-                    <div className="date-item">
-                      <div className="date-circle">
-                        <span className="date-number">30</span>
-                        <span className="date-month">APR</span>
-                      </div>
-                      <div className="date-info">
-                        <h5>Akshaya Tritiya</h5>
-                        <p>Highly auspicious for new beginnings</p>
-                      </div>
-                    </div>
-                    <div className="date-item">
-                      <div className="date-circle">
-                        <span className="date-number">10</span>
-                        <span className="date-month">MAY</span>
-                      </div>
-                      <div className="date-info">
-                        <h5>Buddha Purnima</h5>
-                        <p>Full moon day - excellent for meditation</p>
-                      </div>
-                    </div>
-                    <div className="date-item">
-                      <div className="date-circle">
-                        <span className="date-number">21</span>
-                        <span className="date-month">MAY</span>
-                      </div>
-                      <div className="date-info">
-                        <h5>Ganga Dussehra</h5>
-                        <p>Sacred for water rituals and cleansing</p>
-                      </div>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
           </Row>
-
-          {/* Popular Poojas */}
-          <Row className="mt-4">
-            <Col xs={12} data-aos="fade-up">
-              <h3 className="section-title1">Popular Poojas</h3>
-            </Col>
-            {popularPoojas.map((pooja, index) => (
-              <Col
-                lg={3}
-                md={6}
-                sm={6}
-                key={pooja.id}
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
-                <Card className="pooja-card">
-                  <div className="pooja-img-container">
-                    <div
-                      className="pooja-img-placeholder"
-                      style={{ backgroundImage: `url('${pooja.image}')` }}
-                    ></div>
-                  </div>
-                  <Card.Body>
-                    <Card.Title>{pooja.name}</Card.Title>
-                    <div className="pooja-details">
-                      <span>
-                        <i className="far fa-clock"></i> {pooja.duration}
-                      </span>
-                      <span className="pooja-price">{pooja.price}</span>
-                    </div>
-                    <Button variant="primary" className="book-now-btn">
-                      Book Now
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-
           {/* Testimonials */}
-          <Row className="mt-4">
-            <Col xs={12} data-aos="fade-up">
-              <h3 className="section-title1">Devotee Testimonials</h3>
-            </Col>
-            <Col lg={4} md={6} sm={6} data-aos="fade-up" data-aos-delay="100">
-              <Card className="testimonial-card">
-                <Card.Body>
-                  <div className="quote-icon">
-                    <i className="fas fa-quote-left"></i>
-                  </div>
-                  <p className="testimonial-text">
-                    "The online pooja service was just like having it at home.
-                    The priest was very knowledgeable and guided us through the
-                    entire process with devotion."
-                  </p>
-                  <div className="testimonial-author">
-                    <img
-                      src="/images/testimonial1.jpg"
-                      alt="Author"
-                      className="testimonial-avatar"
-                    />
-                    <div className="author-info">
-                      <h5>Priya Mehta</h5>
-                      <p>Delhi</p>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col lg={4} md={6} sm={6} data-aos="fade-up" data-aos-delay="200">
-              <Card className="testimonial-card">
-                <Card.Body>
-                  <div className="quote-icon">
-                    <i className="fas fa-quote-left"></i>
-                  </div>
-                  <p className="testimonial-text">
-                    "We booked a Griha Pravesh pooja through this platform and
-                    it was a seamless experience. The priest arrived on time
-                    with all necessary items."
-                  </p>
-                  <div className="testimonial-author">
-                    <img
-                      src="/images/testimonial2.jpg"
-                      alt="Author"
-                      className="testimonial-avatar"
-                    />
-                    <div className="author-info">
-                      <h5>Aditya Singh</h5>
-                      <p>Mumbai</p>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col
-              lg={4}
-              md={6}
-              sm={6}
-              className="mt-md-3 mt-0"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <Card className="testimonial-card">
-                <Card.Body>
-                  <div className="quote-icon">
-                    <i className="fas fa-quote-left"></i>
-                  </div>
-                  <p className="testimonial-text">
-                    "Booking a pooja for my parents living in another city was
-                    so convenient. The digital prasad delivery was an amazing
-                    touch to the service."
-                  </p>
-                  <div className="testimonial-author">
-                    <img
-                      src="/images/testimonial3.jpg"
-                      alt="Author"
-                      className="testimonial-avatar"
-                    />
-                    <div className="author-info">
-                      <h5>Shreya Patel</h5>
-                      <p>Bangalore</p>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
         </Container>
       </>
     );
@@ -1227,6 +1085,60 @@ const Dashboard = () => {
         </Row>
       </Container>
     );
+  }
+  function renderMyBookedDetals() {
+    return (
+      <>
+        <div className="container py-5">
+          <div className="row">
+            <div className="text-center fs-1">
+              <h2>Booked Pooja</h2>
+            </div>
+            <table class="custom-table table-responsive">
+              <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Plan Name</th>
+                  <th>Amount</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Pooja Mod</th>
+                  <th>Date of Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookedPuja?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.userId.fullName}</td>
+                    <td>{data.planId.heading}</td>
+                    <td>{data.planId.amount}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.address}</td>
+                    <td>{data.status}</td>
+                    <td>{data.poojaMode}</td>
+                    <td>
+                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </td>
+
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </>
+    )
   }
 };
 
