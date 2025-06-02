@@ -638,8 +638,8 @@ body {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content:center  ;
+    align-items: flex-end;
 }
 
 .footer-content p {
