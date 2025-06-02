@@ -128,7 +128,7 @@ const HeroSection = ({onHeroVisibleChange }) => {
   return (
     <div ref={heroRef} className="enhanced-hero-section">
       {/* Floating God Image */}
-      <motion.div 
+      {/* <motion.div 
         className="floating-god-container"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -142,7 +142,7 @@ const HeroSection = ({onHeroVisibleChange }) => {
           animate="animate"
         />
         <div className="god-glow"></div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Hero Carousel */}
       <Carousel 

@@ -225,8 +225,7 @@ const Dashboard = () => {
     switch (activeNavItem) {
       case "dashboard":
         return renderDashboardContent();
-      case "profile":
-        return renderProfileContent();
+      
       case "bookings":
         return renderMyBookingDetals();
 
@@ -356,14 +355,14 @@ const Dashboard = () => {
               <span>Completed Pooja</span>
             </div>
 
-            <div
+            {/* <div
               className={`menu-item ${activeNavItem === "profile" ? "active" : ""
                 }`}
               onClick={() => handleNavItemClick("profile")}
             >
               <FaUserCircle size={20} />
               <span>My Profile</span>
-            </div>
+            </div> */}
 
             <div className="menu-item logout" onClick={() => handleLogout()}>
               <MdLogout size={22} />
@@ -396,13 +395,9 @@ const Dashboard = () => {
                 className="user-profile"
                 onClick={() => setShowProfileModal(true)}
               >
-                <img
-                  src={userData.profileImage}
-                  alt="User"
-                  className="avatar"
-                />
+               
                 <span className="user-name d-none d-md-inline">
-                  {userData.name}
+                  {user?.fullName}
                 </span>
               </div>
             </div>
@@ -424,21 +419,10 @@ const Dashboard = () => {
             </Modal.Header>
             <Modal.Body>
               <Row>
-                <Col lg={4} className="text-center mb-4 mb-lg-0">
-                  <div className="profile-image-container">
-                    <img
-                      src={userData.profileImage}
-                      alt="Profile"
-                      className="profile-image"
-                    />
-                    <div className="image-edit-overlay">
-                      <MdEdit size={24} />
-                      <span>Change</span>
-                    </div>
-                  </div>
-                  <h4 className="mt-3">{userData.name}</h4>
-                  <p className="text-muted">Member since April 2025</p>
-                  <div className="profile-stats">
+                {/* <Col lg={4} className="text-center mb-4 mb-lg-0"> */}
+                  
+                  {/* <h4 className="mt-3">{user?.fullName}</h4> */}
+                  {/* <div className="profile-stats">
                     <div className="stat-item">
                       <h5>15</h5>
                       <p>Poojas</p>
@@ -451,8 +435,8 @@ const Dashboard = () => {
                       <h5>Gold</h5>
                       <p>Tier</p>
                     </div>
-                  </div>
-                </Col>
+                  </div> */}
+                {/* </Col> */}
                 <Col lg={8}>
                   <Form onSubmit={handleProfileSubmit}>
                     <Form.Group className="mb-3">
@@ -460,7 +444,7 @@ const Dashboard = () => {
                       <Form.Control
                         type="text"
                         name="name"
-                        value={userData.name}
+                        value={user?.fullName}
                         onChange={handleInputChange}
                       />
                     </Form.Group>
@@ -469,11 +453,11 @@ const Dashboard = () => {
                       <Form.Control
                         type="email"
                         name="email"
-                        value={userData.email}
+                        value={user?.email}
                         onChange={handleInputChange}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3 shadow-lg">
+                    {/* <Form.Group className="mb-3 shadow-lg">
                       <Form.Label>Phone Number</Form.Label>
                       <Form.Control
                         type="text"
@@ -491,7 +475,7 @@ const Dashboard = () => {
                         value={userData.address}
                         onChange={handleInputChange}
                       />
-                    </Form.Group>
+                    </Form.Group> */}
                     <div className="d-flex justify-content-end mt-4">
                       <Button
                         variant="secondary"
@@ -592,7 +576,7 @@ const Dashboard = () => {
             <Col>
               <h1 className="welcome-heading" data-aos="fade-right">
                 <span className="namaste">नमस्ते</span>,{" "}
-                {userData.name.split(" ")[0]}!
+                {user?.fullName.split(" ")[0]}!
               </h1>
               <p
                 className="welcome-subtext"
@@ -724,422 +708,368 @@ const Dashboard = () => {
     );
   }
 
-  // Profile content render function
-  function renderProfileContent() {
-    return (
-      <Container fluid className="dashboard-content">
-        <Row className="mb-4">
-          <Col>
-            <h2 className="section-heading" data-aos="fade-right">
-              My Profile
-            </h2>
-          </Col>
-        </Row>
+  // // Profile content render function
+  // function renderProfileContent() {
+  //   return (
+  //     <Container fluid className="dashboard-content">
+  //       <Row className="mb-4">
+  //         <Col>
+  //           <h2 className="section-heading" data-aos="fade-right">
+  //             My Profile
+  //           </h2>
+  //         </Col>
+  //       </Row>
 
-        <Row>
-          <Col lg={12} data-aos="fade-up">
-            <Card className="profile-card">
-              <Card.Body>
-                <Tab.Container defaultActiveKey="personal">
-                  <Row>
-                    <Col lg={3} md={4}>
-                      <div className="profile-sidebar">
-                        <div className="profile-image-wrap">
-                          <img
-                            src={userData.profileImage}
-                            alt="Profile"
-                            className="profile-avatar"
-                          />
-                          <div className="profile-avatar-edit">
-                            <MdEdit size={16} />
-                          </div>
-                        </div>
-                        <h4 className="profile-name">{userData.name}</h4>
-                        <p className="profile-email">{userData.email}</p>
-                        <div className="profile-badge">
-                          <span>Gold Member</span>
-                        </div>
+  //       <Row>
+  //         <Col lg={12} data-aos="fade-up">
+  //           <Card className="profile-card">
+  //             <Card.Body>
+  //               <Tab.Container defaultActiveKey="personal">
+  //                 <Row>
+  //                   <Col lg={3} md={4}>
+  //                     <div className="profile-sidebar">
+  //                       <div className="profile-image-wrap">
+  //                         <img
+  //                           src={userData.profileImage}
+  //                           alt="Profile"
+  //                           className="profile-avatar"
+  //                         />
+  //                         <div className="profile-avatar-edit">
+  //                           <MdEdit size={16} />
+  //                         </div>
+  //                       </div>
+  //                       <h4 className="profile-name">{user.fullName}</h4>
+  //                       <p className="profile-email">{userData.email}</p>
+  //                       <div className="profile-badge">
+  //                         <span>Gold Member</span>
+  //                       </div>
 
-                        <Nav
-                          variant="pills"
-                          className="profile-nav  flex-column mt-4"
-                        >
-                          <Nav.Item>
-                            <Nav.Link
-                              className="text-dark border"
-                              eventKey="personal"
-                            >
-                              Personal Information
-                            </Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link
-                              className="text-dark border"
-                              eventKey="family"
-                            >
-                              Family Members
-                            </Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link
-                              className="text-dark border"
-                              eventKey="notifications"
-                            >
-                              Notifications
-                            </Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link
-                              className="text-dark border"
-                              eventKey="security"
-                            >
-                              Security & Privacy
-                            </Nav.Link>
-                          </Nav.Item>
-                        </Nav>
-                      </div>
-                    </Col>
-                    <Col lg={9} md={8}>
-                      <Tab.Content>
-                        <Tab.Pane eventKey="personal">
-                          <h4 className="profile-section-title1">
-                            Personal Information
-                          </h4>
-                          <Form>
-                            <Row>
-                              <Col md={6}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>Full Name</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    name="name"
-                                    value={userData.name}
-                                    onChange={handleInputChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                              <Col md={6}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>Email Address</Form.Label>
-                                  <Form.Control
-                                    type="email"
-                                    name="email"
-                                    value={userData.email}
-                                    onChange={handleInputChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={6}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>Phone Number</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    name="phone"
-                                    value={userData.phone}
-                                    onChange={handleInputChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                              <Col md={6}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>Date of Birth</Form.Label>
-                                  <Form.Control
-                                    type="date"
-                                    name="dob"
-                                    defaultValue="2000-06-10"
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-                            <Form.Group className="mb-3">
-                              <Form.Label>Address</Form.Label>
-                              <Form.Control
-                                as="textarea"
-                                rows={2}
-                                name="address"
-                                value={userData.address}
-                                onChange={handleInputChange}
-                              />
-                            </Form.Group>
-                            <Row>
-                              <Col md={4}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>City</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    defaultValue="Rohtak"
-                                  />
-                                </Form.Group>
-                              </Col>
-                              <Col md={4}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>State</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    defaultValue="Haryana"
-                                  />
-                                </Form.Group>
-                              </Col>
-                              <Col md={4}>
-                                <Form.Group className="mb-3">
-                                  <Form.Label>Pincode</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    defaultValue="124001"
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-                            <div className="d-flex justify-content-end mt-4">
-                              <Button variant="primary" type="submit">
-                                Save Changes
-                              </Button>
-                            </div>
-                          </Form>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="family">
-                          <h4 className="profile-section-title">
-                            Family Members
-                          </h4>
-                          <div className="family-members">
-                            <div className="family-member-card">
-                              <div className="family-member-avatar">
-                                <img
-                                  src="/images/family-member1.jpg"
-                                  alt="Family Member"
-                                />
-                              </div>
-                              <div className="family-member-details">
-                                <h5>Priya Rana</h5>
-                                <p>Wife</p>
-                              </div>
-                              <Button variant="outline-primary" size="sm">
-                                Edit
-                              </Button>
-                            </div>
-                            <div className="family-member-card">
-                              <div className="family-member-avatar">
-                                <img
-                                  src="/images/family-member2.jpg"
-                                  alt="Family Member"
-                                />
-                              </div>
-                              <div className="family-member-details">
-                                <h5>Rohan Rana</h5>
-                                <p>Son</p>
-                              </div>
-                              <Button variant="outline-primary" size="sm">
-                                Edit
-                              </Button>
-                            </div>
-                            <Button
-                              variant="primary"
-                              className="add-family-btn"
-                            >
-                              <span>+</span> Add Family Member
-                            </Button>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="notifications">
-                          <h4 className="profile-section-title">
-                            Notification Settings
-                          </h4>
-                          <Form>
-                            <Form.Group className="notification-option">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <h5>Email Notifications</h5>
-                                  <p>
-                                    Receive booking confirmations and updates
-                                  </p>
-                                </div>
-                                <Form.Check
-                                  type="switch"
-                                  id="email-switch"
-                                  defaultChecked
-                                />
-                              </div>
-                            </Form.Group>
-                            <Form.Group className="notification-option">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <h5>SMS Notifications</h5>
-                                  <p>
-                                    Receive text messages for important updates
-                                  </p>
-                                </div>
-                                <Form.Check
-                                  type="switch"
-                                  id="sms-switch"
-                                  defaultChecked
-                                />
-                              </div>
-                            </Form.Group>
-                            <Form.Group className="notification-option">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <h5>Promotional Emails</h5>
-                                  <p>Receive special offers and promotions</p>
-                                </div>
-                                <Form.Check type="switch" id="promo-switch" />
-                              </div>
-                            </Form.Group>
-                            <Form.Group className="notification-option">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <h5>Reminder Alerts</h5>
-                                  <p>
-                                    Receive reminders before scheduled poojas
-                                  </p>
-                                </div>
-                                <Form.Check
-                                  type="switch"
-                                  id="reminder-switch"
-                                  defaultChecked
-                                />
-                              </div>
-                            </Form.Group>
-                            <div className="d-flex justify-content-end mt-4">
-                              <Button variant="primary" type="submit">
-                                Save Preferences
-                              </Button>
-                            </div>
-                          </Form>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="security">
-                          <h4 className="profile-section-title">
-                            Security & Privacy
-                          </h4>
-                          <Form>
-                            <div className="password-section mb-4">
-                              <h5>Change Password</h5>
-                              <Row>
-                                <Col md={6}>
-                                  <Form.Group className="mb-3">
-                                    <Form.Label>Current Password</Form.Label>
-                                    <Form.Control type="password" />
-                                  </Form.Group>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col md={6}>
-                                  <Form.Group className="mb-3">
-                                    <Form.Label>New Password</Form.Label>
-                                    <Form.Control type="password" />
-                                  </Form.Group>
-                                </Col>
-                                <Col md={6}>
-                                  <Form.Group className="mb-3">
-                                    <Form.Label>
-                                      Confirm New Password
-                                    </Form.Label>
-                                    <Form.Control type="password" />
-                                  </Form.Group>
-                                </Col>
-                              </Row>
-                              <Button variant="primary" size="sm">
-                                Update Password
-                              </Button>
-                            </div>
-                            <div className="privacy-section">
-                              <h5>Privacy Settings</h5>
-                              <Form.Group className="mb-3">
-                                <Form.Check
-                                  type="checkbox"
-                                  label="Make my profile visible to priests and temples"
-                                  id="profile-visibility"
-                                  defaultChecked
-                                />
-                              </Form.Group>
-                              <Form.Group className="mb-3">
-                                <Form.Check
-                                  type="checkbox"
-                                  label="Allow sharing my booking history with recommended priests"
-                                  id="history-sharing"
-                                />
-                              </Form.Group>
-                              <Form.Group className="mb-3">
-                                <Form.Check
-                                  type="checkbox"
-                                  label="Enable two-factor authentication for login"
-                                  id="two-factor"
-                                />
-                              </Form.Group>
-                            </div>
-                            <div className="d-flex justify-content-end mt-4">
-                              <Button variant="primary" type="submit">
-                                Save Security Settings
-                              </Button>
-                            </div>
-                          </Form>
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </Col>
-                  </Row>
-                </Tab.Container>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-  function renderMyBookedDetals() {
-    return (
-      <>
-        <div className="container py-5">
-          <div className="row">
-            <div className="text-center fs-1">
-              <h2>Booked Pooja</h2>
-            </div>
-            <table class="custom-table table-responsive">
-              <thead>
-                <tr>
-                  <th>Account Name</th>
-                  <th>Plan Name</th>
-                  <th>Amount</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Status</th>
-                  <th>Pooja Mod</th>
-                  <th>Date of Pooja</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookedPuja?.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.userId.fullName}</td>
-                    <td>{data.planId.heading}</td>
-                    <td>{data.planId.amount}</td>
-                    <td>{data.phoneNumber}</td>
-                    <td>{data.address}</td>
-                    <td>{data.status}</td>
-                    <td>{data.poojaMode}</td>
-                    <td>
-                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                        timeZone: 'Asia/Kolkata',
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true
-                      })}
-                    </td>
-
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-          </div>
-
-        </div>
-      </>
-    )
-  }
+  //                       <Nav
+  //                         variant="pills"
+  //                         className="profile-nav  flex-column mt-4"
+  //                       >
+  //                         <Nav.Item>
+  //                           <Nav.Link
+  //                             className="text-dark border"
+  //                             eventKey="personal"
+  //                           >
+  //                             Personal Information
+  //                           </Nav.Link>
+  //                         </Nav.Item>
+  //                         <Nav.Item>
+  //                           <Nav.Link
+  //                             className="text-dark border"
+  //                             eventKey="family"
+  //                           >
+  //                             Family Members
+  //                           </Nav.Link>
+  //                         </Nav.Item>
+  //                         <Nav.Item>
+  //                           <Nav.Link
+  //                             className="text-dark border"
+  //                             eventKey="notifications"
+  //                           >
+  //                             Notifications
+  //                           </Nav.Link>
+  //                         </Nav.Item>
+  //                         <Nav.Item>
+  //                           <Nav.Link
+  //                             className="text-dark border"
+  //                             eventKey="security"
+  //                           >
+  //                             Security & Privacy
+  //                           </Nav.Link>
+  //                         </Nav.Item>
+  //                       </Nav>
+  //                     </div>
+  //                   </Col>
+  //                   <Col lg={9} md={8}>
+  //                     <Tab.Content>
+  //                       <Tab.Pane eventKey="personal">
+  //                         <h4 className="profile-section-title1">
+  //                           Personal Information
+  //                         </h4>
+  //                         <Form>
+  //                           <Row>
+  //                             <Col md={6}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>Full Name</Form.Label>
+  //                                 <Form.Control
+  //                                   type="text"
+  //                                   name="name"
+  //                                   value={user.fullName}
+  //                                   onChange={handleInputChange}
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                             <Col md={6}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>Email Address</Form.Label>
+  //                                 <Form.Control
+  //                                   type="email"
+  //                                   name="email"
+  //                                   value={userData.email}
+  //                                   onChange={handleInputChange}
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                           </Row>
+  //                           <Row>
+  //                             <Col md={6}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>Phone Number</Form.Label>
+  //                                 <Form.Control
+  //                                   type="text"
+  //                                   name="phone"
+  //                                   value={userData.phone}
+  //                                   onChange={handleInputChange}
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                             <Col md={6}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>Date of Birth</Form.Label>
+  //                                 <Form.Control
+  //                                   type="date"
+  //                                   name="dob"
+  //                                   defaultValue="2000-06-10"
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                           </Row>
+  //                           <Form.Group className="mb-3">
+  //                             <Form.Label>Address</Form.Label>
+  //                             <Form.Control
+  //                               as="textarea"
+  //                               rows={2}
+  //                               name="address"
+  //                               value={userData.address}
+  //                               onChange={handleInputChange}
+  //                             />
+  //                           </Form.Group>
+  //                           <Row>
+  //                             <Col md={4}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>City</Form.Label>
+  //                                 <Form.Control
+  //                                   type="text"
+  //                                   defaultValue="Rohtak"
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                             <Col md={4}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>State</Form.Label>
+  //                                 <Form.Control
+  //                                   type="text"
+  //                                   defaultValue="Haryana"
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                             <Col md={4}>
+  //                               <Form.Group className="mb-3">
+  //                                 <Form.Label>Pincode</Form.Label>
+  //                                 <Form.Control
+  //                                   type="text"
+  //                                   defaultValue="124001"
+  //                                 />
+  //                               </Form.Group>
+  //                             </Col>
+  //                           </Row>
+  //                           <div className="d-flex justify-content-end mt-4">
+  //                             <Button variant="primary" type="submit">
+  //                               Save Changes
+  //                             </Button>
+  //                           </div>
+  //                         </Form>
+  //                       </Tab.Pane>
+  //                       <Tab.Pane eventKey="family">
+  //                         <h4 className="profile-section-title">
+  //                           Family Members
+  //                         </h4>
+  //                         <div className="family-members">
+  //                           <div className="family-member-card">
+  //                             <div className="family-member-avatar">
+  //                               <img
+  //                                 src="/images/family-member1.jpg"
+  //                                 alt="Family Member"
+  //                               />
+  //                             </div>
+  //                             <div className="family-member-details">
+  //                               <h5>Priya Rana</h5>
+  //                               <p>Wife</p>
+  //                             </div>
+  //                             <Button variant="outline-primary" size="sm">
+  //                               Edit
+  //                             </Button>
+  //                           </div>
+  //                           <div className="family-member-card">
+  //                             <div className="family-member-avatar">
+  //                               <img
+  //                                 src="/images/family-member2.jpg"
+  //                                 alt="Family Member"
+  //                               />
+  //                             </div>
+  //                             <div className="family-member-details">
+  //                               <h5>Rohan Rana</h5>
+  //                               <p>Son</p>
+  //                             </div>
+  //                             <Button variant="outline-primary" size="sm">
+  //                               Edit
+  //                             </Button>
+  //                           </div>
+  //                           <Button
+  //                             variant="primary"
+  //                             className="add-family-btn"
+  //                           >
+  //                             <span>+</span> Add Family Member
+  //                           </Button>
+  //                         </div>
+  //                       </Tab.Pane>
+  //                       <Tab.Pane eventKey="notifications">
+  //                         <h4 className="profile-section-title">
+  //                           Notification Settings
+  //                         </h4>
+  //                         <Form>
+  //                           <Form.Group className="notification-option">
+  //                             <div className="d-flex justify-content-between align-items-center">
+  //                               <div>
+  //                                 <h5>Email Notifications</h5>
+  //                                 <p>
+  //                                   Receive booking confirmations and updates
+  //                                 </p>
+  //                               </div>
+  //                               <Form.Check
+  //                                 type="switch"
+  //                                 id="email-switch"
+  //                                 defaultChecked
+  //                               />
+  //                             </div>
+  //                           </Form.Group>
+  //                           <Form.Group className="notification-option">
+  //                             <div className="d-flex justify-content-between align-items-center">
+  //                               <div>
+  //                                 <h5>SMS Notifications</h5>
+  //                                 <p>
+  //                                   Receive text messages for important updates
+  //                                 </p>
+  //                               </div>
+  //                               <Form.Check
+  //                                 type="switch"
+  //                                 id="sms-switch"
+  //                                 defaultChecked
+  //                               />
+  //                             </div>
+  //                           </Form.Group>
+  //                           <Form.Group className="notification-option">
+  //                             <div className="d-flex justify-content-between align-items-center">
+  //                               <div>
+  //                                 <h5>Promotional Emails</h5>
+  //                                 <p>Receive special offers and promotions</p>
+  //                               </div>
+  //                               <Form.Check type="switch" id="promo-switch" />
+  //                             </div>
+  //                           </Form.Group>
+  //                           <Form.Group className="notification-option">
+  //                             <div className="d-flex justify-content-between align-items-center">
+  //                               <div>
+  //                                 <h5>Reminder Alerts</h5>
+  //                                 <p>
+  //                                   Receive reminders before scheduled poojas
+  //                                 </p>
+  //                               </div>
+  //                               <Form.Check
+  //                                 type="switch"
+  //                                 id="reminder-switch"
+  //                                 defaultChecked
+  //                               />
+  //                             </div>
+  //                           </Form.Group>
+  //                           <div className="d-flex justify-content-end mt-4">
+  //                             <Button variant="primary" type="submit">
+  //                               Save Preferences
+  //                             </Button>
+  //                           </div>
+  //                         </Form>
+  //                       </Tab.Pane>
+  //                       <Tab.Pane eventKey="security">
+  //                         <h4 className="profile-section-title">
+  //                           Security & Privacy
+  //                         </h4>
+  //                         <Form>
+  //                           <div className="password-section mb-4">
+  //                             <h5>Change Password</h5>
+  //                             <Row>
+  //                               <Col md={6}>
+  //                                 <Form.Group className="mb-3">
+  //                                   <Form.Label>Current Password</Form.Label>
+  //                                   <Form.Control type="password" />
+  //                                 </Form.Group>
+  //                               </Col>
+  //                             </Row>
+  //                             <Row>
+  //                               <Col md={6}>
+  //                                 <Form.Group className="mb-3">
+  //                                   <Form.Label>New Password</Form.Label>
+  //                                   <Form.Control type="password" />
+  //                                 </Form.Group>
+  //                               </Col>
+  //                               <Col md={6}>
+  //                                 <Form.Group className="mb-3">
+  //                                   <Form.Label>
+  //                                     Confirm New Password
+  //                                   </Form.Label>
+  //                                   <Form.Control type="password" />
+  //                                 </Form.Group>
+  //                               </Col>
+  //                             </Row>
+  //                             <Button variant="primary" size="sm">
+  //                               Update Password
+  //                             </Button>
+  //                           </div>
+  //                           <div className="privacy-section">
+  //                             <h5>Privacy Settings</h5>
+  //                             <Form.Group className="mb-3">
+  //                               <Form.Check
+  //                                 type="checkbox"
+  //                                 label="Make my profile visible to priests and temples"
+  //                                 id="profile-visibility"
+  //                                 defaultChecked
+  //                               />
+  //                             </Form.Group>
+  //                             <Form.Group className="mb-3">
+  //                               <Form.Check
+  //                                 type="checkbox"
+  //                                 label="Allow sharing my booking history with recommended priests"
+  //                                 id="history-sharing"
+  //                               />
+  //                             </Form.Group>
+  //                             <Form.Group className="mb-3">
+  //                               <Form.Check
+  //                                 type="checkbox"
+  //                                 label="Enable two-factor authentication for login"
+  //                                 id="two-factor"
+  //                               />
+  //                             </Form.Group>
+  //                           </div>
+  //                           <div className="d-flex justify-content-end mt-4">
+  //                             <Button variant="primary" type="submit">
+  //                               Save Security Settings
+  //                             </Button>
+  //                           </div>
+  //                         </Form>
+  //                       </Tab.Pane>
+  //                     </Tab.Content>
+  //                   </Col>
+  //                 </Row>
+  //               </Tab.Container>
+  //             </Card.Body>
+  //           </Card>
+  //         </Col>
+  //       </Row>
+  //     </Container>
+  //   );
+  // }
 };
 
 export default Dashboard;
