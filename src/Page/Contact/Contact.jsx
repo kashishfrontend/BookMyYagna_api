@@ -181,7 +181,7 @@ const Contact = () => {
         </p>
       </div>
 
-      <div className="row g-4">
+      <div className="row g-4 py-5">
         <ContactCard
           icon={<FaEnvelope size={20} className="text-warning" />}
           title="Email Support"

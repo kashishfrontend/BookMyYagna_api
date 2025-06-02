@@ -41,6 +41,14 @@ const navTextColor = isDesktop
   : ''; // No color change on mobile/tablet
 
 
+  const handleBookingClick = () => {
+    if (isAuthenticated) {
+      navigate("/listofpooja");
+    } else {
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -164,7 +172,7 @@ const navTextColor = isDesktop
               >
                 <Button
                   as="a"
-                  href="/booking"
+                  onClick={handleBookingClick}
                   variant="outline-light m-2"
                   className="book-now-btn ms-2"
                 >
