@@ -40,8 +40,29 @@ const Dashboard = () => {
 
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [completedPuja, setCompletePuja] = useState([]);
+  const bellRef = useRef();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
-
+  useEffect(() => {
+    const getNotification = async () => {
+      try {
+        const response = await axios.get("/notification/getAllNotifications");
+        if (response.data.success) {
+          // Extract heading, message, and createdAt from each notification
+          const filteredNotifications = response.data.notifications.map(({ heading, message, createdAt }) => ({
+            heading,
+            message,
+            createdAt,
+          }));
+          setNotifications(filteredNotifications);
+        }
+      } catch (err) {
+        console.log("Error fetching user notification", err);
+      }
+    };
+    getNotification();
+  }, []);
 
   const [bookedPuja, setBookedPuja] = useState([]);
   useEffect(() => {
@@ -169,7 +190,7 @@ const Dashboard = () => {
     switch (activeNavItem) {
       case "dashboard":
         return renderDashboardContent();
-      
+
       case "bookings":
         return renderMyBookingDetals();
 
@@ -323,15 +344,52 @@ const Dashboard = () => {
                 className="user-profile me-4 me-md-3"
                 onClick={() => setShowProfileModal(true)}
               >
-               
+
                 <span className="user-name d-none d-md-inline">
                   {user?.fullName}
                 </span>
               </div>
-              <div className="notification-bell ">
+              <div
+                className="notification-bell"
+                ref={bellRef}
+                onClick={() => setShowNotifications(!showNotifications)}
+              >
                 <MdNotifications size={24} />
-                <span className="notification-badge">3</span>
+                {/* Safely check notifications */}
+                {Array.isArray(notifications) && notifications.length > 0 && (
+                  <span className="notification-badge">{notifications.length}</span>
+                )}
+
+                {showNotifications && (
+                  <div className="notification-popup">
+                    {Array.isArray(notifications) && notifications.length > 0 ? (
+                      notifications.map((item, index) => (
+                        <div key={index} className="notification-item">
+                          <h4 className="popup-heading">{item.heading}</h4>
+                          <p className="popup-message">{item.message}</p>
+                          <p className="popup-time">
+                            {new Date(item.createdAt).toLocaleString('en-IN', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              hour12: true,
+                              timeZone: 'Asia/Kolkata',
+                            })}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="popup-message">No new notifications.</p>
+                    )}
+                  </div>
+                )}
+
               </div>
+
+
+
             </div>
           </div>
 
@@ -405,7 +463,7 @@ const Dashboard = () => {
     </>
   );
 
-function renderMyBookedDetals() {
+  function renderMyBookedDetals() {
     return (
       <>
         <div className="container py-5">
@@ -460,8 +518,8 @@ function renderMyBookedDetals() {
     )
   }
 
-  
-function renderMyBookingDetals() {
+
+  function renderMyBookingDetals() {
     return (
       <>
 
