@@ -200,26 +200,6 @@ const Dashboard = () => {
   //     image: "/images/lakshmi.jpg",
   //   },
   // ];
-
-  const importedVideos = [
-    {
-      url: "/videos/video1.mp4",
-      name: "video1.mp4",
-    },
-    {
-      url: "/videos/video2.mkv",
-      name: "video2.mkv",
-    },
-    {
-      url: "/videos/video3.mp4",
-      name: "video3.mp4",
-    },
-    // ➕ Add more as needed
-  ];
-
-
-
-
   // Render content based on active nav item
   const renderContent = () => {
     switch (activeNavItem) {
@@ -263,7 +243,6 @@ const Dashboard = () => {
         console.error("Error fetching user profile:", error);
       }
     };
-
     fetchUserProfile();
   }, []);
 
@@ -379,21 +358,15 @@ const Dashboard = () => {
           {/* Top Navigation */}
           <div className="top-nav">
             <div className="search-bar">
-              <input
-                type="text"
-                placeholder="Search for poojas, priests, temples..."
-              />
+              <input type="text" placeholder="Search for poojas, priests, temples..." />
               <button type="submit">
                 <i className="fas fa-search"></i>
               </button>
             </div>
-            <div className="nav-right ">
-              <div className="notification-bell">
-                <MdNotifications size={24} />
-                <span className="notification-badge">3</span>
-              </div>
+            <div className="nav-right">
+
               <div
-                className="user-profile"
+                className="user-profile me-4 me-md-3"
                 onClick={() => setShowProfileModal(true)}
               >
                 <img
@@ -405,8 +378,13 @@ const Dashboard = () => {
                   {userData.name}
                 </span>
               </div>
+              <div className="notification-bell ">
+                <MdNotifications size={24} />
+                <span className="notification-badge">3</span>
+              </div>
             </div>
           </div>
+
 
           {/* Dynamic Content Based on Navigation */}
           {renderContent()}
@@ -670,51 +648,53 @@ const Dashboard = () => {
 
           {/* Upcoming Bookings */}
 
-       
-              <div className="text-center fs-1">
-                <h2>Booked Pooja</h2>
-              </div>
-              <div>
-                <table class="custom-table table-responsive" >
-                  <thead>
-                    <tr>
-                      <th>Account Name</th>
-                      <th>Plan Name</th>
-                      <th>Amount</th>
-                      <th>Phone Number</th>
-                      <th>Address</th>
-                      <th>Status</th>
-                      <th>Pooja Mod</th>
-                      <th>Date of Pooja</th>
-                    </tr>
-                  </thead>
-                  {completedPuja?.map((data, index) => (
-                    <tr key={index} >
-                      <td>{data.userId.fullName}</td>
-                      <td>{data.planId.heading}</td>
-                      <td>{data.planId.amount}</td>
-                      <td>{data.phoneNumber}</td>
-                      <td>{data.address}</td>
-                      <td>{data.status}</td>
-                      <td>{data.poojaMode}</td>
-                      <td>
-                        {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                          timeZone: 'Asia/Kolkata',
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true
-                        })}
-                      </td>
 
-                    </tr>
-                  ))}
-                </table>
-              </div>
+          <div className="text-center fs-1">
+            <h2>Booked Pooja</h2>
+          </div>
+          <div className="table-responsive">
+            <table className="custom-table table table-bordered">
+              <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Plan Name</th>
+                  <th>Amount</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Pooja Mod</th>
+                  <th>Date of Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedPuja?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.userId.fullName}</td>
+                    <td>{data.planId.heading}</td>
+                    <td>{data.planId.amount}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.address}</td>
+                    <td>{data.status}</td>
+                    <td>{data.poojaMode}</td>
+                    <td>
+                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-           
+
+
 
           {/* Calendar Card */}
 
