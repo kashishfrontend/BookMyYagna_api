@@ -19,8 +19,27 @@ const MainNavbar = ({ isHeroVisible }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992); // Bootstrap's lg breakpoint
 
-  const navTextColor = isHeroVisible ? 'text-light  ' : 'text-dark';
+useEffect(() => {
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 992); // 992px is desktop breakpoint
+  };
+
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
+
+
+const navTextColor = isDesktop
+  ? isHeroVisible
+    ? 'text-light'
+    : 'text-dark'
+  : ''; // No color change on mobile/tablet
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,7 +100,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                 </Nav.Link>
               </motion.div>
               <motion.div className={` shadow-none border-0 ${navTextColor}`}  >
-                <NavDropdown
+                <NavDropdown 
 
                   title={
                     <>
@@ -97,10 +116,10 @@ const MainNavbar = ({ isHeroVisible }) => {
                   whileHover={{ scale: 1.1 }}
                   id="nav-dropdown-services"
                   // style={{ border: '0.2px solid rgba(0, 0, 0, 0.5)' }}
-                  className=" d-flex align-content-center justify-content-center"
+                  className=" d-flex align-content-center justify-content-center flex-column m-auto"
                 >
-                  <Dropdown.Item  className={` text-light nav-service-link ${navTextColor}`} href="./listOfPooja">List of Pooja</Dropdown.Item>
-                  <Dropdown.Item className={` text-light nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
+                  <Dropdown.Item  className={`nav-service-link ${navTextColor}`} href="./listOfPooja">List of Pooja</Dropdown.Item>
+                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
 
                 </NavDropdown>
               </motion.div>
@@ -134,8 +153,8 @@ const MainNavbar = ({ isHeroVisible }) => {
                   }
                   id="account-dropdown"
                 >
-                  <NavDropdown.Item  className={` text-light nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
-                  <NavDropdown.Item  className={` text-light nav-service-link ${navTextColor}`} onClick={handleLogout}>Logout</NavDropdown.Item>
+                  <NavDropdown.Item  className={`  nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item  className={`  nav-service-link ${navTextColor}`} onClick={handleLogout}>Logout</NavDropdown.Item>
                 </NavDropdown>
               )}
 

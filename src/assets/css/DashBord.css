@@ -26,7 +26,7 @@ body {
     padding: 0;
     color: var(--text-dark);
     height: 100vh;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 /* For full viewport height */
@@ -638,7 +638,7 @@ body {
 
 .footer-content {
     display: flex;
-    justify-content:center  ;
+    justify-content: center;
     align-items: flex-end;
 }
 
@@ -691,7 +691,7 @@ body {
 
     .menu-item span {
         /* display: none; */
-        text-align:  left;
+        text-align: left;
     }
 
     .menu-item {
@@ -769,7 +769,8 @@ body {
     .footer-links a {
         margin: 0 8px;
     }
-    .card-body{
+
+    .card-body {
         padding: 10px !important;
     }
 }
@@ -836,6 +837,14 @@ body {
         /* Always visible on desktop */
         position: relative;
     }
+/* 
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    table {
+        min-width: 300px !important;
+    } */
 }
 
 /* Profile section */
@@ -843,81 +852,82 @@ body {
 /* Input & Textarea Styling */
 .profile-card input.form-control,
 .profile-card textarea.form-control {
-  border: 1px solid var(--primary-color);
-  border-radius: 0.375rem;
-  box-shadow: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--primary-color);
+    border-radius: 0.375rem;
+    box-shadow: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-card input.form-control:focus,
 .profile-card textarea.form-control:focus {
-  border-color: var(--primary-dark);
-  box-shadow: 0 0 0 0.2rem rgba(230, 92, 0, 0.25);
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 0.2rem rgba(230, 92, 0, 0.25);
 }
 
 /* Primary Button Styling */
 .profile-card .btn-primary {
-  background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
-  border: none;
-  color: #fff;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.2s ease;
+    background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .profile-card .btn-primary:hover,
 .profile-card .btn-primary:focus {
-  background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Outline Button Styling */
 .profile-card .btn-outline-primary {
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  background-color: transparent;
-  transition: all 0.3s ease;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    transition: all 0.3s ease;
 }
 
 .profile-card .btn-outline-primary:hover {
-  background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
-  color: #fff;
-  border-color: var(--primary-dark);
+    background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
+    color: #fff;
+    border-color: var(--primary-dark);
 }
 
 /* Add hover on nav pills (sidebar) */
 .profile-card .nav-pills .nav-link {
-  color: #333;
-  border-radius: 0.375rem;
+    color: #333;
+    border-radius: 0.375rem;
 }
 
 .profile-card .nav-pills .nav-link.active,
 .profile-card .nav-pills .nav-link:hover {
-  background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
-  color: white;
+    background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
+    color: white;
 }
+
 /* =============booked pooja css=========== */
 .custom-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: sans-serif;
-  margin-top: 20px;
-  border: 1px solid #ccc;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    margin-top: 20px;
+    border: 1px solid #ccc;
 }
 
 .custom-table th {
-  background-color: #FF9955;
-  color: white;
-  text-align: left;
-  padding: 12px;
-  border: 1px solid #ddd;
+    background-color: #FF9955;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
 }
 
 .custom-table td {
-  padding: 10px 12px;
-  border: 1px solid #ddd;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
 }
 
 .custom-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+    background-color: #f9f9f9;
 }

@@ -529,51 +529,52 @@ const Dashboard = () => {
     return (
       <>
 
-        <div className="container py-5">
+        <div className="container py-5 ">
           <div className="row">
             <div className="text-center fs-1">
               <h2>Completed Pooja</h2>
             </div>
-            <table className="custom-table table-responsive">
-              <thead>
-                <tr>
-                  <th>Account Name</th>
-                  <th>Plan Name</th>
-                  <th>Amount</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Status</th>
-                  <th>Pooja Mod</th>
-                  <th>Date of Pooja</th>
-                </tr>
-              </thead>
-              <tbody>
-                {completedPuja?.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.userId.fullName}</td>
-                    <td>{data.planId.heading}</td>
-                    <td>{data.planId.amount}</td>
-                    <td>{data.phoneNumber}</td>
-                    <td>{data.address}</td>
-                    <td>{data.status}</td>
-                    <td>{data.poojaMode}</td>
-                    <td>
-                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                        timeZone: 'Asia/Kolkata',
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true
-                      })}
-                    </td>
-
-
+            <div className="table-responsive">
+              <table className="table table-bordered table-striped">
+                <thead className="table-warning">
+                  <tr>
+                    <th>Account Name</th>
+                    <th>Plan Name</th>
+                    <th>Amount</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Pooja Mod</th>
+                    <th>Date of Pooja</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {completedPuja?.map((data, index) => (
+                    <tr key={index}>
+                      <td>{data.userId.fullName}</td>
+                      <td>{data.planId.heading}</td>
+                      <td>{data.planId.amount}</td>
+                      <td>{data.phoneNumber}</td>
+                      <td>{data.address}</td>
+                      <td>{data.status}</td>
+                      <td>{data.poojaMode}</td>
+                      <td>
+                        {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true
+                        })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
 
           </div>
 
@@ -668,13 +669,13 @@ const Dashboard = () => {
           </Row>
 
           {/* Upcoming Bookings */}
-          <Row className="mt-4">
-            <div className="container py-5">
-              <div className="row">
-                <div className="text-center fs-1">
-                  <h2>Booked Pooja</h2>
-                </div>
-                <table class="custom-table table-responsive">
+
+       
+              <div className="text-center fs-1">
+                <h2>Booked Pooja</h2>
+              </div>
+              <div>
+                <table class="custom-table table-responsive" >
                   <thead>
                     <tr>
                       <th>Account Name</th>
@@ -688,7 +689,7 @@ const Dashboard = () => {
                     </tr>
                   </thead>
                   {completedPuja?.map((data, index) => (
-                    <tr key={index}>
+                    <tr key={index} >
                       <td>{data.userId.fullName}</td>
                       <td>{data.planId.heading}</td>
                       <td>{data.planId.amount}</td>
@@ -711,13 +712,12 @@ const Dashboard = () => {
                     </tr>
                   ))}
                 </table>
-
               </div>
 
-            </div>
+           
 
-            {/* Calendar Card */}
-          </Row>
+          {/* Calendar Card */}
+
           {/* Testimonials */}
         </Container>
       </>

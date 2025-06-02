@@ -14,9 +14,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding-right: 10% !important;
 
-  .dropdown-menu { 
+  .dropdown-menu {
     background: rgba(255, 255, 255, 0.2) !important;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
   }
 }
 
@@ -136,6 +136,7 @@
   .nav-link {
     padding: 12px 5px !important;
     margin: 5px 0;
+    border: none !important;
   }
 
   .book-now-btn {
@@ -2165,7 +2166,13 @@
   position: relative;
 }
 
-.accordion-button:not(.collapsed) {
+.collapse {
+      /* background: rgba(255, 255, 255, 0.9); */
+  text-align: left;
+  /* filter: blur(10px); */
+}
+
+.accordion-button:not(.collapse) {
   color: #FF7722;
   background-color: #FFF5E6;
   box-shadow: none;
@@ -3710,4 +3717,45 @@
   .puja-cards {
     grid-template-columns: 1fr;
   }
+
+  .custom-navbar {
+    
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* padding-right: 10% !important; */
+
+    .dropdown-menu {
+      background: rgba(255, 255, 255, 0.7) !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+      color: black !important;
+    }
+  }
+  .nav-service-link{
+     /* background-color: rgba(215, 34, 34, 0.9) !important; */
+    
+
+  }
+  .navbar-nav .dropdown-menu {
+    position: static !important; /* Avoid absolute position */
+    float: none;
+    width: 100%;
+    margin-top: 0;
+    background-color: white; /* Or your theme */
+    box-shadow: none;
+    border: none;
+  }
+
+  .navbar-nav .dropdown-menu .dropdown-item {
+    padding: 10px 20px;
+    color: #000; /* Adjust if needed */
+  }
+
+  .navbar-nav .dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+
+
+
 }

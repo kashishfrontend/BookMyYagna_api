@@ -41,6 +41,7 @@
 }
 
 .wave-circle.delay-1 {
+  overflow: hidden;
   animation-delay: 1s;
 }
 
