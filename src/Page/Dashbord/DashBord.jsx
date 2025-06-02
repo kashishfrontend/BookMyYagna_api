@@ -37,7 +37,47 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
+
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [completedPuja , setCompletePuja] = useState([]);
+
+
+
+  const [bookedPuja, setBookedPuja] = useState([]);
+ useEffect(() => {
+  const allBookingData = async () => {
+    try {
+      const response = await axios.post("/bookings/getAllBookingForUser", {
+        startDate: '',
+        endDate: '',
+        status: ''
+      });
+
+      if (response.data.success) {
+        const allBookings = response.data.data;
+
+        // Filter based on status from each item
+        const pendingOrActive = allBookings.filter(booking =>
+          ['bookingPending', 'bookingConfirmed', 'bookingCancelled'].includes(booking.status)
+        );
+
+        const completed = allBookings.filter(booking =>
+          booking.status === 'completed'
+        );
+
+        setBookedPuja(pendingOrActive);
+        setCompletePuja(completed);
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  allBookingData();
+}, []);
+
+
+
   const navigate = useNavigate();
   // User profile data
   const [userData, setUserData] = useState({
@@ -177,28 +217,8 @@ const Dashboard = () => {
     // ➕ Add more as needed
   ];
 
-  const fullscreenRefs = useRef([]);
 
-  const enterFullScreen = (index) => {
-    const element = fullscreenRefs.current[index];
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  };
-
-  const exitFullScreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  };
+ 
 
   // Render content based on active nav item
   const renderContent = () => {
@@ -209,7 +229,9 @@ const Dashboard = () => {
         return renderProfileContent();
       case "bookings":
         return renderMyBookingDetals();
-      
+
+      case "book":
+        return renderMyBookedDetals();
       default:
         return (
           <div className="content-placeholder">
@@ -260,9 +282,8 @@ const Dashboard = () => {
           className={`sidebar d-block d-md-none ${showSidebar ? "active" : ""}`}
         >
           <div
-            className={`menu-item ${
-              activeNavItem === "dashboard" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("dashboard")}
           >
             <MdDashboard size={22} />
@@ -276,27 +297,25 @@ const Dashboard = () => {
             <span>Book Pooja</span>
           </div>
           <div
-            className={`menu-item ${
-              activeNavItem === "bookings" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("bookings")}
           >
             <FaCalendarAlt size={20} />
-            <span>My Bookings</span>
+            <span>Completed Pooja</span>
           </div>
-        
-          
-         
+
+
+
           <div
-            className={`menu-item ${
-              activeNavItem === "profile" ? "active" : ""
-            }`}
+            className={`menu-item ${activeNavItem === "profile" ? "active" : ""
+              }`}
             onClick={() => handleNavItemClick("profile")}
           >
             <FaUserCircle size={20} />
             <span>My Profile</span>
           </div>
-         
+
           <div className="menu-item logout" onClick={() => handleLogout()}>
             <MdLogout size={22} />
             <span>Logout</span>
@@ -313,43 +332,39 @@ const Dashboard = () => {
           </div>
           <div className="sidebar-menu">
             <div
-              className={`menu-item ${
-                activeNavItem === "dashboard" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("dashboard")}
             >
               <MdDashboard size={22} />
               <span>Dashboard</span>
             </div>
             <div
-              className={`menu-item ${
-                activeNavItem === "book" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "book" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("book")}
             >
               <FaPrayingHands size={20} />
-              <span>Book Pooja</span>
+              <span>Booked Pooja</span>
             </div>
             <div
-              className={`menu-item ${
-                activeNavItem === "bookings" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("bookings")}
             >
               <FaCalendarAlt size={20} />
-              <span>My Bookings</span>
+              <span>Completed Pooja</span>
             </div>
-       
+
             <div
-              className={`menu-item ${
-                activeNavItem === "profile" ? "active" : ""
-              }`}
+              className={`menu-item ${activeNavItem === "profile" ? "active" : ""
+                }`}
               onClick={() => handleNavItemClick("profile")}
             >
               <FaUserCircle size={20} />
               <span>My Profile</span>
             </div>
-           
+
             <div className="menu-item logout" onClick={() => handleLogout()}>
               <MdLogout size={22} />
               <span>Logout</span>
@@ -512,29 +527,48 @@ const Dashboard = () => {
   function renderMyBookingDetals() {
     return (
       <>
+       
         <div className="container py-5">
           <div className="row">
-            <div className="col-md-6">
-              <select name="" id="">
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-                <option value="">Select Pooja</option>
-              </select>
+            <div className="text-center fs-1">
+              <h2>Completed Pooja</h2>
             </div>
+            <table className="custom-table table-responsive">
+              <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Plan Name</th>
+                  <th>Amount</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Pooja Mod</th>
+                  <th>Date of Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedPuja?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.userId.fullName}</td>
+                    <td>{data.planId.heading}</td>
+                    <td>{data.planId.amount}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.address}</td>
+                    <td>{data.status}</td>
+                    <td>{data.poojaMode}</td>
+                    <td>{data.dateOfDelivery}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
           </div>
+
         </div>
       </>
     );
   }
- 
+
 
   // Dashboard content render function
   function renderDashboardContent() {
@@ -1227,6 +1261,49 @@ const Dashboard = () => {
         </Row>
       </Container>
     );
+  }
+  function renderMyBookedDetals() {
+    return (
+      <>
+        <div className="container py-5">
+          <div className="row">
+            <div className="text-center fs-1">
+              <h2>Booked Pooja</h2>
+            </div>
+            <table class="custom-table table-responsive">
+              <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Plan Name</th>
+                  <th>Amount</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Pooja Mod</th>
+                  <th>Date of Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookedPuja?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.userId.fullName}</td>
+                    <td>{data.planId.heading}</td>
+                    <td>{data.planId.amount}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.address}</td>
+                    <td>{data.status}</td>
+                    <td>{data.poojaMode}</td>
+                    <td>{data.dateOfDelivery}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </>
+    )
   }
 };
 
