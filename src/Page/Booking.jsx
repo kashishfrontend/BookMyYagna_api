@@ -156,10 +156,6 @@ const Booking = () => {
 const handleOrderedSubmit = async (e) => {
   e.preventDefault();
 
-  if ( !type || !specialRequirements || !phone || !name) {
-    alert("Please fill all required fields.");
-    return;
-  }
 
   const bookingData = {
     poojaId: poojaId,
@@ -186,10 +182,7 @@ const handleOrderedSubmit = async (e) => {
 
 if (response.data.success) {
   console.log("Booking successful:", response.data);
-  setIsSuccess(true);
-
-  setTimeout(() => {
-    setIsSuccess(false);
+    setIsSuccess(true);
     setSelectedDate(null);
     setSelectedPuja(null);
     setNumberOfPeople(5);
@@ -198,19 +191,9 @@ if (response.data.success) {
     setEmail("");
     setSpecialRequirements("");
     setType("");
-  }, 3000);
 } else {
   alert("Booking failed. Please try again.");
 }
-
-
-    if (!response.ok) {
-      throw new Error("Booking failed!");
-    }
-
-    const result = await response.json();
-    console.log("Booking successful:", result);
-
     setIsSuccess(true);
 
     // Clear form after success
