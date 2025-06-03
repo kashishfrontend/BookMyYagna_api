@@ -44,6 +44,8 @@ const Dashboard = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
+
+  
   useEffect(() => {
     const getNotification = async () => {
       try {
@@ -384,12 +386,12 @@ const Dashboard = () => {
                         <div key={index} className="notification-item">
                           <div className="">
                             <h4 className="popup-heading border-0 ">{item.heading}</h4>
-                            {/* <button
+                            <button
                               className="delete-btn"
                               onClick={() => handleDeleteNotification(item._id)}
                             >
                               ❌
-                            </button> */}
+                            </button>
                             <p className="popup-message">
                               {item.message.replace(/ for pooja booking id \w+\./, ".")}
                             </p>

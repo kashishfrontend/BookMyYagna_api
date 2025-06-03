@@ -168,7 +168,22 @@ body {
 .notification-bell {
     position: relative;
     margin-right: 20px;
+    /* cursor: pointer; */
+}
+
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
     cursor: pointer;
+    font-size: 16px;
+    color: red;
 }
 
 .notification-badge {
