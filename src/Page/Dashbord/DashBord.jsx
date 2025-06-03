@@ -32,9 +32,12 @@ import "aos/dist/aos.css";
 import "../../assets/css/Dashbord.css";
 // import poojaVideo from '../../assets/videos/pooja-video.mp4'
 import axios from "../../Api/axios/axios_config";
+import { useSelector, useDispatch } from 'react-redux';
 import { logout } from "../../redux/action/authAction";
 import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
 
@@ -96,7 +99,7 @@ const Dashboard = () => {
 
           // Filter based on status from each item
           const pendingOrActive = allBookings.filter(booking =>
-            ['bookingPending', 'bookingConfirmed', 'bookingCancelled'].includes(booking.status)
+            ['Pending', 'Confirmed', 'Cancelled'].includes(booking.status)
           );
 
           const completed = allBookings.filter(booking =>
@@ -146,10 +149,11 @@ const Dashboard = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleLogout = () => {
-    dispatch(logout()); // your logout action
-    navigate("/");
+ const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
   };
+
   useEffect(() => {
     // Initialize AOS animation library
     AOS.init({
@@ -213,6 +217,8 @@ const Dashboard = () => {
 
       case "book":
         return renderMyBookedDetals();
+              
+        // return renderMypopDetals();
       default:
         return (
           <div className="content-placeholder">
@@ -335,8 +341,16 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
+             {/* <div
+              className={`menu-item ${activeNavItem === "pop" ? "active" : ""
+                }`}
+              onClick={() => handleNavItemClick("pop")}
+            >
+              <FaCalendarAlt size={20} />
+              <span>pop</span>
+            </div> */}
 
-            <div className="menu-item logout" onClick={() => handleLogout()}>
+            <div className="menu-item logout" onClick={handleLogout}>
               <MdLogout size={22} />
               <span>Logout</span>
             </div>
@@ -380,19 +394,13 @@ const Dashboard = () => {
                 {showNotifications && (
                   <div className="notification-popup">
                     {Array.isArray(notifications) && notifications.length > 0 ? (
-                      notifications.map((item, index) => (
+                      notifications.slice(0,3).map((item, index) => (
                         <div key={index} className="notification-item">
                           <div className="">
                             <h4 className="popup-heading border-0 ">{item.heading}</h4>
-                            {/* <button
-                              className="delete-btn"
-                              onClick={() => handleDeleteNotification(item._id)}
-                            >
-                              ❌
-                            </button> */}
-                            <p className="popup-message">
+                            {/* <p className="popup-message">
                               {item.message.replace(/ for pooja booking id \w+\./, ".")}
-                            </p>
+                            </p> */}
                             <p className="popup-time">
                               {new Date(item.createdAt).toLocaleString("en-IN", {
                                 day: "2-digit",
@@ -412,6 +420,7 @@ const Dashboard = () => {
                     ) : (
                       <p className="popup-message">No new notifications.</p>
                     )}
+                    <button onClick={()=> renderMypopDetals() }>View All</button>
                   </div>
                 )}
 
@@ -491,6 +500,13 @@ const Dashboard = () => {
 
     </>
   );
+  function renderMypopDetals(){
+    return(
+      <>
+      <h1>pop</h1>
+      </>
+    )
+  }
 
   function renderMyBookedDetals() {
     return (
@@ -557,7 +573,7 @@ const Dashboard = () => {
             <div className="text-center fs-1">
               <h2>Completed Pooja</h2>
             </div>
-            <div className="table-responsive">
+            <div className="custom-table table-responsive">
               <table className="table table-bordered table-striped">
                 <thead className="table-warning">
                   <tr>
@@ -685,7 +701,7 @@ const Dashboard = () => {
                   </div>
                   <div className="stats-info">
                     <h5>Notifications</h5>
-                    <h2>03</h2>
+                    <h2>{notifications.length}</h2>
                   </div>
                 </Card.Body>
               </Card>

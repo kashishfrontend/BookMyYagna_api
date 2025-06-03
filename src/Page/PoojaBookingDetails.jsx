@@ -142,7 +142,7 @@ const PoojaBookingDetails = () => {
                 className="main-pooja-image"
               />
               <div className="small-image-container">
-                <img src={img} alt="Shiva" className="small-pooja-image" />
+                <img src={poojaData?.image || img} alt="Shiva" className="small-pooja-image" />
               </div>
             </div>
           </Col>
