@@ -49,12 +49,14 @@ const Dashboard = () => {
       try {
         const response = await axios.get("/notification/getAllNotifications");
         if (response.data.success) {
-          // Extract heading, message, and createdAt from each notification
-          const filteredNotifications = response.data.notifications.map(({ heading, message, createdAt }) => ({
-            heading,
-            message,
-            createdAt,
-          }));
+          // Extract heading, message, and createdAt only
+          const filteredNotifications = response.data.notifications.map(
+            ({ heading, message, createdAt }) => ({
+              heading,
+              message,
+              createdAt,
+            })
+          );
           setNotifications(filteredNotifications);
         }
       } catch (err) {
@@ -63,6 +65,21 @@ const Dashboard = () => {
     };
     getNotification();
   }, []);
+
+
+  const handleDeleteNotification = async (id) => {
+    try {
+      const response = await axios.delete(`/notification/deleteNotification/${id}`);
+      if (response.data.success) {
+        // Remove the deleted notification from the state
+        setNotifications((prev) => prev.filter((item) => item._id !== id));
+      }
+    } catch (err) {
+      console.error("Error deleting notification:", err);
+    }
+  };
+
+
 
   const [bookedPuja, setBookedPuja] = useState([]);
   useEffect(() => {
@@ -365,19 +382,31 @@ const Dashboard = () => {
                     {Array.isArray(notifications) && notifications.length > 0 ? (
                       notifications.map((item, index) => (
                         <div key={index} className="notification-item">
-                          <h4 className="popup-heading">{item.heading}</h4>
-                          <p className="popup-message">{item.message}</p>
-                          <p className="popup-time">
-                            {new Date(item.createdAt).toLocaleString('en-IN', {
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              hour12: true,
-                              timeZone: 'Asia/Kolkata',
-                            })}
-                          </p>
+                          <div className="">
+                            <h4 className="popup-heading border-0 ">{item.heading}</h4>
+                            {/* <button
+                              className="delete-btn"
+                              onClick={() => handleDeleteNotification(item._id)}
+                            >
+                              ❌
+                            </button> */}
+                            <p className="popup-message">
+                              {item.message.replace(/ for pooja booking id \w+\./, ".")}
+                            </p>
+                            <p className="popup-time">
+                              {new Date(item.createdAt).toLocaleString("en-IN", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                                timeZone: "Asia/Kolkata",
+                              })}
+                            </p>
+                          </div>
+                          {/* Add <hr /> between items, except after the last one */}
+                          {index !== notifications.length - 1 && <hr className="notification-separator" />}
                         </div>
                       ))
                     ) : (
