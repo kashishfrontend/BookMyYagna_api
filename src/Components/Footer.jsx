@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaOm, FaPrayingHands, } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaOm, FaPrayingHands, FaPinterestP, FaQuora, FaMediumM, FaLinkedinIn, FaTelegramPlane, FaRedditAlien, } from 'react-icons/fa';
 // import './Footer.css';
 
 const Footer = () => {
@@ -9,20 +9,27 @@ const Footer = () => {
       <div className="footer-top">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info " style={{padding:"10px 50px"}}>
-              
+            <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info " style={{ padding: "10px 50px" }}>
+
               <div className="footer-logo d-flex align-content-center justify-content-center">
                 <FaOm className="om-icon" />
                 <h3>BookmyYagna
                 </h3>
               </div>
               <p>Connecting devotees with authentic Hindu rituals and spiritual experiences. Book your pooja services online and experience the divine blessings.</p>
-              <div className="social-links ">
-                <a href="#" className="social-icon"><FaFacebookF /></a>
-                <a href="#" className="social-icon"><FaTwitter /></a>
-                <a href="#" className="social-icon"><FaInstagram /></a>
-                <a href="#" className="social-icon"><FaYoutube /></a>
+              <div className="social-links">
+                <a href="" target="_blank" rel="noopener noreferrer" className="social-icon"><FaFacebookF /></a>
+                <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a>
+                <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaInstagram /></a>
+                <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaYoutube /></a>
+                <a href="https://in.pinterest.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaPinterestP /></a>
+                <a href="https://www.quora.com/profile/Book-My-Yagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaQuora /></a>
+                <a href="https://medium.com/@bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaMediumM /></a>
+                <a href="https://www.linkedin.com/in/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaLinkedinIn /></a>
+                <a href="https://t.me/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTelegramPlane /></a>
+                <a href="https://www.reddit.com/user/bookmyyagna1/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaRedditAlien /></a>
               </div>
+
             </div>
 
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-links mt-0 mt-md-3">
