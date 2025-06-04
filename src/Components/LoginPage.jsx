@@ -273,7 +273,7 @@ const LoginPage = () => {
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
-                                  <FaUser className="input-icon" />
+                                  {/* <FaUser className="input-icon" /> */}
                                   <Form.Control
                                     type="text"
                                     name="name"
