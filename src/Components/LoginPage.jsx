@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
 import axios from "../Api/axios/axios_config";
+
 // import './Login.css';
 
 const LoginPage = () => {
@@ -20,7 +21,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [resetStep, setResetStep] = useState('login'); // 'login', 'email', 'otp', 'reset'
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -36,7 +37,7 @@ const LoginPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    const { name, email, password, confirmPassword, resetEmail, otp, newPassword, confirmNewPassword } = formData;
+    const { fullName, email, password, confirmPassword, resetEmail, otp, newPassword, confirmNewPassword } = formData;
 
     if (resetStep === 'login') {
       if (!email) newErrors.email = 'Email is required';
@@ -46,7 +47,7 @@ const LoginPage = () => {
       else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
 
       if (!isLogin) {
-        if (!name) newErrors.name = 'Name is required';
+        if (!fullName) newErrors.fullName = 'fullName is required';
         if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
       }
     } else if (resetStep === 'email') {
@@ -200,7 +201,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     setFormData({
-      name: '',
+      fullName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -220,7 +221,7 @@ const LoginPage = () => {
   };
 
 
-  const handleRegister = async (e) => {
+const handleRegister = async (e) => {
   e.preventDefault();
   const newErrors = validateForm();
   if (Object.keys(newErrors).length > 0) {
@@ -229,19 +230,20 @@ const LoginPage = () => {
     return;
   }
 
-  const formDataToSend = new FormData();
-  formDataToSend.append('fullName', formData.name);
-  formDataToSend.append('email', formData.email);
-  formDataToSend.append('password', formData.password);
-
   const toastId = toast.loading('Registering...');
+
   try {
-    const response = await axios.post("/user/registerUser", formDataToSend);
+    const response = await axios.post("/user/registerUser", {
+      fullName: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    });
+
     toast.dismiss(toastId);
 
     if (response.data.success) {
       toast.success("Registration successful! Please log in.");
-      setIsLogin(true); // Switch to login form
+      setIsLogin(true);
     } else {
       toast.error(response.data.message || "Registration failed.");
     }
@@ -251,6 +253,7 @@ const LoginPage = () => {
     toast.error(error.response?.data?.message || "Registration failed.");
   }
 };
+
 
 
   return (
@@ -315,15 +318,15 @@ const LoginPage = () => {
                                   {/* <FaUser className="input-icon" /> */}
                                   <Form.Control
                                     type="text"
-                                    name="name"
+                                    name="fullName"
                                     placeholder="Full Name"
-                                    value={formData.name}
+                                    value={formData.fullName}
                                     onChange={handleInputChange}
-                                    isInvalid={!!errors.name}
+                                    isInvalid={!!errors.fullName}
                                   />
                                 </div>
                                 <Form.Control.Feedback type="invalid">
-                                  {errors.name}
+                                  {errors.fullName}
                                 </Form.Control.Feedback>
                               </Form.Group>
                             )}
@@ -412,19 +415,19 @@ const LoginPage = () => {
                               {isLogin ? 'Sign In' : 'Register'}
                             </Button>
                             <div className="social-login mt-3 text-center">
-                              <p>or continue with</p>
+                              {/* <p>or continue with</p> */}
                               <div className=" d-flex  justify-content-center">
                                 {/* <Button variant="outline-primary" className="social-button">
                                   <FaFacebookF />
                                 </Button> */}
-                                <Button variant="outline-danger" className="hover-class m-0 p-0 border-0">
+                                {/* <Button variant="outline-danger" className="hover-class m-0 p-0 border-0">
                                   <FaGoogle className='border-0' size={"25px"} />
                                 
                                 <span  className='hover-class' style={{color:"red",fontSize:"larger",
                                 position:"relative",left:"-0%"
                                   
                                 }}>oogle</span>
-                                </Button>
+                                </Button> */}
                                 {/* <Button variant="outline-dark" className="social-button">
                                   <FaApple />
                                 </Button> */}
