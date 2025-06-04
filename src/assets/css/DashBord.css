@@ -56,6 +56,7 @@ body {
     padding: 20px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 20px;
+
 }
 
 .logo {
@@ -115,6 +116,7 @@ body {
 .main-content {
     flex-grow: 1;
     /* margin-left: 250px; */
+    
     min-height: 100vh;
     background-color: var(--primary-bg);
     transition: all 0.3s ease;
@@ -298,7 +300,7 @@ body {
     }
 
     .user-name {
-        display: none;
+        /* display: none; */
     }
 
     .nav-right {
@@ -330,7 +332,7 @@ body {
     }
 
     .user-name {
-        display: none;
+        /* display: none; */
     }
 }
 
@@ -452,8 +454,11 @@ body {
 .view-all-btn {
     color: var(--primary-color);
     font-size: 14px;
-    padding: 0;
+    /* padding: 0; */
     font-weight: 500;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 20px ;
 }
 
 .booking-list {
@@ -873,7 +878,7 @@ body {
     }
 
     .user-name {
-        display: none;
+        /* display: none; */
     }
 
     .welcome-heading {
@@ -1068,4 +1073,9 @@ body {
 
 .custom-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+@media (max-width: 767px) {
+        .nav-right {
+            height: 50px;
+        }
 }

@@ -7,60 +7,55 @@ import {
   Button,
   Modal,
   Form,
-  Tab,
-  Nav,
 } from "react-bootstrap";
 import {
   FaPrayingHands,
   FaCalendarAlt,
-  FaUsers,
   FaBell,
   FaUserCircle,
   FaBars,
 } from "react-icons/fa";
 import {
   MdDashboard,
-  MdPayment,
-  MdSettings,
   MdLogout,
   MdNotifications,
-  MdEdit,
   MdClose,
+  MdDelete,
 } from "react-icons/md";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../../assets/css/Dashbord.css";
-// import poojaVideo from '../../assets/videos/pooja-video.mp4'
 import axios from "../../Api/axios/axios_config";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from "../../redux/action/authAction";
 import { useNavigate } from "react-router-dom";
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
-
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [completedPuja, setCompletePuja] = useState([]);
   const bellRef = useRef();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-
-  
   useEffect(() => {
     const getNotification = async () => {
       try {
         const response = await axios.get("/notification/getAllNotifications");
         if (response.data.success) {
-          // Extract heading, message, and createdAt only
           const filteredNotifications = response.data.notifications.map(
-            ({ heading, message, createdAt }) => ({
-              heading,
-              message,
-              createdAt,
-            })
+            ({ _id, heading, message, createdAt }) => {
+              const trimmedMessage = message.split(" for pooja booking id")[0];
+              return {
+                _id,
+                heading,
+                message: trimmedMessage,
+                createdAt,
+              };
+            }
           );
           setNotifications(filteredNotifications);
         }
@@ -71,20 +66,16 @@ const Dashboard = () => {
     getNotification();
   }, []);
 
-
   const handleDeleteNotification = async (id) => {
     try {
       const response = await axios.delete(`/notification/deleteNotification/${id}`);
-      if (response.data.success) {
-        // Remove the deleted notification from the state
+      if (response.data.message) {
         setNotifications((prev) => prev.filter((item) => item._id !== id));
       }
     } catch (err) {
       console.error("Error deleting notification:", err);
     }
   };
-
-
 
   const [bookedPuja, setBookedPuja] = useState([]);
   useEffect(() => {
@@ -95,19 +86,14 @@ const Dashboard = () => {
           endDate: '',
           status: ''
         });
-
         if (response.data.success) {
           const allBookings = response.data.data;
-
-          // Filter based on status from each item
           const pendingOrActive = allBookings.filter(booking =>
             ['Pending', 'Confirmed', 'Cancelled'].includes(booking.status)
           );
-
           const completed = allBookings.filter(booking =>
             booking.status === 'completed'
           );
-
           setBookedPuja(pendingOrActive);
           setCompletePuja(completed);
         }
@@ -115,14 +101,10 @@ const Dashboard = () => {
         console.error("Error fetching user profile:", error);
       }
     };
-
     allBookingData();
   }, []);
 
-
-
   const navigate = useNavigate();
-  // User profile data
   const [userData, setUserData] = useState({
     name: "Nakul Rana",
     email: "Nakul.rana@example.com",
@@ -131,7 +113,6 @@ const Dashboard = () => {
     profileImage: "/images/user-avatar.jpg",
   });
 
-  // Handle window resize for responsive behavior
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 992) {
@@ -140,31 +121,23 @@ const Dashboard = () => {
         setShowSidebar(true);
       }
     };
-
-    // Set initial state
     handleResize();
-
-    // Add event listener
     window.addEventListener("resize", handleResize);
-
-    // Clean up
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
- const handleLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
     navigate('/');
   };
 
   useEffect(() => {
-    // Initialize AOS animation library
     AOS.init({
       duration: 1000,
       once: true,
     });
   }, []);
 
-  // Handle navigation item click
   const handleNavItemClick = (navItem) => {
     setActiveNavItem(navItem);
     if (window.innerWidth < 992) {
@@ -172,15 +145,12 @@ const Dashboard = () => {
     }
   };
 
-  // Handle profile form submit
   const handleProfileSubmit = (e) => {
     e.preventDefault();
-    // In a real app, you'd send this data to your API
     console.log("Profile updated:", userData);
     setShowProfileModal(false);
   };
 
-  // Handle profile input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData((prev) => ({
@@ -188,7 +158,6 @@ const Dashboard = () => {
       [name]: value,
     }));
   };
-
 
   const importedVideos = [
     {
@@ -205,22 +174,16 @@ const Dashboard = () => {
     },
   ];
 
-
-
-
-  // Render content based on active nav item
   const renderContent = () => {
     switch (activeNavItem) {
       case "dashboard":
         return renderDashboardContent();
-
       case "bookings":
         return renderMyBookingDetals();
-
       case "book":
         return renderMyBookedDetals();
-              
-        // return renderMypopDetals();
+      case "notifications":
+        return renderNotifications();
       default:
         return (
           <div className="content-placeholder">
@@ -257,113 +220,109 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="dashboard-container ">
-        {/* Mobile Menu Toggle */}
+      <div className="dashboard-container">
         <div
           className="mobile-toggle"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
         </div>
-        {/* For mobilr view */}
         <div
-          className={`sidebar d-block d-md-none ${showSidebar ? "active" : ""}`}
-        >
-          <div
-            className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
-              }`}
-            onClick={() => handleNavItemClick("dashboard")}
-          >
-            <MdDashboard size={22} />
-            <span>Dashboard</span>
-          </div>
-          <div
-            className={`menu-item ${activeNavItem === "book" ? "active" : ""}`}
-            onClick={() => handleNavItemClick("book")}
-          >
-            <FaPrayingHands size={20} />
-            <span>Book Pooja</span>
-          </div>
-          <div
-            className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
-              }`}
-            onClick={() => handleNavItemClick("bookings")}
-          >
-            <FaCalendarAlt size={20} />
-            <span>Completed Pooja</span>
-          </div>
-
-
-
-          <div
-            className={`menu-item ${activeNavItem === "profile" ? "active" : ""
-              }`}
-            onClick={() => handleNavItemClick("profile")}
-          >
-            <FaUserCircle size={20} />
-            <span>My Profile</span>
-          </div>
-
-          <div className="menu-item logout" onClick={() => handleLogout()}>
-            <MdLogout size={22} />
-            <span>Logout</span>
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div
-          className={`sidebar col-12 col-lg-2 ${showSidebar ? "show" : "hide"}`}
+          className={`sidebar d-block d-lg-none ${showSidebar ? "active" : ""}`}
         >
           <div className="logo-container">
             <h2 className="logo">BookmyYagna</h2>
-            {/* <p className="logo-subtitle">Divine Bookings</p> */}
           </div>
           <div className="sidebar-menu">
             <div
-              className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""
-                }`}
+              className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""}`}
               onClick={() => handleNavItemClick("dashboard")}
             >
               <MdDashboard size={22} />
               <span>Dashboard</span>
             </div>
             <div
-              className={`menu-item ${activeNavItem === "book" ? "active" : ""
-                }`}
+              className={`menu-item ${activeNavItem === "book" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("book")}
+            >
+              <FaPrayingHands size={20} />
+              <span>Book Pooja</span>
+            </div>
+            <div
+              className={`menu-item ${activeNavItem === "bookings" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("bookings")}
+            >
+              <FaCalendarAlt size={20} />
+              <span>Completed Pooja</span>
+            </div>
+            {/* <div
+              className={`menu-item ${activeNavItem === "notifications" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("notifications")}
+            >
+              <FaBell size={20} />
+              <span>Notifications</span>
+            </div> */}
+            {/* <div
+              className={`menu-item ${activeNavItem === "profile" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("profile")}
+            >
+              <FaUserCircle size={20} />
+              <span>My Profile</span>
+            </div> */}
+            <div className="mt-auto">
+              <div className="menu-item logout " onClick={() => handleLogout()}>
+                <MdLogout size={22} />
+                <span>Logout</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`sidebar col-12 col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
+        >
+          <div className="logo-container">
+            <h2 className="logo">BookmyYagna</h2>
+          </div>
+          <div className="sidebar-menu">
+            <div
+              className={`menu-item ${activeNavItem === "dashboard" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("dashboard")}
+            >
+              <MdDashboard size={22} />
+              <span>Dashboard</span>
+            </div>
+            <div
+              className={`menu-item ${activeNavItem === "book" ? "active" : ""}`}
               onClick={() => handleNavItemClick("book")}
             >
               <FaPrayingHands size={20} />
               <span>Booked Pooja</span>
             </div>
             <div
-              className={`menu-item ${activeNavItem === "bookings" ? "active" : ""
-                }`}
+              className={`menu-item ${activeNavItem === "bookings" ? "active" : ""}`}
               onClick={() => handleNavItemClick("bookings")}
             >
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
-             {/* <div
-              className={`menu-item ${activeNavItem === "pop" ? "active" : ""
-                }`}
-              onClick={() => handleNavItemClick("pop")}
+            {/* <div
+              className={`menu-item ${activeNavItem === "notifications" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("notifications")}
             >
-              <FaCalendarAlt size={20} />
-              <span>pop</span>
+              <FaBell size={20} />
+              <span>Notifications</span>
             </div> */}
-
-            <div className="menu-item logout" onClick={handleLogout}>
+            <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />
               <span>Logout</span>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
         <div
-          className={`main-content col-lg-10 ${showSidebar ? "" : "expanded"}`}
+          className={`main-content col-12 col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
-          {/* Top Navigation */}
           <div className="top-nav">
             <div className="search-bar">
               <input type="text" placeholder="Search for poojas, priests, temples..." />
@@ -372,13 +331,11 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="nav-right">
-
               <div
-                className="user-profile me-4 me-md-3"
+                className="user-profile me-2 me-md-3"
                 onClick={() => setShowProfileModal(true)}
               >
-
-                <span className="user-name d-none d-md-inline">
+                <span className="user-name">
                   {user?.fullName}
                 </span>
               </div>
@@ -388,21 +345,17 @@ const Dashboard = () => {
                 onClick={() => setShowNotifications(!showNotifications)}
               >
                 <MdNotifications size={24} />
-                {/* Safely check notifications */}
                 {Array.isArray(notifications) && notifications.length > 0 && (
                   <span className="notification-badge">{notifications.length}</span>
                 )}
-
                 {showNotifications && (
                   <div className="notification-popup">
                     {Array.isArray(notifications) && notifications.length > 0 ? (
-                      notifications.slice(0,3).map((item, index) => (
+                      notifications.slice(0, 3).map((item, index) => (
                         <div key={index} className="notification-item">
-                          <div className="">
-                            <h4 className="popup-heading border-0 ">{item.heading}</h4>
-                            {/* <p className="popup-message">
-                              {item.message.replace(/ for pooja booking id \w+\./, ".")}
-                            </p> */}
+                          <div>
+                            <h4 className="popup-heading border-0">{item.heading}</h4>
+                            <p className="popup-message">{item.message}</p>
                             <p className="popup-time">
                               {new Date(item.createdAt).toLocaleString("en-IN", {
                                 day: "2-digit",
@@ -415,29 +368,29 @@ const Dashboard = () => {
                               })}
                             </p>
                           </div>
-                          {/* Add <hr /> between items, except after the last one */}
-                          {index !== notifications.length - 1 && <hr className="notification-separator" />}
+                          {index !== notifications.slice(0, 3).length - 1 && <hr className="notification-separator" />}
                         </div>
                       ))
                     ) : (
                       <p className="popup-message">No new notifications.</p>
                     )}
-                    <button onClick={()=> renderMypopDetals() }>View All</button>
+                    <div className="text-center">
+                      <button
+                        className="view-all-btn"
+                        onClick={() => {
+                          setShowNotifications(false);
+                          handleNavItemClick("notifications");
+                        }}
+                      >
+                        View All
+                      </button>
+                    </div>
                   </div>
                 )}
-
               </div>
-
-
-
             </div>
           </div>
-
-
-          {/* Dynamic Content Based on Navigation */}
           {renderContent()}
-
-          {/* Profile Modal */}
           <Modal
             show={showProfileModal}
             onHide={() => setShowProfileModal(false)}
@@ -450,7 +403,7 @@ const Dashboard = () => {
             </Modal.Header>
             <Modal.Body>
               <Row>
-                <Col lg={8}>
+                <Col xs={12} lg={8}>
                   <Form onSubmit={handleProfileSubmit}>
                     <Form.Group className="mb-3">
                       <Form.Label>Full Name</Form.Label>
@@ -491,7 +444,7 @@ const Dashboard = () => {
       </div>
       <footer className="dashboard-footer position-fixed bottom-0 w-100">
         <div className="footer-content text-center">
-          <p className="mb-1">&copy; 2025 BookmyYagna. All rights reserved.</p>
+          <p className="m-0">© 2025 BookmyYagna. All rights reserved.</p>
           <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
@@ -499,27 +452,80 @@ const Dashboard = () => {
           </div>
         </div>
       </footer>
-
     </>
   );
-  function renderMypopDetals(){
-    return(
-      <>
-      <h1>pop</h1>
-      </>
-    )
+
+  function renderNotifications() {
+    return (
+      <div className="container py-3 py-md-5">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2>All Notifications</h2>
+          </div>
+          <div className="table-responsive">
+            <table className="custom-table table table-bordered table-striped">
+              <thead className="table-warning">
+                <tr>
+                  <th>Heading</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(notifications) && notifications.length > 0 ? (
+                  notifications.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.heading}</td>
+                      <td>{item.message}</td>
+                      <td>
+                        {new Date(item.createdAt).toLocaleString("en-IN", {
+                          timeZone: "Asia/Kolkata",
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}
+                      </td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDeleteNotification(item._id)}
+                        >
+                          <MdDelete size={20} />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">
+                      No notifications available.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   function renderMyBookedDetals() {
     return (
-      <>
-        <div className="container py-5">
-          <div className="row">
-            <div className="text-center fs-1">
-              <h2>Booked Pooja</h2>
-            </div>
-            <table class="custom-table table-responsive">
-              <thead>
+      <div className="container py-3 py-md-5" data-aos="zoom-in"
+        data-aos-delay="100">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2>Booked Pooja</h2>
+          </div>
+          <div className="table-responsive">
+            <table className="custom-table table table-bordered table-striped">
+              <thead className="table-warning">
                 <tr>
                   <th>Account Name</th>
                   <th>Plan Name</th>
@@ -527,7 +533,7 @@ const Dashboard = () => {
                   <th>Phone Number</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>Pooja Mod</th>
+                  <th>Pooja Mode</th>
                   <th>Date of Pooja</th>
                 </tr>
               </thead>
@@ -552,173 +558,27 @@ const Dashboard = () => {
                         hour12: true
                       })}
                     </td>
-
                   </tr>
                 ))}
               </tbody>
             </table>
-
           </div>
-
         </div>
-      </>
-    )
-  }
-
-
-  function renderMyBookingDetals() {
-    return (
-      <>
-
-        <div className="container py-5 ">
-          <div className="row">
-            <div className="text-center fs-1">
-              <h2>Completed Pooja</h2>
-            </div>
-            <div className="custom-table table-responsive">
-              <table className="table table-bordered table-striped">
-                <thead className="table-warning">
-                  <tr>
-                    <th>Account Name</th>
-                    <th>Plan Name</th>
-                    <th>Amount</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                    <th>Status</th>
-                    <th>Pooja Mod</th>
-                    <th>Date of Pooja</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {completedPuja?.map((data, index) => (
-                    <tr key={index}>
-                      <td>{data.userId.fullName}</td>
-                      <td>{data.planId.heading}</td>
-                      <td>{data.planId.amount}</td>
-                      <td>{data.phoneNumber}</td>
-                      <td>{data.address}</td>
-                      <td>{data.status}</td>
-                      <td>{data.poojaMode}</td>
-                      <td>
-                        {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                          timeZone: 'Asia/Kolkata',
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true
-                        })}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-
-          </div>
-
-        </div>
-      </>
+      </div>
     );
   }
 
-
-
-  // Dashboard content render function
-  function renderDashboardContent() {
+  function renderMyBookingDetals() {
     return (
-      <>
-        <Container fluid className="dashboard-content">
-          <Row>
-            <Col>
-              <h1 className="welcome-heading" data-aos="fade-right">
-                <span className="namaste">नमस्ते</span>,{" "}
-                {user?.fullName.split(" ")[0]}!
-              </h1>
-              <p
-                className="welcome-subtext"
-                data-aos="fade-right"
-                data-aos-delay="200"
-              >
-                Welcome back to your spiritual journey
-              </p>
-            </Col>
-          </Row>
-
-          {/* Stats Cards */}
-          <Row className="stats-row">
-            <Col
-              lg={4}
-              md={6}
-              className="stats-col col-6"
-              data-aos="zoom-in"
-              data-aos-delay="100"
-            >
-              <Card className="stats-card">
-                <Card.Body>
-                  <div className="stats-icon">
-                    <FaCalendarAlt />
-                  </div>
-                  <div className="stats-info">
-                    <h5>Upcoming Poojas</h5>
-                    <h2>{bookedPuja.length}</h2>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col
-              lg={4}
-              md={6}
-              className="stats-col col-6"
-              data-aos="zoom-in"
-              data-aos-delay="200"
-            >
-              <Card className="stats-card">
-                <Card.Body>
-                  <div className="stats-icon">
-                    <FaPrayingHands />
-                  </div>
-                  <div className="stats-info">
-                    <h5>Completed Poojas</h5>
-                    <h2>{completedPuja.length}</h2>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col
-              lg={4}
-              md={6}
-              sm={6}
-              className="stats-col col-6"
-              data-aos="zoom-in"
-              data-aos-delay="400"
-            >
-              <Card className="stats-card">
-                <Card.Body>
-                  <div className="stats-icon">
-                    <FaBell />
-                  </div>
-                  <div className="stats-info">
-                    <h5>Notifications</h5>
-                    <h2>{notifications.length}</h2>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-
-          {/* Upcoming Bookings */}
-
-
-          <div className="text-center fs-1">
-            <h2>Booked Pooja</h2>
+      <div className="container py-3 py-md-5" data-aos="zoom-in"
+        data-aos-delay="100">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2>Completed Pooja</h2>
           </div>
           <div className="table-responsive">
-            <table className="custom-table table table-bordered">
-              <thead>
+            <table className="custom-table table table-bordered table-striped">
+              <thead className="table-warning">
                 <tr>
                   <th>Account Name</th>
                   <th>Plan Name</th>
@@ -726,7 +586,7 @@ const Dashboard = () => {
                   <th>Phone Number</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>Pooja Mod</th>
+                  <th>Pooja Mode</th>
                   <th>Date of Pooja</th>
                 </tr>
               </thead>
@@ -756,15 +616,135 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+    );
+  }
 
-
-
-
-          {/* Calendar Card */}
-
-          {/* Testimonials */}
-        </Container>
-      </>
+  function renderDashboardContent() {
+    return (
+      <Container fluid className="dashboard-content py-3 py-md-5">
+        <Row>
+          <Col xs={12}>
+            <h1 className="welcome-heading" data-aos="fade-right">
+              <span className="namaste">नमस्ते</span>,{" "}
+              {user?.fullName.split(" ")[0]}!
+            </h1>
+            <p
+              className="welcome-subtext"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
+              Welcome back to your spiritual journey
+            </p>
+          </Col>
+        </Row>
+        <Row className="stats-row">
+          <Col
+            xs={12}
+            sm={6}
+            md={4}
+            className="stats-col mb-3"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <Card className="stats-card">
+              <Card.Body>
+                <div className="stats-icon">
+                  <FaCalendarAlt />
+                </div>
+                <div className="stats-info">
+                  <h5>Upcoming Poojas</h5>
+                  <h2>{bookedPuja.length}</h2>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+            md={4}
+            className="stats-col mb-3"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <Card className="stats-card">
+              <Card.Body>
+                <div className="stats-icon">
+                  <FaPrayingHands />
+                </div>
+                <div className="stats-info">
+                  <h5>Completed Poojas</h5>
+                  <h2>{completedPuja.length}</h2>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+            md={4}
+            className="stats-col mb-3"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <Card className="stats-card">
+              <Card.Body>
+                <div className="stats-icon">
+                  <FaBell />
+                </div>
+                <div className="stats-info">
+                  <h5>Notifications</h5>
+                  <h2>{notifications.length}</h2>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <div className="text-center fs-1 mb-3">
+          <h2>Booked Pooja</h2>
+        </div>
+        <div className="table-responsive">
+          <table className="custom-table table table-bordered table-striped">
+            <thead className="table-warning">
+              <tr>
+                <th>Account Name</th>
+                <th>Plan Name</th>
+                <th>Amount</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Pooja Mode</th>
+                <th>Date of Pooja</th>
+              </tr>
+            </thead>
+            <tbody>
+              {completedPuja?.map((data, index) => (
+                <tr key={index}>
+                  <td>{data.userId.fullName}</td>
+                  <td>{data.planId.heading}</td>
+                  <td>{data.planId.amount}</td>
+                  <td>{data.phoneNumber}</td>
+                  <td>{data.address}</td>
+                  <td>{data.status}</td>
+                  <td>{data.poojaMode}</td>
+                  <td>
+                    {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                      timeZone: 'Asia/Kolkata',
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Container>
     );
   }
 };

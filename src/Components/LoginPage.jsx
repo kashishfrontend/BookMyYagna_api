@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import {
-  FaUser, FaLock, FaEnvelope, FaFacebookF, FaGoogle, FaApple, FaEye, FaEyeSlash, FaOm
+  FaUser, FaEnvelope, FaLock, FaFacebookF, FaGoogle, FaApple, FaEye, FaEyeSlash, FaOm
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
+import axios from "../Api/axios/axios_config";
 // import './Login.css';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { success, error, loading, isAuthenticated } = useSelector((state) => state.auth);
+  const { success, error, loading } = useSelector((state) => state.auth);
 
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [showResetSection, setShowResetSection] = useState('login'); // 'login', 'email', 'otp', 'reset'
+  const [resetStep, setResetStep] = useState('login'); // 'login', 'email', 'otp', 'reset'
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
+    password: '',
     confirmPassword: '',
     rememberMe: false,
     resetEmail: '',
@@ -28,76 +30,38 @@ const LoginPage = () => {
     newPassword: '',
     confirmNewPassword: '',
   });
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
 
-  let loadingToastId = null;
+  const validateForm = () => {
+    const newErrors = {};
+    const { name, email, password, confirmPassword, resetEmail, otp, newPassword, confirmNewPassword } = formData;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
+    if (resetStep === 'login') {
+      if (!email) newErrors.email = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
+      
+      if (!password) newErrors.password = 'Password is required';
+      else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    if (showResetSection === 'login') {
-      loadingToastId = toast.loading('Authenticating...');
-      dispatch(login(email, password));
-    } else if (showResetSection === 'email') {
-      // Simulate sending OTP
-      toast.success('OTP sent to your email');
-      setShowResetSection('otp');
-    } else if (showResetSection === 'otp') {
-      // Simulate OTP verification
-      toast.success('OTP verified');
-      setShowResetSection('reset');
-    } else if (showResetSection === 'reset') {
-      if (formData.newPassword !== formData.confirmNewPassword) {
-        setErrors({ confirmNewPassword: 'Passwords do not match' });
-        return;
+      if (!isLogin) {
+        if (!name) newErrors.name = 'Name is required';
+        if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
       }
-      toast.success('Password reset successful');
-      setShowResetSection('login');
-    }
-  };
-
-  useEffect(() => {
-    if (success) {
-      toast.dismiss(loadingToastId);
-      toast.success('Authentication Successful');
-      setTimeout(() => {
-        dispatch(resetLogin());
-        navigate('/');
-      }, 1000);
+    } else if (resetStep === 'email') {
+      if (!resetEmail) newErrors.resetEmail = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(resetEmail)) newErrors.resetEmail = 'Email is invalid';
+    } else if (resetStep === 'otp') {
+      if (!otp) newErrors.otp = 'OTP is required';
+      else if (!/^\d{4,6}$/.test(otp)) newErrors.otp = 'OTP must be a 4-6 digit number';
+    } else if (resetStep === 'reset') {
+      if (!newPassword) newErrors.newPassword = 'New password is required';
+      else if (newPassword.length < 6) newErrors.newPassword = 'Password must be at least 6 characters';
+      if (newPassword !== confirmNewPassword) newErrors.confirmNewPassword = 'Passwords do not match';
     }
 
-    if (error) {
-      toast.dismiss(loadingToastId);
-      toast.error(error);
-      dispatch(resetLogin());
-    }
-  }, [success, error, dispatch, navigate]);
-
-  useEffect(() => {
-    setFormData({
-      name: '',
-      confirmPassword: '',
-      rememberMe: false,
-      resetEmail: '',
-      otp: '',
-      newPassword: '',
-      confirmNewPassword: '',
-    });
-    setErrors({});
-    setEmail('');
-    setPassword('');
-  }, [isLogin, showResetSection]);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
+    return newErrors;
   };
 
   const handleInputChange = (e) => {
@@ -106,62 +70,144 @@ const LoginPage = () => {
       ...prev,
       [name]: name === 'rememberMe' ? checked : value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+  };
 
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
+  const handleSendOtp = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fix the errors in the form');
+      return;
+    }
+
+    setIsOtpLoading(true);
+    try {
+      const response = await axios.post("/user/forgetPassword", { email: formData.resetEmail });
+      console.log('Send OTP Response:', response.data); // Debugging log
+      if (response.data.success) {
+        toast.success('OTP sent to your email');
+        setResetStep('otp');
+      } else {
+        toast.error(response.data.message || 'Failed to send OTP. Try again.');
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      toast.error(error.response?.data?.message || 'Failed to send OTP. Check your email and try again.');
+    } finally {
+      setIsOtpLoading(false);
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (showResetSection === 'login') {
-      if (!email) {
-        newErrors.email = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(email)) {
-        newErrors.email = 'Email is invalid';
-      }
-
-      if (!password) {
-        newErrors.password = 'Password is required';
-      } else if (password.length < 6) {
-        newErrors.password = 'Password must be at least 6 characters';
-      }
-
-      if (!isLogin && !formData.name) {
-        newErrors.name = 'Name is required';
-      }
-
-      if (!isLogin && password !== formData.confirmPassword) {
-        newErrors.confirmPassword = 'Passwords do not match';
-      }
-    } else if (showResetSection === 'email') {
-      if (!formData.resetEmail) {
-        newErrors.resetEmail = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(formData.resetEmail)) {
-        newErrors.resetEmail = 'Email is invalid';
-      }
-    } else if (showResetSection === 'otp') {
-      if (!formData.otp) {
-        newErrors.otp = 'OTP is required';
-      }
-    } else if (showResetSection === 'reset') {
-      if (!formData.newPassword) {
-        newErrors.newPassword = 'New password is required';
-      } else if (formData.newPassword.length < 6) {
-        newErrors.newPassword = 'Password must be at least 6 characters';
-      }
-
-      if (formData.newPassword !== formData.confirmNewPassword) {
-        newErrors.confirmNewPassword = 'Passwords do not match';
-      }
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fix the errors in the form');
+      return;
     }
 
-    return newErrors;
+    setIsOtpLoading(true);
+    try {
+      const response = await axios.post('/user/matchOtp', {
+        email: formData.resetEmail,
+        otp: formData.otp,
+      });
+      console.log('Verify OTP Response:', response.data); // Debugging log
+      if (response.data.success) {
+        toast.success('OTP verified!');
+        setResetStep('reset');
+      } else {
+        toast.error(response.data.message || 'Incorrect OTP');
+      }
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      toast.error(error.response?.data?.message || 'OTP verification failed');
+    } finally {
+      setIsOtpLoading(false);
+    }
   };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fix the errors in the form');
+      return;
+    }
+
+    setIsOtpLoading(true);
+    try {
+      const response = await axios.post("/user/resetPassword", {
+        email: formData.resetEmail,
+        newPassword: formData.newPassword,
+      });
+      console.log('Reset Password Response:', response.data); // Debugging log
+      if (response.data.success) {
+        toast.success('Password reset successfully');
+        setShowSuccessModal(true);
+      } else {
+        toast.error(response.data.message || 'Failed to reset password');
+      }
+    } catch (error) {
+      console.error('Reset password error:', error);
+      toast.error(error.response?.data?.message || 'Error resetting password');
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fix the errors in the form');
+      return;
+    }
+
+    const toastId = toast.loading('Authenticating...');
+    try {
+      await dispatch(login(formData.email, formData.password)).unwrap();
+      toast.dismiss(toastId);
+    } catch {
+      toast.dismiss(toastId);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      toast.success('Authentication Successful');
+      setTimeout(() => {
+        dispatch(resetLogin());
+        navigate('/');
+      }, 1000);
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(resetLogin());
+    }
+  }, [success, error, dispatch, navigate]);
+
+  useEffect(() => {
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      rememberMe: false,
+      resetEmail: '',
+      otp: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    });
+    setErrors({});
+  }, [isLogin, resetStep]);
+
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   const variants = {
     hidden: { opacity: 0, x: -50 },
@@ -174,41 +220,42 @@ const LoginPage = () => {
       <section className="login-section">
         <Container>
           <Row className="justify-content-center">
-            <Col lg={10} className="">
+            <Col xs={12} md={10} lg={8}>
               <div className="login-container shadow-lg">
                 <Row>
-                  <Col md={6} className="login-image-container">
-                    <div className="login-decorative-content  height-class">
-                      <FaOm className="om-symbol1" />
+                  <Col md={6} className="login-image-container d-none d-md-block">
+                    <div className="login-decorative-content">
+                      <FaOm className="om-symbol text-light" style={{fontSize:"60px",
+                        opacity:"1"
+                      }} />
                       <h2>
-                        {showResetSection === 'login'
+                        {resetStep === 'login'
                           ? isLogin
                             ? 'Welcome Back'
                             : 'Join Our Community'
-                          : showResetSection === 'email'
-                            ? 'Reset Your Password'
-                            : showResetSection === 'otp'
-                              ? 'Verify OTP'
-                              : 'Set New Password'}
+                          : resetStep === 'email'
+                          ? 'Reset Your Password'
+                          : resetStep === 'otp'
+                          ? 'Verify OTP'
+                          : 'Set New Password'}
                       </h2>
                       <p>
-                        {showResetSection === 'login'
+                        {resetStep === 'login'
                           ? isLogin
-                            ? 'Connect with your spiritual journey and manage your pooja bookings'
-                            : 'Begin your spiritual journey with us and access our exclusive pooja services'
-                          : showResetSection === 'email'
-                            ? 'Enter your email to receive an OTP for password reset'
-                            : showResetSection === 'otp'
-                              ? 'Enter the OTP sent to your email to verify'
-                              : 'Set a new password to continue your spiritual journey'}
+                            ? 'Connect with your spiritual journey'
+                            : 'Begin your spiritual journey with us'
+                          : resetStep === 'email'
+                          ? 'Enter your email to receive an OTP'
+                          : resetStep === 'otp'
+                          ? 'Enter the OTP sent to your email'
+                          : 'Set a new password to continue'}
                       </p>
                       <div className="login-mandala"></div>
                     </div>
                   </Col>
-
-                  <Col md={6} className="login-form-container">
+                  <Col xs={12} md={6} className="login-form-container">
                     <AnimatePresence mode="wait">
-                      {showResetSection === 'login' && (
+                      {resetStep === 'login' && (
                         <motion.div
                           key="login"
                           className="login-form-wrapper"
@@ -216,22 +263,17 @@ const LoginPage = () => {
                           animate="visible"
                           exit="exit"
                           variants={variants}
-                          transition={{ duration: 0.5 }}
+                          transition={{ duration: 0.3 }}
                         >
                           <div className="login-header">
                             <h3>{isLogin ? 'Sign In' : 'Create Account'}</h3>
-                            <p>
-                              {isLogin
-                                ? 'Enter your details to access your account'
-                                : 'Fill in your information to register'}
-                            </p>
+                            <p>{isLogin ? 'Access your account' : 'Register to start'}</p>
                           </div>
-
                           <Form onSubmit={handleSubmit}>
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
-                                  <FaUser  className="input-icon" />
+                                  <FaUser className="input-icon" />
                                   <Form.Control
                                     type="text"
                                     name="name"
@@ -241,36 +283,36 @@ const LoginPage = () => {
                                     isInvalid={!!errors.name}
                                   />
                                 </div>
-                                {errors.name && <div className="error-message">{errors.name}</div>}
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.name}
+                                </Form.Control.Feedback>
                               </Form.Group>
                             )}
-
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaEnvelope className="input-icon" /> */}
                                 <Form.Control
-                                  className="my-input"
                                   type="email"
                                   name="email"
                                   placeholder="Email Address"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
+                                  value={formData.email}
+                                  onChange={handleInputChange}
                                   isInvalid={!!errors.email}
                                 />
                               </div>
-                              {errors.email && <div className="error-message">{errors.email}</div>}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaLock className="input-icon" /> */}
                                 <Form.Control
-                                  className="my-input"
                                   type={showPassword ? 'text' : 'password'}
                                   name="password"
                                   placeholder="Password"
-                                  value={password}
-                                  onChange={(e) => setPassword(e.target.value)}
+                                  value={formData.password}
+                                  onChange={handleInputChange}
                                   isInvalid={!!errors.password}
                                 />
                                 <button
@@ -281,9 +323,10 @@ const LoginPage = () => {
                                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                               </div>
-                              {errors.password && <div className="error-message">{errors.password}</div>}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.password}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
@@ -297,12 +340,11 @@ const LoginPage = () => {
                                     isInvalid={!!errors.confirmPassword}
                                   />
                                 </div>
-                                {errors.confirmPassword && (
-                                  <div className="error-message">{errors.confirmPassword}</div>
-                                )}
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.confirmPassword}
+                                </Form.Control.Feedback>
                               </Form.Group>
                             )}
-
                             {isLogin && (
                               <div className="d-flex justify-content-between align-items-center mb-3">
                                 <Form.Check
@@ -316,13 +358,12 @@ const LoginPage = () => {
                                 <button
                                   type="button"
                                   className="forgot-password"
-                                  onClick={() => setShowResetSection('email')}
+                                  onClick={() => setResetStep('email')}
                                 >
                                   Forgot Password?
                                 </button>
                               </div>
                             )}
-
                             <Button
                               variant="primary"
                               type="submit"
@@ -331,7 +372,6 @@ const LoginPage = () => {
                             >
                               {isLogin ? 'Sign In' : 'Register'}
                             </Button>
-
                             <div className="social-login mt-3 text-center">
                               <p>or continue with</p>
                               <div className="social-buttons d-flex justify-content-center gap-2">
@@ -346,12 +386,9 @@ const LoginPage = () => {
                                 </Button>
                               </div>
                             </div>
-
                             <div className="toggle-form text-center mt-3">
                               <p>
-                                {isLogin
-                                  ? "Don't have an account?"
-                                  : 'Already have an account?'}
+                                {isLogin ? "Don't have an account?" : 'Already have an account?'}
                                 <Button
                                   variant="link"
                                   onClick={() => setIsLogin(!isLogin)}
@@ -364,8 +401,7 @@ const LoginPage = () => {
                           </Form>
                         </motion.div>
                       )}
-
-                      {showResetSection === 'email' && (
+                      {resetStep === 'email' && (
                         <motion.div
                           key="email"
                           className="login-form-wrapper"
@@ -373,14 +409,13 @@ const LoginPage = () => {
                           animate="visible"
                           exit="exit"
                           variants={variants}
-                          transition={{ duration: 0.5 }}
+                          transition={{ duration: 0.3 }}
                         >
                           <div className="login-header">
                             <h3>Reset Password</h3>
                             <p>Enter your email to receive an OTP</p>
                           </div>
-
-                          <Form onSubmit={handleSubmit}>
+                          <Form onSubmit={handleSendOtp}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaEnvelope className="input-icon" /> */}
@@ -393,35 +428,31 @@ const LoginPage = () => {
                                   isInvalid={!!errors.resetEmail}
                                 />
                               </div>
-                              {errors.resetEmail && <div className="error-message">{errors.resetEmail}</div>}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.resetEmail}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             <Button
                               variant="primary"
                               type="submit"
                               className="login-button w-100"
-                              disabled={loading}
+                              disabled={isOtpLoading}
                             >
-                              Send OTP
+                              {isOtpLoading ? 'Sending...' : 'Send OTP'}
                             </Button>
-
                             <div className="toggle-form text-center mt-3">
-                              <p>
-                                Back to{' '}
-                                <Button
-                                  variant="link"
-                                  onClick={() => setShowResetSection('login')}
-                                  className="toggle-link"
-                                >
-                                  Login
-                                </Button>
-                              </p>
+                              <Button
+                                variant="link"
+                                onClick={() => setResetStep('login')}
+                                className="toggle-link"
+                              >
+                                Back to Login
+                              </Button>
                             </div>
                           </Form>
                         </motion.div>
                       )}
-
-                      {showResetSection === 'otp' && (
+                      {resetStep === 'otp' && (
                         <motion.div
                           key="otp"
                           className="login-form-wrapper"
@@ -429,14 +460,13 @@ const LoginPage = () => {
                           animate="visible"
                           exit="exit"
                           variants={variants}
-                          transition={{ duration: 0.5 }}
+                          transition={{ duration: 0.3 }}
                         >
                           <div className="login-header">
                             <h3>Verify OTP</h3>
                             <p>Enter the OTP sent to your email</p>
                           </div>
-
-                          <Form onSubmit={handleSubmit}>
+                          <Form onSubmit={handleVerifyOtp}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaOm className="input-icon" /> */}
@@ -449,35 +479,31 @@ const LoginPage = () => {
                                   isInvalid={!!errors.otp}
                                 />
                               </div>
-                              {errors.otp && <div className="error-message">{errors.otp}</div>}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.otp}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             <Button
                               variant="primary"
                               type="submit"
                               className="login-button w-100"
-                              disabled={loading}
+                              disabled={isOtpLoading}
                             >
-                              Verify OTP
+                              {isOtpLoading ? 'Verifying...' : 'Verify OTP'}
                             </Button>
-
                             <div className="toggle-form text-center mt-3">
-                              <p>
-                                Back to{' '}
-                                <Button
-                                  variant="link"
-                                  onClick={() => setShowResetSection('login')}
-                                  className="toggle-link"
-                                >
-                                  Login
-                                </Button>
-                              </p>
+                              <Button
+                                variant="link"
+                                onClick={() => setResetStep('login')}
+                                className="toggle-link"
+                              >
+                                Back to Login
+                              </Button>
                             </div>
                           </Form>
                         </motion.div>
                       )}
-
-                      {showResetSection === 'reset' && (
+                      {resetStep === 'reset' && (
                         <motion.div
                           key="reset"
                           className="login-form-wrapper"
@@ -485,14 +511,13 @@ const LoginPage = () => {
                           animate="visible"
                           exit="exit"
                           variants={variants}
-                          transition={{ duration: 0.5 }}
+                          transition={{ duration: 0.3 }}
                         >
                           <div className="login-header">
                             <h3>Set New Password</h3>
-                            <p>Create a new password for your account</p>
+                            <p>Create a new password</p>
                           </div>
-
-                          <Form onSubmit={handleSubmit}>
+                          <Form onSubmit={handleResetPassword}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaLock className="input-icon" /> */}
@@ -512,9 +537,10 @@ const LoginPage = () => {
                                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                               </div>
-                              {errors.newPassword && <div className="error-message">{errors.newPassword}</div>}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.newPassword}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
                                 {/* <FaLock className="input-icon" /> */}
@@ -527,31 +553,26 @@ const LoginPage = () => {
                                   isInvalid={!!errors.confirmNewPassword}
                                 />
                               </div>
-                              {errors.confirmNewPassword && (
-                                <div className="error-message">{errors.confirmNewPassword}</div>
-                              )}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.confirmNewPassword}
+                              </Form.Control.Feedback>
                             </Form.Group>
-
                             <Button
                               variant="primary"
                               type="submit"
                               className="login-button w-100"
-                              disabled={loading}
+                              disabled={isOtpLoading}
                             >
-                              Reset Password
+                              {isOtpLoading ? 'Resetting...' : 'Reset Password'}
                             </Button>
-
                             <div className="toggle-form text-center mt-3">
-                              <p>
-                                Back to{' '}
-                                <Button
-                                  variant="link"
-                                  onClick={() => setShowResetSection('login')}
-                                  className="toggle-link"
-                                >
-                                  Login
-                                </Button>
-                              </p>
+                              <Button
+                                variant="link"
+                                onClick={() => setResetStep('login')}
+                                className="toggle-link"
+                              >
+                                Back to Login
+                              </Button>
                             </div>
                           </Form>
                         </motion.div>
@@ -563,6 +584,29 @@ const LoginPage = () => {
             </Col>
           </Row>
         </Container>
+        <Modal
+          show={showSuccessModal}
+          onHide={() => setShowSuccessModal(false)}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Password Reset Successful</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Your password has been successfully reset. You can now log in with your new password.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setShowSuccessModal(false);
+                setResetStep('login');
+              }}
+            >
+              Go to Login
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </section>
     </div>
   );

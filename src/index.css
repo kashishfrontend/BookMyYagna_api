@@ -2913,6 +2913,7 @@
 /* Right side - Login form */
 .login-form-container {
   padding: 0;
+  min-height: 500px;
 }
 
 /* input::placeholder {
