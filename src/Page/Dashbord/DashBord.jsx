@@ -354,8 +354,10 @@ const Dashboard = () => {
                       notifications.slice(0, 3).map((item, index) => (
                         <div key={index} className="notification-item">
                           <div>
-                            <h4 className="popup-heading border-0">{item.heading}</h4>
-                            <p className="popup-message">{item.message}</p>
+                            <h4 className="popup-heading border-0 ">{item.heading}</h4>
+                            {/* <p className="popup-message">
+                              {item.message.replace(/ for pooja booking id \w+\./, ".")}
+                            </p> */}
                             <p className="popup-time">
                               {new Date(item.createdAt).toLocaleString("en-IN", {
                                 day: "2-digit",
@@ -402,10 +404,10 @@ const Dashboard = () => {
               <Modal.Title>My Profile</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Row>
-                <Col xs={12} lg={8}>
+              <div >
+                <Col>
                   <Form onSubmit={handleProfileSubmit}>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-12">
                       <Form.Label>Full Name</Form.Label>
                       <Form.Control
                         type="text"
@@ -414,7 +416,7 @@ const Dashboard = () => {
                         onChange={handleInputChange}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-12">
                       <Form.Label>Email Address</Form.Label>
                       <Form.Control
                         type="email"
@@ -425,19 +427,20 @@ const Dashboard = () => {
                     </Form.Group>
                     <div className="d-flex justify-content-end mt-4">
                       <Button
-                        variant="secondary"
+                        variant="danger"
                         className="me-2"
                         onClick={() => setShowProfileModal(false)}
                       >
                         Cancel
                       </Button>
-                      <Button variant="primary" type="submit">
-                        Save Changes
-                      </Button>
+                     <Button type="submit shadow-lg" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)' , border:'none' }}>
+  Save Changes
+</Button>
+
                     </div>
                   </Form>
                 </Col>
-              </Row>
+              </div>
             </Modal.Body>
           </Modal>
         </div>
