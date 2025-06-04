@@ -491,7 +491,7 @@ const handleRegister = async (e) => {
                               <Button
                                 variant="link"
                                 onClick={() => setResetStep('login')}
-                                className="btn btn-outline-danger"
+                                className="btn  btn-btn-outline-primary"
                               >
                                 Back to Login
                               </Button>
@@ -542,7 +542,7 @@ const handleRegister = async (e) => {
                               <Button
                                 variant="link"
                                 onClick={() => setResetStep('login')}
-                                className="toggle-link"
+                                className="btn btn-outline-primary"
                               >
                                 Back to Login
                               </Button>
