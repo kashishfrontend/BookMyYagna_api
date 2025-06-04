@@ -107,9 +107,9 @@ const Testimonial = () => {
                     className="section-header text-center"
 
                 >
-                    <div className="section-sub-heading section-title">
+                    <div className="section-sub-heading ">
                         {/* <span className="line"></span> */}
-                        <h3 className="">Client Experiences</h3>
+                        {/* <h3 className="">Client Experiences</h3> */}
                         {/* <span className="line"></span> */}
                     </div>
                     <h3 className="section-title">What <span className="text-gradient">Devotees Say</span></h3>
