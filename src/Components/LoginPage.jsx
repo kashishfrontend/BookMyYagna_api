@@ -25,11 +25,11 @@ const LoginPage = () => {
     password: '',
     confirmPassword: '',
     rememberMe: false,
-    resetEmail: '',
-    otp: '',
     newPassword: '',
     confirmNewPassword: '',
   });
+  const [resetEmail, setResetEmail] = useState('');
+  const [otp, setOtp] = useState('');
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isOtpLoading, setIsOtpLoading] = useState(false);
@@ -41,7 +41,7 @@ const LoginPage = () => {
     if (resetStep === 'login') {
       if (!email) newErrors.email = 'Email is required';
       else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
-      
+
       if (!password) newErrors.password = 'Password is required';
       else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
 
@@ -74,17 +74,16 @@ const LoginPage = () => {
   };
 
   const handleSendOtp = async (e) => {
+    // console.log('click')
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (!resetEmail) {
       toast.error('Please fix the errors in the form');
       return;
     }
 
     setIsOtpLoading(true);
     try {
-      const response = await axios.post("/user/forgetPassword", { email: formData.resetEmail });
+      const response = await axios.post("/user/forgetPassword", { email: resetEmail });
       console.log('Send OTP Response:', response.data); // Debugging log
       if (response.data.success) {
         toast.success('OTP sent to your email');
@@ -102,20 +101,21 @@ const LoginPage = () => {
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      toast.error('Please fix the errors in the form');
+
+    if (!otp || otp.length<6) {
+      toast.error('Invalid OTP');
       return;
     }
 
-    setIsOtpLoading(true);
+    // setIsOtpLoading(true);
     try {
       const response = await axios.post('/user/matchOtp', {
-        email: formData.resetEmail,
-        otp: formData.otp,
+        email: resetEmail,
+        otp: otp,
       });
-      console.log('Verify OTP Response:', response.data); // Debugging log
+
+      console.log('Verify OTP Response:', response.data);
+
       if (response.data.success) {
         toast.success('OTP verified!');
         setResetStep('reset');
@@ -130,6 +130,7 @@ const LoginPage = () => {
     }
   };
 
+
   const handleResetPassword = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
@@ -141,8 +142,9 @@ const LoginPage = () => {
 
     setIsOtpLoading(true);
     try {
-      const response = await axios.post("/user/resetPassword", {
-        email: formData.resetEmail,
+      const response = await axios.patch("/user/resetPassword", {
+        otp:otp,
+        email: resetEmail,
         newPassword: formData.newPassword,
       });
       console.log('Reset Password Response:', response.data); // Debugging log
@@ -169,6 +171,7 @@ const LoginPage = () => {
       return;
     }
 
+    if (isLogin) {
     const toastId = toast.loading('Authenticating...');
     try {
       await dispatch(login(formData.email, formData.password)).unwrap();
@@ -176,6 +179,9 @@ const LoginPage = () => {
     } catch {
       toast.dismiss(toastId);
     }
+  } else {
+    handleRegister(e); 
+  }
   };
 
   useEffect(() => {
@@ -199,8 +205,6 @@ const LoginPage = () => {
       password: '',
       confirmPassword: '',
       rememberMe: false,
-      resetEmail: '',
-      otp: '',
       newPassword: '',
       confirmNewPassword: '',
     });
@@ -215,6 +219,40 @@ const LoginPage = () => {
     exit: { opacity: 0, x: 50 },
   };
 
+
+  const handleRegister = async (e) => {
+  e.preventDefault();
+  const newErrors = validateForm();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    toast.error('Please fix the errors in the form');
+    return;
+  }
+
+  const formDataToSend = new FormData();
+  formDataToSend.append('fullName', formData.name);
+  formDataToSend.append('email', formData.email);
+  formDataToSend.append('password', formData.password);
+
+  const toastId = toast.loading('Registering...');
+  try {
+    const response = await axios.post("/user/registerUser", formDataToSend);
+    toast.dismiss(toastId);
+
+    if (response.data.success) {
+      toast.success("Registration successful! Please log in.");
+      setIsLogin(true); // Switch to login form
+    } else {
+      toast.error(response.data.message || "Registration failed.");
+    }
+  } catch (error) {
+    toast.dismiss(toastId);
+    console.error("Registration error:", error);
+    toast.error(error.response?.data?.message || "Registration failed.");
+  }
+};
+
+
   return (
     <div className="bg-container">
       <section className="login-section">
@@ -225,8 +263,9 @@ const LoginPage = () => {
                 <Row>
                   <Col md={6} className="login-image-container d-none d-md-block">
                     <div className="login-decorative-content">
-                      <FaOm className="om-symbol text-light" style={{fontSize:"60px",
-                        opacity:"1"
+                      <FaOm className="om-symbol text-light" style={{
+                        fontSize: "60px",
+                        opacity: "1"
                       }} />
                       <h2>
                         {resetStep === 'login'
@@ -234,10 +273,10 @@ const LoginPage = () => {
                             ? 'Welcome Back'
                             : 'Join Our Community'
                           : resetStep === 'email'
-                          ? 'Reset Your Password'
-                          : resetStep === 'otp'
-                          ? 'Verify OTP'
-                          : 'Set New Password'}
+                            ? 'Reset Your Password'
+                            : resetStep === 'otp'
+                              ? 'Verify OTP'
+                              : 'Set New Password'}
                       </h2>
                       <p>
                         {resetStep === 'login'
@@ -245,10 +284,10 @@ const LoginPage = () => {
                             ? 'Connect with your spiritual journey'
                             : 'Begin your spiritual journey with us'
                           : resetStep === 'email'
-                          ? 'Enter your email to receive an OTP'
-                          : resetStep === 'otp'
-                          ? 'Enter the OTP sent to your email'
-                          : 'Set a new password to continue'}
+                            ? 'Enter your email to receive an OTP'
+                            : resetStep === 'otp'
+                              ? 'Enter the OTP sent to your email'
+                              : 'Set a new password to continue'}
                       </p>
                       <div className="login-mandala"></div>
                     </div>
@@ -273,7 +312,7 @@ const LoginPage = () => {
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
-                                  <FaUser className="input-icon" />
+                                  {/* <FaUser className="input-icon" /> */}
                                   <Form.Control
                                     type="text"
                                     name="name"
@@ -428,8 +467,8 @@ const LoginPage = () => {
                                   type="email"
                                   name="resetEmail"
                                   placeholder="Email Address"
-                                  value={formData.resetEmail}
-                                  onChange={handleInputChange}
+                                  value={resetEmail}
+                                  onChange={(e) => setResetEmail(e.target.value)}
                                   isInvalid={!!errors.resetEmail}
                                 />
                               </div>
@@ -479,8 +518,8 @@ const LoginPage = () => {
                                   type="text"
                                   name="otp"
                                   placeholder="Enter OTP"
-                                  value={formData.otp}
-                                  onChange={handleInputChange}
+                                  value={otp}
+                                  onChange={(e) => setOtp(e.target.value)}
                                   isInvalid={!!errors.otp}
                                 />
                               </div>
@@ -574,7 +613,7 @@ const LoginPage = () => {
                               <Button
                                 variant="link"
                                 onClick={() => setResetStep('login')}
-                                className="toggle-link"
+                                className="btn btn-outline-danger"
                               >
                                 Back to Login
                               </Button>
