@@ -374,16 +374,21 @@ const LoginPage = () => {
                             </Button>
                             <div className="social-login mt-3 text-center">
                               <p>or continue with</p>
-                              <div className="social-buttons d-flex justify-content-center gap-2">
-                                <Button variant="outline-primary" className="social-button">
+                              <div className=" d-flex  justify-content-center">
+                                {/* <Button variant="outline-primary" className="social-button">
                                   <FaFacebookF />
+                                </Button> */}
+                                <Button variant="outline-danger" className="hover-class m-0 p-0 border-0">
+                                  <FaGoogle className='border-0' size={"25px"} />
+                                
+                                <span  className='hover-class' style={{color:"red",fontSize:"larger",
+                                position:"relative",left:"-0%"
+                                  
+                                }}>oogle</span>
                                 </Button>
-                                <Button variant="outline-danger" className="social-button">
-                                  <FaGoogle />
-                                </Button>
-                                <Button variant="outline-dark" className="social-button">
+                                {/* <Button variant="outline-dark" className="social-button">
                                   <FaApple />
-                                </Button>
+                                </Button> */}
                               </div>
                             </div>
                             <div className="toggle-form text-center mt-3">
