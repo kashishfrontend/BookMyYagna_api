@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const FaqFooter = () => {
   return (
-    <div className="faqs-page mt-5" style={{ backgroundColor: '#f8f9fa', color: '#343a40', padding: '2rem' }}>
+    <div className="faqs-page mt-5" style={{ backgroundColor: '#f8f9fa', color: '#343a40', padding: '6rem' }}>
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

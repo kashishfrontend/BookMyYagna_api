@@ -13,7 +13,7 @@ const FAQ = () => {
     }, []);
 
     return (
-        <section className="faq-section " style={{ padding: '50px 0 ', backgroundColor: '#f7f7f7' }}>
+        <section className="faq-section " style={{ padding: '50px 0 ', }}>
             <Container>
                 {/* Header Section */}
                 <div className="section-header" data-aos="fade-up" style={{ textAlign: 'center', marginBottom: '40px' }}>

@@ -1,6 +1,6 @@
 .privacy-policy-section {
     padding: 50px 0;
-    /* background-color: q; */
+
 }
 
 .section-header {
@@ -42,8 +42,18 @@
 .privacy-content p {
     font-size: 16px;
     color: #555;
+  margin-bottom: 16px;
 }
 
 .privacy-content strong {
     font-weight: bold;
+}
+@media (max-width: 600px) {
+  .privacy-content {
+    padding: 0 20px;
+  }
+
+  .section-title h3 {
+    font-size: 24px;
+  }
 }

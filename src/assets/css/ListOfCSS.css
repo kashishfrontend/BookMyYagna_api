@@ -394,6 +394,42 @@
     color: #FF6D00 !important;
 }
 
+.pooja-card {
+  height: 100%; /* or specify fixed height like 500px if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pooja-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.book-now-btn1 {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #FF6D00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-now-btn1:hover {
+  background-color: #e65c00;
+}
+
+
 /* Animations */
 @keyframes float {
     0% {

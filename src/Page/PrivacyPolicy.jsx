@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
         });
     }, []);
     return (
-        <section className="privacy-policy-section">
+        <section className="privacy-policy-section " style={{ marginTop:"80px"}}>
             <Container>
                 <div className="section-header" data-aos="fade-up">
                     <div className="ornament-line" data-aos="zoom-in">

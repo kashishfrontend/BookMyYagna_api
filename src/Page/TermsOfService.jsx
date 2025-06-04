@@ -13,7 +13,7 @@ const TermsOfService = () => {
     }, []);
 
     return (
-        <section className="terms-of-service-section pt-5" style={{ padding: '50px 0px', backgroundColor: '#f7f7f7' }}>
+        <section className="terms-of-service-section pt-5" style={{ padding: '50px 0px', marginTop:"80px" }}>
             <Container>
                 {/* Header Section */}
                 <div className="section-header" data-aos="fade-up" style={{ textAlign: 'center', marginBottom: '40px' }}>
