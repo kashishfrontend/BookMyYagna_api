@@ -483,7 +483,7 @@ const LoginPage = () => {
                               <Button
                                 variant="link"
                                 onClick={() => setResetStep('login')}
-                                className="toggle-link"
+                                className="btn btn-outline-danger"
                               >
                                 Back to Login
                               </Button>
