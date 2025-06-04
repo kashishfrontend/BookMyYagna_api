@@ -71,13 +71,13 @@ const Gallery = () => {
             category: "pooja",
             title: "Divine Aarti Ceremony"
         },
-        {
-            id: 7,
-            src:VibrantHoliFestival,
-            alt: "Holi Celebration",
-            category: "festivals",
-            title: "Vibrant Holi Festival"
-        },
+        // {
+        //     id: 7,
+        //     // src:VibrantHoliFestival,
+        //     alt: "Holi Celebration",
+        //     category: "festivals",
+        //     title: "Vibrant Holi Festival"
+        // },
         {
             id: 8,
             src: SacredTempleRituals,
@@ -85,13 +85,13 @@ const Gallery = () => {
             category: "ceremonies",
             title: "Sacred Temple Rituals"
         },
-        {
-            id: 9,
-            src: TraditionalWeddingDecorations,
-            alt: "Wedding Decoration",
-            category: "decorations",
-            title: "Traditional Wedding Decorations"
-        },
+        // {
+        //     id: 9,
+        //     src: TraditionalWeddingDecorations,
+        //     alt: "Wedding Decoration",
+        //     category: "decorations",
+        //     title: "Traditional Wedding Decorations"
+        // },
         {
             id: 10,
             src: "https://img.freepik.com/free-photo/close-up-beautiful-indian-wedding-decorations_8353-9764.jpg",
@@ -106,13 +106,13 @@ const Gallery = () => {
             category: "festivals",
             title: "Ganesh Chaturthi Festival"
         },
-        {
-            id: 12,
-            src: "https://img.freepik.com/free-photo/karwa-chauth-festival-celebration-concept_93675-129696.jpg",
-            alt: "Karwa Chauth",
-            category: "ceremonies",
-            title: "Karwa Chauth Celebration"
-        }
+        // {
+        //     id: 12,
+        //     src: "https://img.freepik.com/free-photo/karwa-chauth-festival-celebration-concept_93675-129696.jpg",
+        //     alt: "Karwa Chauth",
+        //     category: "ceremonies",
+        //     title: "Karwa Chauth Celebration"
+        // }
     ];
 
     // Filter images based on selected category6
@@ -213,8 +213,8 @@ const Gallery = () => {
                             <div className="gallery-wrap">
                                 <img src={image.src} alt={image.alt} className="img-fluid" />
                                 <div className="gallery-info">
-                                    <h4>{image.title}</h4>
-                                    <p>{image.category}</p>
+                                    {/* <h4>{image.title}</h4> */}
+                                    {/* <p>{image.category}</p> */}
                                     <div className="gallery-links">
                                         <button onClick={() => openLightbox(index)} className="gallery-lightbox">
                                             <FaSearchPlus />
