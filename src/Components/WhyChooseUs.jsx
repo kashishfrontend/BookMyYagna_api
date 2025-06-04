@@ -159,10 +159,8 @@ const WhyChooseUs = () => {
                             and the traditional approach made it truly special.
                         </p>
                         <div className="testimonial-author">
-                            <div className="author-avatar">
-                                <img src="/api/placeholder/60/60" alt="Testimonial Author" />
-                            </div>
-                            <div className="author-info">
+                           
+                            <div className="author-info ">
                                 <h4>Rajiv Sharma</h4>
                                 <span>Delhi, India</span>
                             </div>

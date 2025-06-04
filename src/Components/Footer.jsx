@@ -28,21 +28,21 @@ const Footer = () => {
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-links mt-0 mt-md-3">
               <h4>Quick Links</h4>
               <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="listofpooja">Services</a></li>
+                <li><a href="gallery">Gallery</a></li>
+                <li><a href="contact">Contact</a></li>
               </ul>
             </div>
 
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-services mt-0 mt-md-3">
               <h4>Our Services</h4>
               <ul>
-                <li><a href="#"><FaPrayingHands className="service-icon" /> Ganesh Pooja</a></li>
-                <li><a href="#"><FaPrayingHands className="service-icon" /> Satyanarayan Katha</a></li>
-                <li><a href="#"><FaPrayingHands className="service-icon" /> Griha Pravesh</a></li>
-                <li><a href="#"><FaPrayingHands className="service-icon" /> Vivah Sanskar</a></li>
+                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Ganesh Pooja</a></li>
+                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Satyanarayan Katha</a></li>
+                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Griha Pravesh</a></li>
+                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Vivah Sanskar</a></li>
                 {/* <li><a href="#"><FaPrayingHands className="service-icon" /> Navgraha Shanti</a></li> */}
               </ul>
             </div>
@@ -50,9 +50,9 @@ const Footer = () => {
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
               <h4>Contact Us</h4>
               <div className="contact-info">
-                <p><FaMapMarkerAlt className="contact-icon" /> 123 Rohtak,Haryana  India</p>
-                <p><FaPhoneAlt className="contact-icon" /> +91 0000 00000</p>
-                <p><FaEnvelope className="contact-icon" /> info@poojabooking.com</p>
+                <p><FaMapMarkerAlt className="contact-icon" /> Prem Plaza, 252, opp. subhash park, Subhash Nagar, Rohtak, Haryana 124001</p>
+                <p><FaPhoneAlt className="contact-icon" /> +91 8569977750 </p>
+                <p><FaEnvelope className="contact-icon" /> support@bookmyyagna.com</p>
               </div>
               <div className="newsletter">
                 <h5>Subscribe to our Newsletter</h5>

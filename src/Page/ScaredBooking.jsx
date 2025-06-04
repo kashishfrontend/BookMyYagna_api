@@ -16,7 +16,7 @@ const fadeInUpVariants = {
 const ScaredBooking = () => {
   return (
     <section
-      style={{ backgroundColor: "#fef9f5", color: "#4b2e2e" }}
+      style={{ backgroundColor: "#fef9f5", color: "#4b2e2e", marginTop:"80px" }}
       className="py-5"
       id="book-sacred"
     >
