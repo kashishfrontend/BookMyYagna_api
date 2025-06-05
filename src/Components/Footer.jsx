@@ -1,8 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaOm, FaPrayingHands, FaPinterestP, FaQuora, FaMediumM, FaLinkedinIn, FaTelegramPlane, FaRedditAlien, } from 'react-icons/fa';
-// import './Footer.css';
-
 const Footer = () => {
   return (
     <footer className="footer-section" style={{ backgroundImage: "#e3e3e3" }}>
@@ -10,28 +8,29 @@ const Footer = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info " style={{ padding: "10px 50px" }}>
-
               <div className="footer-logo d-flex align-content-center justify-content-center">
                 <FaOm className="om-icon" />
                 <h3>BookmyYagna
                 </h3>
               </div>
               <p>Connecting devotees with authentic Hindu rituals and spiritual experiences. Book your pooja services online and experience the divine blessings.</p>
-              <div className="social-links">
-                <a href="" target="_blank" rel="noopener noreferrer" className="social-icon"><FaFacebookF /></a>
-                <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a>
-                <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaInstagram /></a>
-                <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaYoutube /></a>
-                <a href="https://in.pinterest.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaPinterestP /></a>
-                <a href="https://www.quora.com/profile/Book-My-Yagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaQuora /></a>
-                <a href="https://medium.com/@bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaMediumM /></a>
-                <a href="https://www.linkedin.com/in/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaLinkedinIn /></a>
-                <a href="https://t.me/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTelegramPlane /></a>
-                <a href="https://www.reddit.com/user/bookmyyagna1/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaRedditAlien /></a>
+              <div className="social-links row">
+                <div className='d-flex justify-content-center col-12  gap-3'>
+                  <a href="" target="_blank" rel="noopener noreferrer" className="social-icon p-2"><FaFacebookF /></a>
+                  <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a>
+                  <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaInstagram /></a>
+                  <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaYoutube /></a>
+                  <a href="https://in.pinterest.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaPinterestP /></a>
+                </div>
+                <div className='d-flex justify-content-center col-12 mt-4 mt-md-2 gap-3'>
+                  <a href="https://www.quora.com/profile/Book-My-Yagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaQuora /></a>
+                  <a href="https://medium.com/@bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaMediumM /></a>
+                  <a href="https://www.linkedin.com/in/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaLinkedinIn /></a>
+                  <a href="https://t.me/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTelegramPlane /></a>
+                  <a href="https://www.reddit.com/user/bookmyyagna1/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaRedditAlien /></a>
+                </div>
               </div>
-
             </div>
-
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-links mt-0 mt-md-3">
               <h4>Quick Links</h4>
               <ul>
@@ -42,7 +41,6 @@ const Footer = () => {
                 <li><a href="contact">Contact</a></li>
               </ul>
             </div>
-
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-services mt-0 mt-md-3">
               <h4>Our Services</h4>
               <ul>
@@ -50,10 +48,8 @@ const Footer = () => {
                 <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Satyanarayan Katha</a></li>
                 <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Griha Pravesh</a></li>
                 <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Vivah Sanskar</a></li>
-                {/* <li><a href="#"><FaPrayingHands className="service-icon" /> Navgraha Shanti</a></li> */}
               </ul>
             </div>
-
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
               <h4>Contact Us</h4>
               <div className="contact-info">
@@ -72,7 +68,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
       <div className="footer-bottom">
         <div className="container">
           <div className="row">
@@ -91,5 +86,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

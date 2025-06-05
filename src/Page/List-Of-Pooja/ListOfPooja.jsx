@@ -11,7 +11,7 @@ import 'aos/dist/aos.css';
 import '../../assets/css/ListOfCSS.css';
 import MainNavbar from '../../Components/MainNavbar';
 import Footer from '../../Components/Footer';
-import hanumanpic from '../../assets/img/hanumanjiPic.jpg';
+import hanumanpic from '../../assets/img/hanumanjiPic.webp';
 import axios from 'axios';
 // import './PoojaSlider.css';
 import { useNavigate } from 'react-router-dom';

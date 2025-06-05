@@ -9,9 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
 import axios from "../Api/axios/axios_config";
-
-// import './Login.css';
-
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +16,7 @@ const LoginPage = () => {
 
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [resetStep, setResetStep] = useState('login'); // 'login', 'email', 'otp', 'reset'
+  const [resetStep, setResetStep] = useState('login');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -75,7 +72,6 @@ const LoginPage = () => {
   };
 
   const handleSendOtp = async (e) => {
-    // console.log('click')
     e.preventDefault();
     if (!resetEmail) {
       toast.error('Please fix the errors in the form');
@@ -85,7 +81,7 @@ const LoginPage = () => {
     setIsOtpLoading(true);
     try {
       const response = await axios.post("/user/forgetPassword", { email: resetEmail });
-      console.log('Send OTP Response:', response.data); // Debugging log
+      console.log('Send OTP Response:', response.data);
       if (response.data.success) {
         toast.success('OTP sent to your email');
         setResetStep('otp');
@@ -103,12 +99,10 @@ const LoginPage = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
 
-    if (!otp || otp.length<6) {
+    if (!otp || otp.length < 6) {
       toast.error('Invalid OTP');
       return;
     }
-
-    // setIsOtpLoading(true);
     try {
       const response = await axios.post('/user/matchOtp', {
         email: resetEmail,
@@ -130,8 +124,6 @@ const LoginPage = () => {
       setIsOtpLoading(false);
     }
   };
-
-
   const handleResetPassword = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
@@ -144,11 +136,11 @@ const LoginPage = () => {
     setIsOtpLoading(true);
     try {
       const response = await axios.patch("/user/resetPassword", {
-        otp:otp,
+        otp: otp,
         email: resetEmail,
         newPassword: formData.newPassword,
       });
-      console.log('Reset Password Response:', response.data); // Debugging log
+      console.log('Reset Password Response:', response.data);
       if (response.data.success) {
         toast.success('Password reset successfully');
         setShowSuccessModal(true);
@@ -173,16 +165,16 @@ const LoginPage = () => {
     }
 
     if (isLogin) {
-    const toastId = toast.loading('Authenticating...');
-    try {
-      await dispatch(login(formData.email, formData.password)).unwrap();
-      toast.dismiss(toastId);
-    } catch {
-      toast.dismiss(toastId);
+      const toastId = toast.loading('Authenticating...');
+      try {
+        await dispatch(login(formData.email, formData.password)).unwrap();
+        toast.dismiss(toastId);
+      } catch {
+        toast.dismiss(toastId);
+      }
+    } else {
+      handleRegister(e);
     }
-  } else {
-    handleRegister(e); 
-  }
   };
 
   useEffect(() => {
@@ -221,41 +213,38 @@ const LoginPage = () => {
   };
 
 
-const handleRegister = async (e) => {
-  e.preventDefault();
-  const newErrors = validateForm();
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    toast.error('Please fix the errors in the form');
-    return;
-  }
-
-  const toastId = toast.loading('Registering...');
-
-  try {
-    const response = await axios.post("/user/registerUser", {
-      fullName: formData.fullName,
-      email: formData.email,
-      password: formData.password,
-    });
-
-    toast.dismiss(toastId);
-
-    if (response.data.success) {
-      toast.success("Registration successful! Please log in.");
-      setIsLogin(true);
-    } else {
-      toast.error(response.data.message || "Registration failed.");
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fix the errors in the form');
+      return;
     }
-  } catch (error) {
-    toast.dismiss(toastId);
-    console.error("Registration error:", error);
-    toast.error(error.response?.data?.message || "Registration failed.");
-  }
-};
 
+    const toastId = toast.loading('Registering...');
 
+    try {
+      const response = await axios.post("/user/registerUser", {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
 
+      toast.dismiss(toastId);
+
+      if (response.data.success) {
+        toast.success("Registration successful! Please log in.");
+        setIsLogin(true);
+      } else {
+        toast.error(response.data.message || "Registration failed.");
+      }
+    } catch (error) {
+      toast.dismiss(toastId);
+      console.error("Registration error:", error);
+      toast.error(error.response?.data?.message || "Registration failed.");
+    }
+  };
   return (
     <div className="bg-container">
       <section className="login-section">
@@ -315,7 +304,6 @@ const handleRegister = async (e) => {
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
-                                  {/* <FaUser className="input-icon" /> */}
                                   <Form.Control
                                     type="text"
                                     name="fullName"
@@ -332,7 +320,6 @@ const handleRegister = async (e) => {
                             )}
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaEnvelope className="input-icon" /> */}
                                 <Form.Control
                                   type="email"
                                   name="email"
@@ -348,7 +335,6 @@ const handleRegister = async (e) => {
                             </Form.Group>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaLock className="input-icon" /> */}
                                 <Form.Control
                                   type={showPassword ? 'text' : 'password'}
                                   name="password"
@@ -372,7 +358,6 @@ const handleRegister = async (e) => {
                             {!isLogin && (
                               <Form.Group className="mb-3 form-group">
                                 <div className="input-icon-wrapper">
-                                  {/* <FaLock className="input-icon" /> */}
                                   <Form.Control
                                     type={showPassword ? 'text' : 'password'}
                                     name="confirmPassword"
@@ -414,25 +399,6 @@ const handleRegister = async (e) => {
                             >
                               {isLogin ? 'Sign In' : 'Register'}
                             </Button>
-                            <div className="social-login mt-3 text-center">
-                              {/* <p>or continue with</p> */}
-                              <div className=" d-flex  justify-content-center">
-                                {/* <Button variant="outline-primary" className="social-button">
-                                  <FaFacebookF />
-                                </Button> */}
-                                {/* <Button variant="outline-danger" className="hover-class m-0 p-0 border-0">
-                                  <FaGoogle className='border-0' size={"25px"} />
-                                
-                                <span  className='hover-class' style={{color:"red",fontSize:"larger",
-                                position:"relative",left:"-0%"
-                                  
-                                }}>oogle</span>
-                                </Button> */}
-                                {/* <Button variant="outline-dark" className="social-button">
-                                  <FaApple />
-                                </Button> */}
-                              </div>
-                            </div>
                             <div className="toggle-form text-center mt-3">
                               <p>
                                 {isLogin ? "Don't have an account?" : 'Already have an account?'}
@@ -465,7 +431,6 @@ const handleRegister = async (e) => {
                           <Form onSubmit={handleSendOtp}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaEnvelope className="input-icon" /> */}
                                 <Form.Control
                                   type="email"
                                   name="resetEmail"
@@ -516,7 +481,6 @@ const handleRegister = async (e) => {
                           <Form onSubmit={handleVerifyOtp}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaOm className="input-icon" /> */}
                                 <Form.Control
                                   type="text"
                                   name="otp"
@@ -567,7 +531,6 @@ const handleRegister = async (e) => {
                           <Form onSubmit={handleResetPassword}>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaLock className="input-icon" /> */}
                                 <Form.Control
                                   type={showPassword ? 'text' : 'password'}
                                   name="newPassword"
@@ -590,7 +553,6 @@ const handleRegister = async (e) => {
                             </Form.Group>
                             <Form.Group className="mb-3 form-group">
                               <div className="input-icon-wrapper">
-                                {/* <FaLock className="input-icon" /> */}
                                 <Form.Control
                                   type={showPassword ? 'text' : 'password'}
                                   name="confirmNewPassword"
@@ -658,5 +620,4 @@ const handleRegister = async (e) => {
     </div>
   );
 };
-
 export default LoginPage;

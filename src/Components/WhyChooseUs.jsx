@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import CountUp from 'react-countup';
 import { useInView } from 'react-intersection-observer';
-// import VisibilitySensor from 'react-visibility-sensor';
-// import { useInView } from 'react-intersection-observer';
 import AOS from 'aos';
-// import 'aos/dist/aos.css';
 import {
     FaUserTie,
     FaCalendarAlt,

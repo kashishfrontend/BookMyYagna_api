@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import axios from 'axios';
 import moment from 'moment';
-import './Panchang.css';
+import '../assets/css/Panchang.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 

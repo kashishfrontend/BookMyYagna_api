@@ -4,13 +4,15 @@ import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
  import image from  '../assets/img/om-123.png'; 
-import bg1 from  '../assets/img/bg-3-new.jpeg'; 
-import bg2 from  '../assets/img/bg-3.png'; 
-import bg3 from  '../assets/img/bg--2.png'; 
-import pandit from '../assets/img/pundit.png';
+import bg1 from  '../assets/img/bg-3-new.webp'; 
+import bg2 from  '../assets/img/bg-3.webp'; 
+import bg3 from  '../assets/img/bg--2.webp'; 
 import vdo1 from '../assets/videos/pooja1.mp4';
 import vdo2 from '../assets/videos/pooja2.mp4'
 import vdo3 from '../assets/videos/bg-video.mp4'
+import panditSVG  from '../assets/img/pandit.png'
+import CompleteSamagry from '../assets/img/Complete-Samagry.png'
+import AuthenticRituals  from '../assets/img/Authentic-Rituals.png'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +32,6 @@ const HeroSection = ({onHeroVisibleChange }) => {
       },
       {
         threshold: 0,
-        // Adjust based on how much should be visible
       }
     );
 
@@ -127,23 +128,6 @@ const HeroSection = ({onHeroVisibleChange }) => {
       }
   return (
     <div ref={heroRef} className="enhanced-hero-section">
-      {/* Floating God Image */}
-      {/* <motion.div 
-        className="floating-god-container"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5 }}
-      >
-        <motion.img 
-          src="/images/ganesh-transparent.png" 
-          alt="Lord Ganesh" 
-          className="floating-god-image"
-          variants={floatingGodVariants}
-          animate="animate"
-        />
-        <div className="god-glow"></div>
-      </motion.div> */}
-
       {/* Hero Carousel */}
       <Carousel 
         fade 
@@ -157,7 +141,7 @@ const HeroSection = ({onHeroVisibleChange }) => {
           <Carousel.Item key={index}>
             <div 
               className="hero-slide" 
-              style={{ backgroundImage: `url(${slide.bgImage})` }}
+              style={{ backgroundImage: `url(${heroSlides.bgImage})` }}
             >
               <video
                 className="background-video"
@@ -220,19 +204,19 @@ const HeroSection = ({onHeroVisibleChange }) => {
                       <motion.div variants={slideTextVariants} className="row">
                         <div className="feature-item  col-4">
                           <div className="feature-icon-wrapper">
-                          <img src="/icons/pandit.svg" alt="Verified Pandits" className="feature-icon" />
+                          <img src={panditSVG} alt="Verified Pandits" className="feature-icon" />
                           </div>
                           <span>Verified Pandits</span>
                         </div>
                         <div className="feature-item col-4">
                           <div className="feature-icon-wrapper">
-                            <img src="/icons/pooja-items.svg" alt="Complete Samagri" className="feature-icon" />
+                            <img src={CompleteSamagry} alt="Complete Samagri" className="feature-icon" />
                           </div>
                           <span>Complete Samagri</span>
                         </div>
                         <div className="feature-item col-4">
                           <div className="feature-icon-wrapper">
-                            <img src="/icons/temple.svg" alt="Authentic Rituals" className="feature-icon" />
+                            <img src={AuthenticRituals} alt="Authentic Rituals" className="feature-icon" />
                           </div>
                           <span>Authentic Rituals</span>
                         </div>

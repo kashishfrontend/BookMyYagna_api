@@ -255,20 +255,6 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
-            {/* <div
-              className={`menu-item ${activeNavItem === "notifications" ? "active" : ""}`}
-              onClick={() => handleNavItemClick("notifications")}
-            >
-              <FaBell size={20} />
-              <span>Notifications</span>
-            </div> */}
-            {/* <div
-              className={`menu-item ${activeNavItem === "profile" ? "active" : ""}`}
-              onClick={() => handleNavItemClick("profile")}
-            >
-              <FaUserCircle size={20} />
-              <span>My Profile</span>
-            </div> */}
             <div className="mt-auto">
               <div className="menu-item logout " onClick={() => handleLogout()}>
                 <MdLogout size={22} />
@@ -306,20 +292,12 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
-            {/* <div
-              className={`menu-item ${activeNavItem === "notifications" ? "active" : ""}`}
-              onClick={() => handleNavItemClick("notifications")}
-            >
-              <FaBell size={20} />
-              <span>Notifications</span>
-            </div> */}
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />
               <span>Logout</span>
             </div>
           </div>
         </div>
-
         <div
           className={`main-content col-12 col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
@@ -355,9 +333,6 @@ const Dashboard = () => {
                         <div key={index} className="notification-item">
                           <div>
                             <h4 className="popup-heading border-0 ">{item.heading}</h4>
-                            {/* <p className="popup-message">
-                              {item.message.replace(/ for pooja booking id \w+\./, ".")}
-                            </p> */}
                             <p className="popup-time">
                               {new Date(item.createdAt).toLocaleString("en-IN", {
                                 day: "2-digit",
@@ -433,9 +408,9 @@ const Dashboard = () => {
                       >
                         Cancel
                       </Button>
-                     <Button type="submit shadow-lg" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)' , border:'none' }}>
-  Save Changes
-</Button>
+                      <Button type="submit shadow-lg" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)', border: 'none' }}>
+                        Save Changes
+                      </Button>
 
                     </div>
                   </Form>

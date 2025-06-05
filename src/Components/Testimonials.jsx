@@ -6,7 +6,7 @@ import AOS from 'aos';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import user from '../assets/img/user.jpg'
+import user from '../assets/img/user.webp'
 import { useNavigate } from 'react-router-dom';
 const Testimonial = () => {
     useEffect(() => {
@@ -16,11 +16,11 @@ const Testimonial = () => {
             mirror: true,
         });
     }, []);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/listofpooja');
-  };
+    const handleClick = () => {
+        navigate('/listofpooja');
+    };
     const testimonials = [
         {
             id: 1,
@@ -107,11 +107,6 @@ const Testimonial = () => {
                     className="section-header text-center"
 
                 >
-                    <div className="section-sub-heading ">
-                        {/* <span className="line"></span> */}
-                        {/* <h3 className="">Client Experiences</h3> */}
-                        {/* <span className="line"></span> */}
-                    </div>
                     <h3 className="section-title">What <span className="text-gradient">Devotees Say</span></h3>
                     <p className="section-description">
                         Hear from our community of devotees about their experiences with our pooja services
@@ -119,7 +114,6 @@ const Testimonial = () => {
                 </div>
 
                 <div
-
                     className="testimonials-slider-container"
                 >
                     <Slider {...settings}>
@@ -145,7 +139,7 @@ const Testimonial = () => {
                                     <div className="testimonial-pooja">
                                         {testimonial.pooja}
                                     </div>
-                                    <div className="testimonial-author" style={{justifyContent:"start"}}>
+                                    <div className="testimonial-author" style={{ justifyContent: "start" }}>
                                         <div className="author-image">
                                             <img
                                                 src={testimonial.image}
@@ -172,10 +166,9 @@ const Testimonial = () => {
                             <div className="cta-box">
                                 <h3>Experience Divine Rituals Yourself</h3>
                                 <p>Book a pooja today and connect with your spiritual roots through authentic Vedic ceremonies</p>
-                                {/* <button className="cta-btn">Book Your Pooja Now</button> */}
                                 <button className="cta-btn" onClick={handleClick}>
-      Book Your Pooja Now
-    </button>
+                                    Book Your Pooja Now
+                                </button>
                             </div>
                         </Col>
                     </Row>

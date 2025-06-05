@@ -12,7 +12,6 @@ import Gallery from "./gallery";
 import AdBanner from "../Page/AdBanner";
 import WhyYagna from "../Page/WhyYagna";
 import { Link } from "react-router-dom";
-// import DivineJournal from '../Page/DivineJournal'
 
 function HomePage() {
     const [isHeroVisible, setIsHeroVisible] = useState(true);

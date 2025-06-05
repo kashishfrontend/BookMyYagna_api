@@ -3,17 +3,16 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaSearchPlus, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.jpg' ;
-import GaneshChaturthiCelebration  from '../assets/img/Ganesh-Chaturthi-Celebration.jpg';
-import SacredWeddingRituals  from '../assets/img/Sacred-Wedding-Rituals.jpg';
-// import DiwaliLampCeremony from '../assets/img/Diwali-Lamp-Ceremony.jpg';
-import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.jpg';
-import MorningPrayerRitual  from '../assets/img/Morning-Prayer-Ritual.jpg'
-import DivineAartiCeremony  from '../assets/img/Divine-Aarti-Ceremony.jpg'
-import VibrantHoliFestival  from '../assets/img/Vibrant-Holi-Festival.jpg'
-import SacredTempleRituals  from '../assets/img/Sacred-Temple-Rituals.jpg'
-import TraditionalWeddingDecorations  from '../assets/img/Traditional-Wedding-Decorations.jpg'
-import Ganeshestival from '../assets/img/Ganesh-Festival.jpg'
+import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.webp' ;
+import GaneshChaturthiCelebration  from '../assets/img/Ganesh-Chaturthi-Celebration.webp';
+import SacredWeddingRituals  from '../assets/img/Sacred-Wedding-Rituals.webp';
+import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.webp';
+import MorningPrayerRitual  from '../assets/img/Morning-Prayer-Ritual.webp'
+import DivineAartiCeremony  from '../assets/img/Divine-Aarti-Ceremony.webp'
+import VibrantHoliFestival  from '../assets/img/Vibrant-Holi-Festival.webp'
+import SacredTempleRituals  from '../assets/img/Sacred-Temple-Rituals.webp'
+import TraditionalWeddingDecorations  from '../assets/img/Traditional-Wedding-Decorations.webp'
+import Ganeshestival from '../assets/img/Ganesh-Festival.webp'
 
 const Gallery = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -236,8 +235,8 @@ const Gallery = () => {
                     <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
                         <img src={filteredImages[currentImage].src} alt={filteredImages[currentImage].alt} />
                         <div className="lightbox-caption">
-                            <h4>{filteredImages[currentImage].title}</h4>
-                            <p>{filteredImages[currentImage].category}</p>
+                            {/* <h4>{filteredImages[currentImage].title}</h4> */}
+                            {/* <p>{filteredImages[currentImage].category}</p> */}
                         </div>
                         <button className="lightbox-prev" onClick={prevImage}>
                             <FaChevronLeft />

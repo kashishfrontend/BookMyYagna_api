@@ -11,11 +11,11 @@ const FAQ = () => {
             question: "🙏 How do I book a ceremony?",
             answer: (
                 <>
-                  Booking is seamless and takes just a few minutes. Visit our{' '}
-                  <Link style={{textDecoration:"none"}} to="/servicePage">Services</Link> page. Choose your desired Yagna, Pooja, or Ritual, select your preferred date and time, proceed with a secure online payment. You'll receive a confirmation email and WhatsApp message instantly.
+                    Booking is seamless and takes just a few minutes. Visit our{' '}
+                    <Link style={{ textDecoration: "none" }} to="/servicePage">Services</Link> page. Choose your desired Yagna, Pooja, or Ritual, select your preferred date and time, proceed with a secure online payment. You'll receive a confirmation email and WhatsApp message instantly.
                 </>
-              ),
-            // answer: "Booking is seamless and takes just a few minutes.Visit our" <Link to={'/servicePage'}>Services</Link> "PageChoose your desired Yagna, Pooja, or RitualSelect your preferred date and timeProceed with a secure online paymentYou'll receive a confirmation email and WhatsApp message instantly."
+            ),
+
         },
         {
             id: 2,
@@ -53,7 +53,7 @@ const FAQ = () => {
             answer: "The duration varies depending on the type of pooja. Simple poojas may take 1-2 hours, while more elaborate ceremonies like Griha Pravesh or Satyanarayan Pooja can take 3-4 hours. The estimated duration is mentioned in each pooja description on our website."
         }
     ];
-  const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const fadeInUpVariants = {
         hidden: { opacity: 0, y: 30 },
         visible: {
@@ -68,9 +68,9 @@ const FAQ = () => {
     return (
         <section className="faq-section" id="faq">
             <Container>
-            <div className="ornament-line " data-aos="zoom-in" duration="1000">
-                <span className="om-symbol">ॐ</span>
-            </div>
+                <div className="ornament-line " data-aos="zoom-in" duration="1000">
+                    <span className="om-symbol">ॐ</span>
+                </div>
                 <motion.div
                     className="section-header text-center"
                     initial={{ opacity: 0, y: 30 }}
@@ -79,14 +79,11 @@ const FAQ = () => {
                     transition={{ duration: 0.8 }}
                 >
                     <div className=" section-title">
-                        {/* <span className="line"></span> */}
-                        
-                        {/* <span className="line"></span> */}
                         <h3 className="">Your Questions, Answered with <span className="text-gradient">Devotion</span></h3>
                     </div>
-                   
+
                     <p className="section-description">
-                    We understand that booking spiritual rituals online may bring up a few questions. We’re here to guide you through every step of the process. Find quick answers below, or reach out to us for a personal response.
+                        We understand that booking spiritual rituals online may bring up a few questions. We’re here to guide you through every step of the process. Find quick answers below, or reach out to us for a personal response.
                     </p>
                 </motion.div>
 
@@ -126,11 +123,8 @@ const FAQ = () => {
                     <p>Still have questions? We're here to help!</p>
                     <div className="contact-options">
                         <a href="#!" className="contact-option" onClick={() => setShowModal(true)}>
-  <i className="fas fa-envelope"></i> Email Us
-</a>
-                        {/* <a href="tel:+91000000000" className="contact-option">
-                            <i className="fas fa-phone-alt"></i> Call Us
-                        </a> */}
+                            <i className="fas fa-envelope"></i> Email Us
+                        </a>
                         <a href="#" className="contact-option">
                             <i className="fas fa-comments"></i> Live Chat
                         </a>
@@ -138,84 +132,79 @@ const FAQ = () => {
                 </motion.div>
             </Container>
             {showModal && (
-  <div style={styles.overlay}>
-    <div style={styles.modalBox}>
-      <h3 style={styles.heading}>Send Us an Email</h3>
-      <input
-        type="text"
-        placeholder="Write your message here..."
-        style={styles.input}
-      />
-      <button style={styles.submitBtn}>Submit</button>
-      <button style={styles.closeBtn} onClick={() => setShowModal(false)}>×</button>
-    </div>
-  </div>
-)}
+                <div style={styles.overlay}>
+                    <div style={styles.modalBox}>
+                        <h3 style={styles.heading}>Send Us an Email</h3>
+                        <input
+                            type="text"
+                            placeholder="Write your message here..."
+                            style={styles.input}
+                        />
+                        <button style={styles.submitBtn}>Submit</button>
+                        <button style={styles.closeBtn} onClick={() => setShowModal(false)}>×</button>
+                    </div>
+                </div>
+            )}
 
         </section>
-        
     );
-    
-    
 };
-
 const styles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 999,
-  },
-  modalBox: {
-    backgroundColor: '#fff',
-    padding: '30px',
-    borderRadius: '10px',
-    width: '90%',
-    maxWidth: '400px',
-    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-    position: 'relative',
-    textAlign: 'center',
-  },
-  heading: {
-    marginBottom: '20px',
-    fontSize: '1.5rem',
-    background: 'linear-gradient(to right, #fc466b, #3f5efb)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '15px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
-    fontSize: '1rem',
-  },
-  submitBtn: {
-    background: 'linear-gradient(to right, #fc466b, #3f5efb)',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontSize: '1rem',
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: '10px',
-    right: '15px',
-    background: 'transparent',
-    border: 'none',
-    fontSize: '1.2rem',
-    cursor: 'pointer',
-  },
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+    },
+    modalBox: {
+        backgroundColor: '#fff',
+        padding: '30px',
+        borderRadius: '10px',
+        width: '90%',
+        maxWidth: '400px',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+        position: 'relative',
+        textAlign: 'center',
+    },
+    heading: {
+        marginBottom: '20px',
+        fontSize: '1.5rem',
+        background: 'linear-gradient(to right, #fc466b, #3f5efb)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+    },
+    input: {
+        width: '100%',
+        padding: '10px',
+        marginBottom: '15px',
+        border: '1px solid #ddd',
+        borderRadius: '5px',
+        fontSize: '1rem',
+    },
+    submitBtn: {
+        background: 'linear-gradient(to right, #fc466b, #3f5efb)',
+        color: '#fff',
+        border: 'none',
+        padding: '10px 20px',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        fontSize: '1rem',
+    },
+    closeBtn: {
+        position: 'absolute',
+        top: '10px',
+        right: '15px',
+        background: 'transparent',
+        border: 'none',
+        fontSize: '1.2rem',
+        cursor: 'pointer',
+    },
 };
-
 
 export default FAQ;

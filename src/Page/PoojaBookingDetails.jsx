@@ -22,7 +22,7 @@ import { RiShieldStarLine, RiMentalHealthLine } from "react-icons/ri";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../assets/css/PoojaBookingDetails.css";
-import img from "../assets/img/bookingDetailsImg.jpeg";
+import img from "../assets/img/bookingDetailsImg.webp";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
