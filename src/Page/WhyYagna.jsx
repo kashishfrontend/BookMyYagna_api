@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import './YagnaPage.css';
+import '../assets/css/YagnaPage.css';
 
 const WhyYagna = () => {
     useEffect(() => {

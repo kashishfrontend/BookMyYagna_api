@@ -1,6 +1,6 @@
 import {React,useEffect} from 'react';
 import { Container } from 'react-bootstrap';
-import '../Page/PrivacyPloicy.css';  // You can create this CSS file for styles
+import '../assets/css/PrivacyPloicy.css';  // You can create this CSS file for styles
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
