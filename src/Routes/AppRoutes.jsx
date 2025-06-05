@@ -21,6 +21,7 @@ import AboutUs from '../Components/About';
 import Account from '../Components/Account';
 import { checkAuth } from '../redux/action/authAction';
 import Gallery from '../Components/gallery';
+import Booking from '../Page/Booking';
 
 
 // Inline ProtectedRoute
@@ -89,6 +90,7 @@ function AppRoutes() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="account" element={<Account />} />
         <Route path="gallery" element={<Gallery />} />
+        <Route path="booking" element={<Booking/>}/>
 
       </Route>
     </Routes>
