@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
 
 .dashbord {
   background: linear-gradient(15deg, #ff8c00, #b22222, #fdd835);
@@ -133,9 +134,6 @@
 }
 
 /* EnhancedHeroSection.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
 .background-video {
   position: absolute;
   top: 0;
@@ -2554,15 +2552,7 @@
     border-radius: 4px;
   }
 }
-
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
-
-
-
 /* Gallery.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
-
 .gallery-section {
   padding: 60px 0;
   position: relative;
@@ -2718,8 +2708,7 @@
   }
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
+/* login-section */
 
 .login-section {
   padding: 80px 0;

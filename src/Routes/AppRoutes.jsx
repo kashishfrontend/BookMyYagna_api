@@ -1,7 +1,6 @@
-import React , { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-
 // Page & Component Imports
 import HomePage from '../Components/HomePage';
 import LoginPage from '../Components/LoginPage';
@@ -41,10 +40,10 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function AppRoutes() {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const { isAuthenticated } = useSelector((state) => state.auth);
   const location = useLocation();
-  
+
   useEffect(() => {
     dispatch(checkAuth())
   }, [dispatch])
@@ -68,7 +67,7 @@ function AppRoutes() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard/>
+            <Dashboard />
           </ProtectedRoute>
         }
       />
