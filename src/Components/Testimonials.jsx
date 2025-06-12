@@ -24,48 +24,48 @@ const Testimonial = () => {
     const testimonials = [
         {
             id: 1,
-            name: 'Rahul Verma',
-            location: 'Mumbai',
-            pooja: 'Griha Pravesh',
+            name: 'Aman Agarwal',
+            location: 'Bangalore',
+            pooja: 'Ganesh Puja',
             rating: 5,
             image: user,
-            text: 'The entire experience was seamless and authentic. The priest was knowledgeable and explained the significance of each ritual. The digital prasad delivery was an unexpected delight!'
+            text: '“Booking our Ganesh Puja through BookMyYagna was the best decision! Even on short notice, the pandit ji arrived fully prepared with all puja samagri. The rituals were conducted with devotion and proper Vedic chants. Highly recommended for any online puja services.”'
         },
         {
             id: 2,
-            name: 'Priya Sharma',
-            location: 'Delhi',
-            pooja: 'Satyanarayan Pooja',
+            name: 'Isha Sharma',
+            location: 'Noida',
+            pooja: 'Navgraha Shanti Yagna',
             rating: 5,
             image: user,
-            text: 'DevDarshan made it so easy to arrange a traditional pooja despite our busy schedules. The priest was punctual, well-prepared, and guided us through every step with patience.'
+            text: '“We booked a Navgraha Shanti Yagna through BookMyYagna and were amazed by the attention to detail. The online consultation with their Vedic astrologer helped us choose the right date. Their service was not only spiritual but also smooth and timely.”'
         },
         {
             id: 3,
-            name: 'Arun Patel',
-            location: 'Ahmedabad',
-            pooja: 'Vastu Shanti',
-            rating: 4,
+            name: 'Nikhil Jain',
+            location: 'Hyderabad',
+            pooja: 'Satyanarayan Katha',
+            rating: 5,
             image: user,
-            text: 'We were concerned about finding an authentic priest for our new home, but DevDarshan exceeded our expectations. The positive energy in our home is noticeable after the ritual.'
+            text: '“From arranging the Satyanarayan Katha to delivering prasad and samagri on time, BookMyYagna handled everything beautifully. The pandit ji explained every step and made the experience peaceful and fulfilling. Great platform for home havan services.”'
         },
         {
             id: 4,
-            name: 'Meera Iyer',
-            location: 'Bangalore',
-            pooja: 'Navratri Pooja',
+            name: 'Shruti Desai',
+            location: 'Goa',
+            pooja: 'Kundli Dosha Nivaran Puja',
             rating: 5,
             image: user,
-            text: 'The online booking process was straightforward, and the priest was very knowledgeable. He performed all rituals with precision and devotion. Will definitely use their services again!'
+            text: '“Being abroad, I was unsure how to do a Kundli Dosha Nivaran Puja. BookMyYagna arranged a live-streamed puja with all rituals done in a temple on our behalf. The process was seamless, and we even received the digital prasad. Truly divine!”'
         },
         {
             id: 5,
-            name: 'Vikram Singh',
-            location: 'Jaipur',
-            pooja: 'Ganesh Chaturthi',
+            name: 'Raghav Bansal',
+            location: 'Mumbai',
+            pooja: 'Vastu Puja',
             rating: 5,
             image: user,
-            text: 'Even with short notice, DevDarshan arranged a perfect pooja celebration for us. The priest brought all necessary items and performed the rituals with devotion and expertise.'
+            text: '“We were looking for a trusted Vastu Puja service for our new office. BookMyYagna not only provided an experienced pandit but also shared a custom puja guide with step-by-step significance. Their team is professional and spiritually grounded.”'
         }
     ];
 
@@ -107,7 +107,7 @@ const Testimonial = () => {
                     className="section-header text-center"
 
                 >
-                    <h3 className="section-title">What <span className="text-gradient">Devotees Say</span></h3>
+                    <h3 className="section-title">What <span className="text-gradient"> Devotees Say About BookMyYagna</span></h3>
                     <p className="section-description">
                         Hear from our community of devotees about their experiences with our pooja services
                     </p>
@@ -124,7 +124,7 @@ const Testimonial = () => {
                                         <FaQuoteLeft />
                                     </div>
                                     <div className="testimonial-content">
-                                        <p className="testimonial-text">
+                                        <p className="testimonial-text" >
                                             {testimonial.text}
                                         </p>
                                     </div>
@@ -140,13 +140,13 @@ const Testimonial = () => {
                                         {testimonial.pooja}
                                     </div>
                                     <div className="testimonial-author" style={{ justifyContent: "start" }}>
-                                        <div className="author-image">
+                                        {/* <div className="author-image">
                                             <img
                                                 src={testimonial.image}
                                                 alt={testimonial.name}
                                             />
-                                        </div>
-                                        <div className="author-info" >
+                                        </div> */}
+                                        <div className="author-info text-center m-auto" >
                                             <h5 className="author-name">{testimonial.name}</h5>
                                             <div className="author-location">{testimonial.location}</div>
                                         </div>

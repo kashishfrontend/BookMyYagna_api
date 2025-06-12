@@ -23,7 +23,6 @@ import { checkAuth } from '../redux/action/authAction';
 import Gallery from '../Components/gallery';
 import Booking from '../Page/Booking';
 
-
 // Inline ProtectedRoute
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
@@ -72,8 +71,6 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
-      {/* Routes WITH Navbar & Footer */}
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="listofpooja" element={<ListOfPooja />} />
@@ -90,7 +87,22 @@ function AppRoutes() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="account" element={<Account />} />
         <Route path="gallery" element={<Gallery />} />
-        <Route path="booking" element={<Booking/>}/>
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? (
+              <Navigate to={location.state?.from?.pathname || '/booking'} replace />
+            ) : (
+              <LoginPage />
+            )
+          }
+        />
+        <Route path="booking"
+          element={
+            <ProtectedRoute>
+              <Booking />
+            </ProtectedRoute>
+          } />
 
       </Route>
     </Routes>

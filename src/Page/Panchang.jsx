@@ -87,27 +87,37 @@ const PanchangCalendar = () => {
   const handleDateChange = (newDate) => setDate(newDate);
 
   return (
-    <section className="panchang-calendar-section " style={{marginTop:"5%"}}>
+    <section className="panchang-calendar-section " style={{ marginTop: "5%" }}>
       <Container>
         <div className="section-header">
-          <div className="ornament-line" style={{paddingTop:"35px"}}>
+          <div className="ornament-line" style={{ paddingTop: "35px" }}>
             <span className="om-symbol">ॐ</span>
           </div>
           <div className="section-title">
             <h3>
-              Panchang <span>Calendar</span>
+              Panchang <span>Calendar</span> 2025 – Check Today’s Tithi, Nakshatra & Muhurat
             </h3>
           </div>
-          <p>Select a date to view the Panchang details, including tithi, nakshatra, and auspicious timings.</p>
+          <h2>Your daily spiritual guide based on Vedic astrology</h2>
+          <p>Explore the <b> Hindu Panchang </b> for any date. Know the <b> Tithi (तिथि), Nakshatra (नक्षत्र),</b> and <b> Shubh Muhurat </b> (auspicious timings) for your important occasions like Griha Pravesh, Satyanarayan Puja, Vivah Sanskar, Havan, and other rituals.</p>
+          
+          <div className='row'>
+            
+          </div>
+          <div>
+
+        <br />
+          </div>
+      <b> <p>🗓️ <b> Select a date </b> to instantly view the complete  <b> daily Panchang </b> details – trusted by Pandits and astrologers.</p></b>
         </div>
         <div className="calendar-wrapper">
 
-        <div data-aos="fade-right" data-aos-delay="200" data-aos-duration="1200">
-          <Calendar onChange={handleDateChange} value={date}  showNeighboringMonth={false}/>
-        </div>
+          <div data-aos="fade-right" data-aos-delay="200" data-aos-duration="1200">
+            <Calendar onChange={handleDateChange} value={date} showNeighboringMonth={false} />
+          </div>
         </div>
 
-          <h4 className="info-heading">Panchang Details for {moment(date).format('MMMM Do YYYY')}</h4>
+        <h4 className="info-heading">Panchang Details for {moment(date).format('MMMM Do YYYY')}</h4>
 
         <div className="panchang-details" data-aos="fade-up" >
 

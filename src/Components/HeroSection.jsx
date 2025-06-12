@@ -1,29 +1,29 @@
 // EnhancedHeroSection.js
-import React, { useEffect, useState,useRef  } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
- import image from  '../assets/img/om-123.png'; 
-import bg1 from  '../assets/img/bg-3-new.webp'; 
-import bg2 from  '../assets/img/bg-3.webp'; 
-import bg3 from  '../assets/img/bg--2.webp'; 
+import image from '../assets/img/om-123.png';
+import bg1 from '../assets/img/bg-3-new.webp';
+import bg2 from '../assets/img/bg-3.webp';
+import bg3 from '../assets/img/bg--2.webp';
 import vdo1 from '../assets/videos/pooja1.mp4';
 import vdo2 from '../assets/videos/pooja2.mp4'
 import vdo3 from '../assets/videos/bg-video.mp4'
-import panditSVG  from '../assets/img/pandit.png'
+import panditSVG from '../assets/img/pandit.png'
 import CompleteSamagry from '../assets/img/Complete-Samagry.png'
-import AuthenticRituals  from '../assets/img/Authentic-Rituals.png'
+import AuthenticRituals from '../assets/img/Authentic-Rituals.png'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const HeroSection = ({onHeroVisibleChange }) => {
+const HeroSection = ({ onHeroVisibleChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
   const controls = useAnimation();
 
-   const heroRef = useRef();
+  const heroRef = useRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -98,11 +98,12 @@ const HeroSection = ({onHeroVisibleChange }) => {
   const heroSlides = [
     {
       badge: "Auspicious Ceremonies",
-      title: "Welcome to  <span class='highlight-text'>BookMyYagna</span>  A Sacred Connection to the Divine",
-      subtitle: 'In the hustle and bustle of our daily lives, we often forget the true essence of life...',
+      title: "Welcome to  <span class='highlight-text'>BookMyYagna</span> <span class='highlight-text' style='font-size: medium;'>Your Sacred Link to Authentic Vedic Rituals</span>",
+      subtitle: "In today’s fast-paced world, reconnect with spirituality through online yagna, puja, and verified pandits—all in one place.",
       image: image,
       bgVideo: vdo1
     },
+
     {
       badge: "Festival Celebrations",
       title: "Celebrate <span class='highlight-text'>Festivals</span> with Traditional Rituals",
@@ -119,19 +120,19 @@ const HeroSection = ({onHeroVisibleChange }) => {
       bgVideo: vdo3
     }
   ];
-      const handleBookingClick = ()=>{
-        if(isAuthenticated){
-            navigate('/listofpooja')
-        } else {
-          navigate('/login')
-        }
-      }
+  const handleBookingClick = () => {
+    if (isAuthenticated) {
+      navigate('/listofpooja')
+    } else {
+      navigate('/login')
+    }
+  }
   return (
     <div ref={heroRef} className="enhanced-hero-section">
       {/* Hero Carousel */}
-      <Carousel 
-        fade 
-        indicators={true} 
+      <Carousel
+        fade
+        indicators={true}
         controls={true}
         interval={6000}
         onSelect={handleSelect}
@@ -139,8 +140,8 @@ const HeroSection = ({onHeroVisibleChange }) => {
       >
         {heroSlides.map((slide, index) => (
           <Carousel.Item key={index}>
-            <div 
-              className="hero-slide" 
+            <div
+              className="hero-slide"
               style={{ backgroundImage: `url(${heroSlides.bgImage})` }}
             >
               <video
@@ -149,6 +150,7 @@ const HeroSection = ({onHeroVisibleChange }) => {
                 loop
                 muted
                 playsInline
+
               >
                 <source className='w-100' src={slide.bgVideo} type="video/mp4" />
                 <img
@@ -179,32 +181,32 @@ const HeroSection = ({onHeroVisibleChange }) => {
                       <motion.div variants={slideTextVariants} className="hero-badge mt-5 mb-3">
                         <Star className="badge-icon" /> {slide.badge}
                       </motion.div>
-                      
-                      
-                      <motion.h1 
-                        variants={slideTextVariants} 
+
+
+                      <motion.h1
+                        variants={slideTextVariants}
                         className="hero-title"
-                        dangerouslySetInnerHTML={{__html: slide.title}}
+                        dangerouslySetInnerHTML={{ __html: slide.title }}
                       ></motion.h1>
-                      
+
                       <motion.p variants={slideTextVariants} className="hero-subtitle "
-                      style={{textAlign:"justify"}}>
+                        style={{ textAlign: "justify" }}>
                         {slide.subtitle}
                       </motion.p>
-                      
+
                       <motion.div variants={slideTextVariants} className="cta-buttons d-flex flex-row">
                         <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
                           <Calendar2Check className="btn-icon" /> Book Pooja Now
                         </Button>
-                        <Button variant="outline-light" className="secondary-cta-btn" onClick={()=> navigate('/listofpooja')}>
+                        <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpooja')}>
                           <Bell className="btn-icon" /> Explore Services
                         </Button>
                       </motion.div>
-                      
+
                       <motion.div variants={slideTextVariants} className="row">
                         <div className="feature-item  col-4">
                           <div className="feature-icon-wrapper">
-                          <img src={panditSVG} alt="Verified Pandits" className="feature-icon" />
+                            <img src={panditSVG} alt="Verified Pandits" className="feature-icon" />
                           </div>
                           <span>Verified Pandits</span>
                         </div>
@@ -223,10 +225,10 @@ const HeroSection = ({onHeroVisibleChange }) => {
                       </motion.div>
                     </motion.div>
                   </Col>
-                  
+
                   <Col lg={6} md={12} className={`mt-0 mt-md-0 mt-lg-0 d-none d-md-block
                     ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"}`}>
-                    <motion.div 
+                    <motion.div
                       key={`image-${activeIndex}`}
                       className="hero-image-container"
                       variants={index % 2 === 0 ? slideImageVariants.hiddenRight : slideImageVariants.hiddenLeft}
@@ -255,7 +257,7 @@ const HeroSection = ({onHeroVisibleChange }) => {
           </Carousel.Item>
         ))}
       </Carousel>
-      
+
       <div className="floating-particles">
         {[...Array(20)].map((_, i) => (
           <div key={i} className={`particle particle-${i + 1}`}></div>

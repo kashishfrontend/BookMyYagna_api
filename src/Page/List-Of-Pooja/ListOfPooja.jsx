@@ -17,8 +17,8 @@ import "../../assets/css/ListOfCSS.css";
 
 import axios from "axios";
 // import './PoojaSlider.css';
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -116,18 +116,12 @@ const PoojaSlider = () => {
                       <div className="pooja-info">
                         <h4>{pooja.heading}</h4>
                         <h5>{pooja.subHeading}</h5>
-                        <p className="m-1">{pooja.description}</p>
-                        <div className="text-center">
+                        <p className='m-1'>{pooja.description}</p>
+                        <div className='text-center'>
                           {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
-                            className="book-now-btn1 text-center text-decoration-none"
-                            onClick={() =>
-                              isAuthenticated
-                                ? navigate("/poojaBookingDetails", {
-                                    state: { poojaId: pooja._id },
-                                  })
-                                : navigate("/login")
-                            }
+                            className='book-now-btn1 text-center text-decoration-none'
+                            onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                           >
                             Book Now
                           </button>
@@ -139,7 +133,6 @@ const PoojaSlider = () => {
               </Swiper>
             </div>
           </div>
-
           <div className="row mt-5">
             <div className="col-12">
               <div
@@ -172,18 +165,11 @@ const PoojaSlider = () => {
                         </button> */}
                         <button
                           className="tile-book-btn"
-                          onClick={() =>
-                            isAuthenticated
-                              ? navigate("/poojaBookingDetails", {
-                                  state: { poojaId: pooja._id },
-                                })
-                              : navigate("/login")
-                          }
+                          onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                         >
-                          <span className="text-decoration-none text-dark">
-                            Book This Pooja
-                          </span>
+                          <span className='text-decoration-none text-dark'>Book This Pooja</span>
                         </button>
+
                       </div>
                     </div>
                   </div>

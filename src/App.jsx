@@ -10,13 +10,12 @@ function App() {
 
   return (
     <>
-    
-     <AppRoutes/>
-     <FloatingContactButton />
-     {/* <ChatbotWidget/> */}
+
+      <AppRoutes />
+      <FloatingContactButton />
+      {/* <ChatbotWidget/> */}
     </>
   )
 }
 
 export default App
- 

@@ -5,54 +5,39 @@ import { FaQuestion } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const FAQ = () => {
-    const faqs = [
-        {
-            id: 1,
-            question: "🙏 How do I book a ceremony?",
-            answer: (
-                <>
-                    Booking is seamless and takes just a few minutes. Visit our{' '}
-                    <Link style={{ textDecoration: "none" }} to="/servicePage">Services</Link> page. Choose your desired Yagna, Pooja, or Ritual, select your preferred date and time, proceed with a secure online payment. You'll receive a confirmation email and WhatsApp message instantly.
-                </>
-            ),
+   const faqs = [
+  {
+    id: 1,
+    question: " Can I book multiple pujas together for different occasions?",
+    answer: "Yes, you can easily book multiple pujas for different occasions such as Satyanarayan Puja, Griha Pravesh, or Rudrabhishek. Our system allows back-to-back scheduling or custom bundles based on your family needs."
+  },
+  {
+    id: 2,
+    question: " Are your pandits familiar with regional customs and languages?",
+    answer: "Absolutely. We have qualified pandits from different regions of India, fluent in languages like Hindi, Marathi, Tamil, Telugu, Kannada, Bengali, and more—ensuring rituals are performed as per your tradition."
+  },
+  {
+    id: 3,
+    question: " What if I need a puja urgently or within 24 hours?",
+    answer: "We accommodate urgent puja bookings based on pandit availability. For same-day or next-day ceremonies, simply contact us via live chat or WhatsApp for priority assistance."
+  },
+  {
+    id: 4,
+    question: " Will I receive a list of samagri items in advance (if self-arranged)?",
+    answer: "Yes, if you choose to arrange samagri yourself, we’ll provide a detailed checklist of Vedic samagri items in advance. However, most users prefer our full-service option where we handle all arrangements."
+  },
+  {
+    id: 5,
+    question: " Is there any consultation before the puja?",
+    answer: "Yes, we offer a free pre-puja consultation with our team or assigned pandit to guide you on timings, rituals, and preparations based on your purpose (like dosha nivaran, griha shanti, etc.)."
+  },
+  {
+    id: 6,
+    question: " How do I ensure my puja is astrologically aligned (muhurat-based)?",
+    answer: "During booking, you can select the muhurat-based timing option. Our team will consult Hindu Panchang and suggest the most auspicious date/time as per your city and ritual type."
+  }
+];
 
-        },
-        {
-            id: 2,
-            question: "Can I customize the pooja according to my requirements?",
-            answer: "Yes, we offer customization options for most of our poojas. During the booking process, you can add special requirements or preferences. For more specific customizations, you can contact our support team who will assist you in arranging a personalized ceremony."
-        },
-        {
-            id: 3,
-            question: "Do I need to arrange the pooja materials (samagri)?",
-            answer: "No, our priests bring all the necessary pooja materials (samagri) required for the ritual. If you have any specific preferences or traditional items you'd like to include, you can mention this during booking or inform our priest before the ceremony."
-        },
-        {
-            id: 4,
-            question: "How experienced are your priests?",
-            answer: "All our priests have at least 10 years of experience in performing Vedic rituals. They are well-versed in Sanskrit mantras and follow authentic procedures according to Vedic scriptures. We carefully select and verify each priest's credentials and expertise."
-        },
-        {
-            id: 5,
-            question: "Can I schedule a pooja for another city?",
-            answer: "Yes, you can book a pooja in any city where our services are available. Currently, we operate in 20+ major cities across India. If your location is not listed, please contact our support team to check availability or arrange an online pooja."
-        },
-        {
-            id: 6,
-            question: "What happens if I need to reschedule or cancel my pooja?",
-            answer: "You can reschedule your pooja at least 24 hours before the scheduled time at no extra cost. For cancellations made 48 hours before the scheduled time, we offer a full refund. Cancellations within 24 hours may incur a nominal charge. Please refer to our cancellation policy for more details."
-        },
-        {
-            id: 7,
-            question: "Do you offer online pooja services?",
-            answer: "Yes, we offer online pooja services where the priest performs the ritual at our temple and you can join via video call. The priest will guide you through the process and you can participate virtually. Prasad and sacred items can be delivered to your address after the ceremony."
-        },
-        {
-            id: 8,
-            question: "How long does each pooja take?",
-            answer: "The duration varies depending on the type of pooja. Simple poojas may take 1-2 hours, while more elaborate ceremonies like Griha Pravesh or Satyanarayan Pooja can take 3-4 hours. The estimated duration is mentioned in each pooja description on our website."
-        }
-    ];
     const [showModal, setShowModal] = useState(false);
     const fadeInUpVariants = {
         hidden: { opacity: 0, y: 30 },

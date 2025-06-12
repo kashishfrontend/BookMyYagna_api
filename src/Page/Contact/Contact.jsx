@@ -10,10 +10,10 @@ const Contact = () => {
     <div className="container py-5 ">
       <div className="text-center mb-5">
         <h2 className="fw-bold border-bottom d-inline-block pb-2 mb-3 " style={{ marginTop: "90px" }}>
-          Contact Us <span className="text-warning">/01</span>
+         Contact BookMyYagna – We're Here to Help 
         </h2>
         <p className="text-muted " >
-          We're here to help with your pooja selections, event bookings, or any questions you have.
+        Get in touch for puja bookings, event queries, or spiritual guidance.
         </p>
       </div>
 
@@ -21,13 +21,13 @@ const Contact = () => {
         <div className='col-md-4'>
           <ContactCard
             icon={<FaEnvelope size={20} className="text-warning" />}
-            title="Email Support"
+            title="Email "
             content={
               <>
                 <a href="mailto:support@bookmyyagna.com" className="text-decoration-none text-warning fw-semibold">
                   support@bookmyyagna.com
                 </a>
-                <p className="mb-0">We usually reply within <strong>12–24 hours</strong>.</p>
+                <p className="mb-0"> Response within 12–24 hours</p>
               </>
             }
           />
@@ -41,7 +41,7 @@ const Contact = () => {
                 <p className="mb-1"><strong>Phone:</strong> +91 8569977750
 
                 </p>
-                <p className="mb-0">Available daily from <strong>10 AM – 8 PM IST</strong>.</p>
+                <p className="mb-0"> 10 AM – 8 PM IST (Daily)</p>
               </>
             }
           />
@@ -55,7 +55,7 @@ const Contact = () => {
                 <p className="mb-1"><strong>Chat:</strong> +91 8569977750
 
                 </p>
-                <p className="mb-0">Get real-time pooja recommendations and guidance.</p>
+                <p className="mb-0">Instant help with puja recommendations & bookings</p>
               </>
             }
           />
@@ -66,7 +66,7 @@ const Contact = () => {
             <ContactCard
               icon={<FaInstagram size={20} className="text-danger" />}
               title="Instagram"
-              content="Follow for rituals & live alerts"
+              content="Ritual clips & live alerts"
             />
           </a>
         </div>
@@ -76,7 +76,7 @@ const Contact = () => {
             <ContactCard
               icon={<FaYoutube size={20} className="text-danger" />}
               title="YouTube"
-              content="Watch live poojas & stories"
+              content=" Watch live pujas & stories"
             />
           </a>
         </div>
@@ -86,7 +86,7 @@ const Contact = () => {
             <ContactCard
               icon={<FaFacebook size={20} className="text-primary" />}
               title="Facebook"
-              content="Community events & bhajans"
+              content=" Events & bhajan updates"
             />
           </a>
         </div>
@@ -96,7 +96,7 @@ const Contact = () => {
             <ContactCard
               icon={<FaTelegram size={20} className="text-info" />}
               title="Telegram"
-              content="Join satsang groups & daily mantras"
+              content="Daily mantras & satsang invites"
             />
           </a>
         </div>
