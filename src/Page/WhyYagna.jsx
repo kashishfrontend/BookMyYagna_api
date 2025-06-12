@@ -17,27 +17,31 @@ const WhyYagna = () => {
                         <span className="om-symbol">ॐ</span>
                     </div>
                     <div className="section-title">
-                        <h3>Why <span>Yagna & Pooja</span> Ceremonies Are Essential</h3>
+                        <h3>Why <span>Yagna & Pooja</span>Ceremonies Matter
+                        </h3>
                     </div>
-                    <p>Every moment, every action, every thought affects the energy around us. We must align with the universal flow to maintain peace and prosperity.</p>
+                    <p>Every thought, action, and moment generates energy. Aligning with this universal energy through Puja and Yagna ceremonies brings peace, positivity, and spiritual harmony into our lives.
+                    </p>
                 </div>
 
                 <div className="info-block" data-aos="fade-up">
-                    <h4 className="info-heading">Why should you consider a Yagna or Pooja Ceremony?</h4>
-                    
+                    <h4 className="info-heading">Why Choose a Yagna or Puja Ceremony with BookMyYagna?</h4>
+
                     <div className="info-section">
                         <h5>• For Celebrations:</h5>
                         <p>
-                            Life is a tapestry of beautiful moments—birthdays, weddings, housewarming ceremonies, or new beginnings. These are the times when we seek blessings and gratitude.
-                            <strong> BookMyYagna</strong> offers you the chance to invite divine blessings through <strong>Hawan</strong> and <strong>Pooja ceremonies</strong>, whether you’re hosting at home or afar.
+                            From <strong> weddings, birthdays,  housewarmings, </strong> to new ventures—every special occasion calls for divine blessings.
+                            <strong> BookMyYagna </strong> offers easy access to trusted <strong> pandits  </strong> and sacred rituals like <strong> Hawan </strong> and <strong> Puja, </strong> available both  <strong> online and at your location.</strong>
+
                         </p>
                     </div>
 
                     <div className="info-section">
                         <h5>• For Healing:</h5>
                         <p>
-                            Life isn’t always smooth. During moments of loss or stress, we may feel disconnected. A <strong>Pooja</strong> or <strong>Yagna</strong> can restore the balance within you and cleanse your soul.
-                            <strong> BookMyYagna</strong> helps you reconnect with the divine energy that supports us through life’s challenges, even when you’re physically or emotionally distant.
+                            Difficult times like <strong> loss, stress, or emotional imbalance </strong> can leave us feeling disconnected.
+                            A well-performed <strong> Yagna </strong> or <strong> Puja  </strong>helps restore inner peace, removes negative energy, and recharges your spiritual strength.
+                            With <strong> BookMyYagna </strong>, reconnect with divine energy and invite healing into your life.
                         </p>
                     </div>
                 </div>

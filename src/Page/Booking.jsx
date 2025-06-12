@@ -413,7 +413,7 @@ if (response.data.success) {
                     <textarea
                       value={specialRequirements}
                       onChange={(e) => setSpecialRequirements(e.target.value)}
-                      placeholder="Any special requests or requirements for the ceremony"
+                      placeholder="Enter Your Address"
                     ></textarea>
                   </div>
 

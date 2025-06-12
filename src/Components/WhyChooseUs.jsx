@@ -29,42 +29,42 @@ const WhyChooseUs = () => {
             id: 1,
             icon: <FaUserTie />,
             title: "Experienced Pandits",
-            description: "Our ceremonies are conducted by highly qualified Vedic scholars with decades of experience in performing traditional rituals.",
+            description: "Our Vedic pujas are led by highly experienced and certified pandits with years of expertise in Hindu rituals. Each ceremony is performed with precision, authenticity, and devotion.",
             animation: "fade-right"
         },
         {
             id: 2,
             icon: <FaBookOpen />,
             title: "Authentic Scriptures",
-            description: "All rituals follow authentic Vedic scriptures and are performed with precise adherence to ancient traditions and customs.",
+            description: "All rituals follow traditional Vedic scriptures and ancient mantras, ensuring 100% adherence to Hindu customs for maximum spiritual benefit.",
             animation: "fade-up"
         },
         {
             id: 3,
             icon: <FaCalendarAlt />,
             title: "Flexible Scheduling",
-            description: "Choose a date and time that works best for you and your family. We accommodate early morning, evening, and weekend ceremonies.",
+            description: "Book your puja at your convenience — morning, evening, or weekend slots. We offer flexible timing to suit your family's comfort and schedule.",
             animation: "fade-left"
         },
         {
             id: 4,
             icon: <FaPrayingHands />,
             title: "Complete Ceremonies",
-            description: "We provide all necessary samagri (ritual materials) and perform every step of the ceremony with proper mantras and rituals.",
+            description: "We provide full puja samagri and handle each ritual step as per the Vedic process, so you can relax and experience a hassle-free, sacred ceremony.",
             animation: "fade-right"
         },
         {
             id: 5,
             icon: <FaHandHoldingHeart />,
             title: "Personal Guidance",
-            description: "Our pandits offer personalized guidance throughout the ceremony, explaining the significance of each ritual step.",
+            description: "Our pandits explain the meaning and significance of every step, making your ceremony spiritually enriching and easy to follow for the entire family.",
             animation: "fade-up"
         },
         {
             id: 6,
             icon: <FaGem />,
             title: "Quality Assurance",
-            description: "We use only the highest quality, pure ingredients and materials for all rituals, ensuring the most auspicious outcomes.",
+            description: "Only pure, high-quality ingredients and Vedic-certified items are used in every puja, ensuring the most auspicious and effective outcomes.",
             animation: "fade-left"
         }
     ];
@@ -121,8 +121,9 @@ const WhyChooseUs = () => {
                     <div className="ornament-line ">
                         <span className="om-symbol">ॐ</span>
                     </div>
-                    <h2>Why Choose Our Divine Services</h2>
-                    <p className='pb-3'>Experience authentic Vedic traditions with our dedicated team of accomplished pandits</p>
+                    <h2>Why Choose Our Divine Services?</h2>
+                    <p className='pb-3'>Experience authentic Vedic traditions with our dedicated team of accomplished pandits.
+                        At <b> BookMyYagna </b>, we are committed to delivering spiritual ceremonies with precision, authenticity, and devotion. Here’s why thousands of families trust us with their sacred rituals:</p>
                 </div>
 
                 <div className="advantages-wrapper">
@@ -139,7 +140,7 @@ const WhyChooseUs = () => {
                                         <div className="icon-bg"></div>
                                     </div>
                                     <h3>{advantage.title}</h3>
-                                   <p style={{textAlign:"justify"}}>{advantage.description}</p>
+                                    <p style={{ textAlign: "justify" }}>{advantage.description}</p>
                                 </div>
                             </Col>
 
@@ -151,15 +152,13 @@ const WhyChooseUs = () => {
                     <div className="testimonial-content">
                         <div className="quote-mark">"</div>
                         <p>
-                            The Satyanarayan Pooja performed for our new home was one of the most
-                            authentic and spiritually enriching experiences. The pandit's knowledge
-                            and the traditional approach made it truly special.
+                            "We booked a Griha Pravesh Puja through BookMyYagna, and the entire experience was divine. The panditji arrived on time, brought all the samagri, and explained every step with meaning. It truly made our housewarming memorable."
                         </p>
                         <div className="testimonial-author">
-                           
+
                             <div className="author-info ">
-                                <h4>Rajiv Sharma</h4>
-                                <span>Delhi, India</span>
+                                <h4>– Priya Mehta</h4>
+                                <span>Bangalore, India</span>
                             </div>
                         </div>
                     </div>
@@ -196,28 +195,7 @@ const WhyChooseUs = () => {
                         ))}
                     </Row>
                 </div>
-            </Container>
-
-            {/* <div className="sacred-banner">
-                <div className="sacred-overlay"></div>
-                <Container>
-                    <div className="sacred-content"  data-aos="zoom-out" duration="1000" >
-                        <h3>Experience the Sacredness of Authentic Vedic Rituals</h3>
-                        <p>Book your ceremony today and invite divine blessings into your life</p>
-                        <button className="btn btn-sacred">Schedule Consultation</button>
-                    </div>
-                </Container>
-            </div> */}
-
-            {/* <div className="curved-separator-bottom">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
-                    <path
-                        fill="#ffffff"
-                        fillOpacity="1"
-                        d="M0,32L80,37.3C160,43,320,53,480,48C640,43,800,21,960,10.7C1120,0,1280,0,1360,0L1440,0L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z">
-                    </path>
-                </svg>
-            </div> */}
+            </Container>    
         </section>
     );
 };

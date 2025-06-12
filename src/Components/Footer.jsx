@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaOm, FaPrayingHands, FaPinterestP, FaQuora, FaMediumM, FaLinkedinIn, FaTelegramPlane, FaRedditAlien, } from 'react-icons/fa';
+import { Link, Links } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer className="footer-section" style={{ backgroundImage: "#e3e3e3" }}>
@@ -13,54 +14,57 @@ const Footer = () => {
                 <h3>BookmyYagna
                 </h3>
               </div>
-              <p>Connecting devotees with authentic Hindu rituals and spiritual experiences. Book your pooja services online and experience the divine blessings.</p>
+              <p><strong> BookMyYagna </strong> connects devotees with verified Vedic pandits for authentic Hindu rituals, pujas, and spiritual ceremonies.
+                Book online and experience peace, prosperity, and divine blessings at your doorstep.</p>
               <div className="social-links row">
                 <div className='d-flex justify-content-center col-12  gap-3'>
                   <a href="" target="_blank" rel="noopener noreferrer" className="social-icon p-2"><FaFacebookF /></a>
-                  <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a>
-                  <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaInstagram /></a>
-                  <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaYoutube /></a>
-                  <a href="https://in.pinterest.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaPinterestP /></a>
+                  {/* <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a> */}
+                  <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaInstagram /></a>
+                  <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaYoutube /></a>
+                  <a href="https://www.linkedin.com/in/bookmyyagna" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaLinkedinIn /></a>
+                  <a href="https://t.me/bookmyyagna" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaTelegramPlane /></a>
+                  {/* <a href="https://in.pinterest.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaPinterestP /></a> */}
                 </div>
                 <div className='d-flex justify-content-center col-12 mt-4 mt-md-2 gap-3'>
-                  <a href="https://www.quora.com/profile/Book-My-Yagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaQuora /></a>
-                  <a href="https://medium.com/@bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaMediumM /></a>
-                  <a href="https://www.linkedin.com/in/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaLinkedinIn /></a>
-                  <a href="https://t.me/bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTelegramPlane /></a>
-                  <a href="https://www.reddit.com/user/bookmyyagna1/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaRedditAlien /></a>
+                  {/* <a href="https://www.quora.com/profile/Book-My-Yagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaQuora /></a> */}
+                  {/* <a href="https://medium.com/@bookmyyagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaMediumM /></a> */}
+
+                  {/* <a href="https://www.reddit.com/user/bookmyyagna1/" target="_blank" rel="noopener noreferrer" className="social-icon"><FaRedditAlien /></a> */}
                 </div>
               </div>
             </div>
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-links mt-0 mt-md-3">
               <h4>Quick Links</h4>
               <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="about-us">About Us</a></li>
-                <li><a href="listofpooja">Services</a></li>
-                <li><a href="gallery">Gallery</a></li>
-                <li><a href="contact">Contact</a></li>
+                <li><Link to={'/'}>Home</Link></li>
+                <li><Link to={'/about-us'}>About Us</Link></li>
+                <li><Link to={'/listofpooja'}>Services</Link></li>
+                <li><Link to={'/gallery'}>Gallery</Link></li>
+                <li><Link to={'/contact'}>Contact</Link></li>
               </ul>
             </div>
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-services mt-0 mt-md-3">
               <h4>Our Services</h4>
               <ul>
-                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Ganesh Pooja</a></li>
-                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Satyanarayan Katha</a></li>
-                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Griha Pravesh</a></li>
-                <li><a href="listofpooja"><FaPrayingHands className="service-icon" /> Vivah Sanskar</a></li>
+                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Ganesh Pooja</Link></li>
+                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Satyanarayan Katha</Link></li>
+                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Griha Pravesh</Link></li>
+                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Vivah Sanskar</Link></li>
               </ul>
             </div>
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
               <h4>Contact Us</h4>
               <div className="contact-info">
-                <p><FaMapMarkerAlt className="contact-icon" /> Prem Plaza, 252, opp. subhash park, Subhash Nagar, Rohtak, Haryana 124001</p>
+                <p><FaMapMarkerAlt className="contact-icon" />  Prem Plaza, 252, Opp. Subhash Park, Subhash Nagar, Rohtak, Haryana - 124001</p>
                 <p><FaPhoneAlt className="contact-icon" /> +91 8569977750 </p>
                 <p><FaEnvelope className="contact-icon" /> support@bookmyyagna.com</p>
               </div>
               <div className="newsletter">
                 <h5>Subscribe to our Newsletter</h5>
+                <span>Stay updated on auspicious muhurats, Vedic tips & festival discounts.</span>
                 <div className="newsletter-form">
-                  <input type="email" placeholder="Your Email" />
+                  <input type="email" placeholder="Enter your email" />
                   <button type="submit" className="btn">Subscribe</button>
                 </div>
               </div>
@@ -75,9 +79,9 @@ const Footer = () => {
               <div className="footer-mandala"></div>
               <p className="copyright">© {new Date().getFullYear()} BookmyYagna All Rights Reserved.</p>
               <div className="footer-bottom-links">
-                <a href="/privacy-policy">Privacy Policy</a>
-                <a href="/termsofservice">Terms of Service</a>
-                <a href="/FAQ">FAQ</a>
+                <Link to={"/privacy-policy"}>Privacy Policy</Link>
+                <Link to={"/termsofservice"}>Terms of Service</Link>
+                <Link to={"/FAQ"}>FAQ</Link>
               </div>
             </div>
           </div>

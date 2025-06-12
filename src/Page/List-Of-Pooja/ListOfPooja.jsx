@@ -15,7 +15,7 @@ import hanumanpic from '../../assets/img/hanumanjiPic.webp';
 import axios from 'axios';
 // import './PoojaSlider.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector , useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -113,26 +113,21 @@ const PoojaSlider = () => {
                         <h5>{pooja.subHeading}</h5>
                         <p className='m-1'>{pooja.description}</p>
                         <div className='text-center'>
-
                           {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
-  className='book-now-btn1 text-center text-decoration-none'
-   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
->
-  Book Now
-</button>
-
-
+                            className='book-now-btn1 text-center text-decoration-none'
+                            onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
+                          >
+                            Book Now
+                          </button>
                         </div>
                       </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
-
             </div>
           </div>
-
           <div className="row mt-5">
             <div className="col-12">
               <div className="pooja-grid" data-aos="fade-up" data-aos-delay="300">
@@ -161,11 +156,11 @@ const PoojaSlider = () => {
                           <a className='text-decoration-none text-dark' href="./poojaBookingDetails">Book This Pooja</a>
                         </button> */}
                         <button
-  className="tile-book-btn"
-   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
->
-  <span className='text-decoration-none text-dark'>Book This Pooja</span>
-</button>
+                          className="tile-book-btn"
+                          onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
+                        >
+                          <span className='text-decoration-none text-dark'>Book This Pooja</span>
+                        </button>
 
                       </div>
                     </div>
