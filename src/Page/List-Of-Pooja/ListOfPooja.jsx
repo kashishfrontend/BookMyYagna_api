@@ -1,21 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
-import AOS from 'aos';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
-import 'aos/dist/aos.css';
+import React, { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Navigation,
+  Pagination,
+  Autoplay,
+  EffectCoverflow,
+} from "swiper/modules";
+import AOS from "aos";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
+import "aos/dist/aos.css";
 // import '../../assets/css/ListOfCSS.css';
-import '../../assets/css/ListOfCSS.css';
-import MainNavbar from '../../Components/MainNavbar';
-import Footer from '../../Components/Footer';
-import hanumanpic from '../../assets/img/hanumanjiPic.webp';
-import axios from 'axios';
+import "../../assets/css/ListOfCSS.css";
+
+import axios from "axios";
 // import './PoojaSlider.css';
-import { useNavigate } from 'react-router-dom';
-import { useSelector , useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -29,25 +32,22 @@ const PoojaSlider = () => {
     AOS.init({
       duration: 1200,
       once: false,
-      mirror: true
+      mirror: true,
     });
   }, []);
 
   useEffect(() => {
     axios
-      .get('https://bookmyyogna.onrender.com/pooja/getAllPoojas')
+      .get("https://bookmyyogna.onrender.com/pooja/getAllPoojas")
       .then((response) => {
         if (response.data.success) {
           setListPooja(response.data.poojas);
         }
       })
       .catch((error) => {
-        console.error('Error fetching pandits:', error);
+        console.error("Error fetching pandits:", error);
       });
   }, []);
-
-
-
 
   return (
     <>
@@ -65,14 +65,12 @@ const PoojaSlider = () => {
 
           <div className="row">
             <div className="col-12" data-aos="fade-up">
-
               <Swiper
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
-                effect={'coverflow'}
-
+                effect={"coverflow"}
                 grabCursor={true}
                 centeredSlides={true}
-                slidesPerView={'auto'}
+                slidesPerView={"auto"}
                 coverflowEffect={{
                   rotate: 50,
                   stretch: 0,
@@ -90,7 +88,10 @@ const PoojaSlider = () => {
                 className="pooja-swiper shadow-none"
               >
                 {listPooja.map((pooja, _id) => (
-                  <SwiperSlide key={pooja._id} onClick={() => swiperRef.current?.autoplay.stop()}>
+                  <SwiperSlide
+                    key={pooja._id}
+                    onClick={() => swiperRef.current?.autoplay.stop()}
+                  >
                     <div
                       className="pooja-card"
                       onMouseEnter={() => swiperRef.current?.autoplay.stop()}
@@ -99,7 +100,11 @@ const PoojaSlider = () => {
                       }}
                     >
                       <div className="pooja-image-wrapper">
-                        <img src={pooja.image} alt={pooja.heading} className="pooja-image" />
+                        <img
+                          src={pooja.image}
+                          alt={pooja.heading}
+                          className="pooja-image"
+                        />
                         <div className="pooja-overlay">
                           <div className="overlay-content">
                             <span className="pooja-icon">{pooja.icon}</span>
@@ -111,36 +116,41 @@ const PoojaSlider = () => {
                       <div className="pooja-info">
                         <h4>{pooja.heading}</h4>
                         <h5>{pooja.subHeading}</h5>
-                        <p className='m-1'>{pooja.description}</p>
-                        <div className='text-center'>
-
+                        <p className="m-1">{pooja.description}</p>
+                        <div className="text-center">
                           {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
-  className='book-now-btn1 text-center text-decoration-none'
-   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
->
-  Book Now
-</button>
-
-
+                            className="book-now-btn1 text-center text-decoration-none"
+                            onClick={() =>
+                              isAuthenticated
+                                ? navigate("/poojaBookingDetails", {
+                                    state: { poojaId: pooja._id },
+                                  })
+                                : navigate("/login")
+                            }
+                          >
+                            Book Now
+                          </button>
                         </div>
                       </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
-
             </div>
           </div>
 
           <div className="row mt-5">
             <div className="col-12">
-              <div className="pooja-grid" data-aos="fade-up" data-aos-delay="300">
+              <div
+                className="pooja-grid"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
                 {listPooja.map((pooja) => (
                   <div
                     // key={pooja.id}
                     key={pooja._id}
-
                     className="pooja-tile"
                     data-aos="zoom-in"
                     data-aos-delay={100 * pooja.id}
@@ -161,12 +171,19 @@ const PoojaSlider = () => {
                           <a className='text-decoration-none text-dark' href="./poojaBookingDetails">Book This Pooja</a>
                         </button> */}
                         <button
-  className="tile-book-btn"
-   onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
->
-  <span className='text-decoration-none text-dark'>Book This Pooja</span>
-</button>
-
+                          className="tile-book-btn"
+                          onClick={() =>
+                            isAuthenticated
+                              ? navigate("/poojaBookingDetails", {
+                                  state: { poojaId: pooja._id },
+                                })
+                              : navigate("/login")
+                          }
+                        >
+                          <span className="text-decoration-none text-dark">
+                            Book This Pooja
+                          </span>
+                        </button>
                       </div>
                     </div>
                   </div>

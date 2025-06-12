@@ -151,11 +151,15 @@ const PoojaBookingDetails = () => {
             {/* <h1 className="pooja-title">{poojadata.heading}</h1> */}
             <h1 className="pooja-title">{poojaData?.heading}</h1>
 
-            <div className="rating-container">
-              <div className="stars">
-                <p>{poojaData?.rating}</p>
-              </div>
-            </div>
+           <div className="rating-container">
+  <div className="stars">
+    <p>
+      <strong>{poojaData?.rating} ★</strong> &nbsp;
+      Rated by users based on their pooja experience
+    </p>
+  </div>
+</div>
+
 
             <div className="pooja-description">
               <p>{poojaData?.description}</p>
