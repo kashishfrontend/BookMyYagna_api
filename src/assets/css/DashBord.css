@@ -638,7 +638,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-light);
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 

@@ -22,7 +22,6 @@ import Account from '../Components/Account';
 import { checkAuth } from '../redux/action/authAction';
 import Gallery from '../Components/gallery';
 import Booking from '../Page/Booking';
-import DashBoard from '../Page/DashboardPage';
 
 // Inline ProtectedRoute
 const ProtectedRoute = ({ children }) => {
@@ -104,7 +103,6 @@ function AppRoutes() {
               <Booking />
             </ProtectedRoute>
           } />
-           <Route path="newdashboard" element={<DashBoard />} />
 
       </Route>
     </Routes>

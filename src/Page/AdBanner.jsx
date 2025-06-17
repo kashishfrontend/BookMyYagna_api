@@ -39,7 +39,7 @@ const AdBanner = () => {
               </h5>
               <p className="mb-2">
                 Yagna is not just about rituals. It’s about devotion, gratitude, and seeking balance.
-                By booking a Yagna or Pooja, you’re aligning with the universe's rhythm, healing your soul,
+                By booking a Yagna or Puja, you’re aligning with the universe's rhythm, healing your soul,
                 and inviting prosperity into your life.
               </p>
               <Link to="/scaredbooking">

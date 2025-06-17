@@ -99,18 +99,17 @@ const HeroSection = ({ onHeroVisibleChange }) => {
     {
       badge: "Auspicious Ceremonies",
       title: "Welcome to  <span class='highlight-text'>BookMyYagna</span> <span class='highlight-text' style='font-size: medium;'>Your Sacred Link to Authentic Vedic Rituals</span>",
-      subtitle: "In today’s fast-paced world, reconnect with spirituality through online yagna, puja, and verified pandits—all in one place.",
+      subtitle: "Reconnect with spirituality through online yagna, puja, and trusted pandits — all in one place.",
       image: image,
       bgVideo: vdo1
     },
 
     {
       badge: "Festival Celebrations",
-      title: "Celebrate <span class='highlight-text'>Festivals</span> with Traditional Rituals",
-      subtitle: "At BookMyYagna, we believe that Yagna and Pooja ceremonies are not just rituals...",
+      title: "Embrace <span class='highlight-text'>Festivals</span> with Sacred Rituals",
+      subtitle: "At BookMyYagna, Yagna and Puja are divine experiences, not just traditions...",
       image: image,
       bgVideo: vdo2,
-      text: "Lorem ipsum, dolor sit amet consectetur..."
     },
     {
       badge: "Home Ceremonies",

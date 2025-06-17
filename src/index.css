@@ -282,7 +282,7 @@
 .hero-title {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   color: white;
   margin-bottom: 20px;
   line-height: 1.2;
@@ -431,7 +431,7 @@
 @keyframes pulse-new {
   0% {
     transform: scale(0.95);
-  
+
   }
 
   50% {
@@ -2070,7 +2070,7 @@
   padding: 100px 0;
   background-color: #fff;
   position: relative;
-  
+
 }
 
 .faq-container {
@@ -2552,6 +2552,7 @@
     border-radius: 4px;
   }
 }
+
 /* Gallery.css */
 .gallery-section {
   padding: 60px 0;
@@ -3010,11 +3011,12 @@
   transition: all 0.3s ease;
 }
 
-.hover-class:hover{
-color: black !important;
-background: transparent !important;
+.hover-class:hover {
+  color: black !important;
+  background: transparent !important;
   transform: translateY(-3px);
 }
+
 .social-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -3642,12 +3644,14 @@ background: transparent !important;
     padding: 15px 0;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
     .dropdown-menu {
       background: rgba(255, 255, 255, 0.7) !important;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
       color: black !important;
     }
   }
+
   .navbar-nav .dropdown-menu {
     position: static !important;
     /* Avoid absolute position */
@@ -3672,4 +3676,168 @@ background: transparent !important;
 
 
 
+}
+
+/* =========popup css================ */
+/* Container for the View button and info icon */
+.pooja-link-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+/* View button styling with gradient and hover effect */
+.pooja-view-button {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  color: #ffffff;
+  background: linear-gradient(135deg, #eb6207 0%, #f28c38 100%);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.pooja-view-button:hover {
+  background: linear-gradient(135deg, #d55506 0%, #e07b30 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(235, 98, 7, 0.3);
+}
+
+/* Info button styling with subtle scale animation */
+.pooja-info-button {
+  color: #eb6207;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.pooja-info-button:hover {
+  color: #d55506;
+  transform: scale(1.1);
+}
+
+/* Popup container with modern card-like styling */
+.pooja-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 22rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100 !important;
+  opacity: 0;
+  transform: translateY(-15px) scale(0.95);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Popup visible state */
+.pooja-link-container:has(.pooja-popup) .pooja-popup {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Close button with hover rotation */
+.pooja-close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.pooja-close-button:hover {
+  color: #1f2937;
+  transform: rotate(90deg);
+}
+
+/* Popup heading with bold styling */
+.pooja-popup-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #eb6207;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Link wrapper */
+.pooja-link-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #fff5ee;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Link text with hover effect */
+.pooja-link-text {
+  color: #eb6207;
+  text-decoration: none;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.pooja-link-text:hover {
+  color: #d55506;
+  text-decoration: underline;
+}
+
+/* Copy button with scale animation */
+.pooja-copy-button {
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #eb6207 0%, #f28c38 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pooja-copy-button:hover {
+  background: linear-gradient(135deg, #d55506 0%, #e07b30 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(235, 98, 7, 0.3);
+}
+
+/* Copied notification with slide and fade animation */
+.pooja-copied-notification {
+  position: absolute;
+  top: 0.75rem;
+  right: 3.5rem;
+  background: linear-gradient(135deg, #eb6207 0%, #f28c38 100%);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(235, 98, 7, 0.2);
+  opacity: 0;
+  z-index: 99;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Copied notification visible state */
+.pooja-link-container:has(.pooja-copied-notification) .pooja-copied-notification {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ensure table cell is positioned relatively for popup positioning */
+.pooja-link-cell {
+  position: relative;
+  padding: 0.75rem;
 }

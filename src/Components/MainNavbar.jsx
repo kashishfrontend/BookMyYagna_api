@@ -79,7 +79,7 @@ const MainNavbar = ({ isHeroVisible }) => {
             style={{ padding: "0px 70px" }}
             className='padding-class'
           >
-            <Navbar.Brand href="#home" className="brand d-flex  align-items-center d-block p-1">
+            <Navbar.Brand as={Link} to="/" className="brand d-flex align-items-center d-block p-1">
               <img
                 src={img}
                 width="30"

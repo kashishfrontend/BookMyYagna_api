@@ -83,12 +83,12 @@ const PoojaSlider = () => {
                   disableOnInteraction: false,
                 }}
                 modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
-                className="pooja-swiper shadow-none"
+                className="pooja-swiper py-5 shadow-none"
               >
                 {listPooja.map((pooja, _id) => (
                   <SwiperSlide key={pooja._id} onClick={() => swiperRef.current?.autoplay.stop()}>
                     <div
-                      className="pooja-card"
+                      className="pooja-card "
                       onMouseEnter={() => swiperRef.current?.autoplay.stop()}
                       onMouseLeave={() => {
                         swiperRef.current?.autoplay.start();

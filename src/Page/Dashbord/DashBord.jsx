@@ -7,6 +7,7 @@ import {
   Button,
   Modal,
   Form,
+  CloseButton,
 } from "react-bootstrap";
 import {
   FaPrayingHands,
@@ -14,6 +15,9 @@ import {
   FaBell,
   FaUserCircle,
   FaBars,
+  FaLink,
+  FaInfoCircle,
+  FaCopy,
 } from "react-icons/fa";
 import {
   MdDashboard,
@@ -29,6 +33,8 @@ import axios from "../../Api/axios/axios_config";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from "../../redux/action/authAction";
 import { useNavigate } from "react-router-dom";
+import { CCloseButton } from "@coreui/react";
+import { GiClosedBarbute } from "react-icons/gi";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -40,7 +46,11 @@ const Dashboard = () => {
   const bellRef = useRef();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
-
+  // const [popupStates, setPopupStates] = useState({});
+  // const [copyStates, setCopyStates] = useState({});
+  const [popupStates, setPopupStates] = useState({});
+  const [copyStates, setCopyStates] = useState({});
+  //  GET ALL NOTYFICATION
   useEffect(() => {
     const getNotification = async () => {
       try {
@@ -76,7 +86,7 @@ const Dashboard = () => {
       console.error("Error deleting notification:", err);
     }
   };
-
+  // booked POOJA
   const [bookedPuja, setBookedPuja] = useState([]);
   useEffect(() => {
     const allBookingData = async () => {
@@ -104,14 +114,67 @@ const Dashboard = () => {
     allBookingData();
   }, []);
 
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState({
-    name: "Nakul Rana",
-    email: "Nakul.rana@example.com",
-    phone: "+91 00000000000",
-    address: "DLF, ROhtak",
-    profileImage: "/images/user-avatar.jpg",
-  });
+  // const [poojaLink, setPoojaLink] = useState(null);
+
+  // useEffect(() => {
+  //   const updateBooking = async () => {
+  //     try {
+  //       const response = await axios.patch(`./bookings/updateBooking/${bookingId}`);
+  //       if (response.data.success) {
+  //         setPoojaLink(response.data.order);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching updateBooking:", error);
+  //     }
+  //   };
+  //   if (bookingId) {
+  //     updateBooking();
+  //   }
+  // }, [bookingId]);
+  // booked POOJA
+  const [confirmedPoojas, setConfirmedPoojas] = useState([]);
+
+  useEffect(() => {
+    const fetchConfirmedPoojas = async () => {
+      try {
+        const { data: res } = await axios.post("/bookings/getAllBookingForUser", {
+          startDate: '',
+          endDate: '',
+          status: ''
+        });
+
+        if (res.success) {
+          const confirmed = res.data
+            .filter(b => b.status === 'Confirmed' && b.poojaLink)  // only confirmed with link
+            .map(b => ({
+              id: b._id,
+              heading: b.poojaId?.heading || b.planId?.heading || 'Unknown',
+              confirmedAt: b.updatedAt,      // when it was confirmed/updated
+              dateOfDelivery: b.dateOfDelivery,
+              poojaLink: b.poojaLink,
+              poojaLinkTime: b.poojaLinkTime
+            }));
+
+          setConfirmedPoojas(confirmed);
+        }
+      } catch (e) {
+        console.error("Error fetching bookings:", e);
+      }
+    };
+
+    fetchConfirmedPoojas();
+  }, []);
+
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(window.innerWidth <= 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth <= 991);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -159,31 +222,21 @@ const Dashboard = () => {
     }));
   };
 
-  const importedVideos = [
-    {
-      url: "/videos/video1.mp4",
-      name: "video1.mp4",
-    },
-    {
-      url: "/videos/video2.mkv",
-      name: "video2.mkv",
-    },
-    {
-      url: "/videos/video3.mp4",
-      name: "video3.mp4",
-    },
-  ];
+
 
   const renderContent = () => {
     switch (activeNavItem) {
       case "dashboard":
         return renderDashboardContent();
       case "bookings":
-        return renderMyBookingDetals();
+        return renderCompletedPoojaDetals();
       case "book":
         return renderMyBookedDetals();
       case "notifications":
         return renderNotifications();
+      case "Pooja Link":
+        return renderPoojaLink();
+
       default:
         return (
           <div className="content-placeholder">
@@ -255,6 +308,13 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
+            <div
+              className={`menu-item ${activeNavItem === "Pooja Link" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("Pooja Link")}
+            >
+              <FaLink size={20} />
+              <span>Pooja Link</span>
+            </div>
             <div className="mt-auto">
               <div className="menu-item logout " onClick={() => handleLogout()}>
                 <MdLogout size={22} />
@@ -265,7 +325,7 @@ const Dashboard = () => {
         </div>
 
         <div
-          className={`sidebar col-12 col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
+          className={`sidebar col-12 position-sticky  col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
         >
           <div className="logo-container">
             <h2 className="logo">BookmyYagna</h2>
@@ -292,6 +352,14 @@ const Dashboard = () => {
               <FaCalendarAlt size={20} />
               <span>Completed Pooja</span>
             </div>
+            <div
+              className={`menu-item ${activeNavItem === "Pooja Link" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("Pooja Link")}
+            >
+              <FaLink size={20} />
+              <span>Pooja Link</span>
+            </div>
+
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />
               <span>Logout</span>
@@ -299,7 +367,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div
-          className={`main-content col-12 col-lg-10 ${showSidebar ? "" : "expanded"}`}
+          className={`main-content col-12  col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
           <div className="top-nav">
             <div className="search-bar">
@@ -546,7 +614,7 @@ const Dashboard = () => {
     );
   }
 
-  function renderMyBookingDetals() {
+  function renderCompletedPoojaDetals() {
     return (
       <div className="container py-3 py-md-5" data-aos="zoom-in"
         data-aos-delay="100">
@@ -725,6 +793,132 @@ const Dashboard = () => {
       </Container>
     );
   }
+
+
+function renderPoojaLink() {
+  // State for managing popup and copy status for each pooja link
+
+  const handleTogglePopup = (id) => {
+    setPopupStates((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleCopyLink = (id, poojaLink) => {
+    navigator.clipboard.writeText(poojaLink);
+    setCopyStates((prev) => ({
+      ...prev,
+      [id]: true,
+    }));
+    setTimeout(() => {
+      setCopyStates((prev) => ({
+        ...prev,
+        [id]: false,
+      }));
+    }, 2000); // Hide "Copied!" after 2 seconds
+  };
+  
+  return (
+    <>
+      <div className="container py-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2 className="fs-1">Pooja Link</h2>
+          </div>
+          <div className={isMobileOrTablet ? 'table-responsive' : ''}>
+            <table className="custom-table table table-bordered table-striped">
+              <thead className="table-warning">
+                <tr>
+                  <th>Date Of Pooja</th>
+                  <th>Pooja Name</th>
+                  <th>Pooja Time</th>
+                  <th>Link Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {confirmedPoojas.length > 0 ? (
+                  confirmedPoojas.map((p) => (
+                    <tr key={p.id}>
+                      <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
+                      <td>{p.heading}</td>
+                      <td>{p.poojaLinkTime || '—'}</td>
+                      <td className="pooja-link-cell">
+                        {p.poojaLink ? (
+                          <div className="pooja-link-container">
+                            <a
+                              href={p.poojaLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="pooja-view-button"
+                            >
+                              View
+                            </a>
+                            <button
+                              onClick={() => handleTogglePopup(p.id)}
+                              className="pooja-info-button"
+                              aria-label="View Pooja Link Details"
+                            >
+                              <FaInfoCircle size={20} />
+                            </button>
+                            {popupStates[p.id] && (
+                              <div className="pooja-popup">
+                                <button
+                                  onClick={() => handleTogglePopup(p.id)}
+                                  className="pooja-close-button"
+                                  aria-label="Close Popup"
+                                >
+                                  <CloseButton size={24} />
+                                </button>
+                                <h2 className="pooja-popup-heading">
+                                  Your Google Meet Link
+                                </h2>
+                                <div className="pooja-link-wrapper">
+                                  <a
+                                    href={p.poojaLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="pooja-link-text"
+                                  >
+                                    {p.poojaLink}
+                                  </a>
+                                  <button
+                                    onClick={() => handleCopyLink(p.id, p.poojaLink)}
+                                    className="pooja-copy-button"
+                                    aria-label="Copy Link"
+                                  >
+                                    <FaCopy size={16} />
+                                  </button>
+                                </div>
+                                {copyStates[p.id] && (
+                                  <div className="pooja-copied-notification">
+                                    Copied!
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          'Not available'
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+
 };
 
 export default Dashboard;
