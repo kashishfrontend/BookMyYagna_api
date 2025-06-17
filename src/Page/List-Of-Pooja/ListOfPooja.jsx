@@ -48,7 +48,6 @@ const PoojaSlider = () => {
         console.error("Error fetching pandits:", error);
       });
   }, []);
-
   return (
     <>
       <section className="pooja-slider-section mb-5">
