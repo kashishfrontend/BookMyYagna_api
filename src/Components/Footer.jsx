@@ -53,22 +53,32 @@ const Footer = () => {
                 <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Vivah Sanskar</Link></li>
               </ul>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
-              <h4>Contact Us</h4>
-              <div className="contact-info">
-                <p><FaMapMarkerAlt className="contact-icon" />  Prem Plaza, 252, Opp. Subhash Park, Subhash Nagar, Rohtak, Haryana - 124001</p>
-                <p><FaPhoneAlt className="contact-icon" /> +91 8569977750 </p>
-                <p><FaEnvelope className="contact-icon" /> support@bookmyyagna.com</p>
-              </div>
-              <div className="newsletter">
-                <h5>Subscribe to our Newsletter</h5>
-                <span>Stay updated on auspicious muhurats, Vedic tips & festival discounts.</span>
-                <div className="newsletter-form">
-                  <input type="email" placeholder="Enter your email" />
-                  <button type="submit" className="btn">Subscribe</button>
-                </div>
-              </div>
-            </div>
+           <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
+  <h4>Contact Us</h4>
+  <div className="contact-info">
+    <p><FaMapMarkerAlt className="contact-icon me-2" />Prem Plaza, 252, Opp. Subhash Park,<br />Subhash Nagar, Rohtak, Haryana - 124001</p>
+    <p><FaPhoneAlt className="contact-icon me-2" />+91 8569977750</p>
+    <p><FaEnvelope className="contact-icon me-2" />support@bookmyyagna.com</p>
+  </div>
+
+  <div className="newsletter mt-4">
+    <h5 className="mb-1">Subscribe to our Newsletter</h5>
+    <p className="small text-muted mb-2">
+      Stay updated on auspicious muhurats, Vedic tips & festival discounts.
+    </p>
+    <form className="d-flex flex-column flex-sm-row gap-2">
+      <input
+        type="email"
+        placeholder="Enter your email"
+        className="form-control"
+      />
+      <button type="submit" className="btn  text-white px-3" style={{backgroundColor:" #FF7722"}}>
+        Subscribe
+      </button>
+    </form>
+  </div>
+</div>
+
           </div>
         </div>
       </div>

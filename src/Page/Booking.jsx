@@ -16,7 +16,6 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 
-
 const Booking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPuja, setSelectedPuja] = useState(null);
@@ -152,67 +151,65 @@ const Booking = () => {
     fetchUserProfile();
   }, []);
 
+  const handleOrderedSubmit = async (e) => {
+    e.preventDefault();
 
-const handleOrderedSubmit = async (e) => {
-  e.preventDefault();
+    const bookingData = {
+      poojaId: poojaId,
+      planId: selectedPlanId,
+      name: name,
+      phoneNumber: phone,
+      address: specialRequirements,
+      amount: selectedPlan?.amount || 0,
+      poojaMode: type,
+      dateOfDelivery: selectedDate?.toISOString().split("T")[0],
+    };
 
+    try {
+      const response = await axios.post(
+        "https://bookmyyogna.onrender.com/bookings/createBooking",
+        bookingData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-  const bookingData = {
-    poojaId: poojaId,
-    planId: selectedPlanId,
-    name: name,
-    phoneNumber: phone,
-    address: specialRequirements,
-    amount: selectedPlan?.amount || 0,
-    poojaMode: type,
-    dateOfDelivery: selectedDate?.toISOString().split("T")[0], 
+      if (response.data.success) {
+        console.log("Booking successful:", response.data);
+        setIsSuccess(true);
+        setSelectedDate(null);
+        setSelectedPuja(null);
+        setNumberOfPeople(5);
+        setAddress("");
+        setPhone("");
+        setEmail("");
+        setSpecialRequirements("");
+        setType("");
+      } else {
+        alert("Booking failed. Please try again.");
+      }
+      setIsSuccess(true);
+
+      // Clear form after success
+      setTimeout(() => {
+        setIsSuccess(false);
+        setSelectedDate(null);
+        setSelectedPuja(null);
+        setNumberOfPeople(5);
+        setAddress("");
+        setPhone("");
+        setEmail("");
+        setSpecialRequirements("");
+        setType("");
+      }, 3000);
+    } catch (error) {
+      console.error("Error while booking:", error.message);
+      alert("Booking failed. Please try again.");
+    }
   };
-
-  try {
-    const response = await axios.post(
-    "https://bookmyyogna.onrender.com/bookings/createBooking",
-  bookingData,
-  {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true, 
-  }
-);
-
-if (response.data.success) {
-  console.log("Booking successful:", response.data);
-    setIsSuccess(true);
-    setSelectedDate(null);
-    setSelectedPuja(null);
-    setNumberOfPeople(5);
-    setAddress("");
-    setPhone("");
-    setEmail("");
-    setSpecialRequirements("");
-    setType("");
-} else {
-  alert("Booking failed. Please try again.");
-}
-    setIsSuccess(true);
-
-    // Clear form after success
-    setTimeout(() => {
-      setIsSuccess(false);
-      setSelectedDate(null);
-      setSelectedPuja(null);
-      setNumberOfPeople(5);
-      setAddress("");
-      setPhone("");
-      setEmail("");
-      setSpecialRequirements("");
-      setType("");
-    }, 3000);
-  } catch (error) {
-    console.error("Error while booking:", error.message);
-    alert("Booking failed. Please try again.");
-  }
-}; 
   return (
     <>
       <div className="booking-section mt-5">
@@ -354,9 +351,9 @@ if (response.data.success) {
                         required
                       />
                     </div>
-                    </div>
+                  </div>
 
-                     <div className="form-row">
+                  <div className="form-row">
                     <div className="form-group">
                       <label>Your Email:</label>
                       <input
@@ -379,41 +376,54 @@ if (response.data.success) {
                       />
                     </div>
                   </div>
+                  {/* <div className="form-group col-6">
+                      <label>Select Type:</label>
+                      <select
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        required
+                      >
+                        <option value="">Select type</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                      </select>
+                    </div> */}
+
                   <div className="form-row">
                     <div className="form-group col-6">
-                    <label>Select Type:</label>
-                    <select
-                      value={type}
-                      onChange={(e) => setType(e.target.value)}
-                      required
-                    >
-                      <option value="">Select type</option>
-                      <option value="online">Online</option>
-                      <option value="offline">Offline</option>
-                    </select>
-                  </div>
+                      <label>Type:</label>
+                      <select
+                        className="form-control"
+                        name="type"
+                        value="online"
+                        disabled
+                      >
+                        <option value="online">Online</option>
+                      </select>
+                      <input type="hidden" name="type" value="online" />
+                    </div>
 
-  <div className="form-group col-6" >
-    <label>Select Date of Puja:</label>
-    <DatePicker
-    style={{width:'275px'}}
-      selected={selectedDate}
-      onChange={(date) => setSelectedDate(date)}
-      dateFormat="yyyy-MM-dd"
-      minDate={new Date()}
-      placeholderText="Select a date"
-      className="form-control col-6"
-      required
-    />
-  </div>
+                    <div className="form-group col-6">
+                      <label>Select Date of Puja:</label>
+                      <DatePicker
+                        style={{ width: "275px" }}
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        dateFormat="yyyy-MM-dd"
+                        minDate={new Date()}
+                        placeholderText="Select a date"
+                        className="form-control col-6"
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div className="form-group">
-                    <label>Address:</label>
+                    <label>Any Requirements:</label>
                     <textarea
                       value={specialRequirements}
                       onChange={(e) => setSpecialRequirements(e.target.value)}
-                      placeholder="Enter Your Address"
+                      placeholder="Enter Your Requirements"
                     ></textarea>
                   </div>
 
