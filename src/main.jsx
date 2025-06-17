@@ -7,7 +7,7 @@ import store from "./redux/store.js";
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from "../ScrollToTop.js";
 
-createRoot(document.getElementById("root")).render(
+  createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
     <ScrollToTop />
@@ -18,4 +18,4 @@ createRoot(document.getElementById("root")).render(
     />
     </BrowserRouter>
   </Provider>
-);
+)
