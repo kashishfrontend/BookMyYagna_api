@@ -43,15 +43,14 @@ const PoojaBookingDetails = () => {
     });
   }, []);
 
- const handleBookNow = () => {
-  if (selectedPackage !== null && poojaData?.poojaPlans[selectedPackage]) {
-    const selectedPlanId = poojaData.poojaPlans[selectedPackage]._id;
-    navigate("/booking", { state: { poojaId, selectedPlanId } });
-  } else {
-    alert("Please select a package before booking.");
-  }
-};
-
+  const handleBookNow = () => {
+    if (selectedPackage !== null && poojaData?.poojaPlans[selectedPackage]) {
+      const selectedPlanId = poojaData.poojaPlans[selectedPackage]._id;
+      navigate("/booking", { state: { poojaId, selectedPlanId } });
+    } else {
+      alert("Please select a package before booking.");
+    }
+  };
 
   const faqs = [
     {
@@ -106,7 +105,6 @@ const PoojaBookingDetails = () => {
     },
   ];
 
-
   useEffect(() => {
     if (poojaId) {
       axios
@@ -142,7 +140,11 @@ const PoojaBookingDetails = () => {
                 className="main-pooja-image"
               />
               <div className="small-image-container">
-                <img src={poojaData?.image || img} alt="Shiva" className="small-pooja-image" />
+                <img
+                  src={poojaData?.image || img}
+                  alt="Shiva"
+                  className="small-pooja-image"
+                />
               </div>
             </div>
           </Col>
@@ -151,15 +153,14 @@ const PoojaBookingDetails = () => {
             {/* <h1 className="pooja-title">{poojadata.heading}</h1> */}
             <h1 className="pooja-title">{poojaData?.heading}</h1>
 
-           <div className="rating-container">
-  <div className="stars">
-    <p>
-      <strong>{poojaData?.rating} ★</strong> &nbsp;
-      Rated by users based on their pooja experience
-    </p>
-  </div>
-</div>
-
+            <div className="rating-container">
+              <div className="stars">
+                <p>
+                  <strong>{poojaData?.rating} ★</strong> &nbsp; Rated by users
+                  based on their pooja experience
+                </p>
+              </div>
+            </div>
 
             <div className="pooja-description">
               <p>{poojaData?.description}</p>
@@ -401,7 +402,6 @@ const PoojaBookingDetails = () => {
                     >
                       <div className="benefit-icon-container">🌟</div>
                       <div className="benefit-content">
-                        <h4>Benefit {index + 1}</h4>
                         <p>{benefit}</p>
                       </div>
                     </div>

@@ -12,21 +12,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import "aos/dist/aos.css";
-// import '../../assets/css/ListOfCSS.css';
 import "../../assets/css/ListOfCSS.css";
-
 import axios from "axios";
-// import './PoojaSlider.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
 
-  // const [listPooja , setListPooja] = useState('');
   const [listPooja, setListPooja] = useState([]);
+  const [loading, setLoading] = useState(true); // 🟡 New loading state
 
   useEffect(() => {
     AOS.init({
@@ -45,9 +42,24 @@ const PoojaSlider = () => {
         }
       })
       .catch((error) => {
-        console.error("Error fetching pandits:", error);
+        console.error("Error fetching poojas:", error);
+      })
+      .finally(() => {
+        setLoading(false); // ✅ Hide loader
       });
   }, []);
+
+  // 🟡 Loading Spinner
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
+        <div className="spinner-border text-warning" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <section className="pooja-slider-section mb-5">
@@ -86,7 +98,7 @@ const PoojaSlider = () => {
                 modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
                 className="pooja-swiper shadow-none"
               >
-                {listPooja.map((pooja, _id) => (
+                {listPooja.map((pooja) => (
                   <SwiperSlide
                     key={pooja._id}
                     onClick={() => swiperRef.current?.autoplay.stop()}
@@ -117,7 +129,6 @@ const PoojaSlider = () => {
                         <h5>{pooja.subHeading}</h5>
                         <p className='m-1'>{pooja.description}</p>
                         <div className='text-center'>
-                          {/* <a className='book-now-btn1 text-center text-decoration-none' href="./poojaBookingDetails">Book Now</a> */}
                           <button
                             className='book-now-btn1 text-center text-decoration-none'
                             onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
@@ -132,16 +143,12 @@ const PoojaSlider = () => {
               </Swiper>
             </div>
           </div>
+
           <div className="row mt-5">
             <div className="col-12">
-              <div
-                className="pooja-grid"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
+              <div className="pooja-grid" data-aos="fade-up" data-aos-delay="300">
                 {listPooja.map((pooja) => (
                   <div
-                    // key={pooja.id}
                     key={pooja._id}
                     className="pooja-tile"
                     data-aos="zoom-in"
@@ -159,16 +166,12 @@ const PoojaSlider = () => {
                         <h4>{pooja.heading}</h4>
                         <h5>{pooja.subHeading}</h5>
                         <p>{pooja.description}</p>
-                        {/* <button className="tile-book-btn">
-                          <a className='text-decoration-none text-dark' href="./poojaBookingDetails">Book This Pooja</a>
-                        </button> */}
                         <button
                           className="tile-book-btn"
                           onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                         >
                           <span className='text-decoration-none text-dark'>Book This Pooja</span>
                         </button>
-
                       </div>
                     </div>
                   </div>
