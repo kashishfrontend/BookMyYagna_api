@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
-import img from '../assets/img/image.png';
+import img from '../assets/img/favicon.png';
 
 const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
