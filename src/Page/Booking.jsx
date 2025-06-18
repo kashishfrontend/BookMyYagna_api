@@ -161,7 +161,7 @@ const Booking = () => {
       phoneNumber: phone,
       address: specialRequirements,
       amount: selectedPlan?.amount || 0,
-      poojaMode: type,
+      poojaMode: 'online',
       dateOfDelivery: selectedDate?.toISOString().split("T")[0],
     };
 
@@ -195,7 +195,7 @@ const Booking = () => {
 
       // Clear form after success
       setTimeout(() => {
-        setIsSuccess(false);
+        // setIsSuccess(false);
         setSelectedDate(null);
         setSelectedPuja(null);
         setNumberOfPeople(5);
@@ -419,11 +419,11 @@ const Booking = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>Any Requirements:</label>
+                    <label>Address:</label>
                     <textarea
                       value={specialRequirements}
                       onChange={(e) => setSpecialRequirements(e.target.value)}
-                      placeholder="Enter Your Requirements"
+                      placeholder="Enter Your Address"
                     ></textarea>
                   </div>
 
