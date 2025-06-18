@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { FaQuestion } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-
 const FAQ = () => {
     const faqs = [
         {

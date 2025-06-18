@@ -7,9 +7,9 @@ import image from '../assets/img/om-123.png';
 import bg1 from '../assets/img/bg-3-new.webp';
 import bg2 from '../assets/img/bg-3.webp';
 import bg3 from '../assets/img/bg--2.webp';
-import vdo1 from '../assets/videos/pooja1.mp4';
-import vdo2 from '../assets/videos/pooja2.mp4'
-import vdo3 from '../assets/videos/bg-video.mp4'
+import vdo1 from '../assets/videos/pooja1.webm';
+import vdo2 from '../assets/videos/pooja2.webm'
+import vdo3 from '../assets/videos/bg-video.webm'
 import panditSVG from '../assets/img/pandit.png'
 import CompleteSamagry from '../assets/img/Complete-Samagry.png'
 import AuthenticRituals from '../assets/img/Authentic-Rituals.png'
