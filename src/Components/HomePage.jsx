@@ -20,7 +20,7 @@ function HomePage() {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>Book Online Puja, Havan & Yagna Services | BookMyYagna</title>
         <meta
           name="description"
@@ -42,7 +42,7 @@ function HomePage() {
         <meta property="og:url" content="https://bookmyyagna.com/" />
         <meta property="og:image" content="https://bookmyyagna.com/images/home-og-image.jpg" />
         <link rel="canonical" href="https://bookmyyagna.com/" />
-      </Helmet>
+      </Helmet> */}
       <div>
 
         <MainNavbar isHeroVisible={isHeroVisible} />
