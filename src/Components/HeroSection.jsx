@@ -121,7 +121,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
   ];
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate('/listofpooja')
+      navigate('/listofpuja')
     } else {
       navigate('/login')
     }
@@ -182,11 +182,11 @@ const HeroSection = ({ onHeroVisibleChange }) => {
                       </motion.div>
 
 
-                      <motion.h1
-                        variants={slideTextVariants}
-                        className="hero-title"
-                        dangerouslySetInnerHTML={{ __html: slide.title }}
-                      ></motion.h1>
+                        <motion.h1
+                          variants={slideTextVariants}
+                          className="hero-title"
+                          dangerouslySetInnerHTML={{ __html: slide.title }}
+                        ></motion.h1>
 
                       <motion.p variants={slideTextVariants} className="hero-subtitle "
                         style={{ textAlign: "justify" }}>
@@ -197,7 +197,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
                         <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
                           <Calendar2Check className="btn-icon" /> Book Pooja Now
                         </Button>
-                        <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpooja')}>
+                        <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpuja')}>
                           <Bell className="btn-icon" /> Explore Services
                         </Button>
                       </motion.div>
@@ -262,6 +262,8 @@ const HeroSection = ({ onHeroVisibleChange }) => {
           <div key={i} className={`particle particle-${i + 1}`}></div>
         ))}
       </div>
+      <h1 className='d-none'>
+Welcome to BookMyYagna</h1>
     </div>
   );
 };

@@ -16,8 +16,9 @@ import TermsOfService from '../Page/TermsOfService';
 import PanchangCalendar from '../Page/Panchang';
 import AboutUs from '../Components/About';
 import { checkAuth } from '../redux/action/authAction';
-import Gallery from '../Components/gallery';
 import Booking from '../Page/Booking';
+import FAQPage from '../Page/FAQpage';
+import GalleryPage from '../Page/GalleryPage';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
@@ -68,16 +69,16 @@ function AppRoutes() {
       {/* Routes under Layout */}
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="listofpooja" element={<ListOfPooja />} />
-        <Route path="poojaBookingDetails" element={<PoojaBookingDetails />} />
+        <Route path="listofpuja" element={<ListOfPooja />} />
+        <Route path="pujaBookingDetails" element={<PoojaBookingDetails />} />
         <Route path="scaredbooking" element={<ScaredBooking />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="termsofservice" element={<TermsOfService />} />
-        <Route path="faq" element={<FAQ />} />
+        <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
-        <Route path="gallery" element={<Gallery />} />
+        <Route path="gallery" element={<GalleryPage />} />
         <Route
           path="booking"
           element={

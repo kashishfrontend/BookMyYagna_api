@@ -82,9 +82,9 @@ const PoojaSlider = () => {
           content="Explore and book from a wide range of online pujas including Satyanarayan Puja, Rudrabhishek, Navgraha Shanti and more with certified pandits at BookMyYagna"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bookmyyagna.com/listofpooja" />
-        <meta property="og:image" content="https://bookmyyagna.com/images/pooja-og-image.jpg" />
-        <link rel="canonical" href="https://bookmyyagna.com/listofpooja" />
+        <meta property="og:url" content="https://bookmyyagna.com/listofpuja" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/puja-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/listofpuja" />
       </Helmet>
       <section className="pooja-slider-section mb-5">
         <div className="container">
@@ -155,7 +155,7 @@ const PoojaSlider = () => {
                         <div className='text-center'>
                           <button
                             className='book-now-btn1 text-center text-decoration-none'
-                            onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
+                            onClick={() => isAuthenticated ? navigate('/pujaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                           >
                             Book Now
                           </button>

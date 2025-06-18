@@ -19,7 +19,7 @@ const Testimonial = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/listofpooja');
+        navigate('/listofpuja');
     };
     const testimonials = [
         {

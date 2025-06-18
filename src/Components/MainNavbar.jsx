@@ -38,7 +38,7 @@ const MainNavbar = ({ isHeroVisible }) => {
     : '';
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate("/listofpooja");
+      navigate("/listofpuja");
     } else {
       navigate("/login");
     }
@@ -111,7 +111,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                   id="nav-dropdown-services"
                   className=" d-flex align-content-center justify-content-center flex-column m-auto"
                 >
-                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="./listOfPooja">List of Pooja</Dropdown.Item>
+                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="./listOfPuja">List of Pooja</Dropdown.Item>
                   <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
                 </NavDropdown>
               </motion.div>

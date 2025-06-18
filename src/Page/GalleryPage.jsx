@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaSearchPlus, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Helmet } from 'react-helmet-async';
 import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.webp';
 import GaneshChaturthiCelebration from '../assets/img/Ganesh-Chaturthi-Celebration.webp';
 import SacredWeddingRituals from '../assets/img/Sacred-Wedding-Rituals.webp';
@@ -14,7 +15,7 @@ import SacredTempleRituals from '../assets/img/Sacred-Temple-Rituals.webp'
 import TraditionalWeddingDecorations from '../assets/img/Traditional-Wedding-Decorations.webp'
 import Ganeshestival from '../assets/img/Ganesh-Festival.webp'
 
-const Gallery = () => {
+const GalleryPage = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImage, setCurrentImage] = useState(0);
     const [filterCategory, setFilterCategory] = useState('all');
@@ -159,8 +160,27 @@ const Gallery = () => {
 
     return (
         <>
-           
-            <section className="gallery-section">
+            <Helmet>
+                <title>Online Puja Gallery | BookMyYagna – Real Puja Moments & Devotional Experiences</title>
+                <meta
+                    name="description"
+                    content="Explore the BookMyYagna Gallery – View real photos and videos of online pujas, havans, and spiritual rituals performed across India. Witness divine moments now!"
+                />
+                <meta
+                    name="keywords"
+                    content="online puja gallery, BookMyYagna gallery, puja photos, havan videos, Vedic rituals images, spiritual moments India"
+                />
+                <meta property="og:title" content="Online Puja Gallery | BookMyYagna" />
+                <meta
+                    property="og:description"
+                    content="See real images and videos of online pujas, havans, and yagnas performed by BookMyYagna priests. Experience spiritual devotion visually"
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://bookmyyagna.com/gallery" />
+                <meta property="og:image" content="https://bookmyyagna.com/images/gallery-og-image.jpg" />
+                <link rel="canonical" href="https://bookmyyagna.com/gallery" />
+            </Helmet>
+            <section className="gallery-section" style={{marginTop:"5%"}}>
                 <Container>
                     <div className="section-header" data-aos="fade-up">
                         <div className="ornament-line " data-aos="zoom-in" duration="1000">
@@ -255,4 +275,4 @@ const Gallery = () => {
     );
 };
 
-export default Gallery;
+export default GalleryPage;

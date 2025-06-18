@@ -39,7 +39,7 @@ const Footer = () => {
               <ul>
                 <li><Link to={'/'}>Home</Link></li>
                 <li><Link to={'/about-us'}>About Us</Link></li>
-                <li><Link to={'/listofpooja'}>Services</Link></li>
+                <li><Link to={'/listofpuja'}>Services</Link></li>
                 <li><Link to={'/gallery'}>Gallery</Link></li>
                 <li><Link to={'/contact'}>Contact</Link></li>
               </ul>
@@ -47,10 +47,10 @@ const Footer = () => {
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-services mt-0 mt-md-3">
               <h4>Our Services</h4>
               <ul>
-                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Ganesh Pooja</Link></li>
-                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Satyanarayan Katha</Link></li>
-                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Griha Pravesh</Link></li>
-                <li><Link to={"/listofpooja"}><FaPrayingHands className="service-icon" /> Vivah Sanskar</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Ganesh Pooja</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Satyanarayan Katha</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Griha Pravesh</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Vivah Sanskar</Link></li>
               </ul>
             </div>
            <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
