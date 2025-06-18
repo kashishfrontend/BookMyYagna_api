@@ -16,6 +16,7 @@ import "../../assets/css/ListOfCSS.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -62,6 +63,29 @@ const PoojaSlider = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BookMyYagna | List of Online Poojas in India - Book Vedic Rituals</title>
+        <meta
+          name="description"
+          content="Explore a complete list of online poojas including Satyanarayan, Rudrabhishek, Navgraha Shanti & more. Book authentic Vedic rituals with expert purohits."
+        />
+        <meta
+          name="keywords"
+          content="online pooja list, book pooja online, hindu rituals, vedic poojas, rudrabhishek online, satyanarayan pooja, navgraha shanti, bookmyyagna"
+        />
+        <meta
+          property="og:title"
+          content="List of Online Pujas | Book Popular Hindu Rituals at BookMyYagna"
+        />
+        <meta
+          property="og:description"
+          content="Explore and book from a wide range of online pujas including Satyanarayan Puja, Rudrabhishek, Navgraha Shanti and more with certified pandits at BookMyYagna"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyagna.com/listofpooja" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/pooja-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/listofpooja" />
+      </Helmet>
       <section className="pooja-slider-section mb-5">
         <div className="container">
           <div className="row">

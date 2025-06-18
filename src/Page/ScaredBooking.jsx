@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
+import { Helmet } from 'react-helmet-async';
 
 const fadeInUpVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -15,6 +16,31 @@ const fadeInUpVariants = {
 
 const ScaredBooking = () => {
   return (
+    <>
+    
+      <Helmet>
+        {/* Meta Tags */}
+        <title>Book Pooja Online - Sacred Pooja Services | BookMyYogna</title>
+        <meta
+          name="description"
+          content="Explore and book a variety of sacred pooja services online with trusted pandits at BookMyYogna. Convenient, authentic, and affordable rituals."
+        />
+        <meta
+          name="keywords"
+          content="book pooja online, pooja services, online pandit booking, sacred rituals, BookMyYogna"
+        />
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="Book Sacred Pooja Services Online | BookMyYogna" />
+        <meta
+          property="og:description"
+          content="Discover authentic pooja services at BookMyYogna. Book trusted pandits for your spiritual rituals with ease."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyogna.onrender.com/pooja-list" />
+        <meta property="og:image" content="https://bookmyyogna.onrender.com/images/pooja-og-image.jpg" />
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://bookmyyogna.onrender.com/pooja-list" />
+      </Helmet>
     <section
       style={{ backgroundColor: "#fef9f5", color: "#4b2e2e", marginTop:"80px" }}
       className="py-5"
@@ -114,6 +140,7 @@ const ScaredBooking = () => {
         </Row>
       </Container>
     </section>
+    </>
   );
 };
 

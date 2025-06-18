@@ -3,15 +3,16 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaSearchPlus, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.webp' ;
-import GaneshChaturthiCelebration  from '../assets/img/Ganesh-Chaturthi-Celebration.webp';
-import SacredWeddingRituals  from '../assets/img/Sacred-Wedding-Rituals.webp';
+import { Helmet } from 'react-helmet-async';
+import TraditionalHinduWedding from '../assets/img/Traditional-Hindu-Wedding.webp';
+import GaneshChaturthiCelebration from '../assets/img/Ganesh-Chaturthi-Celebration.webp';
+import SacredWeddingRituals from '../assets/img/Sacred-Wedding-Rituals.webp';
 import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.webp';
-import MorningPrayerRitual  from '../assets/img/Morning-Prayer-Ritual.webp'
-import DivineAartiCeremony  from '../assets/img/Divine-Aarti-Ceremony.webp'
-import VibrantHoliFestival  from '../assets/img/Vibrant-Holi-Festival.webp'
-import SacredTempleRituals  from '../assets/img/Sacred-Temple-Rituals.webp'
-import TraditionalWeddingDecorations  from '../assets/img/Traditional-Wedding-Decorations.webp'
+import MorningPrayerRitual from '../assets/img/Morning-Prayer-Ritual.webp'
+import DivineAartiCeremony from '../assets/img/Divine-Aarti-Ceremony.webp'
+import VibrantHoliFestival from '../assets/img/Vibrant-Holi-Festival.webp'
+import SacredTempleRituals from '../assets/img/Sacred-Temple-Rituals.webp'
+import TraditionalWeddingDecorations from '../assets/img/Traditional-Wedding-Decorations.webp'
 import Ganeshestival from '../assets/img/Ganesh-Festival.webp'
 
 const Gallery = () => {
@@ -24,7 +25,8 @@ const Gallery = () => {
             duration: 1000,
             once: false,
             mirror: true
-        });    }, []);
+        });
+    }, []);
 
     // Gallery images with categories
     const galleryImages = [
@@ -44,7 +46,7 @@ const Gallery = () => {
         },
         {
             id: 3,
-            src:SacredWeddingRituals,
+            src: SacredWeddingRituals,
             alt: "Wedding Ritual",
             category: "ceremonies",
             title: "Sacred Wedding Rituals"
@@ -157,97 +159,119 @@ const Gallery = () => {
     }, [lightboxOpen]);
 
     return (
-        <section className="gallery-section">
-            <Container>
-                <div className="section-header" data-aos="fade-up">
-                    <div className="ornament-line " data-aos="zoom-in" duration="1000">
-                        <span className="om-symbol">ॐ</span>
+        <>
+            <Helmet>
+                <title>Online Puja Gallery | BookMyYagna – Real Puja Moments & Devotional Experiences</title>
+                <meta
+                    name="description"
+                    content="Explore the BookMyYagna Gallery – View real photos and videos of online pujas, havans, and spiritual rituals performed across India. Witness divine moments now!"
+                />
+                <meta
+                    name="keywords"
+                    content="online puja gallery, BookMyYagna gallery, puja photos, havan videos, Vedic rituals images, spiritual moments India"
+                />
+                <meta property="og:title" content="Online Puja Gallery | BookMyYagna" />
+                <meta
+                    property="og:description"
+                    content="See real images and videos of online pujas, havans, and yagnas performed by BookMyYagna priests. Experience spiritual devotion visually"
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://bookmyyagna.com/gallery" />
+                <meta property="og:image" content="https://bookmyyagna.com/images/gallery-og-image.jpg" />
+                <link rel="canonical" href="https://bookmyyagna.com/gallery" />
+            </Helmet>
+            <section className="gallery-section">
+                <Container>
+                    <div className="section-header" data-aos="fade-up">
+                        <div className="ornament-line " data-aos="zoom-in" duration="1000">
+                            <span className="om-symbol">ॐ</span>
+                        </div>
+                        <div className='section-title'>
+                            <h3>Sacred Moments <span>Gallery</span></h3>
+                        </div>
+
+                        <p>Explore our collection of divine moments captured during various poojas and ceremonies</p>
                     </div>
-                    <div className='section-title'>
-                    <h3>Sacred Moments <span>Gallery</span></h3>
-                    </div>
-                   
-                    <p>Explore our collection of divine moments captured during various poojas and ceremonies</p>
-                </div>
 
-                <div className="gallery-filter" data-aos="fade-up">
-                    <button
-                       className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                    <div className="gallery-filter" data-aos="fade-up">
+                        <button
+                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
 
-                        onClick={() => setFilterCategory('all')}
-                    >
-                        All
-                    </button>
-                    <button
-                        className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
-                        onClick={() => setFilterCategory('pooja')}
-                    >
-                        Poojas
-                    </button>
-                    <button
-                        className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => setFilterCategory('all')}
+                        >
+                            All
+                        </button>
+                        <button
+                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => setFilterCategory('pooja')}
+                        >
+                            Poojas
+                        </button>
+                        <button
+                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
 
-                        onClick={() => setFilterCategory('ceremonies')}
-                    >
-                        Ceremonies
-                    </button>
-                    <button
-                       className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => setFilterCategory('ceremonies')}
+                        >
+                            Ceremonies
+                        </button>
+                        <button
+                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
 
-                        onClick={() => setFilterCategory('festivals')}
-                    >
-                        Festivals
-                    </button>
-                    <button
-                        className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}}
+                            onClick={() => setFilterCategory('festivals')}
+                        >
+                            Festivals
+                        </button>
+                        <button
+                            className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}}
                         onClick={() => setFilterCategory('decorations')`}
-                    >
-                        Decorations
-                    </button>
-                </div>
+                        >
+                            Decorations
+                        </button>
+                    </div>
 
-                <Row className="gallery-container">
-                    {filteredImages.map((image, index) => (
-                        <Col lg={4} md={6} sm={12} className="gallery-item" key={image.id} data-aos="zoom-in" data-aos-delay={index * 100}>
-                            <div className="gallery-wrap">
-                                <img src={image.src} alt={image.alt} className="img-fluid" />
-                                <div className="gallery-info">
-                                    {/* <h4>{image.title}</h4> */}
-                                    {/* <p>{image.category}</p> */}
-                                    <div className="gallery-links">
-                                        <button onClick={() => openLightbox(index)} className="gallery-lightbox">
-                                            <FaSearchPlus />
-                                        </button>
+                    <Row className="gallery-container">
+                        {filteredImages.map((image, index) => (
+                            <Col lg={4} md={6} sm={12} className="gallery-item" key={image.id} data-aos="zoom-in" data-aos-delay={index * 100}>
+                                <div className="gallery-wrap">
+                                    <img src={image.src} alt={image.alt} className="img-fluid" />
+                                    <div className="gallery-info">
+                                        {/* <h4>{image.title}</h4> */}
+                                        {/* <p>{image.category}</p> */}
+                                        <div className="gallery-links">
+                                            <button onClick={() => openLightbox(index)} className="gallery-lightbox">
+                                                <FaSearchPlus />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>
 
-            {/* Lightbox */}
-            {lightboxOpen && (
-                <div className="gallery-lightbox-container" onClick={closeLightbox}>
-                    <button className="close-lightbox" onClick={closeLightbox}>
-                        <FaTimes />
-                    </button>
-                    <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                        <img src={filteredImages[currentImage].src} alt={filteredImages[currentImage].alt} />
-                        <div className="lightbox-caption">
-                            {/* <h4>{filteredImages[currentImage].title}</h4> */}
-                            {/* <p>{filteredImages[currentImage].category}</p> */}
+                {/* Lightbox */}
+                {lightboxOpen && (
+                    <div className="gallery-lightbox-container" onClick={closeLightbox}>
+                        <button className="close-lightbox" onClick={closeLightbox}>
+                            <FaTimes />
+                        </button>
+                        <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+                            <img src={filteredImages[currentImage].src} alt={filteredImages[currentImage].alt} />
+                            <div className="lightbox-caption">
+                                {/* <h4>{filteredImages[currentImage].title}</h4> */}
+                                {/* <p>{filteredImages[currentImage].category}</p> */}
+                            </div>
+                            <button className="lightbox-prev" onClick={prevImage}>
+                                <FaChevronLeft />
+                            </button>
+                            <button className="lightbox-next" onClick={nextImage}>
+                                <FaChevronRight />
+                            </button>
                         </div>
-                        <button className="lightbox-prev" onClick={prevImage}>
-                            <FaChevronLeft />
-                        </button>
-                        <button className="lightbox-next" onClick={nextImage}>
-                            <FaChevronRight />
-                        </button>
                     </div>
-                </div>
-            )}
-        </section>
+                )}
+            </section>
+        </>
     );
 };
 

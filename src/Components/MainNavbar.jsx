@@ -4,7 +4,6 @@ import { Navbar, Nav, Container, NavDropdown, Button, Dropdown } from 'react-boo
 import { motion } from 'framer-motion';
 import { BellFill, CalendarCheck, PersonCircle, House } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DivineJournal from '../Page/DivineJournal'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';

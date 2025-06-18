@@ -6,6 +6,7 @@ import moment from 'moment';
 import '../assets/css/Panchang.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Helmet } from 'react-helmet-async';
 
 const PanchangCalendar = () => {
   const [date, setDate] = useState(new Date());
@@ -87,64 +88,90 @@ const PanchangCalendar = () => {
   const handleDateChange = (newDate) => setDate(newDate);
 
   return (
-    <section className="panchang-calendar-section " style={{ marginTop: "5%" }}>
-      <Container>
-        <div className="section-header">
-          <div className="ornament-line" style={{ paddingTop: "35px" }}>
-            <span className="om-symbol">ॐ</span>
+    <>
+
+      <Helmet>
+        <title>Daily Panchang - Today’s Tithi, Nakshatra, Muhurat | BookMyYagna</title>
+        <meta
+          name="description"
+          content="Check today’s Panchang including Tithi, Nakshatra, Yoga, and Shubh Muhurat. Stay aligned with Vedic time for all your spiritual needs with BookMyYagna’s daily Panchang."
+        />
+        <meta
+          name="keywords"
+          content="Panchang today, daily Panchang, Tithi today, Nakshatra today, Hindu calendar, Vedic Panchang, Shubh Muhurat, BookMyYagna Panchang"
+        />
+        <meta
+          property="og:title"
+          content="Daily Hindu Panchang: Auspicious Timings, Tithi & Nakshatra - BookMyYagna"
+        />
+        <meta
+          property="og:description"
+          content="Get accurate Hindu Panchang for today with tithi, nakshatra, sunrise, sunset, and daily auspicious timings. Updated daily on BookMyYagna"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyagna.com/panchang" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/panchang-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/panchang" />
+      </Helmet>
+      <section className="panchang-calendar-section " style={{ marginTop: "5%" }}>
+        <Container>
+          <div className="section-header">
+            <div className="ornament-line" style={{ paddingTop: "35px" }}>
+              <span className="om-symbol">ॐ</span>
+            </div>
+            <div className="section-title">
+              <h3>
+                Panchang <span>Calendar</span> 2025 – Check Today’s Tithi, Nakshatra & Muhurat
+              </h3>
+            </div>
+            <h2>Your daily spiritual guide based on Vedic astrology</h2>
+            <p>Explore the <b> Hindu Panchang </b> for any date. Know the <b> Tithi (तिथि), Nakshatra (नक्षत्र),</b> and <b> Shubh Muhurat </b> (auspicious timings) for your important occasions like Griha Pravesh, Satyanarayan Puja, Vivah Sanskar, Havan, and other rituals.</p>
+
+            <div className='row'>
+
+            </div>
+            <div>
+
+              <br />
+            </div>
+            <b> <p>🗓️ <b> Select a date </b> to instantly view the complete  <b> daily Panchang </b> details – trusted by Pandits and astrologers.</p></b>
           </div>
-          <div className="section-title">
-            <h3>
-              Panchang <span>Calendar</span> 2025 – Check Today’s Tithi, Nakshatra & Muhurat
-            </h3>
+          <div className="calendar-wrapper">
+
+            <div data-aos="fade-right" data-aos-delay="200" data-aos-duration="1200">
+              <Calendar onChange={handleDateChange} value={date} showNeighboringMonth={false} />
+            </div>
           </div>
-          <h2>Your daily spiritual guide based on Vedic astrology</h2>
-          <p>Explore the <b> Hindu Panchang </b> for any date. Know the <b> Tithi (तिथि), Nakshatra (नक्षत्र),</b> and <b> Shubh Muhurat </b> (auspicious timings) for your important occasions like Griha Pravesh, Satyanarayan Puja, Vivah Sanskar, Havan, and other rituals.</p>
-          
-          <div className='row'>
-            
+
+          <h4 className="info-heading">Panchang Details for {moment(date).format('MMMM Do YYYY')}</h4>
+
+          <div className="panchang-details" data-aos="fade-up" >
+
+            {loading ? (
+              <p className="info-loading">Loading...</p>
+            ) : panchangDetails ? (
+              <>
+                <div className="info-section">
+                  <h5>• Tithi</h5>
+                  <p>{panchangDetails.tithi}</p>
+                </div>
+                <div className="info-section">
+                  <h5>• Nakshatra</h5>
+                  <p>{panchangDetails.nakshatra}</p>
+                </div>
+                <div className="info-section">
+                  <h5>• Muhurat</h5>
+                  <p>{panchangDetails.muhurat}</p>
+                </div>
+              </>
+            ) : (
+              <p className="info-loading">No Panchang data available.</p>
+            )}
           </div>
-          <div>
 
-        <br />
-          </div>
-      <b> <p>🗓️ <b> Select a date </b> to instantly view the complete  <b> daily Panchang </b> details – trusted by Pandits and astrologers.</p></b>
-        </div>
-        <div className="calendar-wrapper">
-
-          <div data-aos="fade-right" data-aos-delay="200" data-aos-duration="1200">
-            <Calendar onChange={handleDateChange} value={date} showNeighboringMonth={false} />
-          </div>
-        </div>
-
-        <h4 className="info-heading">Panchang Details for {moment(date).format('MMMM Do YYYY')}</h4>
-
-        <div className="panchang-details" data-aos="fade-up" >
-
-          {loading ? (
-            <p className="info-loading">Loading...</p>
-          ) : panchangDetails ? (
-            <>
-              <div className="info-section">
-                <h5>• Tithi</h5>
-                <p>{panchangDetails.tithi}</p>
-              </div>
-              <div className="info-section">
-                <h5>• Nakshatra</h5>
-                <p>{panchangDetails.nakshatra}</p>
-              </div>
-              <div className="info-section">
-                <h5>• Muhurat</h5>
-                <p>{panchangDetails.muhurat}</p>
-              </div>
-            </>
-          ) : (
-            <p className="info-loading">No Panchang data available.</p>
-          )}
-        </div>
-
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   );
 };
 

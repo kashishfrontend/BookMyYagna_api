@@ -4,9 +4,35 @@ import {
   FaEnvelope, FaPhoneAlt, FaWhatsapp,
   FaInstagram, FaYoutube, FaFacebook, FaTelegram
 } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
   return (
+    <>
+    
+     <Helmet>
+        <title>Contact BookMyYagna | Book Online Puja & Yagna Services in India</title>
+        <meta
+          name="description"
+          content="Get in touch with BookMyYagna to book authentic online pujas, homams, and Vedic rituals performed by certified pandits. Contact us for queries or custom puja bookings."
+        />
+        <meta
+          name="keywords"
+          content="BookMyYagna contact, online puja booking, book yagna, Vedic rituals, pandit online, religious ceremony help, puja customer support"
+        />
+        <meta
+          property="og:title"
+          content="Contact Us | BookMyYagna – Book Online Pujas & Rituals"
+        />
+        <meta
+          property="og:description"
+          content="Reach out to BookMyYagna for any inquiries related to online puja booking, pandit availability, and custom spiritual services. We're here to help!"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyagna.com/contact" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/contact-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/contact" />
+      </Helmet>
     <div className="container py-5 ">
       <div className="text-center mb-5">
         <h2 className="fw-bold border-bottom d-inline-block pb-2 mb-3 " style={{ marginTop: "90px" }}>
@@ -104,6 +130,7 @@ const Contact = () => {
 
       </div>
     </div>
+    </>
   );
 };
 
