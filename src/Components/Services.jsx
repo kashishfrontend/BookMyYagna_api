@@ -7,7 +7,7 @@ import '../assets/css/servicepanchang.css'
 import { Link } from 'react-router-dom';
 const Services = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 500 });
     }, []);
 
     const panchangData = [
