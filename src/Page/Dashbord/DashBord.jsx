@@ -177,7 +177,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: r00,
       once: true,
     });
   }, []);

@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 const TermsOfService = () => {
     useEffect(() => {
         AOS.init({
-            duration: 1000,
+            duration: 500,
             once: false,
             mirror: true
         });

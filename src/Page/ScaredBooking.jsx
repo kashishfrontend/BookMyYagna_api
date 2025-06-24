@@ -113,7 +113,7 @@ const ScaredBooking = () => {
                 className="fw-semibold mt-5 mb-3"
                 style={{ color: "#b76e79" }}
               >
-                Why Yagna & Pooja Ceremonies Matter 🌿
+                Why Yagna & Puja Ceremonies Matter 🌿
               </h4>
 
               <p className="mb-3 fs-5">

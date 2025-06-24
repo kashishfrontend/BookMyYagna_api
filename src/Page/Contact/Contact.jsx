@@ -107,7 +107,7 @@ const Contact = () => {
         </div>
 
         <div className="col-md-6 col-lg-4">
-          <a href="https://www.facebook.com/bookmyyagna" target="_blank" rel="noopener noreferrer" className="text-decoration-none w-100">
+          <a href="https://www.facebook.com/people/Book-My-Yagna/61576241761744/" target="_blank" rel="noopener noreferrer" className="text-decoration-none w-100">
             <ContactCard
               icon={<FaFacebook size={20} className="text-primary" />}
               title="Facebook"

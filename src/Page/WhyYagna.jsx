@@ -6,7 +6,7 @@ import '../assets/css/YagnaPage.css';
 
 const WhyYagna = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 500 });
     }, []);
 
     return (
@@ -17,7 +17,7 @@ const WhyYagna = () => {
                         <span className="om-symbol">ॐ</span>
                     </div>
                     <div className="section-title">
-                        <h3>Why <span>Yagna & Pooja</span>Ceremonies Matter
+                        <h3>Why <span>Yagna & Puja</span> Ceremonies Matter
                         </h3>
                     </div>
                     <p>Every thought, action, and moment generates energy. Aligning with this universal energy through Puja and Yagna ceremonies brings peace, positivity, and spiritual harmony into our lives.

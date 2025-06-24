@@ -7,41 +7,30 @@ import "../assets/css/About.css";
 import { Helmet } from 'react-helmet-async';
 const AboutUs = () => {
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 500, once: true });
   }, []);
   return (
     <>
       <Helmet>
-        <title>Login or Register for Puja Online | BookMyYagna</title>
+        <title>About BookMyYagna | Online Vedic Puja Services</title>
         <meta
           name="description"
-          content="Login or register to book online pujas, track past yagnas & connect with expert priests. Start your spiritual journey today."
+          content="Learn about BookMyYagna – your trusted platform for booking online pujas with expert pandits & hassle-free Vedic services."
         />
         <meta
           name="keywords"
-          content="BookMyYagna login, online puja booking, book puja online, login for yagna, virtual puja, spiritual booking India"
-        />
-        <meta
-          name="title"
-          content="Login or Register for Puja Online | BookMyYagna"
+          content="BookMyYagna, about BookMyYagna, Vedic puja platform, online puja India, expert pandits, Hindu rituals, spiritual services online"
         />
         <meta
           property="og:title"
-          content="Login or Register for Puja Online | BookMyYagna"
+          content="About BookMyYagna – Online Puja Platform"
         />
         <meta
           property="og:description"
-          content="Access your account to book online pujas, track yagnas, or start your spiritual journey. Fast, easy & trusted."
+          content="Discover BookMyYagna – your trusted platform for authentic online pujas, performed by experienced pandits across India."
         />
-        <meta
-          property="og:url"
-          content="https://bookmyyagna.com/login"
-        />
-        <meta
-          property="og:type"
-          content="website"
-        />
-        <link rel="canonical" href="https://bookmyyagna.com/login" />
+        <meta property="og:url" content="https://bookmyyagna.com/about-us" />
+        <link rel="canonical" href="https://bookmyyagna.com/about-us" />
       </Helmet>
       <section id="about-us" className="about-us-section">
         <Container>
@@ -102,7 +91,6 @@ const AboutUs = () => {
             </div>
           </Row>
           {/* Features / Values */}
-
           <Row className="text-center">
             <Col md={3} sm={6} className="mb-4" data-aos="zoom-in">
               <div className="about-icon-box">
