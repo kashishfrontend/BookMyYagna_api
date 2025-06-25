@@ -18,7 +18,7 @@ const Footer = () => {
                 Book online and experience peace, prosperity, and divine blessings at your doorstep.</p>
               <div className="social-links row">
                 <div className='d-flex justify-content-center col-12  gap-3'>
-                  <a href="" target="_blank" rel="noopener noreferrer" className="social-icon p-2"><FaFacebookF /></a>
+                  <a href="https://www.facebook.com/people/Book-My-Yagna/61576241761744/" target="_blank" rel="noopener noreferrer" className="social-icon p-2"><FaFacebookF /></a>
                   {/* <a href="https://x.com/MyYagna" target="_blank" rel="noopener noreferrer" className="social-icon"><FaTwitter /></a> */}
                   <a href="https://www.instagram.com/bookmyyagna/" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaInstagram /></a>
                   <a href="https://www.youtube.com/@BookMyYagna" target="_blank" rel="noopener noreferrer" aria-label className="social-icon"><FaYoutube /></a>

@@ -195,7 +195,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
 
                       <motion.div variants={slideTextVariants} className="cta-buttons d-flex flex-row">
                         <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
-                          <Calendar2Check className="btn-icon" /> Book Pooja Now
+                          <Calendar2Check className="btn-icon" /> Book Puja Now
                         </Button>
                         <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpuja')}>
                           <Bell className="btn-icon" /> Explore Services

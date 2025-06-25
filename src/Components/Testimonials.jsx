@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const Testimonial = () => {
     useEffect(() => {
         AOS.init({
-            duration: 1000,
+            duration: 500,
             once: false,
             mirror: true,
         });
@@ -109,7 +109,7 @@ const Testimonial = () => {
                 >
                     <h3 className="section-title">What <span className="text-gradient"> Devotees Say About BookMyYagna</span></h3>
                     <p className="section-description">
-                        Hear from our community of devotees about their experiences with our pooja services
+                        Hear from our community of devotees about their experiences with our puja services
                     </p>
                 </div>
 
@@ -165,7 +165,7 @@ const Testimonial = () => {
                         <Col lg={8}>
                             <div className="cta-box">
                                 <h3>Experience Divine Rituals Yourself</h3>
-                                <p>Book a pooja today and connect with your spiritual roots through authentic Vedic ceremonies</p>
+                                <p>Book a puja today and connect with your spiritual roots through authentic Vedic ceremonies</p>
                                 <button className="cta-btn" onClick={handleClick}>
                                     Book Your Pooja Now
                                 </button>

@@ -113,25 +113,6 @@ const Dashboard = () => {
     };
     allBookingData();
   }, []);
-
-  // const [poojaLink, setPoojaLink] = useState(null);
-
-  // useEffect(() => {
-  //   const updateBooking = async () => {
-  //     try {
-  //       const response = await axios.patch(`./bookings/updateBooking/${bookingId}`);
-  //       if (response.data.success) {
-  //         setPoojaLink(response.data.order);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching updateBooking:", error);
-  //     }
-  //   };
-  //   if (bookingId) {
-  //     updateBooking();
-  //   }
-  // }, [bookingId]);
-  // booked POOJA
   const [confirmedPoojas, setConfirmedPoojas] = useState([]);
 
   useEffect(() => {
@@ -196,7 +177,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: r00,
       once: true,
     });
   }, []);

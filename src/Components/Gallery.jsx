@@ -21,7 +21,7 @@ const Gallery = () => {
 
     useEffect(() => {
         AOS.init({
-            duration: 1000,
+            duration: 500,
             once: false,
             mirror: true
         });
@@ -182,28 +182,28 @@ const Gallery = () => {
                             All
                         </button>
                         <button
-                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            className={`filter-btn ${filterCategory === 'pooja' ? 'active' : ''}`}
                             onClick={() => setFilterCategory('pooja')}
                         >
-                            Poojas
+                            Pujas
                         </button>
                         <button
-                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            className={`filter-btn ${filterCategory === 'ceremonies' ? 'active' : ''}`}
 
                             onClick={() => setFilterCategory('ceremonies')}
                         >
                             Ceremonies
                         </button>
                         <button
-                            className={`filter-btn ${filterCategory === 'all' ? 'active' : ''}`}
+                            className={`filter-btn ${filterCategory === 'festivals' ? 'active' : ''}`}
 
                             onClick={() => setFilterCategory('festivals')}
                         >
                             Festivals
                         </button>
                         <button
-                            className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}}
-                        onClick={() => setFilterCategory('decorations')`}
+                            className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}`}
+                        onClick={() => setFilterCategory('decorations')}
                         >
                             Decorations
                         </button>

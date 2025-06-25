@@ -19,7 +19,7 @@ const PanchangCalendar = () => {
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RpdmluZWFwaS5jb20vc2lnbnVwIiwiaWF0IjoxNzQ3MzcyNjU4LCJuYmYiOjE3NDczNzI2NTgsImp0aSI6IkpieWt1a3JyTklMQnU0OUkiLCJzdWIiOiIzNjcwIiwicHJ2IjoiZTZlNjRiYjBiNjEyNmQ3M2M2Yjk3YWZjM2I0NjRkOTg1ZjQ2YzlkNyJ9.gWTyHM1RBj9XdfOGhdCwg2qaNjk5EnYAZrZ5_AXqotM';
 
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   const getFormattedDateParts = (dateObj) => ({
