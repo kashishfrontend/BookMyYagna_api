@@ -177,7 +177,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: r00,
+      duration: 500,
       once: true,
     });
   }, []);
@@ -350,8 +350,8 @@ const Dashboard = () => {
         <div
           className={`main-content col-12  col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
-          <div className="top-nav">
-            <div className="search-bar">
+          <div className="top-nav ">
+            <div className="search-bar d-none d-md-flex">
               <input type="text" placeholder="Search for poojas, priests, temples..." />
               <button type="submit">
                 <i className="fas fa-search"></i>
@@ -776,128 +776,128 @@ const Dashboard = () => {
   }
 
 
-function renderPoojaLink() {
-  // State for managing popup and copy status for each pooja link
+  function renderPoojaLink() {
+    // State for managing popup and copy status for each pooja link
 
-  const handleTogglePopup = (id) => {
-    setPopupStates((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+    const handleTogglePopup = (id) => {
+      setPopupStates((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+      }));
+    };
 
-  const handleCopyLink = (id, poojaLink) => {
-    navigator.clipboard.writeText(poojaLink);
-    setCopyStates((prev) => ({
-      ...prev,
-      [id]: true,
-    }));
-    setTimeout(() => {
+    const handleCopyLink = (id, poojaLink) => {
+      navigator.clipboard.writeText(poojaLink);
       setCopyStates((prev) => ({
         ...prev,
-        [id]: false,
+        [id]: true,
       }));
-    }, 2000); // Hide "Copied!" after 2 seconds
-  };
-  
-  return (
-    <>
-      <div className="container py-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
-        <div className="row">
-          <div className="text-center fs-1 mb-3">
-            <h2 className="fs-1">Pooja Link</h2>
-          </div>
-          <div className={isMobileOrTablet ? 'table-responsive' : ''}>
-            <table className="custom-table table table-bordered table-striped">
-              <thead className="table-warning">
-                <tr>
-                  <th>Date Of Pooja</th>
-                  <th>Pooja Name</th>
-                  <th>Pooja Time</th>
-                  <th>Link Pooja</th>
-                </tr>
-              </thead>
-              <tbody>
-                {confirmedPoojas.length > 0 ? (
-                  confirmedPoojas.map((p) => (
-                    <tr key={p.id}>
-                      <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
-                      <td>{p.heading}</td>
-                      <td>{p.poojaLinkTime || '—'}</td>
-                      <td className="pooja-link-cell">
-                        {p.poojaLink ? (
-                          <div className="pooja-link-container">
-                            <a
-                              href={p.poojaLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="pooja-view-button"
-                            >
-                              View
-                            </a>
-                            <button
-                              onClick={() => handleTogglePopup(p.id)}
-                              className="pooja-info-button"
-                              aria-label="View Pooja Link Details"
-                            >
-                              <FaInfoCircle size={20} />
-                            </button>
-                            {popupStates[p.id] && (
-                              <div className="pooja-popup">
-                                <button
-                                  onClick={() => handleTogglePopup(p.id)}
-                                  className="pooja-close-button"
-                                  aria-label="Close Popup"
-                                >
-                                  <CloseButton size={24} />
-                                </button>
-                                <h2 className="pooja-popup-heading">
-                                  Your Google Meet Link
-                                </h2>
-                                <div className="pooja-link-wrapper">
-                                  <a
-                                    href={p.poojaLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="pooja-link-text"
-                                  >
-                                    {p.poojaLink}
-                                  </a>
-                                  <button
-                                    onClick={() => handleCopyLink(p.id, p.poojaLink)}
-                                    className="pooja-copy-button"
-                                    aria-label="Copy Link"
-                                  >
-                                    <FaCopy size={16} />
-                                  </button>
-                                </div>
-                                {copyStates[p.id] && (
-                                  <div className="pooja-copied-notification">
-                                    Copied!
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          'Not available'
-                        )}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+      setTimeout(() => {
+        setCopyStates((prev) => ({
+          ...prev,
+          [id]: false,
+        }));
+      }, 2000); // Hide "Copied!" after 2 seconds
+    };
+
+    return (
+      <>
+        <div className="container py-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
+          <div className="row">
+            <div className="text-center fs-1 mb-3">
+              <h2 className="fs-1">Pooja Link</h2>
+            </div>
+            <div className={isMobileOrTablet ? 'table-responsive' : ''}>
+              <table className="custom-table table table-bordered table-striped">
+                <thead className="table-warning">
                   <tr>
-                    <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                    <th>Date Of Pooja</th>
+                    <th>Pooja Name</th>
+                    <th>Pooja Time</th>
+                    <th>Link Pooja</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {confirmedPoojas.length > 0 ? (
+                    confirmedPoojas.map((p) => (
+                      <tr key={p.id}>
+                        <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
+                        <td>{p.heading}</td>
+                        <td>{p.poojaLinkTime || '—'}</td>
+                        <td className="pooja-link-cell">
+                          {p.poojaLink ? (
+                            <div className="pooja-link-container">
+                              <a
+                                href={p.poojaLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="pooja-view-button"
+                              >
+                                View
+                              </a>
+                              <button
+                                onClick={() => handleTogglePopup(p.id)}
+                                className="pooja-info-button"
+                                aria-label="View Pooja Link Details"
+                              >
+                                <FaInfoCircle size={20} />
+                              </button>
+                              {popupStates[p.id] && (
+                                <div className="pooja-popup">
+                                  <button
+                                    onClick={() => handleTogglePopup(p.id)}
+                                    className="pooja-close-button"
+                                    aria-label="Close Popup"
+                                  >
+                                    <CloseButton size={24} />
+                                  </button>
+                                  <h2 className="pooja-popup-heading">
+                                    Your Google Meet Link
+                                  </h2>
+                                  <div className="pooja-link-wrapper">
+                                    <a
+                                      href={p.poojaLink}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="pooja-link-text"
+                                    >
+                                      {p.poojaLink}
+                                    </a>
+                                    <button
+                                      onClick={() => handleCopyLink(p.id, p.poojaLink)}
+                                      className="pooja-copy-button"
+                                      aria-label="Copy Link"
+                                    >
+                                      <FaCopy size={16} />
+                                    </button>
+                                  </div>
+                                  {copyStates[p.id] && (
+                                    <div className="pooja-copied-notification">
+                                      Copied!
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            'Not available'
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-}
+      </>
+    );
+  }
 
 
 };

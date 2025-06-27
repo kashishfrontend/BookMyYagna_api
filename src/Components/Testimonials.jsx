@@ -167,7 +167,7 @@ const Testimonial = () => {
                                 <h3>Experience Divine Rituals Yourself</h3>
                                 <p>Book a puja today and connect with your spiritual roots through authentic Vedic ceremonies</p>
                                 <button className="cta-btn" onClick={handleClick}>
-                                    Book Your Pooja Now
+                                    Book Your Puja Now
                                 </button>
                             </div>
                         </Col>

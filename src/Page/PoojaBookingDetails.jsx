@@ -134,7 +134,7 @@ const PoojaBookingDetails = () => {
     
       <Helmet>
         {/* Meta Tags */}
-        <title>Book Pooja Online - Sacred Pooja Services | BookMyYogna</title>
+        <title>Book Pooja Online - Sacred Puja Services | BookMyYogna</title>
         <meta
           name="description"
           content="Explore and book a variety of sacred pooja services online with trusted pandits at BookMyYogna. Convenient, authentic, and affordable rituals."
