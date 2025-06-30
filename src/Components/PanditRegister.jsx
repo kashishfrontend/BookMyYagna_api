@@ -18,6 +18,7 @@ import {
   Upload
 } from 'lucide-react';
 import '../assets/css/PandiRegister.css';
+import { Link } from 'react-router-dom';
 
 const PanditRegistration = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -483,9 +484,9 @@ const PanditRegistration = () => {
                 <div className="text-center mt-4">
                   <p className="login-text">
                     Already have an account?{' '}
-                    <a href="#" className="login-link">
+                    <Link to="/panditlogin" className="login-link">
                       Sign In Here
-                    </a>
+                    </Link>
                   </p>
                 </div>
 

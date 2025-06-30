@@ -31,6 +31,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/PanditDashBoard.css";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { LogOut, LogOutIcon } from "lucide-react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 // Static data
 const staticUser = {
@@ -145,10 +148,82 @@ const PanditDashboard = () => {
       setShowSidebar(false);
     }
   };
+  // const PanditDashboard = () => {
+  //   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch({ type: 'LOGOUT' }); // Simplified for static demo
-    navigate('/');
+  //   const handleLogout = () => {
+
+  //   };
+
+  //   return (
+  //     <div className="pandit-dashboard-container">
+  //       <h2>Pandit Dashboard</h2>
+  //       <p>Welcome, Pandit Ji!</p>
+  //       <button className="btn btn-danger" onClick={handleLogout}>
+  //         <LogOut size={18} className="me-2" />
+  //         Logout
+  //       </button>
+  //     </div>
+  //   );
+  // };
+  const handleLogout = async () => {
+    const toastId = toast.loading('Logging out...');
+    try {
+      console.log('Sending logout request to:', 'https://bookmyyogna.onrender.com/user/logoutUser');
+
+      const response = await axios.get(
+        'https://bookmyyogna.onrender.com/user/logoutUser',
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('Pandit Logout Response:', response.data);
+
+      if (response.data.success) {
+        toast.dismiss(toastId);
+        toast.success(response.data.message || 'Logout successful!');
+
+        // Dispatch logout action
+        dispatch({ type: 'LOGOUT_SUCCESS' });
+
+        // Navigate to login or homepage
+        navigate('/');
+      } else {
+        throw new Error(response.data.error || response.data.message || 'Logout failed');
+      }
+    } catch (err) {
+      console.error('Logout error:', err);
+      toast.dismiss(toastId);
+
+      let errorMessage = 'Failed to logout. Please try again.';
+      if (err.response) {
+        errorMessage =
+          err.response.data.error ||
+          err.response.data.message ||
+          'Failed to logout. Please try again.';
+      } else if (err.request) {
+        errorMessage = 'Network error. Please check your internet connection.';
+      } else {
+        errorMessage = err.message || 'An unexpected error occurred.';
+      }
+      toast.error(errorMessage);
+    }
+
+
+    return (
+      <div className="pandit-dashboard-container">
+        <h2>Pandit Dashboard</h2>
+        <p>Welcome, Pandit Ji!</p>
+        <button className="btn btn-danger" onClick={handleLogout}>
+          <LogOut size={18} className="me-2" />
+          Logout
+        </button>
+      </div>
+    );
   };
 
   const handleDeleteNotification = (id) => {
@@ -596,100 +671,100 @@ const PanditDashboard = () => {
           </Col>
         </Row>
         <Row>
-       
-            <Card className="stats-card">
-              <Card.Body className="">
-                {isEditingProfile ? (
-                    
-                  <Form className="row " onSubmit={handleProfileSubmit}>
-                    <Form.Group className="mb-3 col-md-6">
-                      <Form.Label>Full Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="fullName"
-                        value={user.fullName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3 col-md-6">
-                      <Form.Label>Email Address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        value={user.email}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3 col-md-6">
-                      <Form.Label>Phone Number</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        name="phoneNumber"
-                        value={user.phoneNumber}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3 col-md-6">
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="address"
-                        value={user.address}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Expertise</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        name="expertise"
-                        value={user.expertise}
-                        onChange={handleInputChange}
-                        rows={3}
-                        required
-                      />
-                    </Form.Group>
-                    <div className="d-flex justify-content-end mt-4">
-                      <Button
-                        variant="danger"
-                        className="me-2"
-                        onClick={() => setIsEditingProfile(false)}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        style={{ background: 'linear-gradient(180deg, #FF7722, #E65C00)', border: 'none' }}
-                      >
-                        Save Changes
-                      </Button>
-                    </div>
-                  </Form>
-                ) : (
-                  <div>
-                    <div className="d-flex align-items-center mb-3">
-                      <FaUserCircle size={40} className="me-3" style={{ color: 'var(--primary-color)' }} />
-                      <h3>{user.fullName}</h3>
-                    </div>
-                    <p><strong>Email:</strong> {user.email}</p>
-                    <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
-                    <p><strong>Address:</strong> {user.address}</p>
-                    <p><strong>Expertise:</strong> {user.expertise}</p>
+
+          <Card className="stats-card">
+            <Card.Body className="">
+              {isEditingProfile ? (
+
+                <Form className="row " onSubmit={handleProfileSubmit}>
+                  <Form.Group className="mb-3 col-md-6">
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="fullName"
+                      value={user.fullName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3 col-md-6">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      value={user.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3 col-md-6">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                      type="tel"
+                      name="phoneNumber"
+                      value={user.phoneNumber}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3 col-md-6">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="address"
+                      value={user.address}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Expertise</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="expertise"
+                      value={user.expertise}
+                      onChange={handleInputChange}
+                      rows={3}
+                      required
+                    />
+                  </Form.Group>
+                  <div className="d-flex justify-content-end mt-4">
                     <Button
-                      style={{ background: 'linear-gradient(180deg, #FF7722, #E65C00)', border: 'none' }}
-                      onClick={() => setIsEditingProfile(true)}
+                      variant="danger"
+                      className="me-2"
+                      onClick={() => setIsEditingProfile(false)}
                     >
-                      Edit Profile
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      style={{ background: 'linear-gradient(180deg, #FF7722, #E65C00)', border: 'none' }}
+                    >
+                      Save Changes
                     </Button>
                   </div>
-                )}
-              </Card.Body>
-            </Card>
-        
+                </Form>
+              ) : (
+                <div>
+                  <div className="d-flex align-items-center mb-3">
+                    <FaUserCircle size={40} className="me-3" style={{ color: 'var(--primary-color)' }} />
+                    <h3>{user.fullName}</h3>
+                  </div>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
+                  <p><strong>Address:</strong> {user.address}</p>
+                  <p><strong>Expertise:</strong> {user.expertise}</p>
+                  <Button
+                    style={{ background: 'linear-gradient(180deg, #FF7722, #E65C00)', border: 'none' }}
+                    onClick={() => setIsEditingProfile(true)}
+                  >
+                    Edit Profile
+                  </Button>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+
         </Row>
       </Container>
     );
