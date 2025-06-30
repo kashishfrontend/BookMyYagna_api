@@ -19,9 +19,11 @@ const AboutUs = () => {
           <h2>
             About <span className="text-gradient">BookMyYagna</span>
           </h2>
+        
           <p className="pb-3">
-            Your trusted platform for online Vedic pujas with experienced
-            Pandits across India.
+            A product of <b>Innovize Tech Solutions Pvt. Ltd</b>. 
+          -  Your trusted platform for online Vedic pujas with experienced
+            Pandits across India., 
           </p>
         </div>
 
