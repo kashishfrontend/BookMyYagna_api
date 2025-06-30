@@ -49,29 +49,11 @@ const Footer = () => {
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-links mt-0 mt-md-3">
               <h4>Quick Links</h4>
               <ul>
-<<<<<<< HEAD
-                <li>
-                  <Link to={"/"}>Home</Link>
-                </li>
-                <li>
-                  <Link to={"/about-us"}>About Us</Link>
-                </li>
-                <li>
-                  <Link to={"/listofpooja"}>Services</Link>
-                </li>
-                <li>
-                  <Link to={"/gallery"}>Gallery</Link>
-                </li>
-                <li>
-                  <Link to={"/contact"}>Contact</Link>
-                </li>
-=======
                 <li><Link to={'/'}>Home</Link></li>
                 <li><Link to={'/about-us'}>About Us</Link></li>
                 <li><Link to={'/listofpuja'}>Services</Link></li>
                 <li><Link to={'/gallery'}>Gallery</Link></li>
                 <li><Link to={'/contact'}>Contact</Link></li>
->>>>>>> origin/feature/UI-Nakul
               </ul>
             </div>
 
@@ -79,55 +61,6 @@ const Footer = () => {
             <div className="col-lg-2 col-md-6 mb-4 mb-md-0 footer-services mt-0 mt-md-3">
               <h4>Our Services</h4>
               <ul>
-<<<<<<< HEAD
-                <li>
-                  <Link to={"/listofpooja"}>
-                    <FaPrayingHands className="service-icon" /> Ganesh Pooja
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/listofpooja"}>
-                    <FaPrayingHands className="service-icon" /> Satyanarayan
-                    Katha
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/listofpooja"}>
-                    <FaPrayingHands className="service-icon" /> Griha Pravesh
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/listofpooja"}>
-                    <FaPrayingHands className="service-icon" /> Vivah Sanskar
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
-              <h4>Contact Us</h4>
-              <div className="contact-info">
-                <p>
-                  <FaMapMarkerAlt className="contact-icon me-2" />
-                  Prem Plaza, 252, Opp. Subhash Park,
-                  <br />
-                  Subhash Nagar, Rohtak, Haryana - 124001
-                </p>
-                <p>
-                  <FaPhoneAlt className="contact-icon me-2" />
-                  +91 8569977750
-                </p>
-                <p>
-                  <FaEnvelope className="contact-icon me-2" />
-                  support@bookmyyagna.com
-                </p>
-              </div>
-
-              <div className="newsletter mt-4">
-                <h5 className="mb-1">Subscribe to our Newsletter</h5>
-                <p className="small text-muted mb-2">
-                  Stay updated on auspicious muhurats, Vedic tips & festival
-                  discounts.
-=======
                 <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Ganesh Puja</Link></li>
                 <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Satyanarayan Katha</Link></li>
                 <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Griha Pravesh</Link></li>
@@ -148,7 +81,6 @@ const Footer = () => {
                 <h5 className="mb-1">Subscribe to our Newsletter</h5>
                 <p className="small text-muted mb-2">
                   Stay updated on auspicious muhurats, Vedic tips & festival discounts.
->>>>>>> origin/feature/UI-Nakul
                 </p>
                 <form className="d-flex flex-column flex-sm-row gap-2">
                   <input
@@ -156,15 +88,7 @@ const Footer = () => {
                     placeholder="Enter your email"
                     className="form-control"
                   />
-<<<<<<< HEAD
-                  <button
-                    type="submit"
-                    className="btn  text-white px-3"
-                    style={{ backgroundColor: " #FF7722" }}
-                  >
-=======
                   <button type="submit" className="btn text-white px-3" style={{ backgroundColor: "#FF7722" }}>
->>>>>>> origin/feature/UI-Nakul
                     Subscribe
                   </button>
                 </form>
@@ -206,8 +130,4 @@ const Footer = () => {
     </footer>
   );
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/feature/UI-Nakul
 export default Footer;
