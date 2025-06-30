@@ -21,6 +21,8 @@ import FAQPage from '../Page/FAQpage';
 import GalleryPage from '../Page/GalleryPage';
 import NotFoundPage from '../Page/NotFoundPage';
 import PanditDashboard from '../Page/PanditDashBoard';
+import PanditLogin from '../Components/PanditLogin';
+import PanditRegister from '../Components/PanditRegister';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
@@ -90,6 +92,8 @@ function AppRoutes() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="panditlogin" element={<PanditLogin />} />
+        <Route path="panditregister" element={<PanditRegister />} />
         <Route
           path="booking"
           element={
