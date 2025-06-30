@@ -7,9 +7,9 @@ import image from '../assets/img/om-123.png';
 import bg1 from '../assets/img/bg-3-new.webp';
 import bg2 from '../assets/img/bg-3.webp';
 import bg3 from '../assets/img/bg--2.webp';
-import vdo1 from '../assets/videos/pooja1.mp4';
-import vdo2 from '../assets/videos/pooja2.mp4'
-import vdo3 from '../assets/videos/bg-video.mp4'
+import vdo1 from '../assets/videos/pooja1.webm';
+import vdo2 from '../assets/videos/pooja2.webm'
+import vdo3 from '../assets/videos/bg-video.webm'
 import panditSVG from '../assets/img/pandit.png'
 import CompleteSamagry from '../assets/img/Complete-Samagry.png'
 import AuthenticRituals from '../assets/img/Authentic-Rituals.png'
@@ -99,18 +99,17 @@ const HeroSection = ({ onHeroVisibleChange }) => {
     {
       badge: "Auspicious Ceremonies",
       title: "Welcome to  <span class='highlight-text'>BookMyYagna</span> <span class='highlight-text' style='font-size: medium;'>Your Sacred Link to Authentic Vedic Rituals</span>",
-      subtitle: "In today’s fast-paced world, reconnect with spirituality through online yagna, puja, and verified pandits—all in one place.",
+      subtitle: "Reconnect with spirituality through online yagna, puja, and trusted pandits — all in one place.",
       image: image,
       bgVideo: vdo1
     },
 
     {
       badge: "Festival Celebrations",
-      title: "Celebrate <span class='highlight-text'>Festivals</span> with Traditional Rituals",
-      subtitle: "At BookMyYagna, we believe that Yagna and Pooja ceremonies are not just rituals...",
+      title: "Embrace <span class='highlight-text'>Festivals</span> with Sacred Rituals",
+      subtitle: "At BookMyYagna, Yagna and Puja are divine experiences, not just traditions...",
       image: image,
       bgVideo: vdo2,
-      text: "Lorem ipsum, dolor sit amet consectetur..."
     },
     {
       badge: "Home Ceremonies",
@@ -122,7 +121,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
   ];
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate('/listofpooja')
+      navigate('/listofpuja')
     } else {
       navigate('/login')
     }
@@ -183,11 +182,11 @@ const HeroSection = ({ onHeroVisibleChange }) => {
                       </motion.div>
 
 
-                      <motion.h1
-                        variants={slideTextVariants}
-                        className="hero-title"
-                        dangerouslySetInnerHTML={{ __html: slide.title }}
-                      ></motion.h1>
+                        <motion.h1
+                          variants={slideTextVariants}
+                          className="hero-title"
+                          dangerouslySetInnerHTML={{ __html: slide.title }}
+                        ></motion.h1>
 
                       <motion.p variants={slideTextVariants} className="hero-subtitle "
                         style={{ textAlign: "justify" }}>
@@ -196,9 +195,9 @@ const HeroSection = ({ onHeroVisibleChange }) => {
 
                       <motion.div variants={slideTextVariants} className="cta-buttons d-flex flex-row">
                         <Button variant="primary" className="main-cta-btn" onClick={handleBookingClick}>
-                          <Calendar2Check className="btn-icon" /> Book Pooja Now
+                          <Calendar2Check className="btn-icon" /> Book Puja Now
                         </Button>
-                        <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpooja')}>
+                        <Button variant="outline-light" className="secondary-cta-btn" onClick={() => navigate('/listofpuja')}>
                           <Bell className="btn-icon" /> Explore Services
                         </Button>
                       </motion.div>
@@ -263,6 +262,8 @@ const HeroSection = ({ onHeroVisibleChange }) => {
           <div key={i} className={`particle particle-${i + 1}`}></div>
         ))}
       </div>
+      <h1 className='d-none'>
+Welcome to BookMyYagna</h1>
     </div>
   );
 };

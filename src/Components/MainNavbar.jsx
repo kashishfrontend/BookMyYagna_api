@@ -4,13 +4,12 @@ import { Navbar, Nav, Container, NavDropdown, Button, Dropdown } from 'react-boo
 import { motion } from 'framer-motion';
 import { BellFill, CalendarCheck, PersonCircle, House } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DivineJournal from '../Page/DivineJournal'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
-import img from '../assets/img/image.png';
+import img from '../assets/img/favicon.png';
 
 const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +38,7 @@ const MainNavbar = ({ isHeroVisible }) => {
     : '';
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate("/listofpooja");
+      navigate("/listofpuja");
     } else {
       navigate("/login");
     }
@@ -79,7 +78,7 @@ const MainNavbar = ({ isHeroVisible }) => {
             style={{ padding: "0px 70px" }}
             className='padding-class'
           >
-            <Navbar.Brand to="/" className="brand d-flex  align-items-center d-block p-1">
+            <Navbar.Brand as={Link} to="/" className="brand d-flex align-items-center d-block p-1">
               <img
                 src={img}
                 width="30"
@@ -112,7 +111,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                   id="nav-dropdown-services"
                   className=" d-flex align-content-center justify-content-center flex-column m-auto"
                 >
-                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="./listOfPooja">List of Pooja</Dropdown.Item>
+                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="./listOfPuja">List of Pooja</Dropdown.Item>
                   <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
                 </NavDropdown>
               </motion.div>

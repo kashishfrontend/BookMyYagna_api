@@ -5,6 +5,7 @@ import {
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
@@ -246,6 +247,30 @@ const LoginPage = () => {
     }
   };
   return (
+    <>
+    <Helmet>
+        <title>Login to Book Your Puja Online | BookMyYagna</title>
+        <meta
+          name="description"
+          content="Access your BookMyYagna account to book online pujas, track your yagna history, and connect with expert priests. Login now for a seamless spiritual experience"
+        />
+        <meta
+          name="keywords"
+          content="BookMyYagna login, online puja booking, book puja online, login for yagna, virtual puja, spiritual booking India"
+        />
+        <meta
+          property="og:title"
+          content="Login to BookMyYagna - Your Trusted Online Puja Booking Platform"
+        />
+        <meta
+          property="og:description"
+          content="Access your BookMyYagna account to manage your puja bookings, view history, and connect with expert priests online. Fast, secure, and spiritual"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyagna.com/login" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/login-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/login" />
+      </Helmet>
     <div className="bg-container">
       <section className="login-section">
         <Container>
@@ -618,6 +643,7 @@ const LoginPage = () => {
         </Modal>
       </section>
     </div>
+    </>
   );
 };
 export default LoginPage;

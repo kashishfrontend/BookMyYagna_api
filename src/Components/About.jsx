@@ -4,138 +4,159 @@ import AOS from "aos";
 import { FaOm, FaHandsHelping, FaPrayingHands, FaHeart } from "react-icons/fa";
 import about from "../assets/img/bg-3.webp";
 import "../assets/css/About.css";
+import { Helmet } from 'react-helmet-async';
 const AboutUs = () => {
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 500, once: true });
   }, []);
   return (
-    <section id="about-us" className="about-us-section">
-      <Container>
-        {/* Section Title */}
-        <div className="section-title text-center" data-aos="fade-down">
-          <div className="ornament-line">
-            <span className="om-symbol">ॐ</span>
-          </div>
-          <h2>
-            About <span className="text-gradient">BookMyYagna</span>
-          </h2>
-        
-          <p className="pb-3">
-            A product of <b>Innovize Tech Solutions Pvt. Ltd</b>. 
-          -  Your trusted platform for online Vedic pujas with experienced
-            Pandits across India., 
-          </p>
-        </div>
-
-        {/* Mission & Vision */}
-        <Row className="align-items-center mb-5">
-          <Col md={6} data-aos="fade-right">
-            <img
-              src={about}
-              alt="Beautiful illuminated Hindu temple symbolizing BookMyYagna's authentic Vedic rituals and spiritual puja services"
-              className="img-fluid rounded shadow"
-            />
-          </Col>
-          <Col md={6} data-aos="fade-left">
-            <h3 className="mb-3">Our Divine Mission</h3>
-            <p style={{ textAlign: "justify" }}>
-              At BookMyYagna, our mission is to simplify and preserve the rich
-              traditions of Sanatan Dharma by offering authentic Hindu rituals
-              online. We connect you with qualified, verified Vedic Pandits who
-              perform pujas with strict adherence to Vedic scriptures and
-              traditions.
+    <>
+      <Helmet>
+        <title>About BookMyYagna | Online Vedic Puja Services</title>
+        <meta
+          name="description"
+          content="Learn about BookMyYagna – your trusted platform for booking online pujas with expert pandits & hassle-free Vedic services."
+        />
+        <meta
+          name="keywords"
+          content="BookMyYagna, about BookMyYagna, Vedic puja platform, online puja India, expert pandits, Hindu rituals, spiritual services online"
+        />
+        <meta
+          property="og:title"
+          content="About BookMyYagna – Online Puja Platform"
+        />
+        <meta
+          property="og:description"
+          content="Discover BookMyYagna – your trusted platform for authentic online pujas, performed by experienced pandits across India."
+        />
+        <meta property="og:url" content="https://bookmyyagna.com/about-us" />
+        <link rel="canonical" href="https://bookmyyagna.com/about-us" />
+      </Helmet>
+      <section id="about-us" className="about-us-section">
+        <Container>
+          {/* Section Title */}
+          <div className="section-title text-center" data-aos="fade-down">
+            <div className="ornament-line">
+              <span className="om-symbol">ॐ</span>
+            </div>
+            <h2>
+              About <span className="text-gradient">BookMyYagna</span>
+            </h2>
+            <p className="pb-3">
+              Your trusted platform for online Vedic pujas with experienced
+              Pandits across India.
             </p>
-            <p style={{ textAlign: "justify" }}>
-              Whether it’s a Satyanarayan Puja, Griha Pravesh, Rudrabhishek,
-              Navgraha Shanti, or Mahamrityunjay Jaap, we bring the ceremony to
-              your home with complete samagri, mantras, and spiritual guidance.
-            </p>
-            <ul>
-              <li style={{ listStyle: "none" }}>✅ Transparent pricing</li>
-              <li style={{ listStyle: "none" }}>
-                ✅ Multi-city service coverage (20+ cities)
-              </li>
-              <li style={{ listStyle: "none" }}>
-                ✅ Fully customizable ritual packages
-              </li>
-              <li style={{ listStyle: "none" }}>
-                ✅ Verified Brahmin Pandits with years of experience
-              </li>
-            </ul>
-          </Col>
-          <div className="mt-5">
-            <h3 className="text-center fs-1">
-              🔱 Why Devotees Trust BookMyYagna
-            </h3>
           </div>
-        </Row>
-        {/* Features / Values */}
 
-        <Row className="text-center">
-          <Col md={3} sm={6} className="mb-4" data-aos="zoom-in">
-            <div className="about-icon-box">
-              <FaOm className="about-icon" />
-              <h5> Rooted in Vedic Tradition</h5>
+          {/* Mission & Vision */}
+          <Row className="align-items-center mb-5">
+            <Col md={6} data-aos="fade-right">
+              <img
+                src={about}
+                alt="Beautiful illuminated Hindu temple symbolizing BookMyYagna's authentic Vedic rituals and spiritual puja services"
+                className="img-fluid rounded shadow"
+              />
+            </Col>
+            <Col md={6} data-aos="fade-left">
+              <h3 className="mb-3">Our Divine Mission</h3>
               <p style={{ textAlign: "justify" }}>
-                Every ritual is performed using authentic Vedic scriptures and
-                sacred Sanskrit mantras, ensuring spiritual accuracy and
-                blessings.
+                At BookMyYagna, our mission is to simplify and preserve the rich
+                traditions of Sanatan Dharma by offering authentic Hindu rituals
+                online. We connect you with qualified, verified Vedic Pandits who
+                perform pujas with strict adherence to Vedic scriptures and
+                traditions.
               </p>
-            </div>
-          </Col>
-          <Col
-            md={3}
-            sm={6}
-            className="mb-4"
-            data-aos="zoom-in"
-            data-aos-delay="100"
-          >
-            <div className="about-icon-box">
-              <FaHandsHelping className="about-icon" />
-              <h5>Trusted, Verified Pandits</h5>
               <p style={{ textAlign: "justify" }}>
-                All our Pandits are highly experienced, background-verified, and
-                trained in Hindu Shastras with decades of experience in
-                spiritual services.
+                Whether it’s a Satyanarayan Puja, Griha Pravesh, Rudrabhishek,
+                Navgraha Shanti, or Mahamrityunjay Jaap, we bring the ceremony to
+                your home with complete samagri, mantras, and spiritual guidance.
               </p>
+              <ul>
+                <li style={{ listStyle: "none" }}>✅ Transparent pricing</li>
+                <li style={{ listStyle: "none" }}>
+                  ✅ Multi-city service coverage (20+ cities)
+                </li>
+                <li style={{ listStyle: "none" }}>
+                  ✅ Fully customizable ritual packages
+                </li>
+                <li style={{ listStyle: "none" }}>
+                  ✅ Verified Brahmin Pandits with years of experience
+                </li>
+              </ul>
+            </Col>
+            <div className="mt-5">
+              <h3 className="text-center fs-1">
+                🔱 Why Devotees Trust BookMyYagna
+              </h3>
             </div>
-          </Col>
-          <Col
-            md={3}
-            sm={6}
-            className="mb-4"
-            data-aos="zoom-in"
-            data-aos-delay="200"
-          >
-            <div className="about-icon-box">
-              <FaPrayingHands className="about-icon" />
-              <h5>Pan-India Service Network</h5>
-              <p style={{ textAlign: "justify" }}>
-                We currently offer our puja services entirely online, allowing
-                devotees from over 20+ Indian cities to conveniently book and
-                perform rituals from the comfort of their homes.
-              </p>
-            </div>
-          </Col>
-          <Col
-            md={3}
-            sm={6}
-            className="mb-4"
-            data-aos="zoom-in"
-            data-aos-delay="300"
-          >
-            <div className="about-icon-box">
-              <FaHeart className="about-icon" />
-              <h5> Bhakti-Driven Approach</h5>
-              <p style={{ textAlign: "justify" }}>
-                Our focus is to deliver meaningful, heartfelt puja experiences
-                that bring peace, positivity, and blessings into your home.
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+          </Row>
+          {/* Features / Values */}
+          <Row className="text-center">
+            <Col md={3} sm={6} className="mb-4" data-aos="zoom-in">
+              <div className="about-icon-box">
+                <FaOm className="about-icon" />
+                <h5> Rooted in Vedic Tradition</h5>
+                <p style={{ textAlign: "justify" }}>
+                  Every ritual is performed using authentic Vedic scriptures and
+                  sacred Sanskrit mantras, ensuring spiritual accuracy and
+                  blessings.
+                </p>
+              </div>
+            </Col>
+            <Col
+              md={3}
+              sm={6}
+              className="mb-4"
+              data-aos="zoom-in"
+              data-aos-delay="100"
+            >
+              <div className="about-icon-box">
+                <FaHandsHelping className="about-icon" />
+                <h5>Trusted, Verified Pandits</h5>
+                <p style={{ textAlign: "justify" }}>
+                  All our Pandits are highly experienced, background-verified, and
+                  trained in Hindu Shastras with decades of experience in
+                  spiritual services.
+                </p>
+              </div>
+            </Col>
+            <Col
+              md={3}
+              sm={6}
+              className="mb-4"
+              data-aos="zoom-in"
+              data-aos-delay="200"
+            >
+              <div className="about-icon-box">
+                <FaPrayingHands className="about-icon" />
+                <h5>Pan-India Service Network</h5>
+                <p style={{ textAlign: "justify" }}>
+                  We currently offer our puja services entirely online, allowing
+                  devotees from over 20+ Indian cities to conveniently book and
+                  perform rituals from the comfort of their homes.
+                </p>
+              </div>
+            </Col>
+            <Col
+              md={3}
+              sm={6}
+              className="mb-4"
+              data-aos="zoom-in"
+              data-aos-delay="300"
+            >
+              <div className="about-icon-box">
+                <FaHeart className="about-icon" />
+                <h5> Bhakti-Driven Approach</h5>
+                <p style={{ textAlign: "justify" }}>
+                  Our focus is to deliver meaningful, heartfelt puja experiences
+                  that bring peace, positivity, and blessings into your home.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </>
   );
 };
 const styles = {

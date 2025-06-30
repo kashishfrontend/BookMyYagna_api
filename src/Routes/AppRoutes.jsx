@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 // Page & Component Imports
 import HomePage from '../Components/HomePage';
 import LoginPage from '../Components/LoginPage';
 import ListOfPooja from '../Page/List-Of-Pooja/ListOfPooja';
 import PoojaBookingDetails from '../Page/PoojaBookingDetails';
 import Dashboard from '../Page/Dashbord/DashBord';
-import DivineJournal from '../Page/DivineJournal';
-import Contact from '../Page/Contact/Contact';
-import TermsAndVision from '../Page/TermsVission';
+import Contact from '../Page/Contact/Contact';  
 import ScaredBooking from '../Page/ScaredBooking';
-import FaqFooter from '../Page/FaqFooter';
 import Layout from './Layout';
 import PrivacyPolicy from '../Page/PrivacyPolicy';
 import FAQ from '../Components/FAQ';
 import TermsOfService from '../Page/TermsOfService';
 import PanchangCalendar from '../Page/Panchang';
 import AboutUs from '../Components/About';
-import Account from '../Components/Account';
 import { checkAuth } from '../redux/action/authAction';
-import Gallery from '../Components/gallery';
 import Booking from '../Page/Booking';
+import FAQPage from '../Page/FAQpage';
+import GalleryPage from '../Page/GalleryPage';
+import NotFoundPage from '../Page/NotFoundPage';
+import PanditDashboard from '../Page/PanditDashBoard';
 
-// Inline ProtectedRoute
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
   const location = useLocation();
@@ -40,13 +38,13 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function AppRoutes() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const location = useLocation();
 
   useEffect(() => {
-    dispatch(checkAuth())
-  }, [dispatch])
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   return (
     <Routes>
@@ -61,7 +59,6 @@ function AppRoutes() {
           )
         }
       />
-
       {/* Protected Dashboard */}
       <Route
         path="/dashboard"
@@ -71,39 +68,36 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+       <Route
+        path="/panditdashboard"
+        element={
+          <ProtectedRoute>
+            <PanditDashboard />
+          </ProtectedRoute>
+        }
+      />
+      {/* Routes under Layout */}
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="listofpooja" element={<ListOfPooja />} />
-        <Route path="poojaBookingDetails" element={<PoojaBookingDetails />} />
-        <Route path="divinejournal" element={<DivineJournal />} />
-        <Route path="termsVision" element={<TermsAndVision />} />
+        <Route path="listofpuja" element={<ListOfPooja />} />
+        <Route path="pujaBookingDetails" element={<PoojaBookingDetails />} />
         <Route path="scaredbooking" element={<ScaredBooking />} />
-        <Route path="faq" element={<FaqFooter />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="termsofservice" element={<TermsOfService />} />
-        <Route path="FAQ" element={<FAQ />} />
+        <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
-        <Route path="account" element={<Account />} />
-        <Route path="gallery" element={<Gallery />} />
+        <Route path="gallery" element={<GalleryPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route
-          path="/login"
-          element={
-            isAuthenticated ? (
-              <Navigate to={location.state?.from?.pathname || '/booking'} replace />
-            ) : (
-              <LoginPage />
-            )
-          }
-        />
-        <Route path="booking"
+          path="booking"
           element={
             <ProtectedRoute>
               <Booking />
             </ProtectedRoute>
-          } />
-
+          }
+        />
       </Route>
     </Routes>
   );

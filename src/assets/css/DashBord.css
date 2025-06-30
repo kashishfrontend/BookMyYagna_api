@@ -140,7 +140,7 @@ body {
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
     border-radius: 25px;
     padding: 5px 15px;
     width: 300px;
@@ -638,7 +638,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-light);
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 

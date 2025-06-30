@@ -7,7 +7,7 @@ import '../assets/css/servicepanchang.css'
 import { Link } from 'react-router-dom';
 const Services = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 500 });
     }, []);
 
     const panchangData = [
@@ -49,7 +49,7 @@ const Services = () => {
         {
             id: 6,
             title: "Sunrise & Sunset",
-            description: "Timings of sunrise and sunset mark transitions of the day and are critical for Sandhya Vandana and Poojas.",
+            description: "Timings of sunrise and sunset mark transitions of the day and are critical for Sandhya Vandana and Pujas.",
             icon: <FaSun className="service-icon" />,
             animation: "fade-up"
         }

@@ -3,7 +3,8 @@ import { Container, Row, Col, Accordion } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { FaQuestion } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-const FAQ = () => {
+import { Helmet } from 'react-helmet-async';
+const FAQPage = () => {
     const faqs = [
         {
             id: 1,
@@ -51,6 +52,30 @@ const FAQ = () => {
 
     return (
         <>
+
+            <Helmet>
+                <title>Frequently Asked Questions | BookMyYagna – Online Puja Booking Made Easy</title>
+                <meta
+                    name="description"
+                    content="Find answers to your questions about online puja booking, payment options, priest details, and yagna procedures. Book authentic Hindu rituals with ease at BookMyYagna."
+                />
+                <meta
+                    name="keywords"
+                    content="online puja FAQ, bookmyyagna faqs, hindu ritual questions, yagna booking help, puja booking support, online havan, priest booking online"
+                />
+                <meta
+                    property="og:title"
+                    content="BookMyYagna FAQ - Your Questions Answered About Online Puja Booking"
+                />
+                <meta
+                    property="og:description"
+                    content="Have questions about booking a puja online? Find clear answers about payments, procedures, priest details, timings, and more at BookMyYagna’s FAQ section"
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://bookmyyagna.com/FAQ" />
+                <meta property="og:image" content="https://bookmyyagna.com/images/faq-og-image.jpg" />
+                <link rel="canonical" href="https://bookmyyagna.com/FAQ" />
+            </Helmet>
             <section className="faq-section" id="faq">
 
                 <Container>
@@ -194,4 +219,4 @@ const styles = {
     },
 };
 
-export default FAQ;
+export default FAQPage;

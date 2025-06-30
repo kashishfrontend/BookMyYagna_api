@@ -16,6 +16,7 @@ import "../../assets/css/ListOfCSS.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 
 const PoojaSlider = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -62,13 +63,36 @@ const PoojaSlider = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BookMyYagna | List of Online Poojas in India - Book Vedic Rituals</title>
+        <meta
+          name="description"
+          content="Explore a complete list of online poojas including Satyanarayan, Rudrabhishek, Navgraha Shanti & more. Book authentic Vedic rituals with expert purohits."
+        />
+        <meta
+          name="keywords"
+          content="online pooja list, book pooja online, hindu rituals, vedic poojas, rudrabhishek online, satyanarayan pooja, navgraha shanti, bookmyyagna"
+        />
+        <meta
+          property="og:title"
+          content="List of Online Pujas | Book Popular Hindu Rituals at BookMyYagna"
+        />
+        <meta
+          property="og:description"
+          content="Explore and book from a wide range of online pujas including Satyanarayan Puja, Rudrabhishek, Navgraha Shanti and more with certified pandits at BookMyYagna"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bookmyyagna.com/listofpuja" />
+        <meta property="og:image" content="https://bookmyyagna.com/images/puja-og-image.jpg" />
+        <link rel="canonical" href="https://bookmyyagna.com/listofpuja" />
+      </Helmet>
       <section className="pooja-slider-section mb-5">
         <div className="container">
           <div className="row">
             <div className="col-12">
               <div className="section-title" data-aos="fade-down">
                 <span className="title-icon">🕉️</span>
-                <h2>Sacred Pooja Services</h2>
+                <h2>Sacred Puja Services</h2>
                 <div className="divider-line"></div>
               </div>
             </div>
@@ -96,7 +120,7 @@ const PoojaSlider = () => {
                   disableOnInteraction: false,
                 }}
                 modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
-                className="pooja-swiper shadow-none"
+                className="pooja-swiper py-5 shadow-none"
               >
                 {listPooja.map((pooja) => (
                   <SwiperSlide
@@ -104,7 +128,7 @@ const PoojaSlider = () => {
                     onClick={() => swiperRef.current?.autoplay.stop()}
                   >
                     <div
-                      className="pooja-card"
+                      className="pooja-card "
                       onMouseEnter={() => swiperRef.current?.autoplay.stop()}
                       onMouseLeave={() => {
                         swiperRef.current?.autoplay.start();
@@ -131,7 +155,7 @@ const PoojaSlider = () => {
                         <div className='text-center'>
                           <button
                             className='book-now-btn1 text-center text-decoration-none'
-                            onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
+                            onClick={() => isAuthenticated ? navigate('/pujaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                           >
                             Book Now
                           </button>
