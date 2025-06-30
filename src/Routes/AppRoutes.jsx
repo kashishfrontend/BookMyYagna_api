@@ -73,9 +73,9 @@ function AppRoutes() {
        <Route
         path="/panditdashboard"
         element={
-          <ProtectedRoute>
+         
             <PanditDashboard />
-          </ProtectedRoute>
+         
         }
       />
       {/* Routes under Layout */}
