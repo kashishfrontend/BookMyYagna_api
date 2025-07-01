@@ -46,7 +46,6 @@ const authReducer = (state = initialState, action) => {
         error:null,
         loading: false,
         logoutSuccess: true,
-        isAuthenticated: false,
       };
     case LOGOUT_FAILURE:
       return { ...state, loading: false, error: action.payload, logoutSuccess: false };
