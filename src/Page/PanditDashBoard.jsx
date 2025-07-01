@@ -774,7 +774,7 @@ const PanditDashboard = () => {
     <>
       <div className="dashboard-container">
         <div
-          className="mobile-toggle d-flex d-md-none"
+          className="mobile-toggle d-flex d-lg-none"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}

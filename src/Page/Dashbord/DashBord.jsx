@@ -256,7 +256,7 @@ const Dashboard = () => {
     <>
       <div className="dashboard-container">
         <div
-          className="mobile-toggle"
+          className="mobile-toggle d-flex d-lg-none"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}

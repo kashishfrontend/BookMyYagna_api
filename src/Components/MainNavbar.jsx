@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Button, Dropdown } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { BellFill, CalendarCheck, PersonCircle, House } from 'react-bootstrap-icons';
+import { BellFill, CalendarCheck, PersonCircle, House, CaretDownFill } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
 import img from '../assets/img/favicon.png';
+import { MdPersonPinCircle } from 'react-icons/md';
 
 const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -116,32 +117,50 @@ const MainNavbar = ({ isHeroVisible }) => {
                 </NavDropdown>
               </motion.div>
               <motion.div >
-                <Nav.Link href="/about-us" className={`nav-link   ${navTextColor}`}>
+                <Nav.Link href="/about-us" className={`nav-link ${navTextColor}`}>
                   <CalendarCheck className="icon" /> About Us
                 </Nav.Link>
               </motion.div>
-              {!isAuthenticated ? (
-                <motion.div>
-                  <Nav.Link href="/login" className={`${navTextColor}`}>
-                    <PersonCircle className={`me-2 icon${navTextColor}`} /> Login
-                  </Nav.Link>
-                </motion.div>
-              ) : (
-                <NavDropdown
-                  title={
-                    <>
-                      <PersonCircle className={` icon ${navTextColor}`} />
-                      <span className={` ${navTextColor}`}>
-                        Account
-                      </span>
-                    </>
-                  }
-                  id="account-dropdown"
-                >
-                  <NavDropdown.Item className={`  nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
-                  <NavDropdown.Item className={`  nav-service-link ${navTextColor}`} onClick={handleLogout}>Logout</NavDropdown.Item>
-                </NavDropdown>
-              )}
+             {!isAuthenticated ? (
+  <NavDropdown
+    title={
+      <span className={`d-flex align-items-center ${navTextColor}`}>
+        <PersonCircle className={`me-2 ${navTextColor}`} />
+        Login
+        <CaretDownFill className="ms-1" size={12} />
+      </span>
+    }
+    id="login-dropdown"
+    className="nav-item"
+  >
+    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/login">
+      User Login
+    </NavDropdown.Item>
+    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/panditlogin">
+      Pandit Login
+    </NavDropdown.Item>
+  </NavDropdown>
+) : (
+  <NavDropdown
+    title={
+      <span className={`d-flex align-items-center ${navTextColor}`}>
+        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
+        Account
+        <CaretDownFill className="ms-1" size={12} />
+      </span>
+    }
+    id="account-dropdown"
+  >
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>
+      Dashboard
+    </NavDropdown.Item>
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogout}>
+      Logout
+    </NavDropdown.Item>
+  </NavDropdown>
+)}
+
+
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

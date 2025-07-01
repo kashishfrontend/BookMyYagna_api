@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from '../Api/axios/axios_config';
 import { Eye, EyeOff, User, Lock, Sun, Moon, Star, Phone } from 'lucide-react';
@@ -25,7 +25,6 @@ const PanditLogin = () => {
     if (!userName) newErrors.userName = 'Username is required';
     if (!password) newErrors.password = 'Password is required';
     else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
-
     return newErrors;
   };
 
@@ -37,7 +36,6 @@ const PanditLogin = () => {
     }));
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
@@ -126,7 +124,6 @@ const PanditLogin = () => {
           <Moon size={45} />
         </div>
       </div>
-
       <div className="container-fluid h-100">
         <div className="row h-100 align-items-center">
           {/* Left Side - Welcome Section */}
@@ -140,7 +137,6 @@ const PanditLogin = () => {
                   <h1 className="brand-name">श्री पूजा सेवा</h1>
                   <p className="brand-tagline">Sacred Services • Divine Connections</p>
                 </div>
-
                 <div className="welcome-text">
                   <h2 className="welcome-title">Welcome Back, Pandit Ji</h2>
                   <p className="welcome-description">
@@ -319,9 +315,9 @@ const PanditLogin = () => {
                         </a>
                       </div>
                       <div className="col-6">
-                        <a href="/pandit/register" className="link-success">
+                        <Link to={"/panditregister"} className="link-success">
                           New Pandit? Join Us
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
