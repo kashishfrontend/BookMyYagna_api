@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../assets/css/YagnaPage.css';
+import { Link } from 'react-router-dom';
 
 const WhyYagna = () => {
     useEffect(() => {
@@ -30,8 +31,8 @@ const WhyYagna = () => {
                     <div className="info-section">
                         <h5>• For Celebrations:</h5>
                         <p>
-                            From <strong> weddings, birthdays,  housewarmings, </strong> to new ventures—every special occasion calls for divine blessings.
-                            <strong> BookMyYagna </strong> offers easy access to trusted <strong> pandits  </strong> and sacred rituals like <strong> Hawan </strong> and <strong> Puja, </strong> available both  <strong> online and at your location.</strong>
+                            From <strong> weddings, birthdays,  housewarmings, </strong> to new ventures—every special occasion calls for divine blessings. <strong>BookMyYagna</strong> offers <Link to={'/listofpuja'}>online puja booking</Link  > with trusted pandits and sacred rituals like Hawan and puja, available at your comfort.
+                           
 
                         </p>
                     </div>

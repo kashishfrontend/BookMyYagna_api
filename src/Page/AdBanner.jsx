@@ -9,14 +9,14 @@ const AdBanner = () => {
   const messages = [
     {
       heading: "🌟 A Spiritual Reminder: Life is a Journey, and So is Devotion 🌟",
-      content: "Yagna is not just about rituals. It's about devotion, gratitude, and seeking balance. By booking a Yagna or Pooja, you're aligning with the universe's rhythm, healing your soul, and inviting prosperity into your life."
+      content: "Yagna is not just about rituals. It's about devotion, gratitude, and seeking balance. By booking a Yagna or puja, you're aligning with the universe's rhythm, healing your soul, and inviting prosperity into your life."
     },
     {
       heading: "🕉️ Connect with the Divine Through Sacred Rituals 🕉️",
-      content: "Every Pooja is an opportunity to connect with the divine energy within and around you. Book a sacred ceremony today to purify your surroundings and bring peace to your mind."
+      content: "Every puja is an opportunity to connect with the divine energy within and around you. Book a sacred ceremony today to purify your surroundings and bring peace to your mind."
     },
     {
-      heading: "🙏 The Power of Pooja: Transform Your Life with Faith 🙏",
+      heading: "🙏 The Power of puja: Transform Your Life with Faith 🙏",
       content: "Ancient Vedic rituals have the power to remove obstacles and bring positive energy into your life. Experience the transformative power of authentic Yagnas performed by learned priests."
     },
     {
@@ -25,7 +25,7 @@ const AdBanner = () => {
     },
     {
       heading: "🌺 Bless Your Home with Divine Energy and Protection 🌺",
-      content: "Regular Poojas create a shield of positive energy around your home and family. Book a house blessing ceremony to invite divine protection and harmony."
+      content: "Regular pujas create a shield of positive energy around your home and family. Book a house blessing ceremony to invite divine protection and harmony."
     },
     {
       heading: "💫 Remove Negative Energy with Powerful Vedic Ceremonies 💫",
@@ -33,7 +33,7 @@ const AdBanner = () => {
     },
     {
       heading: "🌿 Purify Your Soul with Ancient Vedic Wisdom 🌿",
-      content: "The Vedas contain profound rituals for every aspect of life. From health to prosperity to spiritual growth, discover the right Pooja for your needs today."
+      content: "The Vedas contain profound rituals for every aspect of life. From health to prosperity to spiritual growth, discover the right puja for your needs today."
     }
   ];
 

@@ -92,7 +92,7 @@ const PoojaSlider = () => {
             <div className="col-12">
               <div className="section-title" data-aos="fade-down">
                 <span className="title-icon">🕉️</span>
-                <h2>Sacred Pooja Services</h2>
+                <h2>Sacred Puja Services</h2>
                 <div className="divider-line"></div>
               </div>
             </div>

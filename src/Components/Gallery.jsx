@@ -170,7 +170,7 @@ const Gallery = () => {
                             <h3>Sacred Moments <span>Gallery</span></h3>
                         </div>
 
-                        <p>Explore our collection of divine moments captured during various poojas and ceremonies</p>
+                        <p>Explore our collection of divine moments captured during various pujas and ceremonies</p>
                     </div>
 
                     <div className="gallery-filter" data-aos="fade-up">

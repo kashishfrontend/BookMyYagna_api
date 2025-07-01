@@ -19,6 +19,10 @@ import { checkAuth } from '../redux/action/authAction';
 import Booking from '../Page/Booking';
 import FAQPage from '../Page/FAQpage';
 import GalleryPage from '../Page/GalleryPage';
+import NotFoundPage from '../Page/NotFoundPage';
+import PanditDashboard from '../Page/PanditDashBoard';
+import PanditLogin from '../Components/PanditLogin';
+import PanditRegister from '../Components/PanditRegister';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
@@ -66,6 +70,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+       <Route
+        path="/panditdashboard"
+        element={
+         
+            <PanditDashboard />
+         
+        }
+      />
       {/* Routes under Layout */}
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -79,6 +91,9 @@ function AppRoutes() {
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="panditlogin" element={<PanditLogin />} />
+        <Route path="panditregister" element={<PanditRegister />} />
         <Route
           path="booking"
           element={
