@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import axios from '../Api/axios/axios_config';
 import { Eye, EyeOff, User, Lock, Sun, Moon, Star, Phone } from 'lucide-react';
 import { GiLotus } from 'react-icons/gi';
 import '../assets/css/PanditLogin.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginPandit, resetLoginPandit } from '../redux/action/panditAuthAction';
 
 const PanditLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, successPandit, isPanditAuthenticated } = useSelector(
+    (state) => state.panditauth
+  );
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    userName: '',
-    password: '',
     rememberMe: false,
   });
   const [errors, setErrors] = useState({});
@@ -25,6 +28,7 @@ const PanditLogin = () => {
     if (!userName) newErrors.userName = 'Username is required';
     if (!password) newErrors.password = 'Password is required';
     else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+
     return newErrors;
   };
 
@@ -36,74 +40,95 @@ const PanditLogin = () => {
     }));
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
-  const handleSubmit = async (e) => {
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const newErrors = validateForm();
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //     toast.error('Please fix the errors in the form');
+  //     return;
+  //   }
+
+  //   const toastId = toast.loading('Authenticating...');
+  //   setIsLoading(true);
+
+  //   try {
+  //     const payload = {
+  //       userName: formData.userName,
+  //       password: formData.password,
+  //     };
+  //     console.log('Sending login request with:', payload);
+
+  //     const response = await axios.post(
+  //       '/pandit/loginPandit',
+  //       payload,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
+
+  //     console.log('Login API Response:', response.data);
+
+  //     if (response.data.success) {
+  //       toast.dismiss(toastId);
+  //       toast.success(response.data.message || 'Login successful!');
+  //       setFormData({
+  //         userName: '',
+  //         password: '',
+  //         rememberMe: false,
+  //       });
+  //       setTimeout(() => {
+  //         navigate('/panditdashboard');
+  //       }, 1000);
+  //     } else {
+  //       throw new Error(response.data.error || response.data.message || 'Login failed');
+  //     }
+  //   } catch (err) {
+  //     console.error('Login error:', err);
+  //     toast.dismiss(toastId);
+  //     let errorMessage = 'Failed to login. Please try again.';
+  //     if (err.response) {
+  //       errorMessage = err.response.data.error || err.response.data.message || 'Failed to login. Please try again.';
+  //       if (err.response.data.error === 'All fields are compulsory') {
+  //         errorMessage = 'Please provide both username and password correctly.';
+  //       } else if (err.response.data.error === 'User is not existed') {
+  //         errorMessage = 'This username is not registered. Please check or sign up.';
+  //       }
+  //     } else if (err.request) {
+  //       errorMessage = 'Network error. Please check your internet connection.';
+  //     } else {
+  //       errorMessage = err.message || 'An unexpected error occurred.';
+  //     }
+  //     setErrors({ api: errorMessage });
+  //     toast.error(errorMessage);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      toast.error('Please fix the errors in the form');
-      return;
-    }
-
-    const toastId = toast.loading('Authenticating...');
-    setIsLoading(true);
-
-    try {
-      const payload = {
-        userName: formData.userName,
-        password: formData.password,
-      };
-      console.log('Sending login request with:', payload);
-
-      const response = await axios.post(
-        '/pandit/loginPandit',
-        payload,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      console.log('Login API Response:', response.data);
-
-      if (response.data.success) {
-        toast.dismiss(toastId);
-        toast.success(response.data.message || 'Login successful!');
-        setFormData({
-          userName: '',
-          password: '',
-          rememberMe: false,
-        });
-        setTimeout(() => {
-          navigate('/panditdashboard');
-        }, 1000);
-      } else {
-        throw new Error(response.data.error || response.data.message || 'Login failed');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      toast.dismiss(toastId);
-      let errorMessage = 'Failed to login. Please try again.';
-      if (err.response) {
-        errorMessage = err.response.data.error || err.response.data.message || 'Failed to login. Please try again.';
-        if (err.response.data.error === 'All fields are compulsory') {
-          errorMessage = 'Please provide both username and password correctly.';
-        } else if (err.response.data.error === 'User is not existed') {
-          errorMessage = 'This username is not registered. Please check or sign up.';
-        }
-      } else if (err.request) {
-        errorMessage = 'Network error. Please check your internet connection.';
-      } else {
-        errorMessage = err.message || 'An unexpected error occurred.';
-      }
-      setErrors({ api: errorMessage });
-      toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(loginPandit(userName, password));
   };
 
+  useEffect(() => {
+    if (successPandit && isPanditAuthenticated) {
+      // Navigate to dashboard or home
+      navigate('/');
+    }
+
+    return () => {
+      dispatch(resetLoginPandit());
+    };
+  }, [successPandit, isPanditAuthenticated, navigate, dispatch]);
   return (
     <div className="pandit-login-container" style={{ marginTop: '8%' }}>
       {/* Animated Background Elements */}
@@ -124,6 +149,7 @@ const PanditLogin = () => {
           <Moon size={45} />
         </div>
       </div>
+
       <div className="container-fluid h-100">
         <div className="row h-100 align-items-center">
           {/* Left Side - Welcome Section */}
@@ -137,6 +163,7 @@ const PanditLogin = () => {
                   <h1 className="brand-name">श्री पूजा सेवा</h1>
                   <p className="brand-tagline">Sacred Services • Divine Connections</p>
                 </div>
+
                 <div className="welcome-text">
                   <h2 className="welcome-title">Welcome Back, Pandit Ji</h2>
                   <p className="welcome-description">
@@ -218,8 +245,8 @@ const PanditLogin = () => {
                           type="text"
                           className={`form-control ${errors.userName ? 'is-invalid' : ''}`}
                           name="userName"
-                          value={formData.userName}
-                          onChange={handleInputChange}
+                          value={userName}
+                          onChange={(e) => setUserName(e.target.value)}
                           placeholder="Enter your username"
                           required
                         />
@@ -238,9 +265,8 @@ const PanditLogin = () => {
                         <input
                           type={showPassword ? 'text' : 'password'}
                           className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                          name="password"
-                          value={formData.password}
-                          onChange={handleInputChange}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                           placeholder="Enter your password"
                           required
                         />
@@ -315,9 +341,9 @@ const PanditLogin = () => {
                         </a>
                       </div>
                       <div className="col-6">
-                        <Link to={"/panditregister"} className="link-success">
+                        <a href="/pandit/register" className="link-success">
                           New Pandit? Join Us
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>

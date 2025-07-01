@@ -29,7 +29,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/PanditDashBoard.css";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutPandit } from "../redux/action/panditAuthAction";
 import { useNavigate } from "react-router-dom";
 import { LogOut, LogOutIcon } from "lucide-react";
 import toast from "react-hot-toast";
@@ -166,64 +167,9 @@ const PanditDashboard = () => {
   //     </div>
   //   );
   // };
-  const handleLogout = async () => {
-    const toastId = toast.loading('Logging out...');
-    try {
-      console.log('Sending logout request to:', 'https://bookmyyogna.onrender.com/user/logoutUser');
-
-      const response = await axios.get(
-        'https://bookmyyogna.onrender.com/user/logoutUser',
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      console.log('Pandit Logout Response:', response.data);
-
-      if (response.data.success) {
-        toast.dismiss(toastId);
-        toast.success(response.data.message || 'Logout successful!');
-
-        // Dispatch logout action
-        dispatch({ type: 'LOGOUT_SUCCESS' });
-
-        // Navigate to login or homepage
-        navigate('/');
-      } else {
-        throw new Error(response.data.error || response.data.message || 'Logout failed');
-      }
-    } catch (err) {
-      console.error('Logout error:', err);
-      toast.dismiss(toastId);
-
-      let errorMessage = 'Failed to logout. Please try again.';
-      if (err.response) {
-        errorMessage =
-          err.response.data.error ||
-          err.response.data.message ||
-          'Failed to logout. Please try again.';
-      } else if (err.request) {
-        errorMessage = 'Network error. Please check your internet connection.';
-      } else {
-        errorMessage = err.message || 'An unexpected error occurred.';
-      }
-      toast.error(errorMessage);
-    }
-
-
-    return (
-      <div className="pandit-dashboard-container">
-        <h2>Pandit Dashboard</h2>
-        <p>Welcome, Pandit Ji!</p>
-        <button className="btn btn-danger" onClick={handleLogout}>
-          <LogOut size={18} className="me-2" />
-          Logout
-        </button>
-      </div>
-    );
+  const handleLogout = () => {
+    dispatch(logoutPandit());
+    navigate('/');
   };
 
   const handleDeleteNotification = (id) => {

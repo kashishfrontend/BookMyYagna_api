@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
+import { logoutPandit } from '../redux/action/panditAuthAction';
 import img from '../assets/img/favicon.png';
 import { MdPersonPinCircle } from 'react-icons/md';
 
@@ -16,6 +17,9 @@ const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
+   const { isPanditAuthenticated } = useSelector(
+      (state) => state.panditauth 
+    );
   const navigate = useNavigate();
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
 
@@ -61,6 +65,10 @@ const MainNavbar = ({ isHeroVisible }) => {
     navigate('/');
   };
 
+  const handleLogoutPandit = () => {
+    dispatch(logoutPandit());
+    navigate('/')
+  }
   return (
     <div className='container ' style={{ padding: "0px 0px" }}>
       <motion.div
@@ -159,7 +167,6 @@ const MainNavbar = ({ isHeroVisible }) => {
     </NavDropdown.Item>
   </NavDropdown>
 )}
-
 
               <motion.div
                 whileHover={{ scale: 1.05 }}

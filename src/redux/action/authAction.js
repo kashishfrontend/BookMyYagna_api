@@ -64,91 +64,17 @@ export const resetLogoutState = () => {
   };
 };
 
-
-
 export const checkAuth = () => async (dispatch) => {
-  const isPanditPage = window.location.pathname.startsWith('/pandit');
-
   try {
-    if (isPanditPage) {
-      // Try pandit authentication first
-      console.log('Attempting pandit authentication');
-      const panditResponse = await axios.get(
-        'https://bookmyyogna.onrender.com/pandit/authenticationPandit',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        }
-      );
-
-      console.log('Pandit Auth Response:', panditResponse.data);
-
-      if (panditResponse.data.success) {
-        dispatch({
-          type: 'SET_AUTHENTICATED',
-          payload: { role: 'pandit', data: panditResponse.data.pandit || panditResponse.data },
-        });
-        return;
-      } else {
-        console.log('Pandit authentication failed:', panditResponse.data.error || panditResponse.data.message);
-      }
-    }
-
-    // Try user authentication
-    console.log('Attempting user authentication');
-    const userResponse = await axios.get(
+    const response = await axios.get(
       'https://bookmyyogna.onrender.com/user/authenticateUser',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
+      { withCredentials: true }
     );
 
-    console.log('User Auth Response:', userResponse.data);
-
-    if (userResponse.data.success) {
-      dispatch({
-        type: 'SET_AUTHENTICATED',
-        payload: { role: 'user', data: userResponse.data.data || userResponse.data },
-      });
-    } else {
-      throw new Error(userResponse.data.error || userResponse.data.message || 'User authentication failed');
-    }
+    dispatch({ type: SET_AUTHENTICATED });
   } catch (error) {
-    console.error('Authentication error:', error.response?.data || error.message);
-    if (error.response?.status === 401 && !isPanditPage) {
-      // Try pandit authentication if user fails and not on pandit page
-      try {
-        console.log('Falling back to pandit authentication');
-        const panditResponse = await axios.get(
-          'https://bookmyyogna.onrender.com/user/authenticateUser',
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-          }
-        );
-
-        console.log('Pandit Auth Response (fallback):', panditResponse.data);
-
-        if (panditResponse.data.success) {
-          dispatch({
-            type: 'SET_AUTHENTICATED',
-            payload: { role: 'pandit', data: panditResponse.data.pandit || panditResponse.data },
-          });
-          return;
-        }
-      } catch (panditError) {
-        console.error('Pandit authentication error:', panditError.response?.data || panditError.message);
-      }
-    }
-    dispatch({ type: 'LOGOUT_SUCCESS' });
+    dispatch({ type: LOGOUT_SUCCESS });
   } finally {
-    dispatch({ type: 'AUTH_LOADED' });
+    dispatch({ type: AUTH_LOADED });
   }
 };
