@@ -120,6 +120,9 @@ const Footer = () => {
               <div className="footer-bottom-links">
                 <Link to={"/privacy-policy"}>Privacy Policy</Link>
                 <Link to={"/termsofservice"}>Terms of Service</Link>
+                <Link to={"/shippingAndDelivery"}>Shipping and delivery</Link>
+                <Link to={"/cancellationAndRefund"}>Cancellation and refund</Link>
+
                 <Link to={"/FAQ"}>FAQ</Link>
               </div>
             </div>

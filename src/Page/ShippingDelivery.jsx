@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Helmet } from 'react-helmet-async';
 
-const TermsOfService = () => {
+const ShippingDelivery = () => {
     useEffect(() => {
         AOS.init({
             duration: 800,
@@ -15,32 +15,32 @@ const TermsOfService = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Terms of Service | BookMyYagna - Online Puja Booking Platform</title>
+            <Helmet >
+                <title>Shipping & Delivery Policy | BookMyYagna</title>
                 <meta
                     name="description"
-                    content="Read the Terms of Service for BookMyYagna, your trusted platform for booking online pujas and Vedic rituals. Understand our policies, user responsibilities, and service terms before you book a yagna."
+                    content="Shipping and delivery information for BookMyYagna. Learn about our puja samagri delivery timelines and processes."
                 />
                 <meta
                     name="keywords"
-                    content="BookMyYagna terms, online puja terms, yagna booking terms, Vedic rituals terms, user responsibilities BookMyYagna"
+                    content="puja samagri delivery, yagna kit shipping, BookMyYagna delivery, spiritual items shipping"
                 />
-                <meta property="og:title" content="Terms of Service | BookMyYagna" />
+                <meta property="og:title" content="Shipping & Delivery Policy | BookMyYagna" />
                 <meta
                     property="og:description"
-                    content="Read the official Terms of Service for BookMyYagna. Understand your rights, responsibilities, and legal guidelines before booking a puja online."
+                    content="Information about shipping and delivery of puja materials and yagna kits from BookMyYagna."
                 />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://bookmyyagna.com/termsofservice" />
-                <meta property="og:image" content="https://bookmyyagna.com/images/terms-og-image.jpg" />
-                <link rel="canonical" href="https://bookmyyagna.com/termsofservice" />
+                <meta property="og:url" content="https://bookmyyagna.com/shipping-delivery" />
+                <meta property="og:image" content="https://bookmyyagna.com/images/shipping-og-image.jpg" />
+                <link rel="canonical" href="https://bookmyyagna.com/shipping-delivery" />
             </Helmet>
 
-            <section className="terms-of-service-page" style={{ 
+            <section className="shipping-delivery-page" style={{ 
                 padding: '80px 0 60px',
                 backgroundColor: '#f9f5f0',
                 minHeight: '100vh',
-                marginTop:"50px"
+                marginTop:'50px'
             }}>
                 <Container>
                     {/* Header Section */}
@@ -76,7 +76,7 @@ const TermsOfService = () => {
                             marginBottom: '15px',
                             fontFamily: "'Playfair Display', serif"
                         }}>
-                            Terms of Service
+                            Shipping & Delivery Policy
                         </h1>
                         <p style={{
                             fontSize: '1.1rem',
@@ -85,22 +85,22 @@ const TermsOfService = () => {
                             margin: '0 auto',
                             lineHeight: '1.6'
                         }}>
-                            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            Our commitment to delivering sacred items with care and precision
                         </p>
                     </div>
 
-                    {/* Terms Content */}
-                    <div className="terms-content" style={{
+                    {/* Policy Content */}
+                    <div className="policy-content" style={{
                         backgroundColor: '#fff',
                         borderRadius: '10px',
                         boxShadow: '0 5px 25px rgba(0,0,0,0.05)',
                         padding: '40px',
                         marginBottom: '40px'
                     }}>
-                        {/* Introduction */}
-                        <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="100">
+                        {/* Policy Item 1 */}
+                        <div className="policy-item mb-4" data-aos="fade-up" data-aos-delay="100">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="policy-number mr-4" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
                                     width: '40px',
@@ -119,26 +119,25 @@ const TermsOfService = () => {
                                         fontWeight: '600',
                                         color: '#2c3e50',
                                         marginBottom: '15px'
-                                    }}>Introduction</h3>
+                                    }}>Puja Samagri Delivery</h3>
                                     <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        Welcome to BookMyYagna. These Terms of Service govern your use of our platform 
-                                        and services. By accessing or using BookMyYagna, you agree to be bound by these 
-                                        terms and our Privacy Policy. If you disagree with any part, you may not access 
-                                        our services.
+                                        For bookings that include physical puja materials, we ensure delivery 2-3 business days before your scheduled puja date. 
+                                        All items are carefully packed with sacred protection and include a checklist of contents. 
+                                        Samagri is sourced directly from authorized vendors to ensure authenticity.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Account Terms */}
-                        <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="150">
+                        {/* Policy Item 2 */}
+                        <div className="policy-item mb-4" data-aos="fade-up" data-aos-delay="150">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="policy-number mr-4" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
                                     width: '40px',
@@ -157,27 +156,27 @@ const TermsOfService = () => {
                                         fontWeight: '600',
                                         color: '#2c3e50',
                                         marginBottom: '15px'
-                                    }}>Account Terms</h3>
+                                    }}>Delivery Areas & Timelines</h3>
                                     <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        • You must be at least 18 years old to use our services<br />
-                                        • You are responsible for maintaining the security of your account<br />
-                                        • You are responsible for all activities that occur under your account<br />
-                                        • You must provide accurate and complete information<br />
-                                        • One person may not maintain more than one account without permission
+                                        We deliver to all major cities in India with following timelines:<br />
+                                        • Metro cities: 2-3 business days<br />
+                                        • Tier 2 cities: 3-5 business days<br />
+                                        • Rural areas: 5-7 business days<br />
+                                        International deliveries available for special requests with custom shipping quotes.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Acceptable Use */}
-                        <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="200">
+                        {/* Policy Item 3 */}
+                        <div className="policy-item mb-4" data-aos="fade-up" data-aos-delay="200">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="policy-number mr-4" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
                                     width: '40px',
@@ -196,30 +195,27 @@ const TermsOfService = () => {
                                         fontWeight: '600',
                                         color: '#2c3e50',
                                         marginBottom: '15px'
-                                    }}>Acceptable Use</h3>
+                                    }}>Shipping Charges</h3>
                                     <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        You agree not to:<br />
-                                        • Violate any laws in your jurisdiction<br />
-                                        • Infringe on any intellectual property rights<br />
-                                        • Upload or transmit viruses or malicious code<br />
-                                        • Spam, phish, or engage in unethical marketing<br />
-                                        • Interfere with the proper working of our services<br />
-                                        • Bypass any measures we may use to restrict access<br />
-                                        • Use our platform for any unlawful purpose
+                                        • Free standard shipping on all orders above ₹500<br />
+                                        • ₹50 shipping charge for orders below ₹500<br />
+                                        • Express delivery (next business day): ₹150 additional<br />
+                                        • International shipping: Calculated at checkout<br />
+                                        Special rates available for bulk orders of puja samagri.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Payments & Refunds */}
-                        <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="250">
+                        {/* Policy Item 4 */}
+                        <div className="policy-item mb-4" data-aos="fade-up" data-aos-delay="250">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="policy-number mr-4" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
                                     width: '40px',
@@ -238,28 +234,28 @@ const TermsOfService = () => {
                                         fontWeight: '600',
                                         color: '#2c3e50',
                                         marginBottom: '15px'
-                                    }}>Payments & Refunds</h3>
+                                    }}>Order Tracking</h3>
                                     <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        • All prices are in INR unless otherwise stated<br />
-                                        • We accept various payment methods as displayed at checkout<br />
-                                        • Payment is due immediately at time of booking<br />
-                                        • Refunds are processed according to our Cancellation Policy<br />
-                                        • Chargebacks may result in account suspension<br />
-                                        • We reserve the right to change pricing with prior notice
+                                        You'll receive tracking information via SMS and email once your order is shipped. 
+                                        Our tracking portal provides real-time updates including:<br />
+                                        • Package location<br />
+                                        • Estimated delivery date<br />
+                                        • Delivery attempts made<br />
+                                        • Option to reschedule delivery if needed
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Limitation of Liability */}
-                        <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="300">
+                        {/* Policy Item 5 */}
+                        <div className="policy-item" data-aos="fade-up" data-aos-delay="300">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="policy-number mr-4" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
                                     width: '40px',
@@ -278,59 +274,85 @@ const TermsOfService = () => {
                                         fontWeight: '600',
                                         color: '#2c3e50',
                                         marginBottom: '15px'
-                                    }}>Limitation of Liability</h3>
+                                    }}>Digital Services Delivery</h3>
                                     <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        BookMyYagna shall not be liable for any indirect, incidental, special, 
-                                        consequential or punitive damages resulting from:<br />
-                                        • Your use or inability to use our services<br />
-                                        • Any unauthorized access to our systems<br />
-                                        • Any interruption or cessation of services<br />
-                                        • Any bugs or errors in our platform<br />
-                                        • Any loss of data or content<br />
-                                        Our total liability shall not exceed the amount you paid us in the past six months.
+                                        For online puja services, you'll receive within 24 hours of booking:<br />
+                                        • Secure Zoom link for live participation<br />
+                                        • Detailed puja schedule<br />
+                                        • Priest bio and credentials<br />
+                                        • Preparation guidelines<br />
+                                        • Post-puja recording (if requested)<br />
+                                        All digital materials are delivered via email and accessible through your account dashboard.
                                     </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Amendments */}
-                        <div className="terms-item" data-aos="fade-up" data-aos-delay="350">
-                            <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
-                                    backgroundColor: '#f8e8d5',
-                                    color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontWeight: '700',
-                                    flexShrink: '0',
-                                    fontSize: '1.2rem'
-                                }}>6</div>
-                                <div>
-                                    <h3 style={{
-                                        fontSize: '1.4rem',
+                    {/* Additional Information */}
+                    <div className="info-box" style={{
+                        backgroundColor: '#fff',
+                        borderRadius: '10px',
+                        boxShadow: '0 5px 25px rgba(0,0,0,0.05)',
+                        padding: '30px',
+                        marginBottom: '40px'
+                    }} data-aos="fade-up">
+                        <h4 style={{
+                            fontSize: '1.3rem',
+                            fontWeight: '600',
+                            color: '#2c3e50',
+                            marginBottom: '20px',
+                            textAlign: 'center'
+                        }}>Special Handling Instructions</h4>
+                        <div className="row">
+                            <div className="col-md-6" style={{ marginBottom: '20px' }}>
+                                <div style={{
+                                    backgroundColor: '#f8f4ef',
+                                    padding: '20px',
+                                    borderRadius: '8px',
+                                    height: '100%'
+                                }}>
+                                    <h5 style={{
+                                        fontSize: '1.1rem',
                                         fontWeight: '600',
-                                        color: '#2c3e50',
+                                        color: '#d4a762',
                                         marginBottom: '15px'
-                                    }}>Amendments</h3>
+                                    }}>Sacred Items Handling</h5>
                                     <p style={{
-                                        fontSize: '1rem',
+                                        fontSize: '0.95rem',
                                         color: '#555',
-                                        lineHeight: '1.7',
-                                        marginBottom: '0'
+                                        lineHeight: '1.7'
                                     }}>
-                                        We reserve the right to modify these terms at any time. When we make changes, 
-                                        we will revise the "last updated" date at the top of this page. Your continued 
-                                        use of our services after changes constitutes acceptance of the new terms. 
-                                        We encourage you to periodically review this page for updates.
+                                        All sacred items are packed according to Vedic traditions. 
+                                        Please handle with clean hands and store in a pure space until puja time.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div style={{
+                                    backgroundColor: '#f8f4ef',
+                                    padding: '20px',
+                                    borderRadius: '8px',
+                                    height: '100%'
+                                }}>
+                                    <h5 style={{
+                                        fontSize: '1.1rem',
+                                        fontWeight: '600',
+                                        color: '#d4a762',
+                                        marginBottom: '15px'
+                                    }}>Damaged/Missing Items</h5>
+                                    <p style={{
+                                        fontSize: '0.95rem',
+                                        color: '#555',
+                                        lineHeight: '1.7'
+                                    }}>
+                                        If any items arrive damaged or missing, please notify us within 24 hours of delivery 
+                                        for immediate replacement at no additional cost.
                                     </p>
                                 </div>
                             </div>
@@ -351,14 +373,14 @@ const TermsOfService = () => {
                             fontWeight: '600',
                             color: '#2c3e50',
                             marginBottom: '20px'
-                        }}>Questions About Our Terms?</h4>
+                        }}>Need Help With Your Delivery?</h4>
                         <p style={{
                             fontSize: '1rem',
                             color: '#555',
                             lineHeight: '1.7',
                             marginBottom: '20px'
                         }}>
-                            Our team is available to clarify any aspect of these Terms of Service.
+                            Our customer support team is available to assist with any delivery-related questions.
                         </p>
                         <div className="contact-methods">
                             <a href="mailto:support@bookmyyagna.com" style={{
@@ -397,4 +419,4 @@ const TermsOfService = () => {
     );
 };
 
-export default TermsOfService;
+export default ShippingDelivery;
