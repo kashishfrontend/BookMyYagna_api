@@ -150,7 +150,7 @@ const PanditLogin = () => {
         </div>
       </div>
 
-      <div className="container-fluid h-100">
+      <div className="container h-100">
         <div className="row h-100 align-items-center">
           {/* Left Side - Welcome Section */}
           <div className="col-lg-6 col-md-6 d-none d-lg-block">
