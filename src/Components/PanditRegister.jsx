@@ -18,6 +18,7 @@ import {
   Upload
 } from 'lucide-react';
 import '../assets/css/PandiRegister.css';
+import { Link } from 'react-router-dom';
 
 const PanditRegistration = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -186,7 +187,7 @@ const PanditRegistration = () => {
   };
 
   return (
-    <div className="min-vh-100 position-relative overflow-hidden py-5">
+    <div className="min-vh-100 position-relative overflow-hidden py-5" style={{marginTop:"2%"}}>
       {/* Background with animated elements */}
       <div className="position-absolute w-100 h-100 top-0 start-0" style={{
         background: 'linear-gradient(135deg, #fff8f0 0%, #fff2e6 50%, #ffe6cc 100%)',
@@ -483,9 +484,9 @@ const PanditRegistration = () => {
                 <div className="text-center mt-4">
                   <p className="login-text">
                     Already have an account?{' '}
-                    <a href="#" className="login-link">
+                    <Link to="/panditlogin" className="login-link">
                       Sign In Here
-                    </a>
+                    </Link>
                   </p>
                 </div>
 

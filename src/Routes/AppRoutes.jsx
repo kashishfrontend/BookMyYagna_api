@@ -1,86 +1,127 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// Page & Component Imports
+
+// Pages & Components
 import HomePage from '../Components/HomePage';
 import LoginPage from '../Components/LoginPage';
 import ListOfPooja from '../Page/List-Of-Pooja/ListOfPooja';
 import PoojaBookingDetails from '../Page/PoojaBookingDetails';
 import Dashboard from '../Page/Dashbord/DashBord';
-import Contact from '../Page/Contact/Contact';  
+import Contact from '../Page/Contact/Contact';
 import ScaredBooking from '../Page/ScaredBooking';
 import Layout from './Layout';
 import PrivacyPolicy from '../Page/PrivacyPolicy';
-import FAQ from '../Components/FAQ';
+import FAQPage from '../Page/FAQpage';
 import TermsOfService from '../Page/TermsOfService';
 import PanchangCalendar from '../Page/Panchang';
 import AboutUs from '../Components/About';
-import { checkAuth } from '../redux/action/authAction';
-import Booking from '../Page/Booking';
-import FAQPage from '../Page/FAQpage';
 import GalleryPage from '../Page/GalleryPage';
 import NotFoundPage from '../Page/NotFoundPage';
+import Booking from '../Page/Booking';
+
 import PanditDashboard from '../Page/PanditDashBoard';
 import PanditLogin from '../Components/PanditLogin';
 import PanditRegister from '../Components/PanditRegister';
 import ShippingDelivery from '../Page/ShippingDelivery';
 import CancellationRefund from '../Page/CancellationRefund';
 
-const ProtectedRoute = ({ children }) => {
+// Auth check actions
+import { checkAuth } from '../redux/action/authAction';
+import { checkPanditAuth } from '../redux/action/panditAuthAction';
+
+
+// ✅ User Protected Route
+const ProtectedUserRoute = ({ children }) => {
   const { isAuthenticated, authLoaded } = useSelector((state) => state.auth);
   const location = useLocation();
 
-  if (!authLoaded) {
-    return <div className="pt-3 text-center">Loading......</div>;
-  }
+  if (!authLoaded) return <div className="pt-3 text-center">Loading...</div>;
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return children;
+  return isAuthenticated ? children : (
+    <Navigate to="/login" state={{ from: location }} replace />
+  );
 };
+
+// ✅ Pandit Protected Route
+const ProtectedPanditRoute = ({ children }) => {
+  const { isPanditAuthenticated, authPanditLoaded } = useSelector((state) => state.panditauth);
+  const location = useLocation();
+
+  if (!authPanditLoaded) return <div className="pt-3 text-center">Loading...</div>;
+
+  return isPanditAuthenticated ? children : (
+    <Navigate to="/panditlogin" state={{ from: location }} replace />
+  );
+};
+
 
 function AppRoutes() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isPanditAuthenticated } = useSelector((state) => state.panditauth);
   const location = useLocation();
 
   useEffect(() => {
     dispatch(checkAuth());
+    dispatch(checkPanditAuth());
   }, [dispatch]);
 
   return (
     <Routes>
-      {/* Login Route */}
+      {/* ================= Public Auth Routes ================= */}
+
       <Route
         path="/login"
         element={
-          isAuthenticated ? (
-            <Navigate to={location.state?.from?.pathname || '/dashboard'} replace />
-          ) : (
-            <LoginPage />
-          )
+          isAuthenticated
+            ? <Navigate to={location.state?.from?.pathname || '/dashboard'} replace />
+            : <LoginPage />
         }
       />
-      {/* Protected Dashboard */}
+
+      <Route
+        path="/panditlogin"
+        element={
+          isPanditAuthenticated
+            ? <Navigate to={location.state?.from?.pathname || '/panditdashboard'} replace />
+            : <PanditLogin />
+        }
+      />
+
+      <Route path="/panditregister" element={<PanditRegister />} />
+
+      {/* ================= Protected Routes ================= */}
+
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
+          <ProtectedUserRoute>
             <Dashboard />
-          </ProtectedRoute>
+          </ProtectedUserRoute>
         }
       />
-       <Route
+
+      <Route
         path="/panditdashboard"
         element={
-          <ProtectedRoute>
+          <ProtectedPanditRoute>
             <PanditDashboard />
-          </ProtectedRoute>
+          </ProtectedPanditRoute>
         }
       />
-      {/* Routes under Layout */}
+
+      <Route
+        path="/booking"
+        element={
+          <ProtectedUserRoute>
+            <Booking />
+          </ProtectedUserRoute>
+        }
+      />
+
+      {/* ================= Public Routes with Layout ================= */}
+
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="listofpuja" element={<ListOfPooja />} />
@@ -97,16 +138,6 @@ function AppRoutes() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="panditlogin" element={<PanditLogin />} />
-        <Route path="panditregister" element={<PanditRegister />} />
-        <Route
-          path="booking"
-          element={
-            <ProtectedRoute>
-              <Booking />
-            </ProtectedRoute>
-          }
-        />
       </Route>
     </Routes>
   );
