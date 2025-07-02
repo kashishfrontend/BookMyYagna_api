@@ -360,6 +360,7 @@ const Booking = () => {
   
   return (
     <>
+    <MainNavbar/>
       <div className="booking-section mt-5">
         <div className="container">
           <motion.div
@@ -599,6 +600,7 @@ const Booking = () => {
           <div className="floating-element elem-3"></div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
