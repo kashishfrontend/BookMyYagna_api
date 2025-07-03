@@ -130,7 +130,7 @@ const PanditLogin = () => {
     };
   }, [successPandit, isPanditAuthenticated, navigate, dispatch]);
   return (
-    <div className="pandit-login-container" style={{ marginTop: '8%' }}>
+    <div className="pandit-login-container">
       {/* Animated Background Elements */}
       <div className="floating-elements">
         <div className="floating-lotus lotus-1">
