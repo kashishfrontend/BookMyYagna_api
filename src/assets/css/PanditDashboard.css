@@ -612,7 +612,7 @@ body {
     }
 
     .notification-popup {
-        width: 90%;
+        width: 200px   !important;
         right: 5%;
     }
 }

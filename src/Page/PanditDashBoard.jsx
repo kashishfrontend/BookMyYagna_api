@@ -42,11 +42,12 @@ const PanditDashboard = () => {
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState(null);
   const [user, setUser] = useState(authUser || {
-    fullName: 'Pandit Ji',
-    email: 'panditji@example.com',
-    phoneNumber: '9876543210',
-    address: '123 Temple Street, Varanasi, Uttar Pradesh, India',
-    expertise: 'Vedic Astrology, Ganesh Pooja, Shiv Pooja, Durga Pooja',
+    id: '',
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    expertise: '',
   });
 
   // Debug store configuration
@@ -59,7 +60,8 @@ const PanditDashboard = () => {
         'Current state keys: ' + JSON.stringify(storeKeys)
       );
     }
-  }, [storeKeys]);
+    console.log('Pandit State:', panditState);
+  }, [storeKeys, panditState]);
 
   // Handle sidebar responsiveness
   useEffect(() => {
@@ -75,6 +77,7 @@ const PanditDashboard = () => {
   // Redirect if not authenticated
   useEffect(() => {
     if (isPanditAuthenticated === false) {
+      console.log('Not authenticated, redirecting to /panditlogin');
       navigate('/panditlogin');
     }
   }, [isPanditAuthenticated, navigate]);
@@ -93,51 +96,35 @@ const PanditDashboard = () => {
       setNotifLoading(true);
       setNotifError(null);
       try {
-        const response = await axios.get('/notification/getAllNotifications');
+        const response = await axios.get('/notification/getAllNotifications', {
+          withCredentials: true,
+          params: { panditId: user.id }, // Include pandit ID if required
+        });
+        console.log('Notifications Response:', response.data);
         if (response.data.success) {
-          setNotifications(response.data.notifications || []);
+          // Handle both 'data' and 'notifications' keys
+          const notificationsData = response.data.notifications || response.data.data || [];
+          setNotifications(notificationsData);
+          if (notificationsData.length === 0) {
+            console.warn('No notifications returned for pandit ID:', user.id);
+          }
         } else {
-          throw new Error('Failed to fetch notifications');
+          throw new Error(response.data.message || 'Failed to fetch notifications');
         }
       } catch (error) {
         setNotifError(error.message || 'Error fetching notifications');
         console.error('Error fetching notifications:', error);
+        toast.error('Failed to load notifications. Please check your login status.');
       } finally {
         setNotifLoading(false);
       }
     };
-    fetchNotifications();
-  }, []);
-
-  const handleDeleteNotification = async (id) => {
-    const toastId = toast.loading('Deleting notification...');
-    try {
-      await axios.delete(`/notification/deleteNotification/${id}`);
-      setNotifications((prev) => prev.filter((notification) => notification._id !== id));
-      toast.dismiss(toastId);
-      toast.success('Notification deleted successfully');
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error('Failed to delete notification');
-      console.error('Error deleting notification:', error);
+    if (isPanditAuthenticated && user.id) {
+      fetchNotifications();
+    } else {
+      console.warn('Skipping fetchNotifications: isPanditAuthenticated=', isPanditAuthenticated, 'user.id=', user.id);
     }
-  };
-
-  const handleOpenNotification = async (id) => {
-    try {
-      const response = await axios.get(`/notification/getNotificationById/${id}`);
-      if (response.data.success) {
-        setSelectedNotification(response.data.notification || response.data);
-        setShowModal(true);
-        setShowNotifications(false);
-      } else {
-        throw new Error('Failed to load notification');
-      }
-    } catch (err) {
-      toast.error('Failed to load notification');
-      console.error('Error opening notification:', err);
-    }
-  };
+  }, [isPanditAuthenticated, user.id]);
 
   // Fetch confirmed poojas
   useEffect(() => {
@@ -147,22 +134,28 @@ const PanditDashboard = () => {
           startDate: '',
           endDate: '',
           status: 'Confirmed',
+          panditId: user.id, // Include pandit ID
+          // withCredentials: true,
+        }, {
+          withCredentials: true,
         });
         console.log('Confirmed Poojas Response:', response.data);
         if (response.data.success) {
           setConfirmedPoojas(response.data.data || []);
         } else {
-          toast.error('Failed to fetch confirmed poojas');
+          throw new Error(response.data.message || 'Failed to fetch confirmed poojas');
         }
       } catch (err) {
         console.error('Error fetching confirmed poojas:', err);
         toast.error('Error fetching confirmed poojas. Please try again.');
       }
     };
-    if (isPanditAuthenticated) {
+    if (isPanditAuthenticated && user.id) {
       fetchConfirmedPoojas();
+    } else {
+      console.warn('Skipping fetchConfirmedPoojas: isPanditAuthenticated=', isPanditAuthenticated, 'user.id=', user.id);
     }
-  }, [isPanditAuthenticated]);
+  }, [isPanditAuthenticated, user.id]);
 
   // Fetch completed poojas
   useEffect(() => {
@@ -172,22 +165,25 @@ const PanditDashboard = () => {
           startDate: '',
           endDate: '',
           status: 'Completed',
+          panditId: user.id,
+        }, {
+          withCredentials: true,
         });
         console.log('Completed Poojas Response:', response.data);
         if (response.data.success) {
           setCompletedPuja(response.data.data || []);
         } else {
-          toast.error('Failed to fetch completed poojas');
+          throw new Error(response.data.message || 'Failed to fetch completed poojas');
         }
       } catch (err) {
         console.error('Error fetching completed poojas:', err);
         toast.error('Error fetching completed poojas. Please try again.');
       }
     };
-    if (isPanditAuthenticated) {
+    if (isPanditAuthenticated && user.id) {
       fetchCompletedPoojas();
     }
-  }, [isPanditAuthenticated]);
+  }, [isPanditAuthenticated, user.id]);
 
   // Fetch booked poojas
   useEffect(() => {
@@ -197,22 +193,25 @@ const PanditDashboard = () => {
           startDate: '',
           endDate: '',
           status: 'Cancelled',
+          panditId: user.id,
+        }, {
+          withCredentials: true,
         });
         console.log('Booked Poojas Response:', response.data);
         if (response.data.success) {
           setBookedPuja(response.data.data || []);
         } else {
-          toast.error('Failed to fetch booked poojas');
+          throw new Error(response.data.message || 'Failed to fetch booked poojas');
         }
       } catch (err) {
         console.error('Error fetching booked poojas:', err);
         toast.error('Error fetching booked poojas. Please try again.');
       }
     };
-    if (isPanditAuthenticated) {
+    if (isPanditAuthenticated && user.id) {
       fetchBookedPoojas();
     }
-  }, [isPanditAuthenticated]);
+  }, [isPanditAuthenticated, user.id]);
 
   // Fetch pandit profile
   useEffect(() => {
@@ -221,6 +220,7 @@ const PanditDashboard = () => {
         const response = await axios.get('/pandit/getPanditProfile', {
           withCredentials: true,
         });
+        console.log('Profile Response:', response.data);
         if (response.data.success) {
           const pandit = response.data.pandit;
           setUser({
@@ -228,14 +228,14 @@ const PanditDashboard = () => {
             fullName: pandit.name,
             email: pandit.email,
             phoneNumber: pandit.contactNumber,
-            address: '',
-            expertise: pandit.poojaTypes.join(', '),
-            poojaTypes: pandit.poojaTypes,
-            rating: pandit.rating,
-            experience: pandit.experience,
-            languages: pandit.language,
-            image: pandit.image,
-            role: pandit.role,
+            address: pandit.address || '',
+            expertise: pandit.poojaTypes?.join(', ') || '',
+            poojaTypes: pandit.poojaTypes || [],
+            rating: pandit.rating || 0,
+            experience: pandit.experience || 0,
+            languages: pandit.language || [],
+            image: pandit.image || 'https://via.placeholder.com/60',
+            role: pandit.role || 'Pandit',
             createdAt: pandit.createdAt,
             updatedAt: pandit.updatedAt,
           });
@@ -244,11 +244,13 @@ const PanditDashboard = () => {
         }
       } catch (error) {
         toast.error('Error fetching profile.');
-        console.error(error);
+        console.error('Error fetching profile:', error);
       }
     };
-    fetchPanditProfile();
-  }, []);
+    if (isPanditAuthenticated) {
+      fetchPanditProfile();
+    }
+  }, [isPanditAuthenticated]);
 
   // Handle click outside to close notification popup
   useEffect(() => {
@@ -285,16 +287,52 @@ const PanditDashboard = () => {
     } catch (err) {
       console.error('Pandit logout error:', err);
       toast.dismiss(toastId);
-      toast.error('Failed to logout. Please try again or contact support. Possible issue: Invalid token or incorrect endpoint.');
-      console.warn('Note: Logout uses GET /user/logoutUser, which may be incorrect. Expected POST /pandit/logoutPandit.');
+      toast.error('Failed to logout. Please try again or contact support.');
+      console.warn('Note: Logout endpoint may be incorrect. Expected POST /pandit/logoutPandit.');
     }
   };
 
+  const handleDeleteNotification = async (id) => {
+    const toastId = toast.loading('Deleting notification...');
+    try {
+      await axios.delete(`/notification/deleteNotification/${id}`, {
+        withCredentials: true,
+      });
+      setNotifications((prev) => prev.filter((notification) => notification._id !== id));
+      toast.dismiss(toastId);
+      toast.success('Notification deleted successfully');
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error('Failed to delete notification');
+      console.error('Error deleting notification:', error);
+    }
+  };
+
+  const handleOpenNotification = async (id) => {
+    try {
+      const response = await axios.get(`/notification/getNotificationById/${id}`, {
+        withCredentials: true,
+      });
+      console.log('Notification By ID Response:', response.data);
+      if (response.data.success) {
+        setSelectedNotification(response.data.notification || response.data);
+        setShowModal(true);
+        setShowNotifications(false);
+      } else {
+        throw new Error(response.data.message || 'Failed to load notification');
+      }
+    } catch (err) {
+      toast.error('Failed to load notification');
+      console.error('Error opening notification:', err);
+    }
+  };
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put('/pandit/updateProfile', user);
+      const response = await axios.put('/pandit/updateProfile', user, {
+        withCredentials: true,
+      });
       if (response.data.success) {
         toast.success('Profile updated successfully');
         setIsEditingProfile(false);
@@ -315,6 +353,28 @@ const PanditDashboard = () => {
     }));
   };
 
+  const renderContent = () => {
+    switch (activeNavItem) {
+      case 'dashboard':
+        return renderDashboardContent();
+      case 'bookings':
+        return renderCompletedPoojaDetails();
+      case 'poojaTiming':
+        return renderPoojaLink();
+      case 'notifications':
+        return renderNotifications();
+      case 'punditProfile':
+        return renderPunditProfile();
+      default:
+        return (
+          <Container className="py-4 text-center">
+            <h3>Coming Soon</h3>
+            <p className="text-muted">This section is under development.</p>
+          </Container>
+        );
+    }
+  };
+
   const renderNotifications = () => (
     <Container className="py-4">
       <h2 className="text-center mb-4">All Notifications</h2>
@@ -323,7 +383,7 @@ const PanditDashboard = () => {
           {notifLoading && <p className="text-center text-muted">Loading notifications...</p>}
           {notifError && <p className="text-center text-danger">{notifError}</p>}
           {!notifLoading && notifications.length === 0 && (
-            <p className="text-center text-muted">No notifications available.</p>
+            <p className="text-center text-muted">No notifications available. Please check if you are assigned any poojas.</p>
           )}
           {notifications.length > 0 && (
             <div className="table-responsive">
@@ -377,34 +437,12 @@ const PanditDashboard = () => {
     </Container>
   );
 
-  const renderContent = () => {
-    switch (activeNavItem) {
-      case 'dashboard':
-        return renderDashboardContent();
-      case 'bookings':
-        return renderCompletedPoojaDetails();
-      case 'poojaTiming':
-        return renderPoojaLink();
-      case 'notifications':
-        return renderNotifications();
-      case 'punditProfile':
-        return renderPunditProfile();
-      default:
-        return (
-          <Container className="py-4 text-center">
-            <h3>Coming Soon</h3>
-            <p className="text-muted">This section is under development.</p>
-          </Container>
-        );
-    }
-  };
-
   const renderDashboardContent = () => (
     <Container fluid className="py-4">
       <Row>
         <Col xs={12}>
           <h1 className="welcome-heading">
-            <span className="namaste">नमस्ते</span>, {user.fullName.split(' ')[0]}!
+            <span className="namaste">नमस्ते</span>, {user.fullName.split(' ')[0] || 'Pandit Ji'}!
           </h1>
           <p className="welcome-subtext">Welcome back to your spiritual journey</p>
         </Col>
@@ -418,7 +456,7 @@ const PanditDashboard = () => {
               </div>
               <div className="stats-info">
                 <h5>Upcoming Poojas</h5>
-                <h2>{bookedPuja.filter(p => p.status === 'Confirmed' || p.status === 'Pending').length}</h2>
+                <h2>{confirmedPoojas.length}</h2>
               </div>
             </Card.Body>
           </Card>
@@ -481,35 +519,26 @@ const PanditDashboard = () => {
                     <td>
                       {data.dateOfDelivery
                         ? new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                          timeZone: 'Asia/Kolkata',
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true,
-                        })
+                            timeZone: 'Asia/Kolkata',
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                          })
                         : 'N/A'}
                     </td>
                     <td>
                       {data.poojaLink ? (
-                        <div className="d-flex align-items-center gap-2">
-                          <a
-                            href={data.poojaLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-primary btn-sm"
-                          >
-                            View
-                          </a>
-                          <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={() => setPopupStates((prev) => ({ ...prev, [data._id]: true }))}
-                          >
-                            <FaLink size={16} />
-                          </Button>
-                        </div>
+                        <a
+                          href={data.poojaLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary btn-sm"
+                        >
+                          View
+                        </a>
                       ) : (
                         'Not available'
                       )}
@@ -557,14 +586,14 @@ const PanditDashboard = () => {
                       <td>
                         {data.dateOfDelivery
                           ? new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                            timeZone: 'Asia/Kolkata',
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: true,
-                          })
+                              timeZone: 'Asia/Kolkata',
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              hour12: true,
+                            })
                           : 'N/A'}
                       </td>
                     </tr>
@@ -604,34 +633,25 @@ const PanditDashboard = () => {
                       <td>
                         {p.dateOfDelivery
                           ? new Date(p.dateOfDelivery).toLocaleDateString('en-IN', {
-                            timeZone: 'Asia/Kolkata',
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                          })
+                              timeZone: 'Asia/Kolkata',
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                            })
                           : 'N/A'}
                       </td>
                       <td>{p.poojaId?.heading || p.planId?.heading || 'N/A'}</td>
                       <td>{p.poojaLinkTime || '—'}</td>
                       <td>
                         {p.poojaLink ? (
-                          <div className="d-flex align-items-center gap-2">
-                            <a
-                              href={p.poojaLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn-primary btn-sm"
-                            >
-                              View
-                            </a>
-                            <Button
-                              variant="outline-primary"
-                              size="sm"
-                              onClick={() => setPopupStates((prev) => ({ ...prev, [p._id]: true }))}
-                            >
-                              <FaLink size={16} />
-                            </Button>
-                          </div>
+                          <a
+                            href={p.poojaLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary btn-sm"
+                          >
+                            View
+                          </a>
                         ) : (
                           'Not available'
                         )}
@@ -640,7 +660,7 @@ const PanditDashboard = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                    <td colSpan="4" className="text-center">No confirmed poojas yet. Please check your bookings.</td>
                   </tr>
                 )}
               </tbody>
@@ -665,7 +685,7 @@ const PanditDashboard = () => {
               style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
             />
             <div>
-              <h3 className="mb-1">{user.fullName}</h3>
+              <h3 className="mb-1">{user.fullName || 'Pandit Ji'}</h3>
               <p className="mb-0 text-muted">{user.role || 'Pandit'}</p>
             </div>
           </div>
@@ -764,13 +784,13 @@ const PanditDashboard = () => {
             </Form>
           ) : (
             <div>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
+              <p><strong>Email:</strong> {user.email || 'N/A'}</p>
+              <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
               <p><strong>Address:</strong> {user.address || 'N/A'}</p>
-              <p><strong>Expertise:</strong> {user.expertise}</p>
+              <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
               <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>
-              <p><strong>Experience:</strong> {user.experience} years</p>
-              <p><strong>Rating:</strong> {user.rating} / 5</p>
+              <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
+              <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
               <Button
                 variant="primary"
                 onClick={() => setIsEditingProfile(true)}
@@ -828,6 +848,13 @@ const PanditDashboard = () => {
               <FaUserCircle size={20} />
               <span>Pundit Profile</span>
             </div>
+            <div
+              className={`menu-item ${activeNavItem === 'notifications' ? 'active' : ''}`}
+              onClick={() => handleNavItemClick('notifications')}
+            >
+              <MdNotifications size={20} />
+              <span>Notifications</span>
+            </div>
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />
               <span>Logout</span>
@@ -867,7 +894,7 @@ const PanditDashboard = () => {
                     {notifLoading && <p className="text-center text-muted p-3">Loading...</p>}
                     {notifError && <p className="text-center text-danger p-3">{notifError}</p>}
                     {notifications.length > 0 ? (
-                      notifications.slice(0, 3).map((item, index) => (
+                      notifications.slice(0, 3).map((item) => (
                         <div
                           key={item._id}
                           className="notification-item"
@@ -885,13 +912,11 @@ const PanditDashboard = () => {
                               timeZone: 'Asia/Kolkata',
                             })}
                           </p>
-                          {index !== notifications.slice(0, 3).length - 1 && (
-                            <hr className="notification-separator" />
-                          )}
+                          <hr className="notification-separator" />
                         </div>
                       ))
                     ) : (
-                      <p className="popup-message">No new notifications.</p>
+                      <p className="popup-message">No new notifications. Please check your bookings.</p>
                     )}
                     <div className="text-center">
                       <Button
@@ -927,14 +952,14 @@ const PanditDashboard = () => {
               <p className="text-muted small">
                 {selectedNotification?.createdAt
                   ? new Date(selectedNotification.createdAt).toLocaleString('en-IN', {
-                    timeZone: 'Asia/Kolkata',
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true,
-                  })
+                      timeZone: 'Asia/Kolkata',
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                    })
                   : 'N/A'}
               </p>
             </Modal.Body>
