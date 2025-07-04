@@ -43,7 +43,7 @@ body {
     height: 100vh;
     box-shadow: var(--shadow-medium);
     transition: transform 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 1000 !important;
 }
 
 .logo-container {
@@ -588,7 +588,7 @@ body {
     }
 
     .search-bar {
-        width: 100%; 
+        width: 100%;
     }
 
     .pooja-link-modal .modal-body {
@@ -612,7 +612,50 @@ body {
     }
 
     .notification-popup {
-        width: 90%;
+        width: 200px   !important;
         right: 5%;
     }
 }
+
+
+
+
+
+
+/* 
+.sidebar {
+    background: linear-gradient(180deg, #FF6B35, #FFD700);
+    color: white;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.logo-container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.sidebar-menu .menu-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.sidebar-menu .menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-menu .menu-item.active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-menu .logout {
+    margin-top: auto;
+} */
