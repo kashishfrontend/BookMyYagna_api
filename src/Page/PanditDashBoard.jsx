@@ -718,7 +718,7 @@ const PanditDashboard = () => {
 
   const renderPunditProfile = () => (
     <Container className="py-4">
-      <h1 className="welcome-heading">Pundit Profile</h1>
+      <h1 className="welcome-heading">Pandit Profile</h1>
       <p className="welcome-subtext">Manage your personal and professional details</p>
       <Card className="shadow-sm">
         <Card.Body>
@@ -730,8 +730,8 @@ const PanditDashboard = () => {
               style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
             />
             <div>
-              <h3 className="mb-1">{user.fullName || 'Pandit Ji'}</h3>
-              <p className="mb-0 text-muted">{user.role || 'Pandit'}</p>
+              <h3 className="mb-1">{user.fullName   }</h3>
+              <p className="mb-0 text-muted">{user.role}</p>
             </div>
           </div>
           {isEditingProfile ? (
@@ -791,8 +791,10 @@ const PanditDashboard = () => {
                   <Form.Control
                     type="text"
                     name="languages"
+                    value={Array.isArray(user.languages) ? user.languages.join(', ') : user.languages || ''}
+
                     
-                    value={user.languages?.join(', ') || ''}
+                    // value={user.languages?.join(', ') || ''}
                     onChange={handleInputChange}
                   />
                   
@@ -835,7 +837,15 @@ const PanditDashboard = () => {
               <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
               {/* <p><strong>Address:</strong> {user.address || 'N/A'}</p> */}
               <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
-              <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>
+              {/* <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>  */}
+              <p><strong>Languages:</strong> 
+  {Array.isArray(user.languages) 
+    ? user.languages.join(', ') 
+    : typeof user.languages === 'string' 
+      ? user.languages 
+      : 'N/A'}
+</p>
+
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
               <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
               <Button
@@ -893,7 +903,7 @@ const PanditDashboard = () => {
               onClick={() => handleNavItemClick('punditProfile')}
             >
               <FaUserCircle size={20} />
-              <span>Pundit Profile</span>
+              <span>Pandit Profile</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === 'notifications' ? 'active' : ''}`}
