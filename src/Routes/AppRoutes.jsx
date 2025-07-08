@@ -29,6 +29,7 @@ import CancellationRefund from '../Page/CancellationRefund';
 // Auth check actions
 import { checkAuth } from '../redux/action/authAction';
 import { checkPanditAuth } from '../redux/action/panditAuthAction';
+import PanditRegistration from '../Components/PanditRegister';
 
 
 // ✅ User Protected Route
@@ -137,6 +138,7 @@ function AppRoutes() {
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
+        {/* <Route path="panditregistration" element={<PanditRegistration />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
