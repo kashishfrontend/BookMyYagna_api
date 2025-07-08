@@ -96,12 +96,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <div className="class">
-                <label htmlFor="name">Name</label>
-                <button style={{ backgroundColor: " #FF7722" }}>
-                  Subscribe to NewsLetter
-                </button>
-              </div>
+          
             </div>
           </div>
         </div>
