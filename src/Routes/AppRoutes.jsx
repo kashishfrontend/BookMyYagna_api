@@ -23,10 +23,13 @@ import Booking from '../Page/Booking';
 import PanditDashboard from '../Page/PanditDashBoard';
 import PanditLogin from '../Components/PanditLogin';
 import PanditRegister from '../Components/PanditRegister';
+import ShippingDelivery from '../Page/ShippingDelivery';
+import CancellationRefund from '../Page/CancellationRefund';
 
 // Auth check actions
 import { checkAuth } from '../redux/action/authAction';
 import { checkPanditAuth } from '../redux/action/panditAuthAction';
+import PanditRegistration from '../Components/PanditRegister';
 
 
 // ✅ User Protected Route
@@ -128,10 +131,14 @@ function AppRoutes() {
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="termsofservice" element={<TermsOfService />} />
+        <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
+        <Route path="cancellationAndRefund" element={<CancellationRefund />} />
+
         <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
+        {/* <Route path="panditregistration" element={<PanditRegistration />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

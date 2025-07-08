@@ -341,7 +341,7 @@ const PanditLogin = () => {
                         </a>
                       </div>
                       <div className="col-6">
-                        <a href="/pandit/register" className="link-success">
+                        <a href="/panditregister" className="link-success">
                           New Pandit? Join Us
                         </a>
                       </div>
