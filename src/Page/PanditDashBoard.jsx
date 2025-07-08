@@ -39,10 +39,10 @@ const PanditDashboard = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   // const [activeNavItem, setActiveNavItem] = useState('dashboard'); // or any default
 
-// const handleNavItemClick = (item) => {
-//   setActiveNavItem(item);
-//   // Add more logic here if needed, like navigating to a route or logging
-// };
+  // const handleNavItemClick = (item) => {
+  //   setActiveNavItem(item);
+  //   // Add more logic here if needed, like navigating to a route or logging
+  // };
 
 
   // Initialize user state
@@ -57,7 +57,7 @@ const PanditDashboard = () => {
     rating: 0,
     experience: 0,
     languages: [],
-    image: 'https://via.placeholder.com/60',
+    image: " ",
     role: 'Pandit',
   });
 
@@ -207,7 +207,7 @@ const PanditDashboard = () => {
         const response = await axios.get('/pandit/getPanditProfile', {
           withCredentials: true,
         });
-        console.log('Profile Response:', response.data);
+        // console.log('Profile Response:', response.data);
         if (response.data.success) {
           const pandit = response.data.pandit;
           setUser({
@@ -221,10 +221,9 @@ const PanditDashboard = () => {
             rating: pandit.rating || 0,
             experience: pandit.experience || 0,
             languages: pandit.language || [],
-            image: pandit.image || 'https://via.placeholder.com/60',
+            image: pandit.image,
             role: pandit.role || 'Pandit',
-            createdAt: pandit.createdAt,
-            updatedAt: pandit.updatedAt,
+           
           });
         } else {
           toast.error('Failed to load profile.');
@@ -341,11 +340,11 @@ const PanditDashboard = () => {
         formData.append(`language[${index}]`, lang);
       });
 
-        // Append image and imageName if selected
-        if (selectedImage) {
-          // formData.append('image', selectedImage);
-          formData.append('image', selectedImage.name); // Send file name
-        }
+      // Append image and imageName if selected
+      if (selectedImage) {
+        // formData.append('image' , selectedImage);  
+        formData.append('image', selectedImage.name); // Send file name
+      }
 
       const response = await axios.patch(
         `/pandit/updatePanditcard/${user.id}`,
@@ -751,7 +750,7 @@ const PanditDashboard = () => {
                 alt="Pandit"
                 className="rounded-circle me-3"
                 style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
-                // onError={(e) => (e.target.src = 'https://via.placeholder.com/60')}
+              // onError={(e) => (e.target.src = 'https://via.placeholder.com/60')}
               />
 
               {isEditingProfile && (
