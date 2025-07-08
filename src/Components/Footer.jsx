@@ -95,6 +95,14 @@ const Footer = () => {
               </div>
             </div>
 
+            <div>
+              <div className="class">
+                <label htmlFor="name">Name</label>
+                <button style={{ backgroundColor: " #FF7722" }}>
+                  Subscribe to NewsLetter
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -105,10 +113,16 @@ const Footer = () => {
           <div className="row">
             <div className="col-12">
               <div className="footer-mandala"></div>
-              <p className="copyright">© {new Date().getFullYear()} BookmyYagna All Rights Reserved.</p>
+              <p className="copyright">
+                © {new Date().getFullYear()} BookmyYagna – A Product of Innovize
+                Tech Solutions Pvt. Ltd.
+              </p>
               <div className="footer-bottom-links">
                 <Link to={"/privacy-policy"}>Privacy Policy</Link>
                 <Link to={"/termsofservice"}>Terms of Service</Link>
+                <Link to={"/shippingAndDelivery"}>Shipping and delivery</Link>
+                <Link to={"/cancellationAndRefund"}>Cancellation and refund</Link>
+
                 <Link to={"/FAQ"}>FAQ</Link>
               </div>
             </div>
@@ -119,5 +133,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

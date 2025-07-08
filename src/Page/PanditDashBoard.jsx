@@ -328,22 +328,67 @@ const PanditDashboard = () => {
   };
 
   const handleProfileSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put('/pandit/updateProfile', user, {
+  e.preventDefault();
+  
+  // Validate ID exists
+  if (!user.id) {
+    toast.error('Pandit ID not available');
+    return;
+  }
+
+  try {
+    // Prepare only the fields that the endpoint expects
+    const payload = {
+      name: user.fullName || user.name, 
+      email:user.email, // Handle both field names
+      contactNumber:user.phoneNumber ,
+      poojaTypes: user.expertise 
+        ? user.expertise.split(',').map(item => item.trim()) 
+        : [],
+      language: Array.isArray(user.languages) 
+        ? user.languages 
+        : user.languages?.split(',').map(item => item.trim()) || [],
+      experience: user.experience,
+      
+      // rating should not be included as it's likely read-only
+    };
+
+    const response = await axios.patch(
+      `https://bookmyyogna.onrender.com/pandit/updatePanditcard/${user.id}`,
+      payload,
+      {
         withCredentials: true,
-      });
-      if (response.data.success) {
-        toast.success('Profile updated successfully');
-        setIsEditingProfile(false);
-      } else {
-        toast.error('Failed to update profile');
+        headers: {
+          'Content-Type': 'application/json',
+        }
       }
-    } catch (err) {
-      console.error('Error updating profile:', err);
-      toast.error('Error updating profile. Please try again.');
+    );
+
+    if (response.data.success) {
+      toast.success('Profile updated successfully');
+      setIsEditingProfile(false);
+      
+      // Update local state with the response if needed
+      if (response.data.updatedPandit) {
+        setUser(prev => ({
+          ...prev,
+          name: response.data.updatedPandit.name,
+          contactNumber:response.data.updatedPandit.phoneNumber,
+          poojaTypes: response.data.updatedPandit.poojaTypes,
+          language: response.data.updatedPandit.language,
+          experience: response.data.updatedPandit.experience
+        }));
+      }
+    } else {
+      toast.error(response.data.message || 'Failed to update profile');
     }
-  };
+  } catch (err) {
+    console.error('Error updating profile:', err);
+    const errorMsg = err.response?.data?.message || 
+                    'Error updating profile. Please try again.';
+    toast.error(errorMsg);
+  }
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -398,10 +443,10 @@ const PanditDashboard = () => {
                 </thead>
                 <tbody>
                   {notifications.map((item) => (
-                    <tr key={item._id}>
+                    <tr key={item.id}>
                       <td
                         className="cursor-pointer"
-                        onClick={() => handleOpenNotification(item._id)}
+                        onClick={() => handleOpenNotification(item.id)}
                       >
                         {item.heading}
                       </td>
@@ -421,7 +466,7 @@ const PanditDashboard = () => {
                         <Button
                           variant="danger"
                           size="sm"
-                          onClick={() => handleDeleteNotification(item._id)}
+                          onClick={() => handleDeleteNotification(item.id)}
                         >
                           <MdDelete size={20} />
                         </Button>
@@ -508,11 +553,11 @@ const PanditDashboard = () => {
               </thead>
               <tbody>
                 {bookedPuja.map((data) => (
-                  <tr key={data._id}>
+                  <tr key={data.id}>
                     <td>{data.userId?.fullName || data.name || 'N/A'}</td>
                     <td>{data.planId?.heading || 'N/A'}</td>
                     <td>{data.planId?.amount || 'N/A'}</td>
-                    <td>{data.phoneNumber || 'N/A'}</td>
+                    <td>{data.phoneNumber }</td>
                     <td>{data.address || 'N/A'}</td>
                     <td>{data.status || 'N/A'}</td>
                     <td>{data.poojaMode || 'N/A'}</td>
@@ -575,7 +620,7 @@ const PanditDashboard = () => {
               <tbody>
                 {completedPuja.length > 0 ? (
                   completedPuja.map((data) => (
-                    <tr key={data._id}>
+                    <tr key={data.id}>
                       <td>{data.userId?.fullName || data.name || 'N/A'}</td>
                       <td>{data.planId?.heading || 'N/A'}</td>
                       <td>{data.planId?.amount || 'N/A'}</td>
@@ -629,7 +674,7 @@ const PanditDashboard = () => {
               <tbody>
                 {confirmedPoojas.length > 0 ? (
                   confirmedPoojas.map((p) => (
-                    <tr key={p._id}>
+                    <tr key={p.id}>
                       <td>
                         {p.dateOfDelivery
                           ? new Date(p.dateOfDelivery).toLocaleDateString('en-IN', {
@@ -722,7 +767,7 @@ const PanditDashboard = () => {
                     required
                   />
                 </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
+                {/* <Form.Group as={Col} md={6} className="mb-3">
                   <Form.Label>Address</Form.Label>
                   <Form.Control
                     type="text"
@@ -730,7 +775,7 @@ const PanditDashboard = () => {
                     value={user.address}
                     onChange={handleInputChange}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group as={Col} md={6} className="mb-3">
                   <Form.Label>Expertise</Form.Label>
                   <Form.Control
@@ -746,9 +791,11 @@ const PanditDashboard = () => {
                   <Form.Control
                     type="text"
                     name="languages"
+                    
                     value={user.languages?.join(', ') || ''}
                     onChange={handleInputChange}
                   />
+                  
                 </Form.Group>
                 <Form.Group as={Col} md={6} className="mb-3">
                   <Form.Label>Experience (Years)</Form.Label>
@@ -786,7 +833,7 @@ const PanditDashboard = () => {
             <div>
               <p><strong>Email:</strong> {user.email || 'N/A'}</p>
               <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
-              <p><strong>Address:</strong> {user.address || 'N/A'}</p>
+              {/* <p><strong>Address:</strong> {user.address || 'N/A'}</p> */}
               <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
               <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
@@ -896,7 +943,7 @@ const PanditDashboard = () => {
                     {notifications.length > 0 ? (
                       notifications.slice(0, 3).map((item) => (
                         <div
-                          key={item._id}
+                          key={item.id}
                           className="notification-item"
                           onClick={() => handleOpenNotification(item._id)}
                         >
