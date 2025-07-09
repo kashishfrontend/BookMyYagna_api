@@ -8,9 +8,10 @@ import {
   LOGOUT_PANDIT_REQUEST,
   LOGOUT_PANDIT_SUCCESS,
   LOGOUT_PANDIT_FAILURE,
-  RESET_PANDIT_LOGOUT_STATE
+  RESET_PANDIT_LOGOUT_STATE,
 } from '../action/panditAuthAction';
 
+// Initial state
 const initialState = {
   loading: false,
   isPanditAuthenticated: false,
@@ -21,16 +22,23 @@ const initialState = {
   authPanditLoaded: false,
 };
 
+// Reducer
 const panditAuthReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Login Flow
     case LOGIN_PANDIT_REQUEST:
-      return { ...state, loading: true, error: null };
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        successPandit: false,
+      };
 
     case LOGIN_PANDIT_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: action.payload.affiliate,
+        user: action.payload?.affiliate || null,
         successPandit: true,
         logoutSuccess: false,
         error: null,
@@ -42,11 +50,18 @@ const panditAuthReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
         successPandit: false,
+        user: null,
       };
 
     case RESET_PANDIT_LOGIN:
-      return { ...state, successPandit: false, error: null };
+      return {
+        ...state,
+        successPandit: false,
+        error: null,
+        loading: false,
+      };
 
+    // Auth Check
     case SET_PANDIT_AUTHENTICATED:
       return {
         ...state,
@@ -55,10 +70,19 @@ const panditAuthReducer = (state = initialState, action) => {
       };
 
     case AUTH_PANDIT_LOADED:
-      return { ...state, authPanditLoaded: true };
+      return {
+        ...state,
+        authPanditLoaded: true,
+      };
 
+    // Logout Flow
     case LOGOUT_PANDIT_REQUEST:
-      return { ...state, loading: true, error: null, logoutSuccess: false };
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        logoutSuccess: false,
+      };
 
     case LOGOUT_PANDIT_SUCCESS:
       return {
@@ -82,10 +106,11 @@ const panditAuthReducer = (state = initialState, action) => {
       return {
         ...state,
         logoutSuccess: false,
-        loading: false,
         error: null,
+        loading: false,
       };
 
+    // Default
     default:
       return state;
   }

@@ -114,21 +114,54 @@ const PanditLogin = () => {
 
 
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(loginPandit(userName, password));
+  // };
+
+  // useEffect(() => {
+  //   if (successPandit && isPanditAuthenticated) {
+  //     // Navigate to dashboard or home
+  //     navigate('/');
+  //   }
+
+  //   return () => {
+  //     dispatch(resetLoginPandit());
+  //   };
+  // }, [successPandit, isPanditAuthenticated, navigate, dispatch]);
+
+
+ const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginPandit(userName, password));
+    const toastId = toast.loading('Logging in...');
+    dispatch(loginPandit(userName, password)).then(() => {
+      toast.dismiss(toastId);
+    });
   };
 
   useEffect(() => {
-    if (successPandit && isPanditAuthenticated) {
-      // Navigate to dashboard or home
-      navigate('/');
-    }
+  console.log('Login check =>', {
+    successPandit,
+    isPanditAuthenticated,
+    error,
+  });
 
-    return () => {
-      dispatch(resetLoginPandit());
-    };
-  }, [successPandit, isPanditAuthenticated, navigate, dispatch]);
+  if (successPandit && isPanditAuthenticated) {
+    toast.success('Login successful!');
+    navigate('/');
+  }
+
+  if (error) {
+    toast.error(error);
+  }
+
+  return () => {
+    dispatch(resetLoginPandit());
+  };
+}, [successPandit, isPanditAuthenticated, error, dispatch, navigate]);
+
+
+
   return (
     <div className="pandit-login-container">
       {/* Animated Background Elements */}
@@ -326,22 +359,22 @@ const PanditLogin = () => {
                     </div>
                   </div>
 
-                  <div className="alternative-actions">
+                  {/* <div className="alternative-actions">
                     <button className="btn btn-outline-primary w-100 mb-2">
                       <Phone size={18} className="me-2" />
                       Login with Phone OTP
                     </button>
-                  </div>
+                  </div> */}
 
                   <div className="footer-links">
-                    <div className="row text-center">
-                      <div className="col-6">
+                    <div className="row text-center d-flex justify-content-c">
+                      {/* <div className="col-6">
                         <a href="#" className="link-primary">
                           Forgot Password?
                         </a>
-                      </div>
+                      </div> */}
                       <div className="col-6">
-                        <a href="/pandit/register" className="link-success">
+                        <a href="/panditregister" className="link-success">
                           New Pandit? Join Us
                         </a>
                       </div>

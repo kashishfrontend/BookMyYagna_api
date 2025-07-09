@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
-import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete } from 'react-icons/md';
+import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit } from 'react-icons/md';
 import { FaLink, FaCalendarAlt, FaUserCircle, FaBars } from 'react-icons/fa';
 import { createSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,11 +15,6 @@ import '../assets/css/PanditDashboard.css';
 const selectPanditState = createSelector(
   [(state) => state.panditauth],
   (pandit) => pandit || {}
-);
-
-const selectStoreKeys = createSelector(
-  [(state) => state],
-  (state) => Object.keys(state)
 );
 
 const PanditDashboard = () => {
@@ -41,27 +36,41 @@ const PanditDashboard = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState(null);
-  const [user, setUser] = useState(authUser || {
+  const [selectedImage, setSelectedImage] = useState(null);
+  // const [activeNavItem, setActiveNavItem] = useState('dashboard'); // or any default
+
+  // const handleNavItemClick = (item) => {
+  //   setActiveNavItem(item);
+  //   // Add more logic here if needed, like navigating to a route or logging
+  // };
+
+
+  // Initialize user state
+  const [user, setUser] = useState({
     id: '',
     fullName: '',
     email: '',
     phoneNumber: '',
     address: '',
     expertise: '',
+    poojaTypes: [],
+    rating: 0,
+    experience: 0,
+    languages: [],
+    image: " ",
+    role: 'Pandit',
   });
 
   // Debug store configuration
-  const storeKeys = useSelector(selectStoreKeys);
   useEffect(() => {
     if (!panditState) {
       console.warn(
         'Redux state.panditauth is undefined. Check store configuration in store.js. ' +
-        'Expected panditAuthReducer to be registered under "panditauth". ' +
-        'Current state keys: ' + JSON.stringify(storeKeys)
+        'Expected panditAuthReducer to be registered under "panditauth".'
       );
     }
     console.log('Pandit State:', panditState);
-  }, [storeKeys, panditState]);
+  }, [panditState]);
 
   // Handle sidebar responsiveness
   useEffect(() => {
@@ -98,31 +107,24 @@ const PanditDashboard = () => {
       try {
         const response = await axios.get('/notification/getAllNotifications', {
           withCredentials: true,
-          params: { panditId: user.id }, // Include pandit ID if required
+          params: { panditId: user.id },
         });
         console.log('Notifications Response:', response.data);
         if (response.data.success) {
-          // Handle both 'data' and 'notifications' keys
-          const notificationsData = response.data.notifications || response.data.data || [];
-          setNotifications(notificationsData);
-          if (notificationsData.length === 0) {
-            console.warn('No notifications returned for pandit ID:', user.id);
-          }
+          setNotifications(response.data.notifications || response.data.data || []);
         } else {
           throw new Error(response.data.message || 'Failed to fetch notifications');
         }
       } catch (error) {
         setNotifError(error.message || 'Error fetching notifications');
         console.error('Error fetching notifications:', error);
-        toast.error('Failed to load notifications. Please check your login status.');
+        toast.error('Failed to load notifications.');
       } finally {
         setNotifLoading(false);
       }
     };
     if (isPanditAuthenticated && user.id) {
       fetchNotifications();
-    } else {
-      console.warn('Skipping fetchNotifications: isPanditAuthenticated=', isPanditAuthenticated, 'user.id=', user.id);
     }
   }, [isPanditAuthenticated, user.id]);
 
@@ -134,26 +136,19 @@ const PanditDashboard = () => {
           startDate: '',
           endDate: '',
           status: 'Confirmed',
-          panditId: user.id, // Include pandit ID
-          // withCredentials: true,
-        }, {
-          withCredentials: true,
-        });
+          panditId: user.id,
+        }, { withCredentials: true });
         console.log('Confirmed Poojas Response:', response.data);
         if (response.data.success) {
           setConfirmedPoojas(response.data.data || []);
-        } else {
-          throw new Error(response.data.message || 'Failed to fetch confirmed poojas');
         }
       } catch (err) {
         console.error('Error fetching confirmed poojas:', err);
-        toast.error('Error fetching confirmed poojas. Please try again.');
+        toast.error('Error fetching confirmed poojas.');
       }
     };
     if (isPanditAuthenticated && user.id) {
       fetchConfirmedPoojas();
-    } else {
-      console.warn('Skipping fetchConfirmedPoojas: isPanditAuthenticated=', isPanditAuthenticated, 'user.id=', user.id);
     }
   }, [isPanditAuthenticated, user.id]);
 
@@ -166,18 +161,14 @@ const PanditDashboard = () => {
           endDate: '',
           status: 'Completed',
           panditId: user.id,
-        }, {
-          withCredentials: true,
-        });
+        }, { withCredentials: true });
         console.log('Completed Poojas Response:', response.data);
         if (response.data.success) {
           setCompletedPuja(response.data.data || []);
-        } else {
-          throw new Error(response.data.message || 'Failed to fetch completed poojas');
         }
       } catch (err) {
         console.error('Error fetching completed poojas:', err);
-        toast.error('Error fetching completed poojas. Please try again.');
+        toast.error('Error fetching completed poojas.');
       }
     };
     if (isPanditAuthenticated && user.id) {
@@ -194,18 +185,14 @@ const PanditDashboard = () => {
           endDate: '',
           status: 'Cancelled',
           panditId: user.id,
-        }, {
-          withCredentials: true,
-        });
+        }, { withCredentials: true });
         console.log('Booked Poojas Response:', response.data);
         if (response.data.success) {
           setBookedPuja(response.data.data || []);
-        } else {
-          throw new Error(response.data.message || 'Failed to fetch booked poojas');
         }
       } catch (err) {
         console.error('Error fetching booked poojas:', err);
-        toast.error('Error fetching booked poojas. Please try again.');
+        toast.error('Error fetching booked poojas.');
       }
     };
     if (isPanditAuthenticated && user.id) {
@@ -220,7 +207,7 @@ const PanditDashboard = () => {
         const response = await axios.get('/pandit/getPanditProfile', {
           withCredentials: true,
         });
-        console.log('Profile Response:', response.data);
+        // console.log('Profile Response:', response.data);
         if (response.data.success) {
           const pandit = response.data.pandit;
           setUser({
@@ -234,17 +221,16 @@ const PanditDashboard = () => {
             rating: pandit.rating || 0,
             experience: pandit.experience || 0,
             languages: pandit.language || [],
-            image: pandit.image || 'https://via.placeholder.com/60',
+            image: pandit.image,
             role: pandit.role || 'Pandit',
-            createdAt: pandit.createdAt,
-            updatedAt: pandit.updatedAt,
+           
           });
         } else {
           toast.error('Failed to load profile.');
         }
       } catch (error) {
-        toast.error('Error fetching profile.');
         console.error('Error fetching profile:', error);
+        toast.error('Error fetching profile.');
       }
     };
     if (isPanditAuthenticated) {
@@ -271,26 +257,24 @@ const PanditDashboard = () => {
   };
 
   const handleLogout = async () => {
-    const toastId = toast.loading('Logging out...');
-    try {
-      console.log('Initiating pandit logout');
-      const result = await dispatch(logoutPandit());
-      if (result.payload?.success) {
-        console.log('Pandit logout successful');
-        toast.dismiss(toastId);
-        toast.success(result.payload.message || 'Logout successful!');
-        dispatch(resetLogoutPanditState());
-        navigate('/panditlogin');
-      } else {
-        throw new Error(result.payload?.error || 'Logout failed');
-      }
-    } catch (err) {
-      console.error('Pandit logout error:', err);
+  const toastId = toast.loading('Logging out...');
+  try {
+    const result = await dispatch(logoutPandit());
+    if (result.success) {
       toast.dismiss(toastId);
-      toast.error('Failed to logout. Please try again or contact support.');
-      console.warn('Note: Logout endpoint may be incorrect. Expected POST /pandit/logoutPandit.');
+      toast.success(result.message || 'Logout successful!');
+      dispatch(resetLogoutPanditState());
+      navigate('/panditlogin');
+    } else {
+      throw new Error(result.error || 'Logout failed');
     }
-  };
+  } catch (err) {
+    console.error('Pandit logout error:', err);
+    toast.dismiss(toastId);
+    toast.error('Failed to logout.');
+  }
+};
+
 
   const handleDeleteNotification = async (id) => {
     const toastId = toast.loading('Deleting notification...');
@@ -328,67 +312,101 @@ const PanditDashboard = () => {
   };
 
   const handleProfileSubmit = async (e) => {
-  e.preventDefault();
-  
-  // Validate ID exists
-  if (!user.id) {
-    toast.error('Pandit ID not available');
-    return;
-  }
-
-  try {
-    // Prepare only the fields that the endpoint expects
-    const payload = {
-      name: user.fullName || user.name, 
-      email:user.email, // Handle both field names
-      contactNumber:user.phoneNumber ,
-      poojaTypes: user.expertise 
-        ? user.expertise.split(',').map(item => item.trim()) 
-        : [],
-      language: Array.isArray(user.languages) 
-        ? user.languages 
-        : user.languages?.split(',').map(item => item.trim()) || [],
-      experience: user.experience,
-      
-      // rating should not be included as it's likely read-only
-    };
-
-    const response = await axios.patch(
-      `https://bookmyyogna.onrender.com/pandit/updatePanditcard/${user.id}`,
-      payload,
-      {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }
-    );
-
-    if (response.data.success) {
-      toast.success('Profile updated successfully');
-      setIsEditingProfile(false);
-      
-      // Update local state with the response if needed
-      if (response.data.updatedPandit) {
-        setUser(prev => ({
-          ...prev,
-          name: response.data.updatedPandit.name,
-          contactNumber:response.data.updatedPandit.phoneNumber,
-          poojaTypes: response.data.updatedPandit.poojaTypes,
-          language: response.data.updatedPandit.language,
-          experience: response.data.updatedPandit.experience
-        }));
-      }
-    } else {
-      toast.error(response.data.message || 'Failed to update profile');
+    e.preventDefault();
+    if (!user.id) {
+      toast.error('Pandit ID not available');
+      return;
     }
-  } catch (err) {
-    console.error('Error updating profile:', err);
-    const errorMsg = err.response?.data?.message || 
-                    'Error updating profile. Please try again.';
-    toast.error(errorMsg);
-  }
-};
+    try {
+      // Use FormData to send profile data and image
+      const formData = new FormData();
+      formData.append('name', user.fullName || user.name);
+      formData.append('email', user.email);
+      formData.append('contactNumber', user.phoneNumber);
+      formData.append('experience', user.experience || '');
+
+      // Append poojaTypes as array
+      const poojaTypes = user.expertise
+        ? user.expertise.split(',').map((item) => item.trim())
+        : [];
+      poojaTypes.forEach((type, index) => {
+        formData.append(`poojaTypes[${index}]`, type);
+      });
+
+      // Append languages as array
+      const languages = Array.isArray(user.languages)
+        ? user.languages
+        : user.languages?.split(',').map((item) => item.trim()) || [];
+      languages.forEach((lang, index) => {
+        formData.append(`language[${index}]`, lang);
+      });
+
+      // Append image and imageName if selected
+      if (selectedImage) {
+        // formData.append('image' , selectedImage);  
+        formData.append('image', selectedImage.name); // Send file name
+      }
+
+      const response = await axios.patch(
+        `/pandit/updatePanditcard/${user.id}`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      console.log('Profile Update Response:', response.data); // Debug response
+
+      if (response.data.success) {
+        toast.success('Profile updated successfully');
+        setIsEditingProfile(false);
+        if (response.data.updatedPandit) {
+          setUser((prev) => ({
+            ...prev,
+            fullName: response.data.updatedPandit.name,
+            name: response.data.updatedPandit.name,
+            contactNumber: response.data.updatedPandit.phoneNumber,
+            poojaTypes: response.data.updatedPandit.poojaTypes,
+            expertise: response.data.updatedPandit.poojaTypes?.join(', ') || '',
+            language: response.data.updatedPandit.language,
+            languages: response.data.updatedPandit.language,
+            experience: response.data.updatedPandit.experience,
+            image: response.data.updatedPandit.image || prev.image,
+          }));
+          setSelectedImage(null); // Reset image after successful update
+        }
+      } else {
+        throw new Error(response.data.message || 'Failed to update profile');
+      }
+    } catch (err) {
+      console.error('Error updating profile:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
+        headers: err.response?.headers,
+      });
+      const errorMsg = err.response?.data?.message || 'Error updating profile. Please try again.';
+      toast.error(errorMsg);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image size should be less than 5MB');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file');
+        return;
+      }
+      setSelectedImage(file);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -428,7 +446,7 @@ const PanditDashboard = () => {
           {notifLoading && <p className="text-center text-muted">Loading notifications...</p>}
           {notifError && <p className="text-center text-danger">{notifError}</p>}
           {!notifLoading && notifications.length === 0 && (
-            <p className="text-center text-muted">No notifications available. Please check if you are assigned any poojas.</p>
+            <p className="text-center text-muted">No notifications available.</p>
           )}
           {notifications.length > 0 && (
             <div className="table-responsive">
@@ -443,10 +461,10 @@ const PanditDashboard = () => {
                 </thead>
                 <tbody>
                   {notifications.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item._id}>
                       <td
                         className="cursor-pointer"
-                        onClick={() => handleOpenNotification(item.id)}
+                        onClick={() => handleOpenNotification(item._id)}
                       >
                         {item.heading}
                       </td>
@@ -466,7 +484,7 @@ const PanditDashboard = () => {
                         <Button
                           variant="danger"
                           size="sm"
-                          onClick={() => handleDeleteNotification(item.id)}
+                          onClick={() => handleDeleteNotification(item._id)}
                         >
                           <MdDelete size={20} />
                         </Button>
@@ -487,7 +505,7 @@ const PanditDashboard = () => {
       <Row>
         <Col xs={12}>
           <h1 className="welcome-heading">
-            <span className="namaste">नमस्ते</span>, {user.fullName.split(' ')[0] || 'Pandit Ji'}!
+            <span className="namaste">नमस्ते</span>, {user.fullName?.split(' ')[0] || 'Pandit Ji'}!
           </h1>
           <p className="welcome-subtext">Welcome back to your spiritual journey</p>
         </Col>
@@ -557,21 +575,21 @@ const PanditDashboard = () => {
                     <td>{data.userId?.fullName || data.name || 'N/A'}</td>
                     <td>{data.planId?.heading || 'N/A'}</td>
                     <td>{data.planId?.amount || 'N/A'}</td>
-                    <td>{data.phoneNumber }</td>
+                    <td>{data.phoneNumber}</td>
                     <td>{data.address || 'N/A'}</td>
                     <td>{data.status || 'N/A'}</td>
                     <td>{data.poojaMode || 'N/A'}</td>
                     <td>
                       {data.dateOfDelivery
                         ? new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                            timeZone: 'Asia/Kolkata',
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: true,
-                          })
+                          timeZone: 'Asia/Kolkata',
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true,
+                        })
                         : 'N/A'}
                     </td>
                     <td>
@@ -631,14 +649,14 @@ const PanditDashboard = () => {
                       <td>
                         {data.dateOfDelivery
                           ? new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                              timeZone: 'Asia/Kolkata',
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              hour12: true,
-                            })
+                            timeZone: 'Asia/Kolkata',
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                          })
                           : 'N/A'}
                       </td>
                     </tr>
@@ -678,11 +696,11 @@ const PanditDashboard = () => {
                       <td>
                         {p.dateOfDelivery
                           ? new Date(p.dateOfDelivery).toLocaleDateString('en-IN', {
-                              timeZone: 'Asia/Kolkata',
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric',
-                            })
+                            timeZone: 'Asia/Kolkata',
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                          })
                           : 'N/A'}
                       </td>
                       <td>{p.poojaId?.heading || p.planId?.heading || 'N/A'}</td>
@@ -705,7 +723,7 @@ const PanditDashboard = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="text-center">No confirmed poojas yet. Please check your bookings.</td>
+                    <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
                   </tr>
                 )}
               </tbody>
@@ -722,18 +740,51 @@ const PanditDashboard = () => {
       <p className="welcome-subtext">Manage your personal and professional details</p>
       <Card className="shadow-sm">
         <Card.Body>
-          <div className="d-flex align-items-center mb-4">
-            <img
-              src={user.image || 'https://via.placeholder.com/60'}
-              alt="Pandit"
-              className="rounded-circle me-3"
-              style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
-            />
+          <div className="d-flex align-items-center mb-4 position-relative">
+            <div className="position-relative">
+              <img
+                src={
+                  selectedImage
+                    ? URL.createObjectURL(selectedImage) // Show preview if user selects new image
+                    : user.image  // Show existing image or fallback
+                }
+                alt="Pandit"
+                className="rounded-circle me-3"
+                style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
+              // onError={(e) => (e.target.src = 'https://via.placeholder.com/60')}
+              />
+
+              {isEditingProfile && (
+                <div
+                  className="position-absolute bottom-0 start-0 bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                  style={{ width: 24, height: 24, cursor: 'pointer' }}
+                >
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ opacity: 0, position: 'absolute', width: '100%', height: '100%', cursor: 'pointer' }}
+                  />
+                  <MdEdit size={14} color="white" />
+                </div>
+              )}
+            </div>
             <div>
               <h3 className="mb-1">{user.fullName   }</h3>
               <p className="mb-0 text-muted">{user.role}</p>
             </div>
           </div>
+          {/* {selectedImage && (
+            <div className="mb-3 text-center">
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                alt="Preview"
+                className="img-fluid rounded"
+                style={{ maxHeight: '100px' }}
+              />
+              <p className="text-muted small mt-2">File: {selectedImage.name}</p>
+            </div>
+          )} */}
           {isEditingProfile ? (
             <Form onSubmit={handleProfileSubmit}>
               <Row>
@@ -767,15 +818,6 @@ const PanditDashboard = () => {
                     required
                   />
                 </Form.Group>
-                {/* <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="address"
-                    value={user.address}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group> */}
                 <Form.Group as={Col} md={6} className="mb-3">
                   <Form.Label>Expertise</Form.Label>
                   <Form.Control
@@ -797,7 +839,6 @@ const PanditDashboard = () => {
                     // value={user.languages?.join(', ') || ''}
                     onChange={handleInputChange}
                   />
-                  
                 </Form.Group>
                 <Form.Group as={Col} md={6} className="mb-3">
                   <Form.Label>Experience (Years)</Form.Label>
@@ -821,7 +862,10 @@ const PanditDashboard = () => {
                   <Button
                     variant="danger"
                     className="me-2"
-                    onClick={() => setIsEditingProfile(false)}
+                    onClick={() => {
+                      setIsEditingProfile(false);
+                      setSelectedImage(null);
+                    }}
                   >
                     Cancel
                   </Button>
@@ -835,7 +879,6 @@ const PanditDashboard = () => {
             <div>
               <p><strong>Email:</strong> {user.email || 'N/A'}</p>
               <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
-              {/* <p><strong>Address:</strong> {user.address || 'N/A'}</p> */}
               <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
               {/* <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>  */}
               <p><strong>Languages:</strong> 
@@ -847,6 +890,7 @@ const PanditDashboard = () => {
 </p>
 
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
+              <p><strong>Address:</strong> {user.address || 'N/A'}</p>
               <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
               <Button
                 variant="primary"
@@ -933,7 +977,7 @@ const PanditDashboard = () => {
             <div className="d-flex align-items-center">
               <div
                 className="user-profile me-3 cursor-pointer"
-                onClick={() => handleNavItemClick('punditProfile')}
+                onClick={() => handleNavItemurethane('punditProfile')}
               >
                 <span className="user-name">{user.fullName || 'Pandit Ji'}</span>
               </div>
@@ -953,7 +997,7 @@ const PanditDashboard = () => {
                     {notifications.length > 0 ? (
                       notifications.slice(0, 3).map((item) => (
                         <div
-                          key={item.id}
+                          key={item._id}
                           className="notification-item"
                           onClick={() => handleOpenNotification(item._id)}
                         >
@@ -973,7 +1017,7 @@ const PanditDashboard = () => {
                         </div>
                       ))
                     ) : (
-                      <p className="popup-message">No new notifications. Please check your bookings.</p>
+                      <p className="popup-message">No new notifications.</p>
                     )}
                     <div className="text-center">
                       <Button
@@ -1009,14 +1053,14 @@ const PanditDashboard = () => {
               <p className="text-muted small">
                 {selectedNotification?.createdAt
                   ? new Date(selectedNotification.createdAt).toLocaleString('en-IN', {
-                      timeZone: 'Asia/Kolkata',
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true,
-                    })
+                    timeZone: 'Asia/Kolkata',
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  })
                   : 'N/A'}
               </p>
             </Modal.Body>
