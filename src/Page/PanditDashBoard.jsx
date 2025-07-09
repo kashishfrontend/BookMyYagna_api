@@ -257,23 +257,24 @@ const PanditDashboard = () => {
   };
 
   const handleLogout = async () => {
-    const toastId = toast.loading('Logging out...');
-    try {
-      const result = await dispatch(logoutPandit());
-      if (result.payload?.success) {
-        toast.dismiss(toastId);
-        toast.success(result.payload.message || 'Logout successful!');
-        dispatch(resetLogoutPanditState());
-        navigate('/panditlogin');
-      } else {
-        throw new Error(result.payload?.error || 'Logout failed');
-      }
-    } catch (err) {
-      console.error('Pandit logout error:', err);
+  const toastId = toast.loading('Logging out...');
+  try {
+    const result = await dispatch(logoutPandit());
+    if (result.success) {
       toast.dismiss(toastId);
-      toast.error('Failed to logout.');
+      toast.success(result.message || 'Logout successful!');
+      dispatch(resetLogoutPanditState());
+      navigate('/panditlogin');
+    } else {
+      throw new Error(result.error || 'Logout failed');
     }
-  };
+  } catch (err) {
+    console.error('Pandit logout error:', err);
+    toast.dismiss(toastId);
+    toast.error('Failed to logout.');
+  }
+};
+
 
   const handleDeleteNotification = async (id) => {
     const toastId = toast.loading('Deleting notification...');
