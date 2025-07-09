@@ -906,7 +906,7 @@ const PanditDashboard = () => {
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
         </div>
         <div
-          className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block' : 'd-none'} d-lg-block`}
+         className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
         >
           <div className="logo-container p-4">
             <h2 className="logo">BookmyYagna</h2>
