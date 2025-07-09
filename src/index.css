@@ -2,15 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
 
+/* Prevent scrollbars from appearing due to overflow */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* 🔧 Prevent horizontal overflow */
+}
+
 .dashbord {
   background: linear-gradient(15deg, #ff8c00, #b22222, #fdd835);
 }
 
 /* Navbar.css */
-.dropdown-item:hover{
-     background: none  !important;
-  }
-  
+.dropdown-item:hover {
+  background: none !important;
+}
+
 .custom-navbar {
   background: rgba(255, 255, 255, 0.1);
   padding: 15px 0;
@@ -23,15 +32,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
   }
 }
+
 .dropdown-toggle::after {
-display: none !important;
+  display: none !important;
 }
+
 .custom-navbar.scrolled {
   padding: 10px 0;
   background: rgba(255, 109, 0, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-}
+}Contact BookMyYagn
 
 .brand-text {
   font-family: 'Poppins', sans-serif;
@@ -3680,8 +3691,8 @@ display: none !important;
     background-color: transparent !important;
     /* color: black !important; */
   }
- 
- 
+
+
 
 }
 
