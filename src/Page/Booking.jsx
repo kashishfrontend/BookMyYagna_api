@@ -250,12 +250,12 @@ const Booking = () => {
       key,
       amount: order.amount,
       currency: order.currency,
-      name: "Book My Yagna",
+      name: name,
       description: selectedPlan?.heading,
       order_id: order.id,
       prefill: {
-        name,
-        email,
+        name : name,
+        email : email,
         contact: phone,
       },
       handler: async function (response) {
@@ -265,7 +265,7 @@ const Booking = () => {
       razorpay_signature: response.razorpay_signature,
       amount: order.amount / 100, 
       currency: order.currency,
-      email,
+      email : email,
       phoneNumber: phone,
     };
         try {

@@ -14,58 +14,70 @@ export const RESET_PANDIT_LOGOUT_STATE = 'RESET_PANDIT_LOGOUT_STATE';
 export const SET_PANDIT_AUTHENTICATED = 'SET_PANDIT_AUTHENTICATED';
 export const AUTH_PANDIT_LOADED = 'AUTH_PANDIT_LOADED';
 
-// Login action
+// Login Pandit
 export const loginPandit = (userName, password) => async (dispatch) => {
   dispatch({ type: LOGIN_PANDIT_REQUEST });
 
   try {
     const response = await axios.post(
-      `https://bookmyyogna.onrender.com/pandit/loginPandit`,
+      'https://bookmyyogna.onrender.com/pandit/loginPandit',
       { userName, password },
       { withCredentials: true }
     );
 
     dispatch({ type: LOGIN_PANDIT_SUCCESS, payload: response.data });
 
-    setTimeout(() => {
-      dispatch({ type: SET_PANDIT_AUTHENTICATED });
-    }, 1000);
+    // Ensure SET_PANDIT_AUTHENTICATED happens properly
+    dispatch({ type: SET_PANDIT_AUTHENTICATED });
+    
+
+    return { success: true, data: response.data };
   } catch (error) {
     dispatch({
       type: LOGIN_PANDIT_FAILURE,
       payload: error.response?.data?.error || 'Login failed',
     });
+
+    return { success: false, error: error.response?.data?.error || 'Login failed' };
   }
 };
 
+
+// Reset login state
 export const resetLoginPandit = () => ({
   type: RESET_PANDIT_LOGIN,
 });
 
-// Logout action
+// Logout Pandit
 export const logoutPandit = () => async (dispatch) => {
   dispatch({ type: LOGOUT_PANDIT_REQUEST });
 
   try {
-    const response = await axios.get(
+    const { data } = await axios.get(
       'https://bookmyyogna.onrender.com/user/logoutUser',
       { withCredentials: true }
     );
 
-    dispatch({ type: LOGOUT_PANDIT_SUCCESS, payload: response.data });
+    dispatch({ type: LOGOUT_PANDIT_SUCCESS, payload: data });
+
+    return { success: true, message: data.message }; 
   } catch (error) {
     dispatch({
       type: LOGOUT_PANDIT_FAILURE,
       payload: error.response?.data?.error || 'Logout failed',
     });
+
+    return { success: false, error: error.response?.data?.error || 'Logout failed' }; // <-- return for the caller
   }
 };
 
+
+// Reset logout state
 export const resetLogoutPanditState = () => ({
   type: RESET_PANDIT_LOGOUT_STATE,
 });
 
-// Check auth status
+// Check Pandit authentication status
 export const checkPanditAuth = () => async (dispatch) => {
   try {
     await axios.get(
@@ -75,7 +87,8 @@ export const checkPanditAuth = () => async (dispatch) => {
 
     dispatch({ type: SET_PANDIT_AUTHENTICATED });
   } catch (error) {
-    dispatch({ type: LOGOUT_PANDIT_SUCCESS }); // Automatically log out if not authenticated
+    // If not authenticated, log out
+    dispatch({ type: LOGOUT_PANDIT_SUCCESS });
   } finally {
     dispatch({ type: AUTH_PANDIT_LOADED });
   }
