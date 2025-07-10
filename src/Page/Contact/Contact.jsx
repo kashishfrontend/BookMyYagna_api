@@ -12,7 +12,7 @@ import '../../assets/css/ContactUs.css';
 
 const Contact = () => {
   // WhatsApp URL
-  const whatsappUrl = "https://wa.me/918569977750";
+  const whatsappUrl = "https://wa.me/8569977795";
 
   // Social media URLs
   const socialLinks = {
@@ -154,7 +154,7 @@ const Contact = () => {
               title="Call Us"
               content={
                 <>
-                  <p className="mb-1"><strong>Phone:</strong> +91 8569977750</p>
+                  <p className="mb-1"><strong>Phone:</strong>+91 8569977795</p>
                   <p className="mb-0">10 AM – 8 PM IST (Daily)</p>
                 </>
               }
@@ -169,7 +169,7 @@ const Contact = () => {
                 title="WhatsApp"
                 content={
                   <>
-                    <p className="mb-1"><strong>Chat:</strong> +91 8569977750</p>
+                    <p className="mb-1"><strong>Chat:</strong> +91 8569977795</p>
                     <p className="mb-0">Instant help with puja recommendations & bookings</p>
                   </>
                 }

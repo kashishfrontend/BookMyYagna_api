@@ -223,7 +223,7 @@ const PanditDashboard = () => {
             languages: pandit.language || [],
             image: pandit.image,
             role: pandit.role || 'Pandit',
-           
+
           });
         } else {
           toast.error('Failed to load profile.');
@@ -257,23 +257,23 @@ const PanditDashboard = () => {
   };
 
   const handleLogout = async () => {
-  const toastId = toast.loading('Logging out...');
-  try {
-    const result = await dispatch(logoutPandit());
-    if (result.success) {
+    const toastId = toast.loading('Logging out...');
+    try {
+      const result = await dispatch(logoutPandit());
+      if (result.success) {
+        toast.dismiss(toastId);
+        toast.success(result.message || 'Logout successful!');
+        dispatch(resetLogoutPanditState());
+        navigate('/panditlogin');
+      } else {
+        throw new Error(result.error || 'Logout failed');
+      }
+    } catch (err) {
+      console.error('Pandit logout error:', err);
       toast.dismiss(toastId);
-      toast.success(result.message || 'Logout successful!');
-      dispatch(resetLogoutPanditState());
-      navigate('/panditlogin');
-    } else {
-      throw new Error(result.error || 'Logout failed');
+      toast.error('Failed to logout.');
     }
-  } catch (err) {
-    console.error('Pandit logout error:', err);
-    toast.dismiss(toastId);
-    toast.error('Failed to logout.');
-  }
-};
+  };
 
 
   const handleDeleteNotification = async (id) => {
@@ -439,9 +439,9 @@ const PanditDashboard = () => {
   };
 
   const renderNotifications = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="text-center mb-4">All Notifications</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           {notifLoading && <p className="text-center text-muted">Loading notifications...</p>}
           {notifError && <p className="text-center text-danger">{notifError}</p>}
@@ -501,7 +501,7 @@ const PanditDashboard = () => {
   );
 
   const renderDashboardContent = () => (
-    <Container fluid className="py-4">
+    <Container fluid className="py-4 margin-class">
       <Row>
         <Col xs={12}>
           <h1 className="welcome-heading">
@@ -510,7 +510,7 @@ const PanditDashboard = () => {
           <p className="welcome-subtext">Welcome back to your spiritual journey</p>
         </Col>
       </Row>
-      <Row className="mb-4">
+      <Row className="mb-4 col-md-9">
         <Col xs={12} sm={6} md={4} className="mb-3">
           <Card className="stats-card">
             <Card.Body>
@@ -552,7 +552,7 @@ const PanditDashboard = () => {
         </Col>
       </Row>
       <h2 className="mb-4">All Poojas</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-9">
         <Card.Body>
           <div className="table-responsive">
             <table className="table table-bordered table-striped">
@@ -617,9 +617,9 @@ const PanditDashboard = () => {
   );
 
   const renderCompletedPoojaDetails = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="mb-4">Completed Pooja</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           <div className="table-responsive">
             <table className="table table-bordered table-striped">
@@ -675,11 +675,11 @@ const PanditDashboard = () => {
   );
 
   const renderPoojaLink = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="mb-4">Pooja Timing</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
-          <div className="table-responsive">
+          <div className="table-responsive ">
             <table className="table table-bordered table-striped">
               <thead className="table-header">
                 <tr>
@@ -735,10 +735,10 @@ const PanditDashboard = () => {
   );
 
   const renderPunditProfile = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h1 className="welcome-heading">Pandit Profile</h1>
       <p className="welcome-subtext">Manage your personal and professional details</p>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           <div className="d-flex align-items-center mb-4 position-relative">
             <div className="position-relative">
@@ -770,7 +770,7 @@ const PanditDashboard = () => {
               )}
             </div>
             <div>
-              <h3 className="mb-1">{user.fullName   }</h3>
+              <h3 className="mb-1">{user.fullName}</h3>
               <p className="mb-0 text-muted">{user.role}</p>
             </div>
           </div>
@@ -835,7 +835,7 @@ const PanditDashboard = () => {
                     name="languages"
                     value={Array.isArray(user.languages) ? user.languages.join(', ') : user.languages || ''}
 
-                    
+
                     // value={user.languages?.join(', ') || ''}
                     onChange={handleInputChange}
                   />
@@ -881,13 +881,13 @@ const PanditDashboard = () => {
               <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
               <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
               {/* <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>  */}
-              <p><strong>Languages:</strong> 
-  {Array.isArray(user.languages) 
-    ? user.languages.join(', ') 
-    : typeof user.languages === 'string' 
-      ? user.languages 
-      : 'N/A'}
-</p>
+              <p><strong>Languages:</strong>
+                {Array.isArray(user.languages)
+                  ? user.languages.join(', ')
+                  : typeof user.languages === 'string'
+                    ? user.languages
+                    : 'N/A'}
+              </p>
 
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
               <p><strong>Address:</strong> {user.address || 'N/A'}</p>
@@ -915,7 +915,7 @@ const PanditDashboard = () => {
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
         </div>
         <div
-         className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
+          className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
         >
           <div className="logo-container p-4">
             <h2 className="logo">BookmyYagna</h2>

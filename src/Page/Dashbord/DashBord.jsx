@@ -37,9 +37,13 @@ import { logout } from "../../redux/action/authAction";
 import { useNavigate } from "react-router-dom";
 import { CCloseButton } from "@coreui/react";
 import { GiClosedBarbute } from "react-icons/gi";
+import { Download } from "lucide-react";
+import jsPDF from "jspdf";
+import { autoTable } from "jspdf-autotable"; // Updated import
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [showSidebar, setShowSidebar] = useState(true);
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
@@ -48,11 +52,39 @@ const Dashboard = () => {
   const bellRef = useRef();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  // const [popupStates, setPopupStates] = useState({});
-  // const [copyStates, setCopyStates] = useState({});
   const [popupStates, setPopupStates] = useState({});
   const [copyStates, setCopyStates] = useState({});
-  //  GET ALL NOTYFICATION
+  const [user, setUser] = useState(null);
+  const [bookedPuja, setBookedPuja] = useState([]);
+  const [confirmedPoojas, setConfirmedPoojas] = useState([]);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(window.innerWidth <= 991);
+  const [payments, setPayments] = useState([]);
+
+
+
+    // Initialize AOS
+   useEffect(() => {
+    AOS.init({
+      duration: 500, // animation duration in ms
+      // once: true,     // animation happens only once on scroll
+    });
+  }, [renderPoojaLink]);
+  // Fetch user profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get("/user/getUserProfile");
+        if (response.data.success) {
+          setUser(response.data.user);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    fetchUserProfile();
+  }, []);
+
+  // Fetch notifications
   useEffect(() => {
     const getNotification = async () => {
       try {
@@ -78,18 +110,7 @@ const Dashboard = () => {
     getNotification();
   }, []);
 
-  const handleDeleteNotification = async (id) => {
-    try {
-      const response = await axios.delete(`/notification/deleteNotification/${id}`);
-      if (response.data.message) {
-        setNotifications((prev) => prev.filter((item) => item._id !== id));
-      }
-    } catch (err) {
-      console.error("Error deleting notification:", err);
-    }
-  };
-  // booked POOJA
-  const [bookedPuja, setBookedPuja] = useState([]);
+  // Fetch booked and completed poojas
   useEffect(() => {
     const allBookingData = async () => {
       try {
@@ -115,8 +136,8 @@ const Dashboard = () => {
     };
     allBookingData();
   }, []);
-  const [confirmedPoojas, setConfirmedPoojas] = useState([]);
 
+  // Fetch confirmed poojas
   useEffect(() => {
     const fetchConfirmedPoojas = async () => {
       try {
@@ -128,11 +149,11 @@ const Dashboard = () => {
 
         if (res.success) {
           const confirmed = res.data
-            .filter(b => b.status === 'Confirmed' && b.poojaLink)  // only confirmed with link
+            .filter(b => b.status === 'Confirmed' && b.poojaLink)
             .map(b => ({
               id: b._id,
               heading: b.poojaId?.heading || b.planId?.heading || 'Unknown',
-              confirmedAt: b.updatedAt,      // when it was confirmed/updated
+              confirmedAt: b.updatedAt,
               dateOfDelivery: b.dateOfDelivery,
               poojaLink: b.poojaLink,
               poojaLinkTime: b.poojaLinkTime
@@ -148,19 +169,76 @@ const Dashboard = () => {
     fetchConfirmedPoojas();
   }, []);
 
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(window.innerWidth <= 991);
+  // Fetch payment data
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const response = await axios.get("/receipt/getAllPaymentsUser");
+        if (response.data.success) {
+          setPayments(response.data.payments);
+        }
+      } catch (error) {
+        console.error("Error fetching payment data:", error);
+      }
+    };
+    fetchPayments();
+  }, []);
 
+  const handleDownload = (payment) => {
+    try {
+      const doc = new jsPDF();
+      // console.log("jsPDF instance:", doc); // Debug jsPDF instance
+      // console.log("jsPDF setFontSize available:", typeof doc.setFontSize); // Debug setFontSize
+
+      // Set document title
+      doc.setFontSize(18);
+      doc.text("Payment Receipt - BookmyYagna", 14, 22);
+
+      // Prepare table data
+      const tableData = [
+        ["Order ID", payment.razorpay_order_id || "N/A"],
+        ["Amount", payment.amount ? `${payment.amount / 100} ${payment.currency}` : "N/A"],
+        ["Currency", payment.currency || "N/A"],
+        ["Status", payment.status ? payment.status.charAt(0).toUpperCase() + payment.status.slice(1) : "N/A"],
+        ["Date", payment.createdAt ? new Date(payment.createdAt).toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }) : "N/A"],
+        ["Phone Number", payment.phoneNumber || "N/A"],
+        ["Email", payment.email || "N/A"],
+        ["Payment ID", payment.razorpay_payment_id || "N/A"],
+      ];
+
+      // Generate table
+      autoTable(doc, {
+        startY: 30,
+        body: tableData,
+        theme: 'striped',
+        styles: { fontSize: 12 },
+        headStyles: { fillColor: [255, 140, 0] }, // Orange header
+        columnStyles: {
+          0: { cellWidth: 50 },
+          1: { cellWidth: 100 },
+        },
+      });
+
+      // Save PDF
+      doc.save(`receipt-${payment.razorpay_order_id || 'payment'}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF receipt:", error);
+      alert("Failed to generate receipt. Please try again.");
+    }
+  };
+
+  // Handle mobile/tablet detection
   useEffect(() => {
     const handleResize = () => {
       setIsMobileOrTablet(window.innerWidth <= 991);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-
-  useEffect(() => {
-    const handleResize = () => {
       if (window.innerWidth < 992) {
         setShowSidebar(false);
       } else {
@@ -168,21 +246,27 @@ const Dashboard = () => {
       }
     };
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+
+
+  const handleDeleteNotification = async (id) => {
+    try {
+      const response = await axios.delete(`/notification/deleteNotification/${id}`);
+      if (response.data.message) {
+        setNotifications((prev) => prev.filter((item) => item._id !== id));
+      }
+    } catch (err) {
+      console.error("Error deleting notification:", err);
+    }
+  };
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/');
   };
-
-  useEffect(() => {
-    AOS.init({
-      duration: 500,
-      once: true,
-    });
-  }, []);
 
   const handleNavItemClick = (navItem) => {
     setActiveNavItem(navItem);
@@ -193,19 +277,17 @@ const Dashboard = () => {
 
   const handleProfileSubmit = (e) => {
     e.preventDefault();
-    console.log("Profile updated:", userData);
+    console.log("Profile updated:", user);
     setShowProfileModal(false);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({
+    setUser((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
-
 
   const renderContent = () => {
     switch (activeNavItem) {
@@ -221,7 +303,6 @@ const Dashboard = () => {
         return renderPoojaLink();
       case "Payment":
         return renderPayment();
-
       default:
         return (
           <div className="content-placeholder">
@@ -239,22 +320,6 @@ const Dashboard = () => {
         );
     }
   };
-
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get("/user/getUserProfile");
-        if (response.data.success) {
-          setUser(response.data.user);
-        }
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-    fetchUserProfile();
-  }, []);
 
   return (
     <>
@@ -308,7 +373,7 @@ const Dashboard = () => {
               <span>Payment</span>
             </div>
             <div className="mt-auto">
-              <div className="menu-item logout " onClick={() => handleLogout()}>
+              <div className="menu-item logout" onClick={() => handleLogout()}>
                 <MdLogout size={22} />
                 <span>Logout</span>
               </div>
@@ -317,7 +382,7 @@ const Dashboard = () => {
         </div>
 
         <div
-          className={`sidebar col-12 position-sticky  col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
+          className={`sidebar col-12 position-sticky col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
         >
           <div className="logo-container">
             <h2 className="logo">BookmyYagna</h2>
@@ -366,11 +431,11 @@ const Dashboard = () => {
           </div>
         </div>
         <div
-          className={`main-content col-12  col-lg-10 ${showSidebar ? "" : "expanded"}`}
+          className={`main-content col-12 col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
-          <div className="top-nav ">
+          <div className="top-nav">
             <div className="search-bar d-none d-md-flex">
-              <input type="text" placeholder="Search for poojas, priests, temples..." />
+              {/* <input type="text" placeholder="Search for poo" /> */}
               <button type="submit">
                 <i className="fas fa-search"></i>
               </button>
@@ -399,7 +464,7 @@ const Dashboard = () => {
                       notifications.slice(0, 3).map((item, index) => (
                         <div key={index} className="notification-item">
                           <div>
-                            <h4 className="popup-heading border-0 ">{item.heading}</h4>
+                            <h4 className="popup-heading border-0">{item.heading}</h4>
                             <p className="popup-time">
                               {new Date(item.createdAt).toLocaleString("en-IN", {
                                 day: "2-digit",
@@ -446,10 +511,10 @@ const Dashboard = () => {
               <Modal.Title>My Profile</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div >
+              <div>
                 <Col>
                   <Form onSubmit={handleProfileSubmit}>
-                    <Form.Group className="mb-3 col-md-12">
+                    <Form.Group className="mb-3 col-md-12x">
                       <Form.Label>Full Name</Form.Label>
                       <Form.Control
                         type="text"
@@ -475,10 +540,9 @@ const Dashboard = () => {
                       >
                         Cancel
                       </Button>
-                      <Button type="submit shadow-lg" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)', border: 'none' }}>
+                      <Button type="submit" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)', border: 'none' }}>
                         Save Changes
                       </Button>
-
                     </div>
                   </Form>
                 </Col>
@@ -502,12 +566,12 @@ const Dashboard = () => {
 
   function renderNotifications() {
     return (
-      <div className="container py-3 py-md-5">
+      <div className="container py-3 py-md-5  margin-class" >
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>All Notifications</h2>
           </div>
-          <div className="table-responsive">
+          <div className="table-responsive col-md-10">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -562,13 +626,12 @@ const Dashboard = () => {
 
   function renderMyBookedDetals() {
     return (
-      <div className="container py-3 py-md-5" data-aos="zoom-in"
-        data-aos-delay="100">
+      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>Booked Pooja</h2>
           </div>
-          <div className="table-responsive">
+          <div className="table-responsive ">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -615,13 +678,12 @@ const Dashboard = () => {
 
   function renderCompletedPoojaDetals() {
     return (
-      <div className="container py-3 py-md-5" data-aos="zoom-in"
-        data-aos-delay="100">
+      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>Completed Pooja</h2>
           </div>
-          <div className="table-responsive">
+          <div className="table-responsive ">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -668,7 +730,7 @@ const Dashboard = () => {
 
   function renderDashboardContent() {
     return (
-      <Container fluid className="dashboard-content py-3 py-md-5">
+      <Container fluid className="dashboard-content py-3 py-md-5 margin-class col-md-10" >
         <Row>
           <Col xs={12}>
             <h1 className="welcome-heading" data-aos="fade-right">
@@ -684,7 +746,7 @@ const Dashboard = () => {
             </p>
           </Col>
         </Row>
-        <Row className="stats-row">
+        <Row className="stats-row col-md-11">
           <Col
             xs={12}
             sm={6}
@@ -793,10 +855,7 @@ const Dashboard = () => {
     );
   }
 
-
   function renderPoojaLink() {
-    // State for managing popup and copy status for each pooja link
-
     const handleTogglePopup = (id) => {
       setPopupStates((prev) => ({
         ...prev,
@@ -815,117 +874,182 @@ const Dashboard = () => {
           ...prev,
           [id]: false,
         }));
-      }, 2000); // Hide "Copied!" after 2 seconds
+      }, 2000);
     };
 
     return (
-      <>
-        <div className="container py-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
-          <div className="row">
-            <div className="text-center fs-1 mb-3">
-              <h2 className="fs-1">Pooja Link</h2>
-            </div>
-            <div className={isMobileOrTablet ? 'table-responsive' : ''}>
-              <table className="custom-table table table-bordered table-striped">
-                <thead className="table-warning">
-                  <tr>
-                    <th>Date Of Pooja</th>
-                    <th>Pooja Name</th>
-                    <th>Pooja Time</th>
-                    <th>Link Pooja</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {confirmedPoojas.length > 0 ? (
-                    confirmedPoojas.map((p) => (
-                      <tr key={p.id}>
-                        <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
-                        <td>{p.heading}</td>
-                        <td>{p.poojaLinkTime || '—'}</td>
-                        <td className="pooja-link-cell">
-                          {p.poojaLink ? (
-                            <div className="pooja-link-container">
-                              <a
-                                href={p.poojaLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="pooja-view-button"
-                              >
-                                View
-                              </a>
-                              <button
-                                onClick={() => handleTogglePopup(p.id)}
-                                className="pooja-info-button"
-                                aria-label="View Pooja Link Details"
-                              >
-                                <FaInfoCircle size={20} />
-                              </button>
-                              {popupStates[p.id] && (
-                                <div className="pooja-popup">
-                                  <button
-                                    onClick={() => handleTogglePopup(p.id)}
-                                    className="pooja-close-button"
-                                    aria-label="Close Popup"
+      <div className="container py-5 margin-class" data-aos="zoom-in">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2 className="fs-2">Pooja Link</h2>
+          </div>
+          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : '' }>
+            <table className="custom-table table-bordered table-striped ">
+              <thead className="table-warning">
+                <tr>
+                  <th>Date Of Pooja</th>
+                  <th>Pooja Id</th>
+                  <th>Pooja Time</th>
+                  <th>Link Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {confirmedPoojas.length > 0 ? (
+                  confirmedPoojas.map((p) => (
+                    <tr key={p.id}>
+                      <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
+                      <td>{p.id}</td>
+                      <td>{p.poojaLinkTime || '—'}</td>
+                      <td className="pooja-link-cell">
+                        {p.poojaLink ? (
+                          <div className="pooja-link-container">
+                            <a
+                              className="pooja-view-button"
+                              href={p.poojaLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View
+                            </a>
+                            <button
+                              className="pooja-info-button"
+                              onClick={() => handleTogglePopup(p.id)}
+                              aria-label="View Details"
+                            >
+                              <FaInfoCircle size={20} />
+                            </button>
+                            {popupStates[p.id] && (
+                              <div className="pooja-popup">
+                                <button
+                                  className="pooja-close-button"
+                                  onClick={() => handleTogglePopup(p.id)}
+                                  aria-label="Close"
+                                >
+                                  <CloseButton size={24} />
+                                </button>
+                                <h2 className="pooja-popup-heading">
+                                  Your Google Meet Link
+                                </h2>
+                                <div className="pooja-link-wrapper">
+                                  <a
+                                    className="pooja-link-text"
+                                    href={p.poojaLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                   >
-                                    <CloseButton size={24} />
+                                    {p.poojaLink}
+                                  </a>
+                                  <button
+                                    className="pooja-copy-button"
+                                    onClick={() => handleCopyLink(p.id, p.poojaLink)}
+                                    aria-label="Copy Link"
+                                  >
+                                    <FaCopy size={16} />
                                   </button>
-                                  <h2 className="pooja-popup-heading">
-                                    Your Google Meet Link
-                                  </h2>
-                                  <div className="pooja-link-wrapper">
-                                    <a
-                                      href={p.poojaLink}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="pooja-link-text"
-                                    >
-                                      {p.poojaLink}
-                                    </a>
-                                    <button
-                                      onClick={() => handleCopyLink(p.id, p.poojaLink)}
-                                      className="pooja-copy-button"
-                                      aria-label="Copy Link"
-                                    >
-                                      <FaCopy size={16} />
-                                    </button>
-                                  </div>
-                                  {copyStates[p.id] && (
-                                    <div className="pooja-copied-notification">
-                                      Copied!
-                                    </div>
-                                  )}
                                 </div>
-                              )}
-                            </div>
-                          ) : (
-                            'Not available'
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                                {copyStates[p.id] && (
+                                  <div className="pooja-copied-notification">
+                                    Copied!
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          'Not available'
+                        )}
+                      </td>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">No confirmed poojas yet.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
-      </>
+      </div>
     );
   }
-  
+
   function renderPayment() {
     return (
-      <>
-        <h1>Payment</h1>
-      </>
-    )
-  }
-
-
-};
+      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
+        <div className="row">
+          <div className="text-center fs-1 mb-3">
+            <h2>Payment History</h2>
+          </div>
+          <div className={isMobileOrTablet ? 'table-responsive' : ''}>
+            <table className="custom-table table table-bordered table-striped">
+              <thead className="table-warning">
+                <tr>
+                  <th>Order ID</th>
+                  <th>Amount</th>
+                  <th>Currency</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {payments.length > 0 ? (
+                  payments.map((payment, index) => (
+                    <tr key={index}>
+                      <td>{payment.razorpay_order_id || "N/A"}</td>
+                      <td>{payment.amount ? `${payment.amount / 100} ${payment.currency}` : "N/A"}</td>
+                      <td>{payment.currency || "N/A"}</td>
+                      <td>
+                        <span className={`status-${payment.status?.toLowerCase() || 'unknown'}`}>
+                          {payment.status ? payment.status.charAt(0).toUpperCase() + payment.status.slice(1) : "Unknown"}
+                        </span>
+                      </td>
+                      <td>
+                        {payment.createdAt ? new Date(payment.createdAt).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true
+                        }) : "N/A"}
+                      </td>
+                      <td>{payment.phoneNumber || "N/A"}</td>
+                      <td>{payment.email || "N/A"}</td>
+                      <td>
+                        {payment.status?.toLowerCase() === 'success' ? (
+                          <Button
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => handleDownload(payment)}
+                            title="Download Receipt"
+                          >
+                            <Download size={20} />
+                          </Button>
+                        ) : (
+                          <span>—</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="8" className="text-center">
+                      No payment history available.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  };
+}
 
 export default Dashboard;
