@@ -109,9 +109,22 @@ const Footer = () => {
             <div className="col-12">
               <div className="footer-mandala"></div>
               <p className="copyright">
-                © {new Date().getFullYear()} BookmyYagna – A Product of Innovize
-                Tech Solutions Pvt. Ltd.
-              </p>
+  © {new Date().getFullYear()} BookmyYagna – A Product of{" "}
+  <a
+    href="https://innovizetechsolution.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      color: 'inherit',
+      textDecoration: 'none',
+    }}
+    onMouseEnter={e => (e.target.style.color = 'blue')}
+    onMouseLeave={e => (e.target.style.color = 'inherit')}
+  >
+    Innovize Tech Solutions Pvt. Ltd.
+  </a>
+</p>
+
               <div className="footer-bottom-links">
                 <Link to={"/privacy-policy"}>Privacy Policy</Link>
                 <Link to={"/termsofservice"}>Terms of Service</Link>
