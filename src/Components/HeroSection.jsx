@@ -4,7 +4,7 @@ import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
 import image from '../assets/img/om-123.png';
-import bg1 from '../assets/img/bg-3-new.webp';
+import bg1 from '../assets/img/fall-back-img.png';
 import bg2 from '../assets/img/bg-3.webp';
 import bg3 from '../assets/img/bg--2.webp';
 import vdo1 from '../assets/videos/pooja1.webm';
@@ -22,9 +22,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
   const controls = useAnimation();
-
   const heroRef = useRef();
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -127,7 +125,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
     }
   }
   return (
-    <div ref={heroRef} className="enhanced-hero-section">
+    <div ref={heroRef} className="enhanced-hero-section overflow-hidden">
       {/* Hero Carousel */}
       <Carousel
         fade
@@ -140,33 +138,51 @@ const HeroSection = ({ onHeroVisibleChange }) => {
         {heroSlides.map((slide, index) => (
           <Carousel.Item key={index}>
             <div
-              className="hero-slide"
+              className="hero-slide overflow-hidden"
               style={{ backgroundImage: `url(${heroSlides.bgImage})` }}
             >
-              <video
-                className="background-video"
-                autoPlay
-                loop
-                muted
-                playsInline
-
-              >
-                <source className='w-100' src={slide.bgVideo} type="video/mp4" />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, overflow: 'hidden' }}>
+                {/* ✅ Fallback image initially shown */}
                 <img
                   src={bg1}
                   alt="Fallback Background"
+                  className="video-fallback"
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    position: "absolute",
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
                     top: 0,
                     left: 0,
-                    zIndex: 0
+                    zIndex: 1
                   }}
                 />
-                Your browser does not support the video tag.
-              </video>
+
+                {/* ✅ Background video (hides fallback on load) */}
+                <video
+                  className="background-video overflow-hidden"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  onCanPlayThrough={() => {
+                    const fallback = document.querySelector('.video-fallback');
+                    if (fallback) fallback.style.display = 'none';
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    zIndex: 2
+                  }}
+                >
+                  <source className="w-100" src={slide.bgVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
               <div className="slide-overlay"></div>
               <Container className="slide-content">
                 <Row className="align-items-center">
@@ -182,11 +198,11 @@ const HeroSection = ({ onHeroVisibleChange }) => {
                       </motion.div>
 
 
-                        <motion.h1
-                          variants={slideTextVariants}
-                          className="hero-title"
-                          dangerouslySetInnerHTML={{ __html: slide.title }}
-                        ></motion.h1>
+                      <motion.h1
+                        variants={slideTextVariants}
+                        className="hero-title"
+                        dangerouslySetInnerHTML={{ __html: slide.title }}
+                      ></motion.h1>
 
                       <motion.p variants={slideTextVariants} className="hero-subtitle "
                         style={{ textAlign: "justify" }}>
@@ -263,7 +279,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
         ))}
       </div>
       <h1 className='d-none'>
-Welcome to BookMyYagna</h1>
+        Welcome to BookMyYagna</h1>
     </div>
   );
 };

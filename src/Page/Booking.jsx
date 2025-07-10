@@ -151,17 +151,142 @@ const Booking = () => {
     fetchUserProfile();
   }, []);
 
-  const handleOrderedSubmit = async (e) => {
-    e.preventDefault();
+  // const handleOrderedSubmit = async (e) => {
+  //   e.preventDefault();
 
-    const bookingData = {
+  //   const bookingData = {
+  //     poojaId: poojaId,
+  //     planId: selectedPlanId,
+  //     name: name,
+  //     phoneNumber: phone,
+  //     address: specialRequirements,
+  //     amount: selectedPlan?.amount || 0,
+  //     poojaMode: 'online',
+  //     dateOfDelivery: selectedDate?.toISOString().split("T")[0],
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://bookmyyogna.onrender.com/bookings/createBooking",
+  //       bookingData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     if (response.data.success) {
+  //       console.log("Booking successful:", response.data);
+  //       setIsSuccess(true);
+  //       setSelectedDate(null);
+  //       setSelectedPuja(null);
+  //       setNumberOfPeople(5);
+  //       setAddress("");
+  //       setPhone("");
+  //       setEmail("");
+  //       setSpecialRequirements("");
+  //       setType("");
+  //     } else {
+  //       alert("Booking failed. Please try again.");
+  //     }
+  //     setIsSuccess(true);
+
+  //     // Clear form after success
+  //     setTimeout(() => {
+  //       // setIsSuccess(false);
+  //       setSelectedDate(null);
+  //       setSelectedPuja(null);
+  //       setNumberOfPeople(5);
+  //       setAddress("");
+  //       setPhone("");
+  //       setEmail("");
+  //       setSpecialRequirements("");
+  //       setType("");
+  //     }, 3000);
+  //   } catch (error) {
+  //     console.error("Error while booking:", error.message);
+  //     alert("Booking failed. Please try again.");
+  //   }
+  // };
+  
+
+
+
+  const handleOrderedSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    // Step 1: Create Razorpay Order on Backend
+    const orderResponse = await axios.post(
+      "https://bookmyyogna.onrender.com/api/rz1/payment/createOrder",
+      {
+        amount: selectedPlan?.amount, 
+        currency: "INR",
+        email,
+        phoneNumber: phone,
+      },
+      {
+        withCredentials:true
+      }
+    );
+
+    const { order } = orderResponse.data;
+
+    if (!order) {
+      alert("Failed to create order");
+      return;
+    }
+
+    // Step 2: Get Razorpay Key
+    const keyResponse = await axios.get("https://bookmyyogna.onrender.com/api/rz1/payment/getKey",{
+      withCredentials:true
+    });
+    const { key } = keyResponse.data;
+
+    // Step 3: Open Razorpay Checkout
+    const options = {
+      key,
+      amount: order.amount,
+      currency: order.currency,
+      name: name,
+      description: selectedPlan?.heading,
+      order_id: order.id,
+      prefill: {
+        name : name,
+        email : email,
+        contact: phone,
+      },
+      handler: async function (response) {
+         const verificationBody = {
+      razorpay_order_id: response.razorpay_order_id,
+      razorpay_payment_id: response.razorpay_payment_id,
+      razorpay_signature: response.razorpay_signature,
+      amount: order.amount / 100, 
+      currency: order.currency,
+      email : email,
+      phoneNumber: phone,
+    };
+        try {
+          // Step 4: Verify Payment
+          const verifyRes = await axios.post("https://bookmyyogna.onrender.com/api/rz1/payment/verifyPayment", 
+            verificationBody, {
+            withCredentials:true
+          });
+
+          console.log("res razopry" , verifyRes)
+
+          if (verifyRes.data.status === "success") {
+            // Step 5: Save Booking
+           const bookingData = {
       poojaId: poojaId,
       planId: selectedPlanId,
       name: name,
       phoneNumber: phone,
       address: specialRequirements,
       amount: selectedPlan?.amount || 0,
-      poojaMode: type,
+      poojaMode: 'online',
       dateOfDelivery: selectedDate?.toISOString().split("T")[0],
     };
 
@@ -195,7 +320,7 @@ const Booking = () => {
 
       // Clear form after success
       setTimeout(() => {
-        setIsSuccess(false);
+        // setIsSuccess(false);
         setSelectedDate(null);
         setSelectedPuja(null);
         setNumberOfPeople(5);
@@ -209,9 +334,33 @@ const Booking = () => {
       console.error("Error while booking:", error.message);
       alert("Booking failed. Please try again.");
     }
-  };
+          } else {
+            alert("Payment verification failed");
+          }
+        } catch (err) {
+          console.error("Verification error:", err);
+        }
+      },
+      modal: {
+        ondismiss: function () {
+          alert("Payment cancelled by user");
+        },
+      },
+      theme: { color: "#FF8000" },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error("Payment error:", error);
+    alert("Something went wrong during payment.");
+  }
+};
+
+  
   return (
     <>
+    <MainNavbar/>
       <div className="booking-section mt-5">
         <div className="container">
           <motion.div
@@ -419,11 +568,11 @@ const Booking = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>Any Requirements:</label>
+                    <label>Address:</label>
                     <textarea
                       value={specialRequirements}
                       onChange={(e) => setSpecialRequirements(e.target.value)}
-                      placeholder="Enter Your Requirements"
+                      placeholder="Enter Your Address"
                     ></textarea>
                   </div>
 
@@ -451,6 +600,7 @@ const Booking = () => {
           <div className="floating-element elem-3"></div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
