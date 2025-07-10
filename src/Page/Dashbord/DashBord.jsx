@@ -18,6 +18,7 @@ import {
   FaLink,
   FaInfoCircle,
   FaCopy,
+  FaMoneyBill,
 } from "react-icons/fa";
 import {
   MdDashboard,
@@ -25,6 +26,7 @@ import {
   MdNotifications,
   MdClose,
   MdDelete,
+  MdOutlineMoney,
 } from "react-icons/md";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -217,6 +219,8 @@ const Dashboard = () => {
         return renderNotifications();
       case "Pooja Link":
         return renderPoojaLink();
+      case "Payment":
+        return renderPayment();
 
       default:
         return (
@@ -296,6 +300,13 @@ const Dashboard = () => {
               <FaLink size={20} />
               <span>Pooja Link</span>
             </div>
+            <div
+              className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("Payment")}
+            >
+              <FaMoneyBill size={20} />
+              <span>Payment</span>
+            </div>
             <div className="mt-auto">
               <div className="menu-item logout " onClick={() => handleLogout()}>
                 <MdLogout size={22} />
@@ -339,6 +350,13 @@ const Dashboard = () => {
             >
               <FaLink size={20} />
               <span>Pooja Link</span>
+            </div>
+            <div
+              className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
+              onClick={() => handleNavItemClick("Payment")}
+            >
+              <FaMoneyBill size={20} />
+              <span>Payment</span>
             </div>
 
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
@@ -897,6 +915,14 @@ const Dashboard = () => {
         </div>
       </>
     );
+  }
+  
+  function renderPayment() {
+    return (
+      <>
+        <h1>Payment</h1>
+      </>
+    )
   }
 
 
