@@ -120,7 +120,7 @@ const PanditRegistration = () => {
 
     try {
       const response = await axios.post(
-        'https://bookmyyogna.onrender.com/pandit/createPanditCard',
+        'https://api.bookmyyagna.com/pandit/createPanditCard',
         {
           name: formData.name,
           email: formData.email,

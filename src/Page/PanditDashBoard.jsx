@@ -343,9 +343,8 @@ const PanditDashboard = () => {
 
       // Append image and imageName if selected
       if (selectedImage) {
-        // formData.append('image' , selectedImage);  
-        formData.append('image', selectedImage.name); // Send file name
-      }
+      formData.append('panditImage', selectedImage);  // Changed from 'image' to 'panditImage'
+    }
 
       const response = await axios.patch(
         `/pandit/updatePanditcard/${user.id}`,
@@ -374,7 +373,8 @@ const PanditDashboard = () => {
             language: response.data.updatedPandit.language,
             languages: response.data.updatedPandit.language,
             experience: response.data.updatedPandit.experience,
-            image: response.data.updatedPandit.image || prev.image,
+                 // Use the 'image' field from response (not 'panditImage')
+          image: response.data.updatedPandit.image || prev.image,
           }));
           setSelectedImage(null); // Reset image after successful update
         }
@@ -742,18 +742,23 @@ const PanditDashboard = () => {
         <Card.Body>
           <div className="d-flex align-items-center mb-4 position-relative">
             <div className="position-relative">
-              <img
-                src={
-                  selectedImage
-                    ? URL.createObjectURL(selectedImage) // Show preview if user selects new image
-                    : user.image  // Show existing image or fallback
-                }
-                alt="Pandit"
-                className="rounded-circle me-3"
-                style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
-              // onError={(e) => (e.target.src = 'https://via.placeholder.com/60')}
-              />
-
+               <img
+          src={
+            selectedImage
+              ? URL.createObjectURL(selectedImage) // Show preview of newly selected image
+              : user.image
+                ? user.image.includes('http') 
+                  ? user.image // Full URL already
+                  : `${axios.defaults.baseURL}${user.image.startsWith('/') ? '' : '/'}${user.image}`
+                : 'https://via.placeholder.com/60' // Fallback image
+          }
+          alt="Pandit"
+          className="rounded-circle me-3"
+          style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/60';
+          }}
+        />
               {isEditingProfile && (
                 <div
                   className="position-absolute bottom-0 start-0 bg-primary rounded-circle d-flex align-items-center justify-content-center"
@@ -890,7 +895,6 @@ const PanditDashboard = () => {
               </p>
 
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
-              <p><strong>Address:</strong> {user.address || 'N/A'}</p>
               <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
               <Button
                 variant="primary"

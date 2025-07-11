@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://bookmyyogna.onrender.com',
+  baseURL: 'https://api.bookmyyagna.com',
   withCredentials: true, 
 });
 

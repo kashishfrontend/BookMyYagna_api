@@ -20,7 +20,7 @@ export const loginPandit = (userName, password) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      'https://bookmyyogna.onrender.com/pandit/loginPandit',
+      'https://api.bookmyyagna.com/pandit/loginPandit',
       { userName, password },
       { withCredentials: true }
     );
@@ -54,7 +54,7 @@ export const logoutPandit = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      'https://bookmyyogna.onrender.com/user/logoutUser',
+      'https://api.bookmyyagna.com/user/logoutUser',
       { withCredentials: true }
     );
 
@@ -81,7 +81,7 @@ export const resetLogoutPanditState = () => ({
 export const checkPanditAuth = () => async (dispatch) => {
   try {
     await axios.get(
-      'https://bookmyyogna.onrender.com/pandit/authenticationPandit',
+      'https://api.bookmyyagna.com/pandit/authenticationPandit',
       { withCredentials: true }
     );
 
