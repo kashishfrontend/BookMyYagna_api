@@ -123,24 +123,6 @@ const FAQPage = () => {
                             </motion.div>
                         </Col>
                     </Row>
-
-                    <motion.div
-                        className="faq-contact-info text-center mt-5"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5, duration: 0.6 }}
-                    >
-                        <p>Still have questions? We're here to help!</p>
-                        <div className="contact-options">
-                            <a href="#!" className="contact-option" onClick={() => setShowModal(true)}>
-                                <i className="fas fa-envelope"></i> Email Us
-                            </a>
-                            <a href="#" className="contact-option">
-                                <i className="fas fa-comments"></i> Live Chat
-                            </a>
-                        </div>
-                    </motion.div>
                 </Container>
                 {showModal && (
                     <div style={styles.overlay}>

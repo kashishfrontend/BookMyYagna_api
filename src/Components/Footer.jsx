@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="col-lg-4 col-md-6 mb-4 mb-md-0 footer-info" style={{ padding: "10px 50px" }}>
               <Link
                 to="/"
-               
+
                 style={{ textDecoration: 'none', color: 'inherit' }}
                 title="Scroll to Top"
               >
@@ -96,7 +96,7 @@ const Footer = () => {
             </div>
 
             <div>
-          
+
             </div>
           </div>
         </div>
@@ -109,21 +109,21 @@ const Footer = () => {
             <div className="col-12">
               <div className="footer-mandala"></div>
               <p className="copyright">
-  © {new Date().getFullYear()} BookmyYagna – A Product of{" "}
-  <a
-    href="https://innovizetechsolution.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      color: 'inherit',
-      textDecoration: 'none',
-    }}
-    onMouseEnter={e => (e.target.style.color = 'blue')}
-    onMouseLeave={e => (e.target.style.color = 'inherit')}
-  >
-    Innovize Tech Solutions Pvt. Ltd.
-  </a>
-</p>
+                © {new Date().getFullYear()} BookmyYagna – A Product of{" "}
+                <a
+                  href="https://innovizetechsolution.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={e => (e.target.style.color = 'blue')}
+                  onMouseLeave={e => (e.target.style.color = 'inherit')}
+                >
+                  Innovize Tech Solutions Pvt. Ltd.
+                </a>
+              </p>
 
               <div className="footer-bottom-links">
                 <Link to={"/privacy-policy"}>Privacy Policy</Link>

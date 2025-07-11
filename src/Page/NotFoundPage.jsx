@@ -70,8 +70,8 @@ const NotFoundPage = () => {
         rel="stylesheet"
       />
 
-      <div className="vh-100 position-relative overflow-hidden d-flex align-items-center justify-content-center pb-4," style={{
-        background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fff7ed 100%)', marginTop: "10%"
+      <div className=" overflow-hidden d-flex align-items-center justify-content-center ," style={{
+        background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fff7ed 100%)', marginTop:"8%"
       }}>
 
         {/* Animated Background Particles */}
@@ -96,7 +96,7 @@ const NotFoundPage = () => {
         {floatingElements.map((element, index) => (
           <div
             key={index}
-            className="position-absolute user-select-none"
+            className="position-absolute user-select-none mt-5"
             style={{
               left: `${10 + index * 15}%`,
               top: `${20 + (index % 3) * 20}%`,
@@ -133,7 +133,7 @@ const NotFoundPage = () => {
         <div className="container text-center position-relative" style={{ zIndex: 20, maxWidth: '800px' }}>
 
           {/* Animated 404 Text */}
-          <div className="position-relative mb-5 overflow-visible">
+          <div className="position-relative  overflow-visible">
             <div
               className="position-absolute top-0 start-50 translate-middle-x fw-bold text-warning opacity-50"
               style={{
@@ -171,7 +171,7 @@ const NotFoundPage = () => {
           </div>
 
           {/* Sacred Symbol Animation */}
-          <div className="mb-5 position-relative">
+          <div className=" position-relative">
             <div
               className="d-inline-block mb-4"
               style={{
