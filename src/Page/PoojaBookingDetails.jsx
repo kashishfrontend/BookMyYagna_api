@@ -110,7 +110,7 @@ const PoojaBookingDetails = () => {
   useEffect(() => {
     if (poojaId) {
       axios
-        .get(`https://bookmyyogna.onrender.com/pooja/getPooja/${poojaId}`)
+        .get(`https://api.bookmyyagna.com/pooja/getPooja/${poojaId}`)
         .then((response) => {
           console.log(response);
           if (response.data.success) {
@@ -151,10 +151,10 @@ const PoojaBookingDetails = () => {
           content="Discover authentic pooja services at BookMyYogna. Book trusted pandits for your spiritual rituals with ease."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bookmyyogna.onrender.com/pooja-list" />
-        <meta property="og:image" content="https://bookmyyogna.onrender.com/images/pooja-og-image.jpg" />
+        <meta property="og:url" content="https://api.bookmyyagna.com/pooja-list" />
+        <meta property="og:image" content="https://api.bookmyyagna.com/images/pooja-og-image.jpg" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://bookmyyogna.onrender.com/pooja-list" />
+        <link rel="canonical" href="https://api.bookmyyagna.com/pooja-list" />
       </Helmet>
       <div className="pooja-detail-page mt-5" style={{ padding: "20px" }}>
         <Container>

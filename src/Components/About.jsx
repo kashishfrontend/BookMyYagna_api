@@ -46,7 +46,8 @@ const AboutUs = () => {
             <h2>
               About <span className="text-gradient">BookMyYagna</span>
             </h2>
-            <p className="pb-3">
+
+            <p>BookMyYagna is a spiritual service platform powered by <a href="https://innovizetechsolution.com" target="_blank">Innovize Tech Solutions</a> – delivering innovative IT solutions for modern businesses.
               Your trusted platform for online Vedic pujas with experienced
               Pandits across India.
             </p>

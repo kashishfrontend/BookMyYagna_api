@@ -36,10 +36,10 @@ const ScaredBooking = () => {
           content="Discover authentic puja services at BookMyYogna. Book trusted pandits for your spiritual rituals with ease."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bookmyyogna.onrender.com/puja-list" />
-        <meta property="og:image" content="https://bookmyyogna.onrender.com/images/puja-og-image.jpg" />
+        <meta property="og:url" content="https://api.bookmyyagna.com/puja-list" />
+        <meta property="og:image" content="https://api.bookmyyagna.com/images/puja-og-image.jpg" />
         {/* Canonical URL */}
-        <link rel="canonical" href="https://bookmyyogna.onrender.com/puja-list" />
+        <link rel="canonical" href="https://api.bookmyyagna.com/puja-list" />
       </Helmet>
     <section
       style={{ backgroundColor: "#fef9f5", color: "#4b2e2e", marginTop:"80px" }}

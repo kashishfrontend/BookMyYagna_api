@@ -19,7 +19,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      `https://bookmyyogna.onrender.com/user/loginUser`,
+      `https://api.bookmyyagna.com/user/loginUser`,
       { email, password },
       {
         withCredentials: true,
@@ -48,7 +48,7 @@ export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGOUT_REQUEST });
     const response = await axios.get(
-      'https://bookmyyogna.onrender.com/user/logoutUser',
+      'https://api.bookmyyagna.com/user/logoutUser',
       { withCredentials: true }
     );
 
@@ -67,7 +67,7 @@ export const resetLogoutState = () => {
 export const checkAuth = () => async (dispatch) => {
   try {
     const response = await axios.get(
-      'https://bookmyyogna.onrender.com/user/authenticateUser',
+      'https://api.bookmyyagna.com/user/authenticateUser',
       { withCredentials: true }
     );
 
