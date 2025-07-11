@@ -20,10 +20,10 @@ const PanchangCalendar = () => {
 
   useEffect(() => {
     AOS.init({
-       duration: 300,
-       offset: 10,
-       once: true
-       });
+      duration: 300,
+      offset: 10,
+      once: true
+    });
   }, []);
 
   const getFormattedDateParts = (dateObj) => ({
@@ -155,17 +155,23 @@ const PanchangCalendar = () => {
               <p className="info-loading">Loading...</p>
             ) : panchangDetails ? (
               <>
-                <div className="info-section">
-                  <h5>• Tithi</h5>
-                  <p>{panchangDetails.tithi}</p>
-                </div>
-                <div className="info-section">
-                  <h5>• Nakshatra</h5>
-                  <p>{panchangDetails.nakshatra}</p>
-                </div>
-                <div className="info-section">
-                  <h5>• Muhurat</h5>
-                  <p>{panchangDetails.muhurat}</p>
+                <div className='row'>
+                
+
+
+                    <div className="info-section col-4 p-0 p-md-2">
+                      <h5 className='m-0'>• Tithi</h5>
+                      <p>{panchangDetails.tithi}</p>
+                    </div>
+                    <div className="info-section col-4 p-0 p-md-2">
+                      <h5  className='m-0'>• Nakshatra</h5>
+                      <p>{panchangDetails.nakshatra}</p>
+                    </div>
+                    <div className="info-section col-4 p-0 p-md-2">
+                      <h5  className='m-0'>• Muhurat</h5>
+                      <p>{panchangDetails.muhurat}</p>
+                    </div>
+              
                 </div>
               </>
             ) : (

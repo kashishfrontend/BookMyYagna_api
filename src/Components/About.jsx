@@ -62,7 +62,7 @@ const AboutUs = () => {
               />
             </Col>
             <Col md={6} data-aos="fade-left">
-              <h3 className="mb-3">Our Divine Mission</h3>
+              <h3 className="mb-3 text-center fs-1 mt-4 mt-md-0">Our <span style={{color:"#FF6D00"}}> Divine Mission </span></h3>
               <p style={{ textAlign: "justify" }}>
                 At BookMyYagna, our mission is to simplify and preserve the rich
                 traditions of Sanatan Dharma by offering authentic Hindu rituals
@@ -89,7 +89,7 @@ const AboutUs = () => {
               </ul>
             </Col>
             <div className="mt-5">
-              <h3 className="text-center fs-1">
+              <h3 className="text-center text-small fs-1">
                 🔱 Why Devotees Trust BookMyYagna
               </h3>
             </div>

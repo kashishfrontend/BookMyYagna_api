@@ -185,7 +185,7 @@ strong {
 
   .info-section {
     margin-bottom: 15px;
-    width: 100%;
+    /* width: 100%; */
   }
 
   .info-heading {
@@ -237,5 +237,8 @@ strong {
   .panchang-calendar-section {
     padding: 0 15px;
     margin-top: 20% !important;
+  }
+  .text-small{
+    font-size: larger !important;
   }
 }
