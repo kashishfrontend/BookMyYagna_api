@@ -12,7 +12,7 @@ import '../../assets/css/ContactUs.css';
 
 const Contact = () => {
   // WhatsApp URL
-  const whatsappUrl = "https://wa.me/918569977750";
+  const whatsappUrl = "https://wa.me/8569977795";
 
   // Social media URLs
   const socialLinks = {
@@ -36,7 +36,11 @@ const Contact = () => {
 
   // Initialize AOS
   useEffect(() => {
-    AOS.init({ duration: 500, once: true });
+    AOS.init({
+      duration: 300,
+      offset: 10,
+      once: true
+    });
   }, []);
 
   // Handle input changes
@@ -154,7 +158,7 @@ const Contact = () => {
               title="Call Us"
               content={
                 <>
-                  <p className="mb-1"><strong>Phone:</strong> +91 8569977750</p>
+                  <p className="mb-1"><strong>Phone:</strong>+91 8569977795</p>
                   <p className="mb-0">10 AM – 8 PM IST (Daily)</p>
                 </>
               }
@@ -169,7 +173,7 @@ const Contact = () => {
                 title="WhatsApp"
                 content={
                   <>
-                    <p className="mb-1"><strong>Chat:</strong> +91 8569977750</p>
+                    <p className="mb-1"><strong>Chat:</strong> +91 8569977795</p>
                     <p className="mb-0">Instant help with puja recommendations & bookings</p>
                   </>
                 }
@@ -233,7 +237,7 @@ const Contact = () => {
                   </Alert>
                 )}
                 <Form onSubmit={handleSubmit}>
-                 <div className='d-md-flex gap-3'>
+                  <div className='d-md-flex gap-3'>
                     <Col xs={12} md={6}>
                       <Form.Group className="mb-3" controlId="formName">
                         <Form.Label>Full Name</Form.Label>
@@ -266,7 +270,7 @@ const Contact = () => {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
-                 </div>
+                  </div>
                   <div className='d-md-flex gap-3'>
                     <Col xs={12} md={6}>
                       <Form.Group className="mb-3" controlId="formPhone">

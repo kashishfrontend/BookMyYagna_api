@@ -21,7 +21,8 @@ const Gallery = () => {
 
     useEffect(() => {
         AOS.init({
-            duration: 500,
+            duration: 300,
+            offset: 10,
             once: false,
             mirror: true
         });
@@ -159,7 +160,7 @@ const Gallery = () => {
 
     return (
         <>
-           
+
             <section className="gallery-section">
                 <Container>
                     <div className="section-header" data-aos="fade-up">
@@ -203,7 +204,7 @@ const Gallery = () => {
                         </button>
                         <button
                             className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}`}
-                        onClick={() => setFilterCategory('decorations')}
+                            onClick={() => setFilterCategory('decorations')}
                         >
                             Decorations
                         </button>

@@ -35,6 +35,9 @@ body {
     /* min-height: 100vh; */
     /* width: 100%; */
 }
+.margin-class{
+    margin-left: 20% !important;
+}
 
 /* Sidebar Styles */
 .sidebar {
@@ -44,8 +47,8 @@ body {
     padding: 20px 0;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    height: 100vh;
+    position: fixed !important;
+    height: 100vh !important;
     box-shadow: var(--shadow-medium);
     transition: all 0.3s ease;
     z-index: 1000;
@@ -334,6 +337,9 @@ body {
     .user-name {
         /* display: none; */
     }
+    .margin-class{
+    margin-left: 0% !important;
+}
 }
 
 
@@ -1045,7 +1051,7 @@ body {
 
 /* =============booked pooja css=========== */
 .custom-table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
     font-family: sans-serif;
     margin-top: 20px;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
 import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit } from 'react-icons/md';
@@ -69,7 +69,7 @@ const PanditDashboard = () => {
         'Expected panditAuthReducer to be registered under "panditauth".'
       );
     }
-    console.log('Pandit State:', panditState);
+    // console.log('Pandit State:', panditState);
   }, [panditState]);
 
   // Handle sidebar responsiveness
@@ -109,7 +109,7 @@ const PanditDashboard = () => {
           withCredentials: true,
           params: { panditId: user.id },
         });
-        console.log('Notifications Response:', response.data);
+        // console.log('Notifications Response:', response.data);
         if (response.data.success) {
           setNotifications(response.data.notifications || response.data.data || []);
         } else {
@@ -138,7 +138,7 @@ const PanditDashboard = () => {
           status: 'Confirmed',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Confirmed Poojas Response:', response.data);
+        // console.log('Confirmed Poojas Response:', response.data);
         if (response.data.success) {
           setConfirmedPoojas(response.data.data || []);
         }
@@ -162,7 +162,7 @@ const PanditDashboard = () => {
           status: 'Completed',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Completed Poojas Response:', response.data);
+        // console.log('Completed Poojas Response:', response.data);
         if (response.data.success) {
           setCompletedPuja(response.data.data || []);
         }
@@ -186,7 +186,7 @@ const PanditDashboard = () => {
           status: 'Cancelled',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Booked Poojas Response:', response.data);
+        // console.log('Booked Poojas Response:', response.data);
         if (response.data.success) {
           setBookedPuja(response.data.data || []);
         }
@@ -223,7 +223,7 @@ const PanditDashboard = () => {
             languages: pandit.language || [],
             image: pandit.image,
             role: pandit.role || 'Pandit',
-           
+
           });
         } else {
           toast.error('Failed to load profile.');
@@ -257,23 +257,23 @@ const PanditDashboard = () => {
   };
 
   const handleLogout = async () => {
-  const toastId = toast.loading('Logging out...');
-  try {
-    const result = await dispatch(logoutPandit());
-    if (result.success) {
+    const toastId = toast.loading('Logging out...');
+    try {
+      const result = await dispatch(logoutPandit());
+      if (result.success) {
+        toast.dismiss(toastId);
+        toast.success(result.message || 'Logout successful!');
+        dispatch(resetLogoutPanditState());
+        navigate('/panditlogin');
+      } else {
+        throw new Error(result.error || 'Logout failed');
+      }
+    } catch (err) {
+      console.error('Pandit logout error:', err);
       toast.dismiss(toastId);
-      toast.success(result.message || 'Logout successful!');
-      dispatch(resetLogoutPanditState());
-      navigate('/panditlogin');
-    } else {
-      throw new Error(result.error || 'Logout failed');
+      toast.error('Failed to logout.');
     }
-  } catch (err) {
-    console.error('Pandit logout error:', err);
-    toast.dismiss(toastId);
-    toast.error('Failed to logout.');
-  }
-};
+  };
 
 
   const handleDeleteNotification = async (id) => {
@@ -297,7 +297,7 @@ const PanditDashboard = () => {
       const response = await axios.get(`/notification/getNotificationById/${id}`, {
         withCredentials: true,
       });
-      console.log('Notification By ID Response:', response.data);
+      // console.log('Notification By ID Response:', response.data);
       if (response.data.success) {
         setSelectedNotification(response.data.notification || response.data);
         setShowModal(true);
@@ -357,7 +357,7 @@ const PanditDashboard = () => {
         }
       );
 
-      console.log('Profile Update Response:', response.data); // Debug response
+      // console.log('Profile Update Response:', response.data); // Debug response
 
       if (response.data.success) {
         toast.success('Profile updated successfully');
@@ -439,9 +439,9 @@ const PanditDashboard = () => {
   };
 
   const renderNotifications = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="text-center mb-4">All Notifications</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           {notifLoading && <p className="text-center text-muted">Loading notifications...</p>}
           {notifError && <p className="text-center text-danger">{notifError}</p>}
@@ -501,7 +501,7 @@ const PanditDashboard = () => {
   );
 
   const renderDashboardContent = () => (
-    <Container fluid className="py-4">
+    <Container fluid className="py-4 margin-class">
       <Row>
         <Col xs={12}>
           <h1 className="welcome-heading">
@@ -510,7 +510,7 @@ const PanditDashboard = () => {
           <p className="welcome-subtext">Welcome back to your spiritual journey</p>
         </Col>
       </Row>
-      <Row className="mb-4">
+      <Row className="mb-4 col-md-9">
         <Col xs={12} sm={6} md={4} className="mb-3">
           <Card className="stats-card">
             <Card.Body>
@@ -552,7 +552,7 @@ const PanditDashboard = () => {
         </Col>
       </Row>
       <h2 className="mb-4">All Poojas</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-9">
         <Card.Body>
           <div className="table-responsive">
             <table className="table table-bordered table-striped">
@@ -617,9 +617,9 @@ const PanditDashboard = () => {
   );
 
   const renderCompletedPoojaDetails = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="mb-4">Completed Pooja</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           <div className="table-responsive">
             <table className="table table-bordered table-striped">
@@ -675,11 +675,11 @@ const PanditDashboard = () => {
   );
 
   const renderPoojaLink = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h2 className="mb-4">Pooja Timing</h2>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
-          <div className="table-responsive">
+          <div className="table-responsive ">
             <table className="table table-bordered table-striped">
               <thead className="table-header">
                 <tr>
@@ -735,10 +735,10 @@ const PanditDashboard = () => {
   );
 
   const renderPunditProfile = () => (
-    <Container className="py-4">
+    <Container className="py-4 margin-class">
       <h1 className="welcome-heading">Pandit Profile</h1>
       <p className="welcome-subtext">Manage your personal and professional details</p>
-      <Card className="shadow-sm">
+      <Card className="shadow-sm col-md-10">
         <Card.Body>
           <div className="d-flex align-items-center mb-4 position-relative">
             <div className="position-relative">
@@ -775,7 +775,7 @@ const PanditDashboard = () => {
               )}
             </div>
             <div>
-              <h3 className="mb-1">{user.fullName   }</h3>
+              <h3 className="mb-1">{user.fullName}</h3>
               <p className="mb-0 text-muted">{user.role}</p>
             </div>
           </div>
@@ -840,7 +840,7 @@ const PanditDashboard = () => {
                     name="languages"
                     value={Array.isArray(user.languages) ? user.languages.join(', ') : user.languages || ''}
 
-                    
+
                     // value={user.languages?.join(', ') || ''}
                     onChange={handleInputChange}
                   />
@@ -886,13 +886,13 @@ const PanditDashboard = () => {
               <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
               <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
               {/* <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>  */}
-              <p><strong>Languages:</strong> 
-  {Array.isArray(user.languages) 
-    ? user.languages.join(', ') 
-    : typeof user.languages === 'string' 
-      ? user.languages 
-      : 'N/A'}
-</p>
+              <p><strong>Languages:</strong>
+                {Array.isArray(user.languages)
+                  ? user.languages.join(', ')
+                  : typeof user.languages === 'string'
+                    ? user.languages
+                    : 'N/A'}
+              </p>
 
               <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
               <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
@@ -919,10 +919,10 @@ const PanditDashboard = () => {
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
         </div>
         <div
-         className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
+          className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
         >
           <div className="logo-container p-4">
-            <h2 className="logo">BookmyYagna</h2>
+            <h2 className="logo"><Link className='logo text-decoration-none' to={'/'}>BookmyYagna</Link></h2>
           </div>
           <div className="sidebar-menu">
             <div
@@ -969,11 +969,11 @@ const PanditDashboard = () => {
         <div className={`main-content col-12 col-lg-10 ${showSidebar ? '' : 'expanded'}`}>
           <div className="top-nav d-flex justify-content-between align-items-center p-4">
             <div className="search-bar d-none d-md-flex align-items-center">
-              <Form.Control
+              {/* <Form.Control
                 type="text"
                 placeholder="Search for poojas, priests, temples..."
                 className="rounded-start"
-              />
+              /> */}
               <Button variant="primary" className="rounded-end">
                 <i className="fas fa-search"></i>
               </Button>

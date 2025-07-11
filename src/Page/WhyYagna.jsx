@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 
 const WhyYagna = () => {
     useEffect(() => {
-        AOS.init({ duration: 500 });
+        AOS.init({
+            duration: 300,
+            offset: 10,
+        });
     }, []);
 
     return (
@@ -18,7 +21,7 @@ const WhyYagna = () => {
                         <span className="om-symbol">ॐ</span>
                     </div>
                     <div className="section-title">
-                        <h3>Why <span style={{position:"relative", right:"5px"}}>Yagna & Puja</span>Ceremonies Matter
+                        <h3>Why <span style={{ position: "relative", right: "5px" }}>Yagna & Puja</span>Ceremonies Matter
                         </h3>
                     </div>
                     <p>Every thought, action, and moment generates energy. Aligning with this universal energy through Puja and Yagna ceremonies brings peace, positivity, and spiritual harmony into our lives.
@@ -32,7 +35,7 @@ const WhyYagna = () => {
                         <h5>• For Celebrations:</h5>
                         <p>
                             From <strong> weddings, birthdays,  housewarmings, </strong> to new ventures—every special occasion calls for divine blessings. <strong>BookMyYagna</strong> offers <Link to={'/listofpuja'}>online puja booking</Link  > with trusted pandits and sacred rituals like Hawan and puja, available at your comfort.
-                           
+
 
                         </p>
                     </div>

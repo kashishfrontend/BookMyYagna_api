@@ -18,7 +18,8 @@ const WhyChooseUs = () => {
     const { ref, inView } = useInView({ triggerOnce: true });
     useEffect(() => {
         AOS.init({
-            duration: 500,
+          duration: 300,
+            offset: 10,
             once: false,
             mirror: true,
         });

@@ -38,7 +38,8 @@ const PoojaBookingDetails = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 500,
+     duration: 300,
+     offset: 10,
       once: false,
       mirror: true,
     });
