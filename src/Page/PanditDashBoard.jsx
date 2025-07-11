@@ -1077,7 +1077,17 @@ const PanditDashboard = () => {
       </div>
       <footer className="dashboard-footer">
         <div className="footer-content text-center">
-          <p className="m-0">© 2025 Innovize Tech All rights reserved.</p>
+          <p className="m-0">
+  © 2025 <a
+    href="https://innovizetechsolution.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-decoration-none text-dark hover-link"
+  >
+    Innovize Tech Solution Pvt Ltd
+  </a> All rights reserved.
+</p>
+
           <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
