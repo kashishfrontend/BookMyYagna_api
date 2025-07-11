@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff, User, Lock, Sun, Moon, Star, Phone } from 'lucide-react';
 import { GiLotus } from 'react-icons/gi';
@@ -131,7 +131,7 @@ const PanditLogin = () => {
   // }, [successPandit, isPanditAuthenticated, navigate, dispatch]);
 
 
- const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const toastId = toast.loading('Logging in...');
     dispatch(loginPandit(userName, password)).then(() => {
@@ -140,25 +140,25 @@ const PanditLogin = () => {
   };
 
   useEffect(() => {
-  console.log('Login check =>', {
-    successPandit,
-    isPanditAuthenticated,
-    error,
-  });
+    console.log('Login check =>', {
+      successPandit,
+      isPanditAuthenticated,
+      error,
+    });
 
-  if (successPandit && isPanditAuthenticated) {
-    toast.success('Login successful!');
-    navigate('/');
-  }
+    if (successPandit && isPanditAuthenticated) {
+      toast.success('Login successful!');
+      navigate('/');
+    }
 
-  if (error) {
-    toast.error(error);
-  }
+    if (error) {
+      toast.error(error);
+    }
 
-  return () => {
-    dispatch(resetLoginPandit());
-  };
-}, [successPandit, isPanditAuthenticated, error, dispatch, navigate]);
+    return () => {
+      dispatch(resetLoginPandit());
+    };
+  }, [successPandit, isPanditAuthenticated, error, dispatch, navigate]);
 
 
 
@@ -373,10 +373,11 @@ const PanditLogin = () => {
                           Forgot Password?
                         </a>
                       </div> */}
-                      <div className="col-6">
-                        <a href="/panditregister" className="link-success">
+                      <div className="">
+
+                        <Link to="/panditregister" className="link-success">
                           New Pandit? Join Us
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

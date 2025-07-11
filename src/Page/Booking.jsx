@@ -431,7 +431,7 @@ const Booking = () => {
                 </div>
 
                 <form onSubmit={handleOrderedSubmit}>
-                  <div className="form-row">
+                  <div className="form-row ">
                     <div className="form-group">
                       <label>Your Name:</label>
                       <input
@@ -442,9 +442,6 @@ const Booking = () => {
                         required
                       />
                     </div>
-                  </div>
-
-                  <div className="form-row">
                     <div className="form-group">
                       <label>Your Email:</label>
                       <input
@@ -455,6 +452,10 @@ const Booking = () => {
                         required
                       />
                     </div>
+                  </div>
+
+                  <div className="form-row">
+
 
                     <div className="form-group">
                       <label>Phone Number:</label>
@@ -466,34 +467,6 @@ const Booking = () => {
                         required
                       />
                     </div>
-                  </div>
-                  {/* <div className="form-group col-6">
-                      <label>Select Type:</label>
-                      <select
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        required
-                      >
-                        <option value="">Select type</option>
-                        <option value="online">Online</option>
-                        <option value="offline">Offline</option>
-                      </select>
-                    </div> */}
-
-                  <div className="form-row">
-                    <div className="form-group col-6">
-                      <label>Type:</label>
-                      <select
-                        className="form-control"
-                        name="type"
-                        value="online"
-                        disabled
-                      >
-                        <option value="online">Online</option>
-                      </select>
-                      <input type="hidden" name="type" value="online" />
-                    </div>
-
                     <div className="form-group col-6">
                       <label>Select Date of Puja:</label>
                       <DatePicker
@@ -509,6 +482,37 @@ const Booking = () => {
                     </div>
                   </div>
 
+
+                  <div className="form-row">
+                    <div className="form-group col-6">
+                      <label>Type:</label>
+                      <select
+                        className="form-control"
+                        name="type"
+                        value="online"
+                        disabled
+                      >
+                        <option value="online">Online</option>
+                      </select>
+                      <input type="hidden" name="type" value="online" />
+                    </div>
+                    <div className="form-group col-6">
+                      <label>Pay by:</label>
+                      <select
+                        className="form-control"
+                        name="type"
+                        value="online"
+                        disabled
+                      >
+                        <option value="online">Razorpay</option>
+                      </select>
+                      <input type="hidden" name="type" value="online" />
+                    </div>
+
+
+
+                  </div>
+
                   <div className="form-group">
                     <label>Address:</label>
                     <textarea
@@ -518,7 +522,7 @@ const Booking = () => {
                     ></textarea>
                   </div>
 
-                 
+
                   <motion.button
                     type="submit"
                     className="book-now-btn"
@@ -535,7 +539,7 @@ const Booking = () => {
               </motion.div>
             </div>
           )}
-          
+
         </div>
 
         <div className="decorative-elements">
