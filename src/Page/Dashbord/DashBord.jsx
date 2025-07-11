@@ -421,7 +421,7 @@ const Dashboard = () => {
               className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
               onClick={() => handleNavItemClick("Payment")}
             >
-              <FaMoneyBill size={20} />
+              <FaMoneyBill size={20}/>
               <span>Payment</span>
             </div>
 

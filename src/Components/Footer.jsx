@@ -109,8 +109,8 @@ const Footer = () => {
             <div className="col-12">
               <div className="footer-mandala"></div>
               <p className="copyright">
-                © {new Date().getFullYear()} BookmyYagna – A Product of Innovize
-                Tech Solutions Pvt. Ltd.
+                © {new Date().getFullYear()} BookmyYagna – A Product of <b> <Link className='text-decoration-none' to={'/https://innovizetechsolution.com/'}> Innovize
+                Tech Solutions Pvt. Ltd.</Link></b>
               </p>
               <div className="footer-bottom-links">
                 <Link to={"/privacy-policy"}>Privacy Policy</Link>

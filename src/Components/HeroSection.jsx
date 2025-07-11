@@ -4,7 +4,7 @@ import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar2Check, Bell, Star } from 'react-bootstrap-icons';
 import image from '../assets/img/om-123.png';
-import bg1 from '../assets/img/fall-back-img.png';
+import bg1 from '../assets/img/fall-back-img.webp';
 import bg2 from '../assets/img/bg-3.webp';
 import bg3 from '../assets/img/bg--2.webp';
 import vdo1 from '../assets/videos/pooja1.webm';
