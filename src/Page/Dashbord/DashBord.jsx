@@ -34,7 +34,7 @@ import "../../assets/css/Dashbord.css";
 import axios from "../../Api/axios/axios_config";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from "../../redux/action/authAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CCloseButton } from "@coreui/react";
 import { GiClosedBarbute } from "react-icons/gi";
 import { Download } from "lucide-react";
@@ -62,10 +62,11 @@ const Dashboard = () => {
 
 
 
-    // Initialize AOS
-   useEffect(() => {
+  // Initialize AOS
+  useEffect(() => {
     AOS.init({
-      duration: 500, // animation duration in ms
+      duration: 300,
+      offset: 10, // animation duration in ms
       // once: true,     // animation happens only once on scroll
     });
   }, [renderPoojaLink]);
@@ -334,7 +335,7 @@ const Dashboard = () => {
           className={`sidebar d-block d-lg-none ${showSidebar ? "active" : ""}`}
         >
           <div className="logo-container">
-            <h2 className="logo">BookmyYagna</h2>
+            <h2 className="logo ">BookmyYagna</h2>
           </div>
           <div className="sidebar-menu">
             <div
@@ -385,7 +386,7 @@ const Dashboard = () => {
           className={`sidebar col-12 position-sticky col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
         >
           <div className="logo-container">
-            <h2 className="logo">BookmyYagna</h2>
+            <h2 className="logo "><Link className="logo text-decoration-none" to={'/'}>BookmyYagna</Link></h2>
           </div>
           <div className="sidebar-menu">
             <div
@@ -883,7 +884,7 @@ const Dashboard = () => {
           <div className="text-center fs-1 mb-3">
             <h2 className="fs-2">Pooja Link</h2>
           </div>
-          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : '' }>
+          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : ''}>
             <table className="custom-table table-bordered table-striped ">
               <thead className="table-warning">
                 <tr>

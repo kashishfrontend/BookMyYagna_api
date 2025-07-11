@@ -36,7 +36,11 @@ const Contact = () => {
 
   // Initialize AOS
   useEffect(() => {
-    AOS.init({ duration: 500, once: true });
+    AOS.init({
+      duration: 300,
+      offset: 10,
+      once: true
+    });
   }, []);
 
   // Handle input changes
@@ -233,7 +237,7 @@ const Contact = () => {
                   </Alert>
                 )}
                 <Form onSubmit={handleSubmit}>
-                 <div className='d-md-flex gap-3'>
+                  <div className='d-md-flex gap-3'>
                     <Col xs={12} md={6}>
                       <Form.Group className="mb-3" controlId="formName">
                         <Form.Label>Full Name</Form.Label>
@@ -266,7 +270,7 @@ const Contact = () => {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
-                 </div>
+                  </div>
                   <div className='d-md-flex gap-3'>
                     <Col xs={12} md={6}>
                       <Form.Group className="mb-3" controlId="formPhone">

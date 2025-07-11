@@ -7,7 +7,10 @@ import '../assets/css/servicepanchang.css'
 import { Link } from 'react-router-dom';
 const Services = () => {
     useEffect(() => {
-        AOS.init({ duration: 500 });
+        AOS.init({
+            duration: 300,
+             offset: 10
+        });
     }, []);
 
     const panchangData = [
@@ -90,10 +93,10 @@ const Services = () => {
                         </Col>
 
                     ))}
-                    <Card.Footer className="bg-transparent border-0 text-center py-3 overflow-hidden"  style={{
-                            animation: 'zoomInOut 2s infinite ease-in-out',
-                            transformOrigin: 'center',
-                        }}>
+                    <Card.Footer className="bg-transparent border-0 text-center py-3 overflow-hidden" style={{
+                        animation: 'zoomInOut 2s infinite ease-in-out',
+                        transformOrigin: 'center',
+                    }}>
                         <Link to="/panchang" className="text-decoration-none border border-danger p-2  fw-bold">
                             Lets see Calender→
                         </Link>

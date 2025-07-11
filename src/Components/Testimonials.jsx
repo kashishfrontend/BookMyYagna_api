@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const Testimonial = () => {
     useEffect(() => {
         AOS.init({
-            duration: 500,
+           duration: 300,
+            offset: 10,
             once: false,
             mirror: true,
         });

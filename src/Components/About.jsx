@@ -7,7 +7,11 @@ import "../assets/css/About.css";
 import { Helmet } from 'react-helmet-async';
 const AboutUs = () => {
   useEffect(() => {
-    AOS.init({ duration: 500, once: true });
+    AOS.init({
+      duration: 300,
+      offset: 10,
+      once: true
+    });
   }, []);
   return (
     <>

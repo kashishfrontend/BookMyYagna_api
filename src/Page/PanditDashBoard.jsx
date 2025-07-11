@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
 import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit } from 'react-icons/md';
@@ -69,7 +69,7 @@ const PanditDashboard = () => {
         'Expected panditAuthReducer to be registered under "panditauth".'
       );
     }
-    console.log('Pandit State:', panditState);
+    // console.log('Pandit State:', panditState);
   }, [panditState]);
 
   // Handle sidebar responsiveness
@@ -109,7 +109,7 @@ const PanditDashboard = () => {
           withCredentials: true,
           params: { panditId: user.id },
         });
-        console.log('Notifications Response:', response.data);
+        // console.log('Notifications Response:', response.data);
         if (response.data.success) {
           setNotifications(response.data.notifications || response.data.data || []);
         } else {
@@ -138,7 +138,7 @@ const PanditDashboard = () => {
           status: 'Confirmed',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Confirmed Poojas Response:', response.data);
+        // console.log('Confirmed Poojas Response:', response.data);
         if (response.data.success) {
           setConfirmedPoojas(response.data.data || []);
         }
@@ -162,7 +162,7 @@ const PanditDashboard = () => {
           status: 'Completed',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Completed Poojas Response:', response.data);
+        // console.log('Completed Poojas Response:', response.data);
         if (response.data.success) {
           setCompletedPuja(response.data.data || []);
         }
@@ -186,7 +186,7 @@ const PanditDashboard = () => {
           status: 'Cancelled',
           panditId: user.id,
         }, { withCredentials: true });
-        console.log('Booked Poojas Response:', response.data);
+        // console.log('Booked Poojas Response:', response.data);
         if (response.data.success) {
           setBookedPuja(response.data.data || []);
         }
@@ -297,7 +297,7 @@ const PanditDashboard = () => {
       const response = await axios.get(`/notification/getNotificationById/${id}`, {
         withCredentials: true,
       });
-      console.log('Notification By ID Response:', response.data);
+      // console.log('Notification By ID Response:', response.data);
       if (response.data.success) {
         setSelectedNotification(response.data.notification || response.data);
         setShowModal(true);
@@ -358,7 +358,7 @@ const PanditDashboard = () => {
         }
       );
 
-      console.log('Profile Update Response:', response.data); // Debug response
+      // console.log('Profile Update Response:', response.data); // Debug response
 
       if (response.data.success) {
         toast.success('Profile updated successfully');
@@ -918,7 +918,7 @@ const PanditDashboard = () => {
           className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
         >
           <div className="logo-container p-4">
-            <h2 className="logo">BookmyYagna</h2>
+            <h2 className="logo"><Link className='logo text-decoration-none' to={'/'}>BookmyYagna</Link></h2>
           </div>
           <div className="sidebar-menu">
             <div
@@ -965,11 +965,11 @@ const PanditDashboard = () => {
         <div className={`main-content col-12 col-lg-10 ${showSidebar ? '' : 'expanded'}`}>
           <div className="top-nav d-flex justify-content-between align-items-center p-4">
             <div className="search-bar d-none d-md-flex align-items-center">
-              <Form.Control
+              {/* <Form.Control
                 type="text"
                 placeholder="Search for poojas, priests, temples..."
                 className="rounded-start"
-              />
+              /> */}
               <Button variant="primary" className="rounded-end">
                 <i className="fas fa-search"></i>
               </Button>
