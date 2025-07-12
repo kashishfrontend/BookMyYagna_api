@@ -343,8 +343,8 @@ const PanditDashboard = () => {
 
       // Append image and imageName if selected
       if (selectedImage) {
-      formData.append('panditImage', selectedImage);  // Changed from 'image' to 'panditImage'
-    }
+        formData.append('panditImage', selectedImage);  // Changed from 'image' to 'panditImage'
+      }
 
       const response = await axios.patch(
         `/pandit/updatePanditcard/${user.id}`,
@@ -355,7 +355,7 @@ const PanditDashboard = () => {
             'Content-Type': 'multipart/form-data',
           },
         }
-      );
+      );  
 
       // console.log('Profile Update Response:', response.data); // Debug response
 
@@ -373,8 +373,8 @@ const PanditDashboard = () => {
             language: response.data.updatedPandit.language,
             languages: response.data.updatedPandit.language,
             experience: response.data.updatedPandit.experience,
-                 // Use the 'image' field from response (not 'panditImage')
-          image: response.data.updatedPandit.image || prev.image,
+            // Use the 'image' field from response (not 'panditImage')
+            image: response.data.updatedPandit.image || prev.image,
           }));
           setSelectedImage(null); // Reset image after successful update
         }
@@ -441,7 +441,7 @@ const PanditDashboard = () => {
   const renderNotifications = () => (
     <Container className="py-4 margin-class">
       <h2 className="text-center mb-4">All Notifications</h2>
-      <Card className="shadow-sm col-md-10">
+      <Card className="shadow-sm col-md-12">
         <Card.Body>
           {notifLoading && <p className="text-center text-muted">Loading notifications...</p>}
           {notifError && <p className="text-center text-danger">{notifError}</p>}
@@ -531,7 +531,7 @@ const PanditDashboard = () => {
                 <FaCalendarAlt />
               </div>
               <div className="stats-info">
-                <h5>Completed Poojas</h5>
+                <h5 >Completed Poojas</h5>
                 <h2>{completedPuja.length}</h2>
               </div>
             </Card.Body>
@@ -552,10 +552,10 @@ const PanditDashboard = () => {
         </Col>
       </Row>
       <h2 className="mb-4">All Poojas</h2>
-      <Card className="shadow-sm col-md-9">
+      <Card className=" col-md-9 border border-0 " style={{ background: "none" }}>
         <Card.Body>
           <div className="table-responsive">
-            <table className="table table-bordered table-striped">
+            <table className="table table-bordered custom-table table-striped">
               <thead className="table-header">
                 <tr>
                   <th>Account Name</th>
@@ -618,11 +618,11 @@ const PanditDashboard = () => {
 
   const renderCompletedPoojaDetails = () => (
     <Container className="py-4 margin-class">
-      <h2 className="mb-4">Completed Pooja</h2>
-      <Card className="shadow-sm col-md-10">
+      <h2 className="mb-4 text text-center">Completed Pooja</h2>
+      <Card className="border border-0 col-md-12" style={{ background: 'none' }}>
         <Card.Body>
           <div className="table-responsive">
-            <table className="table table-bordered table-striped">
+            <table className="table table-bordered custom-table table-striped">
               <thead className="table-header">
                 <tr>
                   <th>Account Name</th>
@@ -676,11 +676,11 @@ const PanditDashboard = () => {
 
   const renderPoojaLink = () => (
     <Container className="py-4 margin-class">
-      <h2 className="mb-4">Pooja Timing</h2>
-      <Card className="shadow-sm col-md-10">
+      <h2 className=" text-center">Pooja Timing</h2>
+      <Card className="col-md-12 bg-transparent border border-0">
         <Card.Body>
           <div className="table-responsive ">
-            <table className="table table-bordered table-striped">
+            <table className="table table-bordered custom-table  table-striped">
               <thead className="table-header">
                 <tr>
                   <th>Date Of Pooja</th>
@@ -738,176 +738,132 @@ const PanditDashboard = () => {
     <Container className="py-4 margin-class">
       <h1 className="welcome-heading">Pandit Profile</h1>
       <p className="welcome-subtext">Manage your personal and professional details</p>
-      <Card className="shadow-sm col-md-10">
+      <Card className="shadow-sm col-md-12">
         <Card.Body>
           <div className="d-flex align-items-center mb-4 position-relative">
             <div className="position-relative">
-               <img
-          src={
-            selectedImage
-              ? URL.createObjectURL(selectedImage) // Show preview of newly selected image
-              : user.image
-                ? user.image.includes('http') 
-                  ? user.image // Full URL already
-                  : `${axios.defaults.baseURL}${user.image.startsWith('/') ? '' : '/'}${user.image}`
-                : 'https://via.placeholder.com/60' // Fallback image
-          }
-          alt="Pandit"
-          className="rounded-circle me-3"
-          style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/60';
-          }}
-        />
-              {isEditingProfile && (
-                <div
-                  className="position-absolute bottom-0 start-0 bg-primary rounded-circle d-flex align-items-center justify-content-center"
-                  style={{ width: 24, height: 24, cursor: 'pointer' }}
-                >
-                  <Form.Control
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ opacity: 0, position: 'absolute', width: '100%', height: '100%', cursor: 'pointer' }}
-                  />
-                  <MdEdit size={14} color="white" />
-                </div>
-              )}
+              <img
+                src={
+                  selectedImage
+                    ? URL.createObjectURL(selectedImage) // Show preview of newly selected image
+                    : user.image
+                      ? user.image.includes('http')
+                        ? user.image // Full URL already
+                        : `${axios.defaults.baseURL}${user.image.startsWith('/') ? '' : '/'}${user.image}`
+                      : 'https://via.placeholder.com/60' // Fallback image
+                }
+                alt="Pandit"
+                className="rounded-circle me-3"
+                style={{ width: 60, height: 60, objectFit: 'cover', border: '2px solid #FF7722' }}
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/60';
+                }}
+              />
+              <div
+                className="position-absolute bottom-0 start-0 bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                style={{ width: 24, height: 24, cursor: 'pointer' }}
+              >
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  style={{ opacity: 0, position: 'absolute', width: '100%', height: '100%', cursor: 'pointer' }}
+                />
+                <MdEdit size={14} color="white" />
+              </div>
             </div>
             <div>
               <h3 className="mb-1">{user.fullName}</h3>
               <p className="mb-0 text-muted">{user.role}</p>
             </div>
           </div>
-          {/* {selectedImage && (
-            <div className="mb-3 text-center">
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Preview"
-                className="img-fluid rounded"
-                style={{ maxHeight: '100px' }}
-              />
-              <p className="text-muted small mt-2">File: {selectedImage.name}</p>
-            </div>
-          )} */}
-          {isEditingProfile ? (
-            <Form onSubmit={handleProfileSubmit}>
-              <Row>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Full Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="fullName"
-                    value={user.fullName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={user.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    name="phoneNumber"
-                    value={user.phoneNumber}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Expertise</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="expertise"
-                    value={user.expertise}
-                    onChange={handleInputChange}
-                    rows={2}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Languages</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="languages"
-                    value={Array.isArray(user.languages) ? user.languages.join(', ') : user.languages || ''}
-
-
-                    // value={user.languages?.join(', ') || ''}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Experience (Years)</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="experience"
-                    value={user.experience || ''}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6} className="mb-3">
-                  <Form.Label>Rating</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="rating"
-                    value={user.rating || ''}
-                    readOnly
-                  />
-                </Form.Group>
-                <div className="d-flex justify-content-end mt-3">
-                  <Button
-                    variant="danger"
-                    className="me-2"
-                    onClick={() => {
-                      setIsEditingProfile(false);
-                      setSelectedImage(null);
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button type="submit" variant="primary">
-                    Save Changes
-                  </Button>
-                </div>
-              </Row>
-            </Form>
-          ) : (
-            <div>
-              <p><strong>Email:</strong> {user.email || 'N/A'}</p>
-              <p><strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}</p>
-              <p><strong>Expertise:</strong> {user.expertise || 'N/A'}</p>
-              {/* <p><strong>Languages:</strong> {user.languages?.join(', ') || 'N/A'}</p>  */}
-              <p><strong>Languages:</strong>
-                {Array.isArray(user.languages)
-                  ? user.languages.join(', ')
-                  : typeof user.languages === 'string'
-                    ? user.languages
-                    : 'N/A'}
-              </p>
-
-              <p><strong>Experience:</strong> {user.experience ? `${user.experience} years` : 'N/A'}</p>
-              <p><strong>Rating:</strong> {user.rating ? `${user.rating} / 5` : 'N/A'}</p>
-              <Button
-                variant="primary"
-                onClick={() => setIsEditingProfile(true)}
-              >
-                Edit Profile
-              </Button>
-            </div>
-          )}
+          <Form onSubmit={handleProfileSubmit}>
+            <Row>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="fullName"
+                  value={user.fullName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phoneNumber"
+                  value={user.phoneNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Expertise</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="expertise"
+                  value={user.expertise}
+                  onChange={handleInputChange}
+                  rows={2}
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Languages</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="languages"
+                  value={Array.isArray(user.languages) ? user.languages.join(', ') : user.languages || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Experience (Years)</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="experience"
+                  value={user.experience || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group as={Col} md={6} className="mb-3">
+                <Form.Label>Rating</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="rating"
+                  value={user.rating || ''}
+                  readOnly
+                />
+              </Form.Group>
+              <div className="d-flex justify-content-end mt-3">
+                <Button
+                  variant="danger"
+                  className="me-2"
+                  onClick={() => setSelectedImage(null)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" variant="primary">
+                  Save Changes
+                </Button>
+              </div>
+            </Row>
+          </Form>
         </Card.Body>
       </Card>
     </Container>
-  );
+  );;
 
   return (
     <>
@@ -1082,15 +1038,15 @@ const PanditDashboard = () => {
       <footer className="dashboard-footer">
         <div className="footer-content text-center">
           <p className="m-0">
-  © 2025 <a
-    href="https://innovizetechsolution.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-decoration-none text-dark hover-link"
-  >
-    Innovize Tech Solution Pvt Ltd
-  </a> All rights reserved.
-</p>
+            © 2025 <a
+              href="https://innovizetechsolution.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none text-dark hover-link"
+            >
+              Innovize Tech Solution Pvt Ltd
+            </a> All rights reserved.
+          </p>
 
           <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
             <a href="#privacy">Privacy Policy</a>

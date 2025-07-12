@@ -277,29 +277,29 @@ const Dashboard = () => {
     }
   };
 
-const handleProfileSubmit = async (e) => {
-  e.preventDefault();
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await axios.patch(`/user/editUser`, {
-      fullName: user.fullName,
-      email: user.email,
-      address: user.address,
-      phoneNumber: user.phoneNumber,
-      country: user.country,
-    });
+    try {
+      const response = await axios.patch(`/user/editUser`, {
+        fullName: user.fullName,
+        email: user.email,
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+        country: user.country,
+      });
 
-    if (response.data.success) {
-      toast.success("Profile updated successfully!");
-      setShowProfileModal(false);
-    } else {
-      toast.error(response.data.message || "Update failed.");
+      if (response.data.success) {
+        toast.success("Profile updated successfully!");
+        setShowProfileModal(false);
+      } else {
+        toast.error(response.data.message || "Update failed.");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
     }
-  } catch (error) {
-    console.error("Update error:", error);
-    toast.error(error.response?.data?.message || "Something went wrong!");
-  }
-};
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -440,7 +440,7 @@ const handleProfileSubmit = async (e) => {
               className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
               onClick={() => handleNavItemClick("Payment")}
             >
-              <FaMoneyBill size={20}/>
+              <FaMoneyBill size={20} />
               <span>Payment</span>
             </div>
 
@@ -533,72 +533,72 @@ const handleProfileSubmit = async (e) => {
             <Modal.Body>
               <div>
                 <Col>
-                 <Form onSubmit={handleProfileSubmit}>
-  <Form.Group className="mb-3">
-    <Form.Label>Full Name</Form.Label>
-    <Form.Control
-      type="text"
-      name="fullName"
-      value={user?.fullName}
-      onChange={handleInputChange}
-    />
-  </Form.Group>
+                  <Form onSubmit={handleProfileSubmit}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Full Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="fullName"
+                        value={user?.fullName}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
 
-  <Form.Group className="mb-3">
-    <Form.Label>Email Address</Form.Label>
-    <Form.Control
-      type="email"
-      name="email"
-      value={user?.email}
-      onChange={handleInputChange}
-    />
-  </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email Address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        value={user?.email}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
 
-  <Form.Group className="mb-3">
-    <Form.Label>Phone Number</Form.Label>
-    <Form.Control
-      type="text"
-      name="phoneNumber"
-      value={user?.phoneNumber || ''}
-      onChange={handleInputChange}
-    />
-  </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="phoneNumber"
+                        value={user?.phoneNumber || ''}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
 
-  <Form.Group className="mb-3">
-    <Form.Label>Address</Form.Label>
-    <Form.Control
-      type="text"
-      name="address"
-      value={user?.address || ''}
-      onChange={handleInputChange}
-    />
-  </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="address"
+                        value={user?.address || ''}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
 
-  <Form.Group className="mb-3">
-    <Form.Label>Country</Form.Label>
-    <Form.Control
-      type="text"
-      name="country"
-      value={user?.country || ''}
-      onChange={handleInputChange}
-    />
-  </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="country"
+                        value={user?.country || ''}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
 
-  <div className="d-flex justify-content-end mt-4">
-    <Button variant="danger" className="me-2" onClick={() => setShowProfileModal(false)}>
-      Cancel
-    </Button>
-    <Button
-      type="submit"
-      style={{
-        backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)',
-        border: 'none',
-      }}
-    >
-      Save Changes
-    </Button>
-  </div>
-</Form>
+                    <div className="d-flex justify-content-end mt-4">
+                      <Button variant="danger" className="me-2" onClick={() => setShowProfileModal(false)}>
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        style={{
+                          backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)',
+                          border: 'none',
+                        }}
+                      >
+                        Save Changes
+                      </Button>
+                    </div>
+                  </Form>
                 </Col>
               </div>
             </Modal.Body>
@@ -863,9 +863,11 @@ const handleProfileSubmit = async (e) => {
           </Col>
         </Row>
         <div className="text-center fs-1 mb-3">
-          <h2>Booked Puja</h2>
+          <div className="text-center col-md-10">
+            <h2 className="text-center">Booked Puja</h2>
+          </div>
         </div>
-        <div className="table-responsive">
+        <div className="table-responsive col-md-10">
           <table className="custom-table table table-bordered table-striped">
             <thead className="table-warning">
               <tr>
