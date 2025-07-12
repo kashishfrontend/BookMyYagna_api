@@ -40,6 +40,7 @@ import { GiClosedBarbute } from "react-icons/gi";
 import { Download } from "lucide-react";
 import jsPDF from "jspdf";
 import { autoTable } from "jspdf-autotable"; // Updated import
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -276,11 +277,29 @@ const Dashboard = () => {
     }
   };
 
-  const handleProfileSubmit = (e) => {
-    e.preventDefault();
-    console.log("Profile updated:", user);
-    setShowProfileModal(false);
-  };
+const handleProfileSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.patch(`/user/editUser`, {
+      fullName: user.fullName,
+      email: user.email,
+      address: user.address,
+      phoneNumber: user.phoneNumber,
+      country: user.country,
+    });
+
+    if (response.data.success) {
+      toast.success("Profile updated successfully!");
+      setShowProfileModal(false);
+    } else {
+      toast.error(response.data.message || "Update failed.");
+    }
+  } catch (error) {
+    console.error("Update error:", error);
+    toast.error(error.response?.data?.message || "Something went wrong!");
+  }
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -357,14 +376,14 @@ const Dashboard = () => {
               onClick={() => handleNavItemClick("bookings")}
             >
               <FaCalendarAlt size={20} />
-              <span>Completed Pooja</span>
+              <span>Completed Puja</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === "Pooja Link" ? "active" : ""}`}
               onClick={() => handleNavItemClick("Pooja Link")}
             >
               <FaLink size={20} />
-              <span>Pooja Link</span>
+              <span>Puja Link</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
@@ -401,21 +420,21 @@ const Dashboard = () => {
               onClick={() => handleNavItemClick("book")}
             >
               <FaPrayingHands size={20} />
-              <span>Booked Pooja</span>
+              <span>Booked Puja</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === "bookings" ? "active" : ""}`}
               onClick={() => handleNavItemClick("bookings")}
             >
               <FaCalendarAlt size={20} />
-              <span>Completed Pooja</span>
+              <span>Completed Puja</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === "Pooja Link" ? "active" : ""}`}
               onClick={() => handleNavItemClick("Pooja Link")}
             >
               <FaLink size={20} />
-              <span>Pooja Link</span>
+              <span>Puja Link</span>
             </div>
             <div
               className={`menu-item ${activeNavItem === "Payment" ? "active" : ""}`}
@@ -514,38 +533,72 @@ const Dashboard = () => {
             <Modal.Body>
               <div>
                 <Col>
-                  <Form onSubmit={handleProfileSubmit}>
-                    <Form.Group className="mb-3 col-md-12x">
-                      <Form.Label>Full Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        value={user?.fullName}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3 col-md-12">
-                      <Form.Label>Email Address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        value={user?.email}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <div className="d-flex justify-content-end mt-4">
-                      <Button
-                        variant="danger"
-                        className="me-2"
-                        onClick={() => setShowProfileModal(false)}
-                      >
-                        Cancel
-                      </Button>
-                      <Button type="submit" style={{ backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)', border: 'none' }}>
-                        Save Changes
-                      </Button>
-                    </div>
-                  </Form>
+                 <Form onSubmit={handleProfileSubmit}>
+  <Form.Group className="mb-3">
+    <Form.Label>Full Name</Form.Label>
+    <Form.Control
+      type="text"
+      name="fullName"
+      value={user?.fullName}
+      onChange={handleInputChange}
+    />
+  </Form.Group>
+
+  <Form.Group className="mb-3">
+    <Form.Label>Email Address</Form.Label>
+    <Form.Control
+      type="email"
+      name="email"
+      value={user?.email}
+      onChange={handleInputChange}
+    />
+  </Form.Group>
+
+  <Form.Group className="mb-3">
+    <Form.Label>Phone Number</Form.Label>
+    <Form.Control
+      type="text"
+      name="phoneNumber"
+      value={user?.phoneNumber || ''}
+      onChange={handleInputChange}
+    />
+  </Form.Group>
+
+  <Form.Group className="mb-3">
+    <Form.Label>Address</Form.Label>
+    <Form.Control
+      type="text"
+      name="address"
+      value={user?.address || ''}
+      onChange={handleInputChange}
+    />
+  </Form.Group>
+
+  <Form.Group className="mb-3">
+    <Form.Label>Country</Form.Label>
+    <Form.Control
+      type="text"
+      name="country"
+      value={user?.country || ''}
+      onChange={handleInputChange}
+    />
+  </Form.Group>
+
+  <div className="d-flex justify-content-end mt-4">
+    <Button variant="danger" className="me-2" onClick={() => setShowProfileModal(false)}>
+      Cancel
+    </Button>
+    <Button
+      type="submit"
+      style={{
+        backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)',
+        border: 'none',
+      }}
+    >
+      Save Changes
+    </Button>
+  </div>
+</Form>
                 </Col>
               </div>
             </Modal.Body>
@@ -630,9 +683,9 @@ const Dashboard = () => {
       <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
-            <h2>Booked Pooja</h2>
+            <h2>Booked Puja</h2>
           </div>
-          <div className="table-responsive ">
+          <div className="table-responsive d-flex justify-content-center align-items-center ">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -642,8 +695,8 @@ const Dashboard = () => {
                   <th>Phone Number</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>Pooja Mode</th>
-                  <th>Date of Pooja</th>
+                  <th>Puja Mode</th>
+                  <th>Date of Puja</th>
                 </tr>
               </thead>
               <tbody>
@@ -682,9 +735,9 @@ const Dashboard = () => {
       <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
-            <h2>Completed Pooja</h2>
+            <h2>Completed Puja</h2>
           </div>
-          <div className="table-responsive ">
+          <div className="table-responsive d-flex justify-content-center align-items-center">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -694,8 +747,8 @@ const Dashboard = () => {
                   <th>Phone Number</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>Pooja Mode</th>
-                  <th>Date of Pooja</th>
+                  <th>Puja Mode</th>
+                  <th>Date of Puja</th>
                 </tr>
               </thead>
               <tbody>
@@ -762,7 +815,7 @@ const Dashboard = () => {
                   <FaCalendarAlt />
                 </div>
                 <div className="stats-info">
-                  <h5>Upcoming Poojas</h5>
+                  <h5>Upcoming Pujas</h5>
                   <h2>{bookedPuja.length}</h2>
                 </div>
               </Card.Body>
@@ -782,7 +835,7 @@ const Dashboard = () => {
                   <FaPrayingHands />
                 </div>
                 <div className="stats-info">
-                  <h5>Completed Poojas</h5>
+                  <h5>Completed Pujas</h5>
                   <h2>{completedPuja.length}</h2>
                 </div>
               </Card.Body>
@@ -810,7 +863,7 @@ const Dashboard = () => {
           </Col>
         </Row>
         <div className="text-center fs-1 mb-3">
-          <h2>Booked Pooja</h2>
+          <h2>Booked Puja</h2>
         </div>
         <div className="table-responsive">
           <table className="custom-table table table-bordered table-striped">
@@ -822,8 +875,8 @@ const Dashboard = () => {
                 <th>Phone Number</th>
                 <th>Address</th>
                 <th>Status</th>
-                <th>Pooja Mode</th>
-                <th>Date of Pooja</th>
+                <th>Puja Mode</th>
+                <th>Date of Puja</th>
               </tr>
             </thead>
             <tbody>
@@ -882,16 +935,16 @@ const Dashboard = () => {
       <div className="container py-5 margin-class" data-aos="zoom-in">
         <div className="row">
           <div className="text-center fs-1 mb-3">
-            <h2 className="fs-2">Pooja Link</h2>
+            <h2 className="fs-2">Puja Link</h2>
           </div>
-          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : ''}>
-            <table className="custom-table table-bordered table-striped ">
+          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : 'd-flex justify-content-center align-items-center'}>
+            <table className="custom-table table-bordered table-striped  ">
               <thead className="table-warning">
                 <tr>
-                  <th>Date Of Pooja</th>
-                  <th>Pooja Id</th>
-                  <th>Pooja Time</th>
-                  <th>Link Pooja</th>
+                  <th>Date Of Puja</th>
+                  <th>Puja Id</th>
+                  <th>Puja Time</th>
+                  <th>Link Puja</th>
                 </tr>
               </thead>
               <tbody>
@@ -982,7 +1035,7 @@ const Dashboard = () => {
           <div className="text-center fs-1 mb-3">
             <h2>Payment History</h2>
           </div>
-          <div className={isMobileOrTablet ? 'table-responsive' : ''}>
+          <div className={isMobileOrTablet ? 'table-responsive' : 'd-flex justify-content-center align-items-center'}>
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>

@@ -134,7 +134,6 @@
 
         .form-control {
           border: 1px solid rgba(255, 107, 53, 0.2);
-          border-left: none;
           transition: all 0.3s ease;
         }
 
