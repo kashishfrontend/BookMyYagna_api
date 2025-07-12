@@ -168,7 +168,7 @@
       if (isLogin) {
         const toastId = toast.loading('Authenticating...');
         try {
-          await dispatch(login(formData.email, formData.password)).unwrap();
+          await dispatch(login(formData.email, formData.password));
           toast.dismiss(toastId);
         } catch {
           toast.dismiss(toastId);
@@ -178,19 +178,34 @@
       }
     };
 
+    // useEffect(() => {
+    //   if (success) {
+    //     toast.success('Authentication Successful');
+    //     setTimeout(() => {
+    //       dispatch(resetLogin());
+    //       navigate('/');
+    //     }, 1000);
+    //   }
+    //   if (error) {
+    //     toast.error(error);
+    //     dispatch(resetLogin());
+    //   }
+    // }, [success, error, dispatch, navigate]);
     useEffect(() => {
-      if (success) {
-        toast.success('Authentication Successful');
-        setTimeout(() => {
-          dispatch(resetLogin());
-          navigate('/');
-        }, 1000);
-      }
-      if (error) {
-        toast.error(error);
-        dispatch(resetLogin());
-      }
-    }, [success, error, dispatch, navigate]);
+  if (success) {
+    toast.success('Authentication Successful');
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
+  }
+
+  if (error) {
+    toast.error(error);
+  }
+
+  dispatch(resetLogin());
+}, [success, error, dispatch, navigate]);
+
 
     useEffect(() => {
       setFormData({

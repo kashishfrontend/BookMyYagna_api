@@ -20,6 +20,9 @@ const MainNavbar = ({ isHeroVisible }) => {
    const { isPanditAuthenticated } = useSelector(
       (state) => state.panditauth 
     );
+
+    console.log("pandit login" , isPanditAuthenticated);
+    console.log("login" , isAuthenticated);
   const navigate = useNavigate();
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
 
@@ -129,7 +132,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                   <CalendarCheck className="icon" /> About Us
                 </Nav.Link>
               </motion.div>
-             {!isAuthenticated ? (
+             {/* {!isPanditAuthenticated ? (
   <NavDropdown
     title={
       <span className={`d-flex align-items-center ${navTextColor}`}>
@@ -166,7 +169,74 @@ const MainNavbar = ({ isHeroVisible }) => {
       Logout
     </NavDropdown.Item>
   </NavDropdown>
+)} */}
+
+{isAuthenticated && !isPanditAuthenticated ? (
+  // 🧘‍♂️ Regular User Dashboard
+  <NavDropdown
+    title={
+      <span className={`d-flex align-items-center ${navTextColor}`}>
+        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
+        Account
+        <CaretDownFill className="ms-1" size={12} />
+      </span>
+    }
+    id="user-account-dropdown"
+  >
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>
+      Dashboard
+    </NavDropdown.Item>
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogout}>
+      Logout
+    </NavDropdown.Item>
+  </NavDropdown>
+) : isPanditAuthenticated ? (
+  // 🕉️ Pandit Dashboard
+  <NavDropdown
+    title={
+      <span className={`d-flex align-items-center ${navTextColor}`}>
+        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
+        Pandit Account
+        <CaretDownFill className="ms-1" size={12} />
+      </span>
+    }
+    id="pandit-account-dropdown"
+  >
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/panditdashboard')}>
+      Pandit Dashboard
+    </NavDropdown.Item>
+    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogoutPandit}>
+      Logout
+    </NavDropdown.Item>
+  </NavDropdown>
+) : (
+  // 👤 Not Logged In - Show Login Options
+  <NavDropdown
+    title={
+      <span className={`d-flex align-items-center ${navTextColor}`}>
+        <PersonCircle className={`me-2 ${navTextColor}`} />
+        Login
+        <CaretDownFill className="ms-1" size={12} />
+      </span>
+    }
+    id="login-dropdown"
+    className="nav-item"
+  >
+    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/login">
+      User Login
+    </NavDropdown.Item>
+    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/panditlogin">
+      Pandit Login
+    </NavDropdown.Item>
+  </NavDropdown>
 )}
+
+
+
+
+
+
+
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
