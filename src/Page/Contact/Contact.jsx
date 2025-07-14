@@ -5,6 +5,8 @@ import {
 } from 'react-icons/fa';
 import { Helmet } from 'react-helmet-async';
 import { Container, Row, Col, Card, Form, Button, Alert, Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,14 +26,14 @@ const Contact = () => {
 
   // Form state
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     phone: '',
     subject: '',
     message: ''
   });
   const [errors, setErrors] = useState({});
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Initialize AOS
@@ -54,7 +56,7 @@ const Contact = () => {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.fullName.trim()) newErrors.fullName = 'Name is required';
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -71,32 +73,75 @@ const Contact = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
+    
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setSubmitStatus({ type: 'danger', message: 'Please fix the errors in the form.' });
+      toast.error('Please fix the errors in the form.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return;
     }
 
-    // Simulate form submission (log to console for demo)
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
 
-    // Reset form and show success modal
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
-    setErrors({});
-    setSubmitStatus(null);
-    setShowSuccessModal(true);
+    try {
+      const response = await fetch('https://bookmyyogna.onrender.com/contactUs/createContactMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Auto-close modal after 5 seconds
-    setTimeout(() => setShowSuccessModal(false), 5000);
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const data = await response.json();
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+      setErrors({});
+      
+      // Show success message
+      toast.success('Message sent successfully! We will contact you soon.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      setShowSuccessModal(true);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Failed to send message. Please try again later.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -231,11 +276,6 @@ const Contact = () => {
                 <h3 className="text-center mb-4" style={{ color: 'var(--primary-color)' }}>
                   Send Us a Message
                 </h3>
-                {submitStatus && (
-                  <Alert variant={submitStatus.type} className="text-center">
-                    {submitStatus.message}
-                  </Alert>
-                )}
                 <Form onSubmit={handleSubmit}>
                   <div className='d-md-flex gap-3'>
                     <Col xs={12} md={6}>
@@ -243,14 +283,14 @@ const Contact = () => {
                         <Form.Label>Full Name</Form.Label>
                         <Form.Control
                           type="text"
-                          name="name"
-                          value={formData.name}
+                          name="fullName"
+                          value={formData.fullName}
                           onChange={handleInputChange}
                           placeholder="Enter your full name"
-                          isInvalid={!!errors.name}
+                          isInvalid={!!errors.fullName}
                         />
                         <Form.Control.Feedback type="invalid">
-                          {errors.name}
+                          {errors.fullName}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
@@ -329,8 +369,9 @@ const Contact = () => {
                       type="submit"
                       className="btn-primary"
                       style={{ background: 'linear-gradient(180deg, #FF7722, #E65C00)', border: 'none' }}
+                      disabled={isSubmitting}
                     >
-                      Send Message
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>
                   </div>
                 </Form>
