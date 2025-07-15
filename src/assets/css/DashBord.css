@@ -160,6 +160,26 @@ body {
     top: 0;
     z-index: 100;
 }
+.home-back-button {
+  background: linear-gradient(135deg, #ff9854, #ffb178);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(255, 152, 84, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.home-back-button:hover {
+  background: linear-gradient(135deg, #e67e22, #ff9854);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 152, 84, 0.6);
+}
+
 
 /* Search Bar */
 .search-bar {

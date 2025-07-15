@@ -19,6 +19,7 @@ import {
   FaInfoCircle,
   FaCopy,
   FaMoneyBill,
+  FaArrowLeft,
 } from "react-icons/fa";
 import {
   MdDashboard,
@@ -455,11 +456,12 @@ const Dashboard = () => {
         >
           <div className="top-nav">
             <div className="search-bar d-none d-md-flex">
-              {/* <input type="text" placeholder="Search for poo" /> */}
-              <button type="submit">
-                <i className="fas fa-search"></i>
+              <button type="submit" className="home-back-button">
+                <FaArrowLeft className="me-2" /> Back 
+                Home
               </button>
             </div>
+
             <div className="nav-right">
               <div
                 className="user-profile me-2 me-md-3"
@@ -941,7 +943,7 @@ const Dashboard = () => {
           <div className="text-center fs-1 mb-3">
             <h2 className="fs-2">Puja Link</h2>
           </div>
-          <div className= 'table-responsive col-md-12 d-flex justify-content-center align-items-center'>
+          <div className='table-responsive col-md-12 d-flex justify-content-center align-items-center'>
             <table className="custom-table table-bordered table-striped w-100 ">
               <thead className="table-warning">
                 <tr>
