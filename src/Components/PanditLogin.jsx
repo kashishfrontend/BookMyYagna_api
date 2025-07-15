@@ -228,7 +228,7 @@ const PanditLogin = () => {
                   </div>
                 </div>
 
-                <div className="testimonial-card">
+                <div className="testimonial-cards p-3 ">
                   <div className="testimonial-stars">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={16} fill="#FF6B35" color="#FF6B35" />
