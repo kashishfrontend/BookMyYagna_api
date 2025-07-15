@@ -457,11 +457,17 @@ const Dashboard = () => {
           <div className="top-nav">
             <div className="search-bar d-none d-md-flex">
               <button type="submit" className="home-back-button">
-                <FaArrowLeft className="me-2" /> Back 
-                Home
+                <Link className="text-decoration-none text-dark" to={'/'}>
+                  <FaArrowLeft className="me-2" /> Back
+                  Home
+                </Link>
+              </button>
+              <button type="submit" className="home-back-button">
+                <Link className="text-decoration-none text-dark" to={'/contact'}>
+                  Contact
+                </Link>
               </button>
             </div>
-
             <div className="nav-right">
               <div
                 className="user-profile me-2 me-md-3"
@@ -611,9 +617,9 @@ const Dashboard = () => {
         <div className="footer-content text-center">
           <p className="m-0">© 2025 BookmyYagna. All rights reserved.</p>
           <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
-            <a href="#privacy">Privacy Policy</a>
-            <a href="#terms">Terms of Service</a>
-            <a href="#contact">Contact Us</a>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/termsofservice">Terms of Service</Link>
+            <Link to="/contact">Contact Us</Link>
           </div>
         </div>
       </footer>

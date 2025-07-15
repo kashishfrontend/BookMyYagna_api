@@ -18,7 +18,7 @@ function App() {
     <>
 
       <AppRoutes />
-      <FloatingContactButton />
+      
       {/* <ChatbotWidget/> */}
     </>
   )

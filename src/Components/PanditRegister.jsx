@@ -26,9 +26,8 @@ const PanditRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [selectedPoojaTypes, setSelectedPoojaTypes] = useState([]);
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
+  const [termsAgreed, setTermsAgreed] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -42,6 +41,11 @@ const PanditRegistration = () => {
     poojaTypes: [],
     language: []
   });
+
+  const [poojaInput, setPoojaInput] = useState('');
+  const [languageInput, setLanguageInput] = useState('');
+  const [showPoojaSuggestions, setShowPoojaSuggestions] = useState(false);
+  const [showLanguageSuggestions, setShowLanguageSuggestions] = useState(false);
 
   const poojaTypesList = [
     'Ganesh Puja', 'Satyanarayan Puja', 'Lakshmi Puja', 'Durga Puja',
@@ -60,7 +64,7 @@ const PanditRegistration = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError(null); // Clear error on input change
+    setError(null);
   };
 
   const handleImageUpload = (e) => {
@@ -79,22 +83,28 @@ const PanditRegistration = () => {
     setError(null);
   };
 
-  const togglePoojaType = (type) => {
-    const updated = selectedPoojaTypes.includes(type)
-      ? selectedPoojaTypes.filter(t => t !== type)
-      : [...selectedPoojaTypes, type];
-    setSelectedPoojaTypes(updated);
-    setFormData({ ...formData, poojaTypes: updated });
-    setError(null);
+  const addPoojaType = (type) => {
+    if (type && !formData.poojaTypes.includes(type)) {
+      setFormData({ ...formData, poojaTypes: [...formData.poojaTypes, type] });
+      setPoojaInput('');
+      setShowPoojaSuggestions(false);
+    }
   };
 
-  const toggleLanguage = (lang) => {
-    const updated = selectedLanguages.includes(lang)
-      ? selectedLanguages.filter(l => l !== lang)
-      : [...selectedLanguages, lang];
-    setSelectedLanguages(updated);
-    setFormData({ ...formData, language: updated });
-    setError(null);
+  const removePoojaType = (type) => {
+    setFormData({ ...formData, poojaTypes: formData.poojaTypes.filter(t => t !== type) });
+  };
+
+  const addLanguage = (lang) => {
+    if (lang && !formData.language.includes(lang)) {
+      setFormData({ ...formData, language: [...formData.language, lang] });
+      setLanguageInput('');
+      setShowLanguageSuggestions(false);
+    }
+  };
+
+  const removeLanguage = (lang) => {
+    setFormData({ ...formData, language: formData.language.filter(l => l !== lang) });
   };
 
   const handleSubmit = async (e) => {
@@ -102,16 +112,19 @@ const PanditRegistration = () => {
     setError(null);
     setSuccessMessage(null);
 
-    // Validate password match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match!');
       return;
     }
 
-    // Validate required fields
+    if (!termsAgreed) {
+      setError('Please agree to the Terms & Conditions and Privacy Policy!');
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.contactNumber ||
       !formData.password || !formData.experience || !formData.image ||
-      selectedPoojaTypes.length === 0 || selectedLanguages.length === 0) {
+      formData.poojaTypes.length === 0 || formData.language.length === 0) {
       setError('Please fill in all required fields!');
       return;
     }
@@ -139,18 +152,10 @@ const PanditRegistration = () => {
         }
       );
 
-      // Log the full response for debugging
       console.log('API Response:', response.data);
 
-      // Check if response.data exists and has the expected structure
-      if (!response.data) {
-        throw new Error('No data received from the server');
-      }
-
-      // Check if success is true and pandit object exists
       if (response.data.success && response.data.pandit) {
         setSuccessMessage(response.data.message || 'Pandit registered successfully!');
-        // Reset form after successful submission
         setFormData({
           name: '',
           email: '',
@@ -163,22 +168,18 @@ const PanditRegistration = () => {
           poojaTypes: [],
           language: []
         });
-        setSelectedPoojaTypes([]);
-        setSelectedLanguages([]);
         setImagePreview(null);
+        setTermsAgreed(false);
       } else {
         throw new Error(response.data.message || 'Unexpected response structure');
       }
     } catch (err) {
       console.error('Error during API call:', err);
       if (err.response) {
-        // Server responded with an error status
         setError(err.response.data.message || 'Failed to register. Please try again.');
       } else if (err.request) {
-        // No response received (network error)
         setError('Network error. Please check your internet connection.');
       } else {
-        // Other errors (e.g., client-side issue)
         setError(err.message || 'An unexpected error occurred. Please try again.');
       }
     } finally {
@@ -187,8 +188,7 @@ const PanditRegistration = () => {
   };
 
   return (
-    <div className="min-vh-100 position-relative overflow-hidden py-5" style={{marginTop:"2%"}}>
-      {/* Background with animated elements */}
+    <div className="min-vh-100 position-relative overflow-hidden py-5" style={{ marginTop: "2%" }}>
       <div className="position-absolute w-100 h-100 top-0 start-0" style={{
         background: 'linear-gradient(135deg, #fff8f0 0%, #fff2e6 50%, #ffe6cc 100%)',
         zIndex: -2
@@ -219,7 +219,6 @@ const PanditRegistration = () => {
         <div className="row justify-content-center">
           <div className="col-lg-8 col-md-10">
             <div className="registration-card">
-              {/* Header */}
               <div className="text-center mb-4">
                 <div className="logo-container mb-3">
                   <div className="logo-circle">
@@ -233,7 +232,6 @@ const PanditRegistration = () => {
                 </p>
               </div>
 
-              {/* Error/Success Messages */}
               {error && (
                 <div className="alert alert-danger alert-dismissible fade show" role="alert">
                   {error}
@@ -255,12 +253,9 @@ const PanditRegistration = () => {
                 </div>
               )}
 
-              {/* Registration Form */}
               <div className="registration-form">
                 <div className="row">
-                  {/* Left Column */}
                   <div className="col-md-6">
-                    {/* Name Field */}
                     <div className="form-group mb-3">
                       <label className="form-label">Full Name *</label>
                       <div className="input-group">
@@ -279,7 +274,6 @@ const PanditRegistration = () => {
                       </div>
                     </div>
 
-                    {/* Email Field */}
                     <div className="form-group mb-3">
                       <label className="form-label">Email Address *</label>
                       <div className="input-group">
@@ -298,7 +292,6 @@ const PanditRegistration = () => {
                       </div>
                     </div>
 
-                    {/* Contact Number */}
                     <div className="form-group mb-3">
                       <label className="form-label">Contact Number *</label>
                       <div className="input-group">
@@ -317,7 +310,6 @@ const PanditRegistration = () => {
                       </div>
                     </div>
 
-                    {/* Experience */}
                     <div className="form-group mb-3">
                       <label className="form-label">Experience (Years) *</label>
                       <div className="input-group">
@@ -337,9 +329,7 @@ const PanditRegistration = () => {
                       </div>
                     </div>
                   </div>
-                  {/* Right Column */}
                   <div className="col-md-6">
-                    {/* Profile Image Upload */}
                     <div className="form-group mb-3">
                       <label className="form-label">Profile Photo *</label>
                       <div className="image-upload-container">
@@ -363,7 +353,6 @@ const PanditRegistration = () => {
                       </div>
                     </div>
 
-                    {/* Password */}
                     <div className="form-group mb-3">
                       <label className="form-label">Password *</label>
                       <div className="input-group">
@@ -389,7 +378,6 @@ const PanditRegistration = () => {
                       </div>
                     </div>
 
-                    {/* Confirm Password */}
                     <div className="form-group mb-3">
                       <label className="form-label">Confirm Password *</label>
                       <div className="input-group">
@@ -405,15 +393,13 @@ const PanditRegistration = () => {
                           onChange={handleInputChange}
                           required
                         />
-                        <div>
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          >
-                            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                          </button>
-                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        >
+                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -421,48 +407,130 @@ const PanditRegistration = () => {
                   {/* Pooja Types */}
                   <div className="form-group mb-4">
                     <label className="form-label">Pooja Types You Perform *</label>
-                    <div className="selection-container">
-                      {poojaTypesList.map((type) => (
-                        <button
-                          key={type}
-                          type="button"
-                          className={`selection-chip ${selectedPoojaTypes.includes(type) ? 'selected' : ''}`}
-                          onClick={() => togglePoojaType(type)}
-                        >
-                          {type}
-                          {selectedPoojaTypes.includes(type) && <X size={16} className="ms-1" />}
-                        </button>
-                      ))}
+                    <div className="input-group mb-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Type or select a Pooja type"
+                        value={poojaInput}
+                        onChange={(e) => {
+                          setPoojaInput(e.target.value);
+                          setShowPoojaSuggestions(true);
+                        }}
+                        onBlur={() => setTimeout(() => setShowPoojaSuggestions(false), 200)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && poojaInput) addPoojaType(poojaInput);
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => addPoojaType(poojaInput)}
+                        disabled={!poojaInput}
+                      >
+                        <Plus size={16} />
+                      </button>
                     </div>
+                    {showPoojaSuggestions && poojaInput && (
+                      <div className="suggestions-container">
+                        {poojaTypesList
+                          .filter((type) => type.toLowerCase().includes(poojaInput.toLowerCase()))
+                          .map((type) => (
+                            <div
+                              key={type}
+                              className="suggestion-item"
+                              onClick={() => {
+                                addPoojaType(type);
+                                setPoojaInput('');
+                              }}
+                            >
+                              {type}
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                    {formData.poojaTypes.length > 0 && (
+                      <div className="selected-items">
+                        {formData.poojaTypes.map((type) => (
+                          <span key={type} className="selected-chip">
+                            {type} <X size={16} onClick={() => removePoojaType(type)} />
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Languages */}
                   <div className="form-group mb-4">
                     <label className="form-label">Languages You Speak *</label>
-                    <div className="selection-container">
-                      {languagesList.map((lang) => (
-                        <button
-                          key={lang}
-                          type="button"
-                          className={`selection-chip ${selectedLanguages.includes(lang) ? 'selected' : ''}`}
-                          onClick={() => toggleLanguage(lang)}
-                        >
-                          {lang}
-                          {selectedLanguages.includes(lang) && <X size={16} className="ms-1" />}
-                        </button>
-                      ))}
+                    <div className="input-group mb-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Type or select a language"
+                        value={languageInput}
+                        onChange={(e) => {
+                          setLanguageInput(e.target.value);
+                          setShowLanguageSuggestions(true);
+                        }}
+                        onBlur={() => setTimeout(() => setShowLanguageSuggestions(false), 200)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && languageInput) addLanguage(languageInput);
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => addLanguage(languageInput)}
+                        disabled={!languageInput}
+                      >
+                        <Plus size={16} />
+                      </button>
                     </div>
+                    {showLanguageSuggestions && languageInput && (
+                      <div className="suggestions-container">
+                        {languagesList
+                          .filter((lang) => lang.toLowerCase().includes(languageInput.toLowerCase()))
+                          .map((lang) => (
+                            <div
+                              key={lang}
+                              className="suggestion-item"
+                              onClick={() => {
+                                addLanguage(lang);
+                                setLanguageInput('');
+                              }}
+                            >
+                              {lang}
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                    {formData.language.length > 0 && (
+                      <div className="selected-items">
+                        {formData.language.map((lang) => (
+                          <span key={lang} className="selected-chip">
+                            {lang} <X size={16} onClick={() => removeLanguage(lang)} />
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Terms and Conditions */}
                   <div className="form-check mb-4">
-                    <input className="form-check-input" type="checkbox" id="terms" required />
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="terms"
+                      checked={termsAgreed}
+                      onChange={(e) => setTermsAgreed(e.target.checked)}
+                      required
+                    />
                     <label className="form-check-label" htmlFor="terms">
                       I agree to the <a href="#" className="terms-link">Terms & Conditions</a> and <a href="#" className="terms-link">Privacy Policy</a>
                     </label>
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     type="button"
                     className="btn btn-primary w-100 register-btn"
@@ -480,7 +548,6 @@ const PanditRegistration = () => {
                   </button>
                 </div>
 
-                {/* Login Link */}
                 <div className="text-center mt-4">
                   <p className="login-text">
                     Already have an account?{' '}
@@ -490,7 +557,6 @@ const PanditRegistration = () => {
                   </p>
                 </div>
 
-                {/* Footer */}
                 <div className="text-center mt-4">
                   <p className="footer-text">
                     🙏 Serving devotees with divine blessings since 2024

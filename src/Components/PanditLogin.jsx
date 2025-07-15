@@ -205,7 +205,7 @@ const PanditLogin = () => {
                   </p>
                 </div>
 
-                <div className="stats-section">
+                <div className="stats-section" style={{padding:"10px"}}>
                   <div className="row">
                     <div className="col-4">
                       <div className="stat-card">
