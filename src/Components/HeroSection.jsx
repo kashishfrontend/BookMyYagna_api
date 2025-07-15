@@ -96,7 +96,7 @@ const HeroSection = ({ onHeroVisibleChange }) => {
   const heroSlides = [
     {
       badge: "Auspicious Ceremonies",
-      title: "Welcome to  <span class='highlight-text'>BookMyYagna</span> <span class='highlight-text' style='font-size: medium;'>Your Sacred Link to Authentic Vedic Rituals</span>",
+      title: "Welcome to  <span class='highlight-text1'>BookMyYagna</span> <span class='highlight-text' style='font-size: medium;'>Your Sacred Link to Authentic Vedic Rituals</span>",
       subtitle: "Reconnect with spirituality through online yagna, puja, and trusted pandits — all in one place.",
       image: image,
       bgVideo: vdo1
@@ -104,14 +104,14 @@ const HeroSection = ({ onHeroVisibleChange }) => {
 
     {
       badge: "Festival Celebrations",
-      title: "Embrace <span class='highlight-text'>Festivals</span> with Sacred Rituals",
+      title: "Embrace <span class='highlight-text1'>Festivals</span> with Sacred Rituals",
       subtitle: "At BookMyYagna, Yagna and Puja are divine experiences, not just traditions...",
       image: image,
       bgVideo: vdo2,
     },
     {
       badge: "Home Ceremonies",
-      title: "Bring <span class='highlight-text'>Blessings</span> to Your Home",
+      title: "Bring <span class='highlight-text1'>Blessings</span> to Your Home",
       subtitle: "Schedule Griha Pravesh, Vastu Shanti, or other home ceremonies...",
       image: image,
       bgVideo: vdo3

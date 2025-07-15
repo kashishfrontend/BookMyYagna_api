@@ -355,7 +355,7 @@ const PanditDashboard = () => {
             'Content-Type': 'multipart/form-data',
           },
         }
-      );  
+      );
 
       // console.log('Profile Update Response:', response.data); // Debug response
 
@@ -439,7 +439,7 @@ const PanditDashboard = () => {
   };
 
   const renderNotifications = () => (
-    <Container className="py-4 margin-class">
+    <Container fluid className="py-4">
       <h2 className="text-center mb-4">All Notifications</h2>
       <Card className="shadow-sm col-md-12">
         <Card.Body>
@@ -501,7 +501,7 @@ const PanditDashboard = () => {
   );
 
   const renderDashboardContent = () => (
-    <Container fluid className="py-4 margin-class">
+    <Container fluid className="container-fluid py-4 ">
       <Row>
         <Col xs={12}>
           <h1 className="welcome-heading">
@@ -510,7 +510,7 @@ const PanditDashboard = () => {
           <p className="welcome-subtext">Welcome back to your spiritual journey</p>
         </Col>
       </Row>
-      <Row className="mb-4 col-md-9">
+      <Row className="mb-4 col-md-12">
         <Col xs={12} sm={6} md={4} className="mb-3">
           <Card className="stats-card">
             <Card.Body>
@@ -551,9 +551,9 @@ const PanditDashboard = () => {
           </Card>
         </Col>
       </Row>
-      <h2 className="mb-4">All Poojas</h2>
-      <Card className=" col-md-9 border border-0 " style={{ background: "none" }}>
-        <Card.Body>
+      <h2 className="mb-4 text-center fs-1" style={{color:'#ff7722'}}>All Poojas</h2>
+      <Card className="border border-0 " style={{ background: "none" }}>
+        <div>
           <div className="table-responsive">
             <table className="table table-bordered custom-table table-striped">
               <thead className="table-header">
@@ -611,16 +611,16 @@ const PanditDashboard = () => {
               </tbody>
             </table>
           </div>
-        </Card.Body>
+        </div>
       </Card>
     </Container>
   );
 
   const renderCompletedPoojaDetails = () => (
-    <Container className="py-4 margin-class">
+    <div className="container-fluid py-4 ">
       <h2 className="mb-4 text text-center">Completed Pooja</h2>
       <Card className="border border-0 col-md-12" style={{ background: 'none' }}>
-        <Card.Body>
+      <div>
           <div className="table-responsive">
             <table className="table table-bordered custom-table table-striped">
               <thead className="table-header">
@@ -669,16 +669,16 @@ const PanditDashboard = () => {
               </tbody>
             </table>
           </div>
-        </Card.Body>
+      </div>
       </Card>
-    </Container>
+    </div>
   );
 
   const renderPoojaLink = () => (
-    <Container className="py-4 margin-class">
+    <div className=" container-fluid py-4 ">
       <h2 className=" text-center">Pooja Timing</h2>
       <Card className="col-md-12 bg-transparent border border-0">
-        <Card.Body>
+        <div>
           <div className="table-responsive ">
             <table className="table table-bordered custom-table  table-striped">
               <thead className="table-header">
@@ -729,13 +729,13 @@ const PanditDashboard = () => {
               </tbody>
             </table>
           </div>
-        </Card.Body>
+       </div>
       </Card>
-    </Container>
+    </div>
   );
 
   const renderPunditProfile = () => (
-    <Container className="py-4 margin-class">
+    <Container fluid className="py-4">
       <h1 className="welcome-heading">Pandit Profile</h1>
       <p className="welcome-subtext">Manage your personal and professional details</p>
       <Card className="shadow-sm col-md-12">
@@ -875,7 +875,7 @@ const PanditDashboard = () => {
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
         </div>
         <div
-          className={`sidebar col-12 col-lg-2 position-sticky ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
+          className={`sidebar col-12 col-lg-2 ${showSidebar ? 'd-block active' : 'd-none'} d-lg-block`}
         >
           <div className="logo-container p-4">
             <h2 className="logo"><Link className='logo text-decoration-none' to={'/'}>BookmyYagna</Link></h2>
@@ -922,7 +922,7 @@ const PanditDashboard = () => {
             </div>
           </div>
         </div>
-        <div className={`main-content col-12 col-lg-10 ${showSidebar ? '' : 'expanded'}`}>
+        <div className={`main-content col-12 col-lg-12 ${showSidebar ? '' : 'expanded'}`}>
           <div className="top-nav d-flex justify-content-between align-items-center p-4">
             <div className="search-bar d-none d-md-flex align-items-center">
               {/* <Form.Control

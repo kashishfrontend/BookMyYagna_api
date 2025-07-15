@@ -310,6 +310,11 @@ html {
   position: relative;
   display: inline-block;
 }
+.highlight-text1{
+  color: #FF6700;
+  position: relative;
+  display: inline-block;
+}
 
 .highlight-text::after {
   content: '';
