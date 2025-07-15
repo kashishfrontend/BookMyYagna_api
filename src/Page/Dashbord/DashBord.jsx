@@ -345,7 +345,7 @@ const Dashboard = () => {
     <>
       <div className="dashboard-container">
         <div
-          className="mobile-toggle d-flex d-lg-none"
+          className="mobile-toggle d-flex d-md-none"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           {showSidebar ? <MdClose size={24} /> : <FaBars size={24} />}
@@ -402,7 +402,7 @@ const Dashboard = () => {
         </div>
 
         <div
-          className={`sidebar col-12 position-sticky col-lg-2 ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
+          className={`sidebar col-12 position top-0 col-lg-2  ${showSidebar ? "show" : "hide"} d-none d-lg-block`}
         >
           <div className="logo-container">
             <h2 className="logo "><Link className="logo text-decoration-none" to={'/'}>BookmyYagna</Link></h2>
@@ -620,12 +620,12 @@ const Dashboard = () => {
 
   function renderNotifications() {
     return (
-      <div className="container py-3 py-md-5  margin-class" >
+      <div className="container-fluid py-3 py-md-5" >
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>All Notifications</h2>
           </div>
-          <div className="table-responsive col-md-10">
+          <div className="table-responsive col-md-12">
             <table className="custom-table table table-bordered table-striped">
               <thead className="table-warning">
                 <tr>
@@ -680,7 +680,7 @@ const Dashboard = () => {
 
   function renderMyBookedDetals() {
     return (
-      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
+      <div className="container-fluid p-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>Booked Puja</h2>
@@ -732,50 +732,52 @@ const Dashboard = () => {
 
   function renderCompletedPoojaDetals() {
     return (
-      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
+      <div className="container-fluid py-3 py-md-5 " data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>Completed Puja</h2>
           </div>
-          <div className="table-responsive d-flex justify-content-center align-items-center">
-            <table className="custom-table table table-bordered table-striped">
-              <thead className="table-warning">
-                <tr>
-                  <th>Account Name</th>
-                  <th>Plan Name</th>
-                  <th>Amount</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Status</th>
-                  <th>Puja Mode</th>
-                  <th>Date of Puja</th>
-                </tr>
-              </thead>
-              <tbody>
-                {completedPuja?.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.userId.fullName}</td>
-                    <td>{data.planId.heading}</td>
-                    <td>{data.planId.amount}</td>
-                    <td>{data.phoneNumber}</td>
-                    <td>{data.address}</td>
-                    <td>{data.status}</td>
-                    <td>{data.poojaMode}</td>
-                    <td>
-                      {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
-                        timeZone: 'Asia/Kolkata',
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true
-                      })}
-                    </td>
+          <div className="d-flex justify-content-center align-content-center">
+            <div className="table-responsive col-lg-12 ">
+              <table className="custom-table table table-bordered table-striped">
+                <thead className="table-warning">
+                  <tr>
+                    <th>Account Name</th>
+                    <th>Plan Name</th>
+                    <th>Amount</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Puja Mode</th>
+                    <th>Date of Puja</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {completedPuja?.map((data, index) => (
+                    <tr key={index}>
+                      <td>{data.userId.fullName}</td>
+                      <td>{data.planId.heading}</td>
+                      <td>{data.planId.amount}</td>
+                      <td>{data.phoneNumber}</td>
+                      <td>{data.address}</td>
+                      <td>{data.status}</td>
+                      <td>{data.poojaMode}</td>
+                      <td>
+                        {new Date(data.dateOfDelivery).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true
+                        })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -784,7 +786,7 @@ const Dashboard = () => {
 
   function renderDashboardContent() {
     return (
-      <Container fluid className="dashboard-content py-3 py-md-5 margin-class col-md-10" >
+      <Container fluid className="dashboard-content d-flex justify-content-center align-content-center flex-column py-3 py-md-5 col-lg-12" >
         <Row>
           <Col xs={12}>
             <h1 className="welcome-heading" data-aos="fade-right">
@@ -800,7 +802,7 @@ const Dashboard = () => {
             </p>
           </Col>
         </Row>
-        <Row className="stats-row col-md-11">
+        <Row className="stats-row col-md-12">
           <Col
             xs={12}
             sm={6}
@@ -863,11 +865,11 @@ const Dashboard = () => {
           </Col>
         </Row>
         <div className="text-center fs-1 mb-3">
-          <div className="text-center col-md-10">
+          <div className="text-center col-md-12">
             <h2 className="text-center">Booked Puja</h2>
           </div>
         </div>
-        <div className="table-responsive col-md-10">
+        <div className="table-responsive col-md-12">
           <table className="custom-table table table-bordered table-striped">
             <thead className="table-warning">
               <tr>
@@ -934,13 +936,13 @@ const Dashboard = () => {
     };
 
     return (
-      <div className="container py-5 margin-class" data-aos="zoom-in">
+      <div className="container-fluid py-5" data-aos="zoom-in">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2 className="fs-2">Puja Link</h2>
           </div>
-          <div className={isMobileOrTablet ? 'table-responsive col-md-10' : 'd-flex justify-content-center align-items-center'}>
-            <table className="custom-table table-bordered table-striped  ">
+          <div className= 'table-responsive col-md-12 d-flex justify-content-center align-items-center'>
+            <table className="custom-table table-bordered table-striped w-100 ">
               <thead className="table-warning">
                 <tr>
                   <th>Date Of Puja</th>
@@ -1032,7 +1034,7 @@ const Dashboard = () => {
 
   function renderPayment() {
     return (
-      <div className="container py-3 py-md-5 margin-class" data-aos="zoom-in" data-aos-delay="100">
+      <div className="container-fluid py-3 py-md-5" data-aos="zoom-in" data-aos-delay="100">
         <div className="row">
           <div className="text-center fs-1 mb-3">
             <h2>Payment History</h2>

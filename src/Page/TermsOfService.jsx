@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 const TermsOfService = () => {
     useEffect(() => {
         AOS.init({
-            duration: 800,
+            duration: 300,
             once: true,
             easing: 'ease-in-out'
         });
@@ -100,11 +100,11 @@ const TermsOfService = () => {
                         {/* Introduction */}
                         <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="100">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -138,11 +138,11 @@ const TermsOfService = () => {
                         {/* Account Terms */}
                         <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="150">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -177,11 +177,11 @@ const TermsOfService = () => {
                         {/* Acceptable Use */}
                         <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="200">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -219,11 +219,11 @@ const TermsOfService = () => {
                         {/* Payments & Refunds */}
                         <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="250">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -259,11 +259,11 @@ const TermsOfService = () => {
                         {/* Limitation of Liability */}
                         <div className="terms-item mb-4" data-aos="fade-up" data-aos-delay="300">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -299,13 +299,13 @@ const TermsOfService = () => {
                         </div>
 
                         {/* Amendments */}
-                        <div className="terms-item" data-aos="fade-up" data-aos-delay="350">
+                        <div className="terms-item d-flex justify-content-center align-content-center" data-aos="fade-up" data-aos-delay="350">
                             <div className="d-flex align-items-start">
-                                <div className="terms-number mr-4" style={{
+                                <div className="terms-number me-2" style={{
                                     backgroundColor: '#f8e8d5',
                                     color: '#d4a762',
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '35px',
+                                    height: '35px',
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -321,7 +321,7 @@ const TermsOfService = () => {
                                         color: '#2c3e50',
                                         marginBottom: '15px'
                                     }}>Amendments</h3>
-                                    <p style={{
+                                    <p  style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
@@ -338,7 +338,7 @@ const TermsOfService = () => {
                     </div>
 
                     {/* Contact Information */}
-                    <div className="contact-box text-center" data-aos="fade-up" style={{
+                    {/* <div className="contact-box text-center" data-aos="fade-up" style={{
                         backgroundColor: '#fff',
                         borderRadius: '10px',
                         boxShadow: '0 5px 25px rgba(0,0,0,0.05)',
@@ -390,7 +390,7 @@ const TermsOfService = () => {
                                 Call Support
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                 </Container>
             </section>
         </>

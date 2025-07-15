@@ -54,6 +54,7 @@ const Footer = () => {
                 <li><Link to={'/listofpuja'}>Services</Link></li>
                 <li><Link to={'/gallery'}>Gallery</Link></li>
                 <li><Link to={'/contact'}>Contact</Link></li>
+                  <li><Link to={'/faq'}>FAQ</Link></li>
               </ul>
             </div>
 
@@ -130,8 +131,6 @@ const Footer = () => {
                 <Link to={"/termsofservice"}>Terms of Service</Link>
                 <Link to={"/shippingAndDelivery"}>Shipping and delivery</Link>
                 <Link to={"/cancellationAndRefund"}>Cancellation and refund</Link>
-
-                <Link to={"/FAQ"}>FAQ</Link>
               </div>
             </div>
           </div>

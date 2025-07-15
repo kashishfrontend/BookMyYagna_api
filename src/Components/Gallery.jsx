@@ -164,7 +164,7 @@ const Gallery = () => {
             <section className="gallery-section">
                 <Container>
                     <div className="section-header" data-aos="fade-up">
-                        <div className="ornament-line " data-aos="zoom-in" duration="1000">
+                        <div className="ornament-line " data-aos="zoom-in" duration="300">
                             <span className="om-symbol">ॐ</span>
                         </div>
                         <div className='section-title'>
@@ -212,7 +212,7 @@ const Gallery = () => {
 
                     <Row className="gallery-container">
                         {filteredImages.map((image, index) => (
-                            <Col lg={4} md={6} sm={12} className="gallery-item" key={image.id} data-aos="zoom-in" data-aos-delay={index * 100}>
+                            <Col lg={4} md={6} sm={12} className="gallery-item" key={image.id} data-aos="zoom-in" data-aos-delay={index * 10}>
                                 <div className="gallery-wrap">
                                     <img src={image.src} alt={image.alt} className="img-fluid" />
                                     <div className="gallery-info">

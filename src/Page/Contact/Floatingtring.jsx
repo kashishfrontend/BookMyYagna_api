@@ -7,7 +7,7 @@ const FloatingContactButton = () => {
   return (
     <Link
   to="/contact"
-  className="btn btn-success position-fixed bottom-0 end-0 m-4 d-flex align-items-center justify-content-center shadow-lg phone-wave"
+  className="btn btn-success position-fixed end-0 m-4 d-flex align-items-center justify-content-center shadow-lg phone-wave"
   style={{
     zIndex: 1050,
     borderRadius: "50%",
