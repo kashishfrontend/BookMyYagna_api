@@ -892,7 +892,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {completedPuja?.map((data, index) => (
+              {bookedPuja?.map((data, index) => (
                 <tr key={index}>
                   <td>{data.userId.fullName}</td>
                   <td>{data.planId.heading}</td>

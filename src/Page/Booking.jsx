@@ -512,14 +512,23 @@ const Booking = () => {
 
 
                   </div>
-
-                  <div className="form-group">
-                    <label>Address:</label>
-                    <textarea
-                      value={specialRequirements}
-                      onChange={(e) => setSpecialRequirements(e.target.value)}
-                      placeholder="Enter Your Address"
-                    ></textarea>
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label>Address:</label>
+                      <textarea
+                        value={specialRequirements}
+                        onChange={(e) => setSpecialRequirements(e.target.value)}
+                        placeholder="Enter Your Address"
+                      ></textarea>
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label>Description:</label>
+                      <textarea
+                        value={specialRequirements}
+                        // onChange={(e) => setSpecialRequirements(e.target.value)}
+                        placeholder="Enter Your Description"
+                      ></textarea>
+                    </div>
                   </div>
 
 

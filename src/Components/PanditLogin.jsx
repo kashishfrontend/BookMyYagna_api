@@ -228,13 +228,13 @@ const PanditLogin = () => {
                   </div>
                 </div>
 
-                <div className="testimonial-cards p-3 ">
+                <div className="testimonial-cards ">
                   <div className="testimonial-stars">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={16} fill="#FF6B35" color="#FF6B35" />
                     ))}
                   </div>
-                  <p className="testimonial-text m-0">
+                  <p className="testimonial-text1 m-0">
                     "This platform has helped me reach more families and conduct meaningful pujas.
                     The booking system is very convenient."
                   </p>
