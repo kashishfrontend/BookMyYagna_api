@@ -38,8 +38,8 @@ const PoojaBookingDetails = () => {
 
   useEffect(() => {
     AOS.init({
-     duration: 300,
-     offset: 10,
+      duration: 300,
+      offset: 10,
       once: false,
       mirror: true,
     });
@@ -132,7 +132,7 @@ const PoojaBookingDetails = () => {
 
   return (
     <>
-    
+
       <Helmet>
         {/* Meta Tags */}
         <title>Book Pooja Online - Sacred Puja Services | BookMyYogna</title>
@@ -160,7 +160,7 @@ const PoojaBookingDetails = () => {
         <Container>
           <Row className="pooja-detail-section mt-5" style={{ padding: "10px" }}>
             <Col lg={5} className="pooja-image-col" data-aos="fade-right">
-              <div className="pooja-image-container  position-sticky">
+              <div className="pooja-image-container  d-lg-block">
                 <img
                   src={poojaData?.image || img}
                   alt="Maha Mrityunjaya Jaap"
@@ -175,6 +175,7 @@ const PoojaBookingDetails = () => {
                 </div>
               </div>
             </Col>
+
 
             <Col lg={7} className="pooja-detail-content" data-aos="fade-left">
               {/* <h1 className="pooja-title">{poojadata.heading}</h1> */}
