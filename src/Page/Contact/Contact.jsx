@@ -273,7 +273,7 @@ const Contact = () => {
               title="Call Us"
               content={
                 <>
-                  <p className="mb-1"><strong>Phone:</strong>+91 8569977795</p>
+                  <p className="mb-1"><strong>Phone:</strong>+91 8569977705</p>
                   <p className="mb-0">10 AM – 8 PM IST (Daily)</p>
                 </>
               }
@@ -288,7 +288,7 @@ const Contact = () => {
                 title="WhatsApp"
                 content={
                   <>
-                    <p className="mb-1"><strong>Chat:</strong> +91 8569977795</p>
+                    <p className="mb-1"><strong>Chat:</strong> +91 8569977705</p>
                     <p className="mb-0">Instant help with puja recommendations & bookings</p>
                   </>
                 }

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -80,29 +81,28 @@ const PoojaBookingDetails = () => {
 
   const benefits = [
     {
-      title: "Protection from untimely and unnatural death",
-      description: "Removes fears, accidents, and dangers.",
+      title: "Divine blessings and spiritual growth",
+      description: "Enhances your spiritual connection and brings peace of mind.",
       icon: <FiShield className="benefit-icon" />,
     },
     {
-      title: "Relief from major health issues",
-      description: "Aids in healing chronic illnesses and diseases.",
+      title: "Removal of obstacles and negative energies",
+      description: "Helps overcome challenges and clears negative influences.",
       icon: <RiMentalHealthLine className="benefit-icon" />,
     },
     {
-      title: "Removes Kaal Sarp Dosh & other planetary afflictions",
-      description: "Reduces the negative impact of malefic planets.",
+      title: "Fulfillment of desires",
+      description: "Aids in achieving personal and professional goals.",
       icon: <GiTripleYin className="benefit-icon" />,
     },
     {
-      title: "Spiritual Growth & Mental Peace",
-      description:
-        "Increases divine energy, removes past karma, and provides clarity in life.",
-      icon: <GiTripleYin className="benefit-icon" />,
+      title: "Health and well-being",
+      description: "Promotes physical and mental health and longevity.",
+      icon: <GiMeditation className="benefit-icon" />,
     },
     {
-      title: "Blessings of Lord Shiva",
-      description: "Brings prosperity, happiness, and success.",
+      title: "Prosperity and happiness",
+      description: "Brings abundance and joy to your life.",
       icon: <GiOmega className="benefit-icon" />,
     },
   ];
@@ -132,30 +132,30 @@ const PoojaBookingDetails = () => {
 
   return (
     <>
-
       <Helmet>
         {/* Meta Tags */}
-        <title>Book Pooja Online - Sacred Puja Services | BookMyYogna</title>
+        <title>{poojaData?.heading || "Book Pooja Online"} - Sacred Puja Services | BookMyYogna</title>
         <meta
           name="description"
-          content="Explore and book a variety of sacred pooja services online with trusted pandits at BookMyYogna. Convenient, authentic, and affordable rituals."
+          content={`Explore and book ${poojaData?.heading || "sacred pooja"} services online with trusted pandits at BookMyYogna. Convenient, authentic, and affordable rituals.`}
         />
         <meta
           name="keywords"
-          content="book pooja online, pooja services, online pandit booking, sacred rituals, BookMyYogna"
+          content={`book ${poojaData?.heading || "pooja"} online, ${poojaData?.heading || "pooja"} services, online pandit booking, sacred rituals, BookMyYogna`}
         />
         {/* Open Graph Tags */}
-        <meta property="og:title" content="Book Sacred Pooja Services Online | BookMyYogna" />
+        <meta property="og:title" content={`Book ${poojaData?.heading || "Sacred Pooja"} Services Online | BookMyYogna`} />
         <meta
           property="og:description"
-          content="Discover authentic pooja services at BookMyYogna. Book trusted pandits for your spiritual rituals with ease."
+          content={`Discover authentic ${poojaData?.heading || "pooja"} services at BookMyYogna. Book trusted pandits for your spiritual rituals with ease.`}
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://api.bookmyyagna.com/pooja-list" />
-        <meta property="og:image" content="https://api.bookmyyagna.com/images/pooja-og-image.jpg" />
+        <meta property="og:image" content={poojaData?.image || "https://api.bookmyyagna.com/images/pooja-og-image.jpg"} />
         {/* Canonical URL */}
         <link rel="canonical" href="https://api.bookmyyagna.com/pooja-list" />
       </Helmet>
+
       <div className="pooja-detail-page mt-5" style={{ padding: "20px" }}>
         <Container>
           <Row className="pooja-detail-section mt-5" style={{ padding: "10px" }}>
@@ -163,28 +163,26 @@ const PoojaBookingDetails = () => {
               <div className="pooja-image-container  d-lg-block">
                 <img
                   src={poojaData?.image || img}
-                  alt="Maha Mrityunjaya Jaap"
+                  alt={poojaData?.heading || "Pooja"}
                   className="main-pooja-image"
                 />
                 <div className="small-image-container">
                   <img
                     src={poojaData?.image || img}
-                    alt="Shiva"
+                    alt={poojaData?.heading || "Pooja"}
                     className="small-pooja-image"
                   />
                 </div>
               </div>
             </Col>
 
-
             <Col lg={7} className="pooja-detail-content" data-aos="fade-left">
-              {/* <h1 className="pooja-title">{poojadata.heading}</h1> */}
               <h1 className="pooja-title">{poojaData?.heading}</h1>
 
               <div className="rating-container">
                 <div className="stars">
                   <p>
-                    <strong>{poojaData?.rating} ★</strong> &nbsp; Rated by users
+                    <strong>{poojaData?.rating || "4.8"} ★</strong> &nbsp; Rated by users
                     based on their pooja experience
                   </p>
                 </div>
@@ -201,7 +199,6 @@ const PoojaBookingDetails = () => {
 
                 <Row className="package-cards ">
                   <div className="mobile-scroll d-flex gap-3">
-                    {/* {poojaData?.plans?.map((pkg, index) => ( */}
                     {poojaData?.poojaPlans?.map((plan, index) => (
                       <Col md={4} className="col-10" key={index}>
                         <Card
@@ -235,12 +232,6 @@ const PoojaBookingDetails = () => {
                                 </span>
                               </div>
                             </div>
-                            <div className="know-more">
-                              <a href="#">
-                                Know More{" "}
-                                <FaChevronRight className="arrow-icon" />
-                              </a>
-                            </div>
                           </Card.Body>
                           <Card.Footer>
                             <Button
@@ -255,16 +246,6 @@ const PoojaBookingDetails = () => {
                     ))}
                   </div>
                 </Row>
-
-                <div className="custom-package" data-aos="fade-up">
-                  <p>
-                    Looking for a custom package? Click here to plan your perfect
-                    pooja experience:
-                  </p>
-                  <Button variant="outline-primary" className="get-quote-btn">
-                    Get a Quote
-                  </Button>
-                </div>
               </div>
             </Col>
           </Row>
@@ -355,100 +336,89 @@ const PoojaBookingDetails = () => {
             <Col md={12}>
               <div className="info-block" data-aos="fade-up">
                 <h3>
-                  This Jaap is known to rejuvenate the mind and body, remove
-                  karmic doshas, and enhance longevity.
+                  This sacred ritual is known to bring peace, prosperity and spiritual growth to devotees.
                 </h3>
                 <p>
-                  It is highly recommended for individuals facing health issues,
-                  prolonged suffering, or dangers related to planetary doshaa such
-                  as <strong>Kaal Sarp Dosh</strong>.
+                  It is highly recommended for individuals seeking divine blessings,
+                  facing challenges in life, or wanting to enhance their spiritual journey.
                 </p>
               </div>
 
-              <div className="info-block" data-aos="fade-up">
-                <h3>How Maha Mrityunjaya Jaap is Performed?</h3>
+              {/* <div className="info-block" data-aos="fade-up">
+                <h3>How {poojaData?.heading || "the Puja"} is Performed?</h3>
                 <p>
-                  The Maha Mrityunjaya Jaap is conducted by expert Vedic Pandits
-                  following{" "}
-                  <strong>authentic rituals as per the scriptures</strong>. The
+                  The {poojaData?.heading || "Puja"} is conducted by expert Vedic Pandits
+                  following <strong>authentic rituals as per the scriptures</strong>. The
                   procedure includes:
                 </p>
                 <ul className="ritual-steps">
                   <li data-aos="fade-right">
-                    <strong>Sankalp Puja & Kalash Naivedyam Puja</strong> - To
-                    remove obstacles and invoke divine energy.
+                    <strong>Sankalp Puja</strong> - Setting the intention and invoking divine energies.
                   </li>
                   <li data-aos="fade-right" data-aos-delay="100">
-                    <strong>Chanting of Maha Mrityunjaya Mantra</strong> - A set
-                    number of <strong>Jaap counts</strong> (e.g., 1,008, 5,000,
-                    10,000, 54,000, or 1,25,000).
+                    <strong>Main Rituals</strong> - Performed according to Vedic traditions with proper mantras and offerings.
                   </li>
                   <li data-aos="fade-right" data-aos-delay="200">
-                    <strong>Havan (Fire Ceremony)</strong> - Performed at the end
-                    to channel positive energies and seek Lord Shiva's grace.
+                    <strong>Havan (Fire Ceremony)</strong> - Channeling positive energies and seeking divine grace.
+                  </li>
+                  <li data-aos="fade-right" data-aos-delay="300">
+                    <strong>Aarti & Prasad Distribution</strong> - Concluding the ceremony with blessings.
                   </li>
                 </ul>
               </div>
 
               <div className="info-block" data-aos="fade-up">
-                <h3>When to Perform Maha Mrityunjaya Jaap?</h3>
+                <h3>When to Perform {poojaData?.heading || "this Puja"}?</h3>
                 <ul className="timing-info">
                   <li data-aos="fade-right">
-                    <strong>Shravan or Kartik Month</strong> - The most auspicious
-                    time dedicated to Lord Shiva.
+                    <strong>Auspicious Days</strong> - Based on the Hindu calendar and planetary positions.
                   </li>
                   <li data-aos="fade-right" data-aos-delay="100">
-                    <strong>Mondays</strong> - Considered sacred for worshipping
-                    Lord Shiva.
+                    <strong>Festivals</strong> - During relevant religious festivals for enhanced benefits.
                   </li>
                   <li data-aos="fade-right" data-aos-delay="200">
-                    <strong>
-                      Auspicious Nakshatra or Personal Janma Nakshatra
-                    </strong>{" "}
-                    - Chosen based on the devotee's birth chart.
+                    <strong>Personal Auspicious Dates</strong> - Chosen based on the devotee's birth chart.
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </Col>
           </Row>
 
-          <Row className="benefits-section">
-            {poojaData?.benefitsOfPooja && (
-              <Row className="benefits-section">
-                <Col md={12}>
-                  <h2 className="section-title" data-aos="fade-up">
-                    Benefits of Maha Mrityunjaya Jaap
-                  </h2>
-                  <div className="benefits-container">
-                    {poojaData.benefitsOfPooja.map((benefit, index) => (
-                      <div
-                        className="benefit-item"
-                        key={index}
-                        data-aos="fade-up"
-                        data-aos-delay={index * 100}
-                      >
-                        <div className="benefit-icon-container">🌟</div>
-                        <div className="benefit-content">
-                          <p>{benefit}</p>
-                        </div>
+          {poojaData?.benefitsOfPooja && (
+            <Row className="benefits-section">
+              <Col md={12}>
+                <h2 className="section-title" data-aos="fade-up">
+                  Benefits of {poojaData?.heading || "this Puja"}
+                </h2>
+                <div className="benefits-container">
+                  {poojaData.benefitsOfPooja.map((benefit, index) => (
+                    <div
+                      className="benefit-item"
+                      key={index}
+                      data-aos="fade-up"
+                      data-aos-delay={index * 100}
+                    >
+                      <div className="benefit-icon-container">🌟</div>
+                      <div className="benefit-content">
+                        <p>{benefit}</p>
                       </div>
-                    ))}
-                  </div>
-                </Col>
-              </Row>
-            )}
-          </Row>
+                    </div>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+          )}
 
           <Row className="cta-section" data-aos="fade-up">
             <Col md={12}>
               <div className="cta-box">
-                <h3>Book a Sacred Maha Mrityunjaya Jaap</h3>
+                <h3>Book {poojaData?.heading || "a Sacred Puja"}</h3>
                 <p>
-                  Perform Maha Mrityunjaya Jaap with the guidance of expert North
-                  Indian Vedic Pandits for divine protection and long life.
+                  Perform {poojaData?.heading || "this sacred ritual"} with the guidance of expert
+                  Vedic Pandits for divine blessings and spiritual growth.
                 </p>
-                <Button className="book-now-btn">
-                  Book your Maha Mrityunjaya Jaap today!
+                <Button className="book-now-btn" onClick={handleBookNow}>
+                  Book your {poojaData?.heading || "Puja"} today!
                 </Button>
               </div>
             </Col>
@@ -478,14 +448,7 @@ const PoojaBookingDetails = () => {
             </Col>
           </Row>
 
-          <Row className="reviews-section" data-aos="fade-up">
-            <Col md={12}>
-              <h2 className="section-title">Reviews</h2>
-              <div className="no-reviews">
-                <p>No reviews available</p>
-              </div>
-            </Col>
-          </Row>
+      
         </Container>
       </div>
     </>

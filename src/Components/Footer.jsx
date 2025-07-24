@@ -74,7 +74,7 @@ const Footer = () => {
               <h4>Contact Us</h4>
               <div className="contact-info">
                 <p><FaMapMarkerAlt className="contact-icon me-2" />Prem Plaza, 252, Opp. Subhash Park,<br />Subhash Nagar, Rohtak, Haryana - 124001</p>
-                <p><FaPhoneAlt className="contact-icon me-2" />+91 8569977795</p>
+                <p><FaPhoneAlt className="contact-icon me-2" />+91 8569977705</p>
                 <p><FaEnvelope className="contact-icon me-2" />support@bookmyyagna.com</p>
               </div>
 

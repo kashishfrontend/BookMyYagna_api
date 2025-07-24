@@ -133,7 +133,6 @@ function AppRoutes() {
         <Route path="termsofservice" element={<TermsOfService />} />
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
-
         <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />

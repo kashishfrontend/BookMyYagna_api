@@ -1045,14 +1045,14 @@ const PanditDashboard = () => {
               className="text-decoration-none text-dark hover-link"
             >
               Innovize Tech Solution Pvt Ltd
-            </a> All rights reserved.
+            </a>   All rights reserved.
           </p>
 
-          <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
+          {/* <div className="footer-links d-flex justify-content-center gap-3 flex-wrap">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
             <a href="#contact">Contact Us</a>
-          </div>
+          </div> */}
         </div>
       </footer>
     </>

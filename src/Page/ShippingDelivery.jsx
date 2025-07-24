@@ -397,7 +397,7 @@ const ShippingDelivery = () => {
                                onMouseOut={(e) => e.target.style.backgroundColor = '#d4a762'}>
                                 Email Support
                             </a>
-                            <a href="tel:+911234567890" style={{
+                            <a href="tel:+91 8569977705" style={{
                                 display: 'inline-block',
                                 backgroundColor: '#2c3e50',
                                 color: '#fff',
