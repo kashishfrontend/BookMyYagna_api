@@ -26,6 +26,8 @@ const Booking = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [specialRequirements, setSpecialRequirements] = useState("");
+  const [description, setDescription] = useState("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [type, setType] = useState("");
@@ -86,6 +88,7 @@ const Booking = () => {
         setPhone("");
         setEmail("");
         setSpecialRequirements("");
+        setDescription("");
       }, 3000);
     }, 2000);
   };
@@ -228,6 +231,7 @@ const Booking = () => {
                 name: name,
                 phoneNumber: phone,
                 address: specialRequirements,
+                description:description,
                 amount: selectedPlan?.amount || 0,
                 poojaMode: "online",
                 dateOfDelivery: selectedDate?.toISOString().split("T")[0],
@@ -255,6 +259,7 @@ const Booking = () => {
                   setPhone("");
                   setEmail("");
                   setSpecialRequirements("");
+                  setDescription("");
                   setType("");
                 } else {
                   alert("Booking failed. Please try again.");
@@ -271,6 +276,7 @@ const Booking = () => {
                   setPhone("");
                   setEmail("");
                   setSpecialRequirements("");
+                  setDescription("");
                   setType("");
                 }, 3000);
               } catch (error) {
@@ -524,8 +530,8 @@ const Booking = () => {
                     <div className="form-group col-md-6">
                       <label>Description:</label>
                       <textarea
-                        value={specialRequirements}
-                        // onChange={(e) => setSpecialRequirements(e.target.value)}
+                        value={description}
+                        onChange={(e) => setDescription (e.target.value)}
                         placeholder="Enter Your Description"
                       ></textarea>
                     </div>

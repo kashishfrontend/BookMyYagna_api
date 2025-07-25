@@ -10,7 +10,7 @@ import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.webp';
 import MorningPrayerRitual from '../assets/img/Morning-Prayer-Ritual.webp'
 import DivineAartiCeremony from '../assets/img/Divine-Aarti-Ceremony.webp'
 import VibrantHoliFestival from '../assets/img/Vibrant-Holi-Festival.webp'
-import SacredTempleRituals from '../assets/img/Sacred-Temple-Rituals.webp'
+import SacredTempleRituals from '../assets/img/gallery-puja.webp';   
 import TraditionalWeddingDecorations from '../assets/img/Traditional-Wedding-Decorations.webp'
 import Ganeshestival from '../assets/img/Ganesh-Festival.webp'
 

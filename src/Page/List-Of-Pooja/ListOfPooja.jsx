@@ -192,7 +192,7 @@ const PoojaSlider = () => {
                         <p>{pooja.description}</p>
                         <button
                           className="tile-book-btn"
-                          onClick={() => isAuthenticated ? navigate('/poojaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
+                          onClick={() => isAuthenticated ? navigate('/pujaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}
                         >
                           <span className='text-decoration-none text-dark'>Book This Pooja</span>
                         </button>

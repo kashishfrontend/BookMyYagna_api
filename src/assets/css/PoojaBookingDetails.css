@@ -469,13 +469,10 @@
     color: white;
 }
 
-/* Mobile Responsive: Scrollable card on small screens */
 @media (max-width: 576px) {
     .mobile-scroll {
         max-width: 400px;
-        /* Set a max height for scrolling */
         overflow-x: auto !important;
-        /* Enable vertical scroll */
         padding: 10px;
     }
 
