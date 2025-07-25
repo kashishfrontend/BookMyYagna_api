@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import {
   User,
   Mail,
@@ -37,7 +36,7 @@ const PanditRegistration = () => {
     confirmPassword: '',
     experience: '',
     rating: 0,
-    image: null,
+    panditImage: null, // Raw file
     poojaTypes: [],
     language: []
   });
@@ -70,17 +69,18 @@ const PanditRegistration = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size (5MB = 5 * 1024 * 1024 bytes)
+      if (file.size > 5 * 1024 * 1024) {
+       setError('Image size must be less than 5MB.');
+
+        return;
+      }
+      setFormData({ ...formData, panditImage: file });
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-        setFormData({
-          ...formData,
-          image: reader.result
-        });
-      };
+      reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
+      setError(null);
     }
-    setError(null);
   };
 
   const addPoojaType = (type) => {
@@ -112,50 +112,49 @@ const PanditRegistration = () => {
     setError(null);
     setSuccessMessage(null);
 
+    // Validation conditions
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match!');
+      setError('Password and confirm password do not match!');
       return;
     }
 
     if (!termsAgreed) {
-      setError('Please agree to the Terms & Conditions and Privacy Policy!');
+     setError('Please accept the Terms & Conditions and Privacy Policy!');
+
       return;
     }
 
     if (!formData.name || !formData.email || !formData.contactNumber ||
-      !formData.password || !formData.experience || !formData.image ||
+      !formData.password || !formData.experience || !formData.panditImage ||
       formData.poojaTypes.length === 0 || formData.language.length === 0) {
-      setError('Please fill in all required fields!');
+     setError('Please fill all required fields!');
       return;
     }
 
+    // All conditions are true, proceed with submission
     setIsLoading(true);
 
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('contactNumber', formData.contactNumber);
+    formDataToSend.append('password', formData.password);
+    formDataToSend.append('experience', parseInt(formData.experience));
+    formDataToSend.append('rating', parseInt(formData.rating) || 0);
+    formDataToSend.append('poojaTypes', JSON.stringify(formData.poojaTypes));
+    formDataToSend.append('language', JSON.stringify(formData.language));
+    formDataToSend.append('panditImage', formData.panditImage); // Raw file
+
     try {
-      const response = await axios.post(
-        'https://api.bookmyyagna.com/pandit/createPanditCard',
-        {
-          name: formData.name,
-          email: formData.email,
-          contactNumber: formData.contactNumber,
-          password: formData.password,
-          image: formData.image || undefined,
-          poojaTypes: formData.poojaTypes,
-          language: formData.language,
-          experience: parseInt(formData.experience),
-          rating: parseInt(formData.rating) || 0
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const response = await fetch('https://api.bookmyyagna.com/pandit/createPanditCard', {
+        method: 'POST',
+        body: formDataToSend
+      });
 
-      console.log('API Response:', response.data);
+      const data = await response.json();
 
-      if (response.data.success && response.data.pandit) {
-        setSuccessMessage(response.data.message || 'Pandit registered successfully!');
+      if (response.ok && data.success && data.pandit) {
+        setSuccessMessage(data.message || 'Pandit successfully register');
         setFormData({
           name: '',
           email: '',
@@ -164,24 +163,17 @@ const PanditRegistration = () => {
           confirmPassword: '',
           experience: '',
           rating: 0,
-          image: null,
+          panditImage: null,
           poojaTypes: [],
           language: []
         });
         setImagePreview(null);
         setTermsAgreed(false);
       } else {
-        throw new Error(response.data.message || 'Unexpected response structure');
+        setError(data.message || 'Registration fail try again.');
       }
     } catch (err) {
-      console.error('Error during API call:', err);
-      if (err.response) {
-        setError(err.response.data.message || 'Failed to register. Please try again.');
-      } else if (err.request) {
-        setError('Network error. Please check your internet connection.');
-      } else {
-        setError(err.message || 'An unexpected error occurred. Please try again.');
-      }
+      setError('Network server error.');
     } finally {
       setIsLoading(false);
     }
