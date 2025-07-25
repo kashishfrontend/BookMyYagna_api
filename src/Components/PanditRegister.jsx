@@ -488,7 +488,7 @@ const PanditRegistration = () => {
                             <div
                               key={type}
                               className="suggestion-item"
-                              onClick={() => {
+                              onMouseDown={() => {
                                 addPoojaType(type);
                                 setPoojaInput('');
                               }}
@@ -544,7 +544,7 @@ const PanditRegistration = () => {
                             <div
                               key={lang}
                               className="suggestion-item"
-                              onClick={() => {
+                              onMouseDown={() => {
                                 addLanguage(lang);
                                 setLanguageInput('');
                               }}
