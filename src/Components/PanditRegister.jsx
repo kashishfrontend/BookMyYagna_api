@@ -66,23 +66,58 @@ const PanditRegistration = () => {
     setError(null);
   };
 
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     // Check file size (5MB = 5 * 1024 * 1024 bytes)
+  //     if (file.size > 5 * 1024 * 1024) {
+  //      setError('Image size must be less than 5MB.');
+
+  //       return;
+  //     }
+  //     setFormData({ ...formData, panditImage: file });
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => setImagePreview(reader.result);
+  //     reader.readAsDataURL(file);
+  //     setError(null);
+  //   }
+  // };
+
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      // Check file size (5MB = 5 * 1024 * 1024 bytes)
-      if (file.size > 5 * 1024 * 1024) {
-       setError('Image size must be less than 5MB.');
+    if (!file) return;
 
+    // Check file type
+    const validTypes = ['image/jpeg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      setError('Please upload a JPG or PNG image only.');
+      return;
+    }
+
+    // Check file size (5MB = 5 * 1024 * 1024 bytes)
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image size must be less than 5MB.');
+      return;
+    }
+
+    // Check image dimensions if needed
+    const img = new Image();
+    img.onload = function () {
+      if (this.width < 300 || this.height < 300) {
+        setError('Image dimensions should be at least 300x300 pixels.');
         return;
       }
+
+      // All validations passed
       setFormData({ ...formData, panditImage: file });
       const reader = new FileReader();
       reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
       setError(null);
-    }
+    };
+    img.src = URL.createObjectURL(file);
   };
-
   const addPoojaType = (type) => {
     if (type && !formData.poojaTypes.includes(type)) {
       setFormData({ ...formData, poojaTypes: [...formData.poojaTypes, type] });
@@ -119,7 +154,7 @@ const PanditRegistration = () => {
     }
 
     if (!termsAgreed) {
-     setError('Please accept the Terms & Conditions and Privacy Policy!');
+      setError('Please accept the Terms & Conditions and Privacy Policy!');
 
       return;
     }
@@ -127,7 +162,7 @@ const PanditRegistration = () => {
     if (!formData.name || !formData.email || !formData.contactNumber ||
       !formData.password || !formData.experience || !formData.panditImage ||
       formData.poojaTypes.length === 0 || formData.language.length === 0) {
-     setError('Please fill all required fields!');
+      setError('Please fill all required fields!');
       return;
     }
 
@@ -180,7 +215,7 @@ const PanditRegistration = () => {
   };
 
   return (
-    <div className="min-vh-100 position-relative overflow-hidden py-5" style={{ marginTop: "2%" }}>
+    <div className="min-vh-100 position-relative overflow-hidden py-5" >
       <div className="position-absolute w-100 h-100 top-0 start-0" style={{
         background: 'linear-gradient(135deg, #fff8f0 0%, #fff2e6 50%, #ffe6cc 100%)',
         zIndex: -2
@@ -322,26 +357,48 @@ const PanditRegistration = () => {
                     </div>
                   </div>
                   <div className="col-md-6">
+
                     <div className="form-group mb-3">
                       <label className="form-label">Profile Photo *</label>
                       <div className="image-upload-container">
-                        <div className="image-upload-area" onClick={() => document.getElementById('imageInput').click()}>
+                        <div
+                          className="image-upload-area"
+                          onClick={() => document.getElementById('imageInput').click()}
+                          style={{
+                            border: error ? '2px dashed #ff6b35' : '2px dashed #ddd',
+                            position: 'relative'
+                          }}
+                        >
                           {imagePreview ? (
-                            <img src={imagePreview} alt="Preview" className="image-preview" />
+                            <>
+                              <img src={imagePreview} alt="Preview" className="image-preview" />
+                              <div className="image-overlay">
+                                <Camera size={24} color="#fff" />
+                                <span style={{ color: '#fff', fontSize: '12px' }}>Change Photo</span>
+                              </div>
+                            </>
                           ) : (
                             <div className="image-placeholder">
                               <Camera size={40} color="#ff6b35" />
                               <p>Click to upload photo</p>
+                              <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                                (Limit Upto Max 5MB)
+                              </p>
                             </div>
                           )}
                         </div>
                         <input
                           type="file"
                           id="imageInput"
-                          accept="image/*"
+                          accept="image/jpeg, image/png"
                           onChange={handleImageUpload}
                           style={{ display: 'none' }}
                         />
+                        {error && (
+                          <div className="text-danger mt-2" style={{ fontSize: '14px' }}>
+                            {error}
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -519,7 +576,7 @@ const PanditRegistration = () => {
                       required
                     />
                     <label className="form-check-label" htmlFor="terms">
-                      I agree to the <a href="#" className="terms-link">Terms & Conditions</a> and <a href="#" className="terms-link">Privacy Policy</a>
+                      I agree to the <Link to="/termsofservice" className="terms-link">Terms & Conditions</Link> and <Link to="/privacy-policy" className="terms-link">Privacy Policy</Link>
                     </label>
                   </div>
 

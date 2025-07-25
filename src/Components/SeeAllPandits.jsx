@@ -120,6 +120,7 @@ const AllPandits = () => {
                   <div className="mt-auto">
                     <Button 
                       variant="link" 
+                      style={{color:"#FF7722"}}
                       className="read-more-btn p-0"
                       onClick={() => toggleExpand(priest._id)}
                     >
