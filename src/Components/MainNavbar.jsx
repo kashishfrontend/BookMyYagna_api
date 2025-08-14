@@ -1,49 +1,86 @@
-// Navbar.js
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Button, Dropdown } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { BellFill, CalendarCheck, PersonCircle, House, CaretDownFill } from 'react-bootstrap-icons';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/action/authAction';
 import { logoutPandit } from '../redux/action/panditAuthAction';
 import img from '../assets/img/favicon.png';
 import { MdPersonPinCircle } from 'react-icons/md';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
 
 const MainNavbar = ({ isHeroVisible }) => {
   const [scrolled, setScrolled] = useState(false);
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-   const { isPanditAuthenticated } = useSelector(
-      (state) => state.panditauth 
-    );
-
-    console.log("pandit login" , isPanditAuthenticated);
-    console.log("login" , isAuthenticated);
+  const { isPanditAuthenticated } = useSelector((state) => state.panditauth);
   const navigate = useNavigate();
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
+
+
+  // function App() {
+  useEffect(() => {
+    const removeBanner = () => {
+      const bannerFrame = document.querySelector('.goog-te-banner-frame');
+      if (bannerFrame) {
+        bannerFrame.style.display = 'none';
+        document.body.style.top = '0px';
+      }
+    };
+
+    removeBanner();
+    setTimeout(removeBanner, 500);
+
+    const observer = new MutationObserver(removeBanner);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Load Google Translate Script
+  useEffect(() => {
+    const addScript = document.createElement('script');
+    addScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(addScript);
+
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'en,hi,ar',
+          autoDisplay: false
+        },
+        'google_translate_element'
+      );
+    };
+  }, []);
+
+  const changeLanguage = (lang) => {
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = lang;
+      select.dispatchEvent(new Event('change'));
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 992);
     };
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
 
   const navTextColor = isDesktop
     ? isHeroVisible
       ? 'text-light'
       : 'text-dark'
     : '';
+
   const handleBookingClick = () => {
     if (isAuthenticated) {
       navigate("/listofpuja");
@@ -51,13 +88,10 @@ const MainNavbar = ({ isHeroVisible }) => {
       navigate("/login");
     }
   };
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -70,10 +104,11 @@ const MainNavbar = ({ isHeroVisible }) => {
 
   const handleLogoutPandit = () => {
     dispatch(logoutPandit());
-    navigate('/')
-  }
+    navigate('/');
+  };
+
   return (
-    <div className='container ' style={{ padding: "0px 0px" }}>
+    <div className='container' style={{ padding: "0px" }}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -81,7 +116,7 @@ const MainNavbar = ({ isHeroVisible }) => {
       >
         <Navbar
           expand="lg"
-          className={` custom-navbar py-0  ${scrolled ? 'scrolled' : ''}`}
+          className={`custom-navbar py-0 ${scrolled ? 'scrolled' : ''}`}
           fixed="top"
         >
           <motion.div
@@ -100,157 +135,84 @@ const MainNavbar = ({ isHeroVisible }) => {
               />
             </Navbar.Brand>
           </motion.div>
+
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center ">
-              <motion.div   >
-                <Nav.Link whileHover={{ scale: 1.1 }} href="/" className={`nav-link   ${navTextColor}`}>
+              <motion.div>
+                <Nav.Link href="/" className={`nav-link ${navTextColor}`}>
                   <House className="icon" /> Home
                 </Nav.Link>
               </motion.div>
-              <motion.div className={` shadow-none border-0 ${navTextColor}`}  >
+
+              <motion.div>
                 <NavDropdown
                   title={
                     <>
-                      <BellFill className={` icon me-1 ${navTextColor}`} />
-                      <span className={` hover_class border-0 ${navTextColor}`}>
-                        Services
-
-                      </span>
+                      <BellFill className={`icon me-1 ${navTextColor}`} />
+                      <span className={navTextColor}>Service</span>
                     </>
                   }
-                  whileHover={{ scale: 1.1 }}
                   id="nav-dropdown-services"
-                  className=" d-flex align-content-center justify-content-center flex-column m-auto"
+                  className="m-auto"
                 >
-                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="./listOfPuja">List of Pooja</Dropdown.Item>
-                  <Dropdown.Item className={`nav-service-link ${navTextColor}`} href="/panchang">Panchang</Dropdown.Item>
+                  <Dropdown.Item href="./listOfPuja">List of Pooja</Dropdown.Item>
+                  <Dropdown.Item href="/panchang">Panchang</Dropdown.Item>
                 </NavDropdown>
               </motion.div>
-              <motion.div >
+
+              <motion.div>
                 <Nav.Link href="/about-us" className={`nav-link ${navTextColor}`}>
                   <CalendarCheck className="icon" /> About Us
                 </Nav.Link>
               </motion.div>
-             {/* {!isPanditAuthenticated ? (
-  <NavDropdown
-    title={
-      <span className={`d-flex align-items-center ${navTextColor}`}>
-        <PersonCircle className={`me-2 ${navTextColor}`} />
-        Login
-        <CaretDownFill className="ms-1" size={12} />
-      </span>
-    }
-    id="login-dropdown"
-    className="nav-item"
-  >
-    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/login">
-      User Login
-    </NavDropdown.Item>
-    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/panditlogin">
-      Pandit Login
-    </NavDropdown.Item>
-  </NavDropdown>
-) : (
-  <NavDropdown
-    title={
-      <span className={`d-flex align-items-center ${navTextColor}`}>
-        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
-        Account
-        <CaretDownFill className="ms-1" size={12} />
-      </span>
-    }
-    id="account-dropdown"
-  >
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>
-      Dashboard
-    </NavDropdown.Item>
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogout}>
-      Logout
-    </NavDropdown.Item>
-  </NavDropdown>
-)} */}
 
-{isAuthenticated && !isPanditAuthenticated ? (
-  // 🧘‍♂️ Regular User Dashboard
-  <NavDropdown
-    title={
-      <span className={`d-flex align-items-center ${navTextColor}`}>
-        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
-        Account
-        <CaretDownFill className="ms-1" size={12} />
-      </span>
-    }
-    id="user-account-dropdown"
-  >
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/dashboard')}>
-      Dashboard
-    </NavDropdown.Item>
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogout}>
-      Logout
-    </NavDropdown.Item>
-  </NavDropdown>
-) : isPanditAuthenticated ? (
-  // 🕉️ Pandit Dashboard
-  <NavDropdown
-    title={
-      <span className={`d-flex align-items-center ${navTextColor}`}>
-        <MdPersonPinCircle className={`me-2 ${navTextColor}`} />
-        Pandit Account
-        <CaretDownFill className="ms-1" size={12} />
-      </span>
-    }
-    id="pandit-account-dropdown"
-  >
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={() => navigate('/panditdashboard')}>
-      Pandit Dashboard
-    </NavDropdown.Item>
-    <NavDropdown.Item className={`nav-service-link ${navTextColor}`} onClick={handleLogoutPandit}>
-      Logout
-    </NavDropdown.Item>
-  </NavDropdown>
-) : (
-  // 👤 Not Logged In - Show Login Options
-  <NavDropdown
-    title={
-      <span className={`d-flex align-items-center ${navTextColor}`}>
-        <PersonCircle className={`me-2 ${navTextColor}`} />
-        Login
-        <CaretDownFill className="ms-1" size={12} />
-      </span>
-    }
-    id="login-dropdown"
-    className="nav-item"
-  >
-    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/login">
-      User Login
-    </NavDropdown.Item>
-    <NavDropdown.Item className={`${navTextColor}`} as={Link} to="/panditlogin">
-      Pandit Login
-    </NavDropdown.Item>
-  </NavDropdown>
-)}
-
-
-
-
-
-
-
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  as="a"
-                  onClick={handleBookingClick}
-                  variant="outline-light m-2"
-                  className="book-now-btn ms-2"
+              {isAuthenticated && !isPanditAuthenticated ? (
+                <NavDropdown
+                  title={<span className={`d-flex align-items-center ${navTextColor}`}><MdPersonPinCircle className={`me-2 ${navTextColor}`} />Account<CaretDownFill className="ms-1" size={12} /></span>}
+                  id="user-account-dropdown"
                 >
+                  <NavDropdown.Item onClick={() => navigate('/dashboard')}>Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              ) : isPanditAuthenticated ? (
+                <NavDropdown
+                  title={<span className={`d-flex align-items-center ${navTextColor}`}><MdPersonPinCircle className={`me-2 ${navTextColor}`} />Pandit Account<CaretDownFill className="ms-1" size={12} /></span>}
+                  id="pandit-account-dropdown"
+                >
+                  <NavDropdown.Item onClick={() => navigate('/panditdashboard')}>Pandit Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogoutPandit}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <NavDropdown
+                  title={<span className={`d-flex align-items-center ${navTextColor}`}><PersonCircle className={`me-2 ${navTextColor}`} />Login<CaretDownFill className="ms-1" size={12} /></span>}
+                  id="login-dropdown"
+                >
+                  <NavDropdown.Item as={Link} to="/login">User Login</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/panditlogin">Pandit Login</NavDropdown.Item>
+                </NavDropdown>
+              )}
+
+              {/* Language Selector */}
+              <Dropdown className="ms-3">
+                <Dropdown.Toggle variant="outline-secondary" size="md">
+                  🌐 Language
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
+                  <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
+                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
+
+                </Dropdown.Menu>
+              </Dropdown>
+              <div id="google_translate_element" style={{ display: 'none' }}></div>
+
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={handleBookingClick} variant="outline-light m-2" className="book-now-btn ms-2">
                   Book Now
                 </Button>
-
               </motion.div>
             </Nav>
           </Navbar.Collapse>
@@ -259,4 +221,5 @@ const MainNavbar = ({ isHeroVisible }) => {
     </div>
   );
 };
+
 export default MainNavbar;
