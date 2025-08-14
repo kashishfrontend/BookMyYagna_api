@@ -19,7 +19,7 @@ import AboutUs from '../Components/About';
 import GalleryPage from '../Page/GalleryPage';
 import NotFoundPage from '../Page/NotFoundPage';
 import Booking from '../Page/Booking';
-
+import Blogs from '../Components/BlogsSection/Blogs'
 import PanditDashboard from '../Page/PanditDashBoard';
 import PanditLogin from '../Components/PanditLogin';
 import PanditRegister from '../Components/PanditRegister';
@@ -32,6 +32,8 @@ import { checkPanditAuth } from '../redux/action/panditAuthAction';
 import PanditRegistration from '../Components/PanditRegister';
 import FaviconImage from '../Page/FaviconImage';
 import AllPandits from '../Components/SeeAllPandits';
+import SingleBlogPage from '../Components/BlogsSection/SingleBlogPage';
+import BlogsPage from '../Components/BlogsSection/BlogPage';
 
 // ✅ User Protected Route
 const ProtectedUserRoute = ({ children }) => {
@@ -135,6 +137,9 @@ function AppRoutes() {
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
         <Route path="/all-pandits" element={<AllPandits />} />
+    <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blog/:id" element={<SingleBlogPage />} />
+
 
         <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />

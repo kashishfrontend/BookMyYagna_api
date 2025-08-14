@@ -157,7 +157,7 @@ const WhyChooseUs = () => {
                         </p>
                         <div className="testimonial-author">
 
-                            <div className="author-info ">
+                            <div className="author-info " style={{color:"brown"}}>
                                 <h4>– Priya Mehta</h4>
                                 <span>Bangalore, India</span>
                             </div>

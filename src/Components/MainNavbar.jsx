@@ -159,6 +159,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                 >
                   <Dropdown.Item href="./listOfPuja">List of Pooja</Dropdown.Item>
                   <Dropdown.Item href="/panchang">Panchang</Dropdown.Item>
+                  <Dropdown.Item href="/blogs">Blogs</Dropdown.Item>
                 </NavDropdown>
               </motion.div>
 
