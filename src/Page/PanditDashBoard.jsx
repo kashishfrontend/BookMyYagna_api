@@ -44,6 +44,14 @@ const PanditDashboard = () => {
   //   // Add more logic here if needed, like navigating to a route or logging
   // };
 
+  const [showModal2, setShowModal2] = useState(false);
+   const handleShow = () => setShowModal2(true);
+  const handleClose = () => setShowModal2(false);
+
+    const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   // Initialize user state
   const [user, setUser] = useState({
@@ -59,6 +67,16 @@ const PanditDashboard = () => {
     languages: [],
     image: " ",
     role: 'Pandit',
+  });
+
+   const [formData, setFormData] = useState({
+    accountName: "",
+    accountNumber: "",
+    IFSCCode: "",
+    bankName: "",
+    bankAddress: "",
+    city: "",
+    state: "",
   });
 
   // Debug store configuration
@@ -199,6 +217,18 @@ const PanditDashboard = () => {
       fetchBookedPoojas();
     }
   }, [isPanditAuthenticated, user.id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/bankDetails/registerBankDetails", formData);
+      toast.success("Bank details added successfully!");
+      handleClose();
+    } catch (error) {
+      toast.error("Failed to add bank details");
+      console.error(error);
+    }
+  };
 
   // Fetch pandit profile
   useEffect(() => {
@@ -426,6 +456,10 @@ const PanditDashboard = () => {
         return renderPoojaLink();
       case 'notifications':
         return renderNotifications();
+         case 'bankDetails':
+        return rendorAccountDetails();
+        case 'paymentRecived':
+        return rendorPaymentRecived();
       case 'punditProfile':
         return renderPunditProfile();
       default:
@@ -498,6 +532,169 @@ const PanditDashboard = () => {
         </Card.Body>
       </Card>
     </Container>
+  );
+
+  const rendorAccountDetails = () => (
+   <div className="container-fluid py-4">
+      <div className="d-flex justify-content-between align-items-center">
+        <h2 className="text-center">All Bank Details</h2>
+        <Button variant="success" onClick={handleShow}>
+          + Add New
+        </Button>
+      </div>
+
+      <Card className="col-md-12 bg-transparent border border-0 mt-3">
+        <div className="table-responsive">
+          <table className="table table-bordered custom-table table-striped">
+            <thead className="table-header">
+              <tr>
+                <th>Date Of Pooja</th>
+                <th>Pooja Name</th>
+                <th>Pooja Time</th>
+                <th>Link Pooja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>14/08/2025</td>
+                <td>Ganesh Pooja</td>
+                <td>07:00 AM</td>
+                <td>
+                  <a
+                    href="https://example.com/pooja1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>20/08/2025</td>
+                <td>Satyanarayan Katha</td>
+                <td>05:00 PM</td>
+                <td>
+                  <a
+                    href="https://example.com/pooja2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>25/08/2025</td>
+                <td>Navgrah Shanti</td>
+                <td>06:30 PM</td>
+                <td>Not available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Modal */}
+      <Modal show={showModal2} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Bank Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            {[
+              { label: "Account Name", name: "accountName" },
+              { label: "Account Number", name: "accountNumber" },
+              { label: "IFSC Code", name: "IFSCCode" },
+              { label: "Bank Name", name: "bankName" },
+              { label: "Bank Address", name: "bankAddress" },
+              { label: "City", name: "city" },
+              { label: "State", name: "state" },
+            ].map((field, idx) => (
+              <Form.Group key={idx} className="mb-3">
+                <Form.Label>{field.label}</Form.Label>
+                <Form.Control
+                  type="text"
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            ))}
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={handleClose} className="me-2">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+
+    const rendorPaymentRecived = () => (
+    <div className="container-fluid py-4">
+    <h2 className="text-center">Payment Recived</h2>
+    <Card className="col-md-12 bg-transparent border border-0">
+      <div>
+        <div className="table-responsive">
+          <table className="table table-bordered custom-table table-striped">
+            <thead className="table-header">
+              <tr>
+                <th>Date Of Pooja</th>
+                <th>Pooja Name</th>
+                <th>Pooja Time</th>
+                <th>Link Pooja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>14/08/2025</td>
+                <td>Ganesh Pooja</td>
+                <td>07:00 AM</td>
+                <td>
+                  <a
+                    href="https://example.com/pooja1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>20/08/2025</td>
+                <td>Satyanarayan Katha</td>
+                <td>05:00 PM</td>
+                <td>
+                  <a
+                    href="https://example.com/pooja2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>25/08/2025</td>
+                <td>Navgrah Shanti</td>
+                <td>06:30 PM</td>
+                <td>Not available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Card>
+  </div>
   );
 
   const renderDashboardContent = () => (
@@ -915,6 +1112,20 @@ const PanditDashboard = () => {
             >
               <MdNotifications size={20} />
               <span>Notifications</span>
+            </div>
+             <div
+              className={`menu-item ${activeNavItem === 'bankDetails' ? 'active' : ''}`}
+              onClick={() => handleNavItemClick('bankDetails')}
+            >
+              <MdNotifications size={20} />
+              <span>Bank Details</span>
+            </div>
+             <div
+              className={`menu-item ${activeNavItem === 'paymentRecived' ? 'active' : ''}`}
+              onClick={() => handleNavItemClick('paymentRecived')}
+            >
+              <MdNotifications size={20} />
+              <span>Payment Recived</span>
             </div>
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />
