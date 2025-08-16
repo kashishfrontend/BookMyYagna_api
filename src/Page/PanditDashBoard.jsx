@@ -10,6 +10,7 @@ import { logoutPandit, resetLogoutPanditState } from '../redux/action/panditAuth
 import axios from '../Api/axios/axios_config';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/PanditDashboard.css';
+import moment from 'moment';
 
 // Memoized selectors
 const selectPanditState = createSelector(
@@ -506,6 +507,27 @@ const PanditDashboard = () => {
   };
 
 
+ const [receiptList, setReceiptList] = useState([]);
+ const fetchReceipts = async () => {
+    try {
+      const response = await axios.post(
+        "/panditReceipt/getAllReceiptByPandit"
+      );
+      if (response.data.success) {
+        setReceiptList(response.data.data);
+      } else {
+        toast.error("Failed to fetch payment data.");
+      }
+    } catch (error) {
+      console.error("Error fetching payment data:", error);
+      toast.error("Something went wrong while fetching payments.");
+    }
+  };
+
+  useEffect(() => {
+    fetchReceipts();
+  }, []);
+
 
 
   const renderContent = () => {
@@ -771,49 +793,41 @@ const PanditDashboard = () => {
           <table className="table table-bordered custom-table table-striped">
             <thead className="table-header">
               <tr>
-                <th>Date Of Pooja</th>
-                <th>Pooja Name</th>
-                <th>Pooja Time</th>
-                <th>Link Pooja</th>
+                <th>Pandit Name</th>
+                <th>Client Name</th>
+                <th>Pooja Mode</th>
+                <th>Pooja Amount</th>
+                <th>Amount Currency</th>
+                <th>Date of Pooja</th>
+                <th>Note</th>
+                <th>Status</th>
+                <th>Payment Date</th>
+                <th>Transaction Id</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>14/08/2025</td>
-                <td>Ganesh Pooja</td>
-                <td>07:00 AM</td>
-                <td>
-                  <a
-                    href="https://example.com/pooja1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>20/08/2025</td>
-                <td>Satyanarayan Katha</td>
-                <td>05:00 PM</td>
-                <td>
-                  <a
-                    href="https://example.com/pooja2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>25/08/2025</td>
-                <td>Navgrah Shanti</td>
-                <td>06:30 PM</td>
-                <td>Not available</td>
-              </tr>
+              {receiptList.length === 0 ? (
+                <tr>
+                  <td colSpan="10" className="text-center">
+                    No payment records found.
+                  </td>
+                </tr>
+              ) : (
+                receiptList.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.panditId?.name || "-"}</td>
+                    <td>{item.userId?.fullName || "-"}</td>
+                    <td>{item.poojaMode}</td>
+                    <td>{item.amount}</td>
+                    <td>{item.currency}</td>
+                    <td>{moment(item.poojaDate).format("DD/MM/YYYY")}</td>
+                    <td>{item.notes || "-"}</td>
+                    <td>{item.status}</td>
+                    <td>{moment(item.paymentDate).format("DD/MM/YYYY")}</td>
+                    <td>{item.transactionId}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
