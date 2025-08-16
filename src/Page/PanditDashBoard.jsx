@@ -37,6 +37,7 @@ const PanditDashboard = () => {
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [bankDetails, setBankDetails] = useState([]);
   // const [activeNavItem, setActiveNavItem] = useState('dashboard'); // or any default
 
   // const handleNavItemClick = (item) => {
@@ -305,6 +306,23 @@ const PanditDashboard = () => {
     }
   };
 
+  const fetchBankDetails = async () => {
+    try {
+      const response = await axios.get("/bankDetails/getAllBankDetails");
+      if (response.data.success) {
+        setBankDetails(response.data.bankDetails);
+      } else {
+        toast.error("Failed to fetch bank details");
+      }
+    } catch (error) {
+      console.error("API error:", error);
+      toast.error("Something went wrong while fetching data.");
+    }
+  };
+
+  useEffect(() => {
+    fetchBankDetails();
+  }, []);
 
   const handleDeleteNotification = async (id) => {
     const toastId = toast.loading('Deleting notification...');
@@ -548,49 +566,35 @@ const PanditDashboard = () => {
           <table className="table table-bordered custom-table table-striped">
             <thead className="table-header">
               <tr>
-                <th>Date Of Pooja</th>
-                <th>Pooja Name</th>
-                <th>Pooja Time</th>
-                <th>Link Pooja</th>
+                <th>Account Name</th>
+                <th>Account Number</th>
+                <th>IFSC Code</th>
+                <th>Bank Name</th>
+                <th>Bank Address</th>
+                <th>City</th>
+                <th>State</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>14/08/2025</td>
-                <td>Ganesh Pooja</td>
-                <td>07:00 AM</td>
-                <td>
-                  <a
-                    href="https://example.com/pooja1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>20/08/2025</td>
-                <td>Satyanarayan Katha</td>
-                <td>05:00 PM</td>
-                <td>
-                  <a
-                    href="https://example.com/pooja2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>25/08/2025</td>
-                <td>Navgrah Shanti</td>
-                <td>06:30 PM</td>
-                <td>Not available</td>
-              </tr>
+              {bankDetails.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center">
+                    No bank details found.
+                  </td>
+                </tr>
+              ) : (
+                bankDetails.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.accountName}</td>
+                    <td>{item.accountNumber}</td>
+                    <td>{item.IFSCCode}</td>
+                    <td>{item.bankName}</td>
+                    <td>{item.bankAddress}</td>
+                    <td>{item.city}</td>
+                    <td>{item.state}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
