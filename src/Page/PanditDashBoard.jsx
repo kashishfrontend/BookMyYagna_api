@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
-import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit } from 'react-icons/md';
+import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit  , MdAccountBalance, MdPayment} from 'react-icons/md';
 import { FaLink, FaCalendarAlt, FaUserCircle, FaBars } from 'react-icons/fa';
 import { createSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
@@ -1256,14 +1256,14 @@ const PanditDashboard = () => {
               className={`menu-item ${activeNavItem === 'bankDetails' ? 'active' : ''}`}
               onClick={() => handleNavItemClick('bankDetails')}
             >
-              <MdNotifications size={20} />
+              <MdAccountBalance  size={20} />
               <span>Bank Details</span>
             </div>
              <div
               className={`menu-item ${activeNavItem === 'paymentRecived' ? 'active' : ''}`}
               onClick={() => handleNavItemClick('paymentRecived')}
             >
-              <MdNotifications size={20} />
+              <MdPayment  size={20} />
               <span>Payment Recived</span>
             </div>
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
