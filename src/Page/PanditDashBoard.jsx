@@ -464,6 +464,50 @@ const PanditDashboard = () => {
     }));
   };
 
+
+  const [showModal3, setShowModal3] = useState(false);
+  const [upiId, setUpiId] = useState("");
+  const [upiList, setUpiList] = useState([]);
+
+
+ const handleShow1 = () => setShowModal3(true);
+  const handleClose1 = () => {
+    setShowModal3(false);
+    setUpiId("");
+  };
+
+// Fetch all UPI details
+  const fetchUpiDetails = async () => {
+    try {
+      const response = await axios.get("/bankDetails/getAllUpiDetails");
+      setUpiList(response.data.upiIds || []);
+    } catch (error) {
+      toast.error("Failed to fetch UPI details");
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUpiDetails();
+  }, []);
+
+  // Handle form submit
+  const handleSubmitUpi = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/bankDetails/registerUpiDetails", { upiId });
+      toast.success("UPI ID added successfully!");
+      handleClose();
+      fetchUpiDetails(); // refresh list
+    } catch (error) {
+      toast.error("Failed to add UPI ID");
+      console.error(error);
+    }
+  };
+
+
+
+
   const renderContent = () => {
     switch (activeNavItem) {
       case 'dashboard':
@@ -553,6 +597,7 @@ const PanditDashboard = () => {
   );
 
   const rendorAccountDetails = () => (
+   <>
    <div className="container-fluid py-4">
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="text-center">All Bank Details</h2>
@@ -639,6 +684,82 @@ const PanditDashboard = () => {
         </Modal.Body>
       </Modal>
     </div>
+
+
+<div className='mt-4'>
+
+   <div className="container-fluid py-4">
+      <div className="d-flex justify-content-between align-items-center">
+        <h2 className="text-center">All UPI Details</h2>
+        <Button variant="success" onClick={handleShow1}>
+          + Add UPI
+        </Button>
+      </div>
+
+      <Card className="col-md-12 bg-transparent border border-0 mt-3">
+        <div className="table-responsive">
+          <table className="table table-bordered custom-table table-striped">
+            <thead className="table-header">
+              <tr>
+                <th>UPI ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {upiList.length === 0 ? (
+                <tr>
+                  <td className="text-center">No UPI IDs found.</td>
+                </tr>
+              ) : (
+                upiList.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.upiId}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Modal */}
+      <Modal show={showModal3} onHide={handleClose1} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add UPI ID</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmitUpi}>
+            <Form.Group className="mb-3">
+              <Form.Label>UPI ID</Form.Label>
+              <Form.Control
+                type="text"
+                name="upiId"
+                value={upiId}
+                onChange={(e) => setUpiId(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={handleClose1} className="me-2">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>
+  
+</div>
+
+
+   </>
+
+
+
+
+
   );
 
     const rendorPaymentRecived = () => (
