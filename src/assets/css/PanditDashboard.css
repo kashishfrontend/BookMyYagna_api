@@ -28,6 +28,13 @@ body {
     color: var(--text-dark);
 }
 
+div.main-content {
+  display: block !important;
+  gap: 0 !important;
+  margin-top: 0 !important;
+}
+
+
 /* Dashboard Container */
 .dashboard-container {
     display: flex;
