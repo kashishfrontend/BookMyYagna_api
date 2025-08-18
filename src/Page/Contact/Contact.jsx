@@ -474,6 +474,7 @@ const Contact = () => {
           centered
           size="md"
         >
+          ///
           <Modal.Body className="text-center p-4">
             <FaCheckCircle size={60} className="text-success mb-3" />
             <h4 className="fw-bold mb-3" style={{ color: '#5a3e1f' }}>Thank You!</h4>

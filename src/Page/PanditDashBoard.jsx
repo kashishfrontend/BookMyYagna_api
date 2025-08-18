@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
-import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit } from 'react-icons/md';
+import { MdDashboard, MdLogout, MdNotifications, MdClose, MdDelete, MdEdit  , MdAccountBalance, MdPayment} from 'react-icons/md';
 import { FaLink, FaCalendarAlt, FaUserCircle, FaBars } from 'react-icons/fa';
 import { createSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { logoutPandit, resetLogoutPanditState } from '../redux/action/panditAuth
 import axios from '../Api/axios/axios_config';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/PanditDashboard.css';
+import moment from 'moment';
 
 // Memoized selectors
 const selectPanditState = createSelector(
@@ -37,6 +38,7 @@ const PanditDashboard = () => {
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [bankDetails, setBankDetails] = useState([]);
   // const [activeNavItem, setActiveNavItem] = useState('dashboard'); // or any default
 
   // const handleNavItemClick = (item) => {
@@ -44,6 +46,14 @@ const PanditDashboard = () => {
   //   // Add more logic here if needed, like navigating to a route or logging
   // };
 
+  const [showModal2, setShowModal2] = useState(false);
+   const handleShow = () => setShowModal2(true);
+  const handleClose = () => setShowModal2(false);
+
+    const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   // Initialize user state
   const [user, setUser] = useState({
@@ -59,6 +69,16 @@ const PanditDashboard = () => {
     languages: [],
     image: " ",
     role: 'Pandit',
+  });
+
+   const [formData, setFormData] = useState({
+    accountName: "",
+    accountNumber: "",
+    IFSCCode: "",
+    bankName: "",
+    bankAddress: "",
+    city: "",
+    state: "",
   });
 
   // Debug store configuration
@@ -200,6 +220,18 @@ const PanditDashboard = () => {
     }
   }, [isPanditAuthenticated, user.id]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/bankDetails/registerBankDetails", formData);
+      toast.success("Bank details added successfully!");
+      handleClose();
+    } catch (error) {
+      toast.error("Failed to add bank details");
+      console.error(error);
+    }
+  };
+
   // Fetch pandit profile
   useEffect(() => {
     const fetchPanditProfile = async () => {
@@ -275,6 +307,23 @@ const PanditDashboard = () => {
     }
   };
 
+  const fetchBankDetails = async () => {
+    try {
+      const response = await axios.get("/bankDetails/getAllBankDetails");
+      if (response.data.success) {
+        setBankDetails(response.data.bankDetails);
+      } else {
+        toast.error("Failed to fetch bank details");
+      }
+    } catch (error) {
+      console.error("API error:", error);
+      toast.error("Something went wrong while fetching data.");
+    }
+  };
+
+  useEffect(() => {
+    fetchBankDetails();
+  }, []);
 
   const handleDeleteNotification = async (id) => {
     const toastId = toast.loading('Deleting notification...');
@@ -416,6 +465,135 @@ const PanditDashboard = () => {
     }));
   };
 
+
+
+
+    const [editingId, setEditingId] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    accountName: '',
+    accountNumber: '',
+    IFSCCode: '',
+    bankName: '',
+    bankAddress: '',
+    city: '',
+    state: ''
+  });
+
+  const handleEditClick = (item) => {
+    setEditingId(item._id);
+    setEditFormData({
+      accountName: item.accountName,
+      accountNumber: item.accountNumber,
+      IFSCCode: item.IFSCCode,
+      bankName: item.bankName,
+      bankAddress: item.bankAddress,
+      city: item.city,
+      state: item.state
+    });
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete these bank details?")) {
+      try {
+        await axios.delete(`/bankDetails/deleteBankDetail/${id}`);
+        // Remove the deleted item from state
+        setBankDetails(bankDetails.filter(item => item._id !== id));
+        toast.success("Bank details deleted successfully");
+      } catch (error) {
+        toast.error("Failed to delete bank details");
+        console.error(error);
+      }
+    }
+  };
+
+
+  const handleDeleteUpi = async (id) => {
+  if (window.confirm("Are you sure you want to delete this UPI ID?")) {
+    try {
+      await axios.delete(`/bankDetails/deleteUpiDetail/${id}`);
+      // Correctly update the upiList state by filtering out the deleted item
+      setUpiList(upiList.filter(item => item._id !== id));
+      toast.success("UPI ID deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete UPI ID");
+      console.error(error);
+    }
+  }
+};
+
+  const [showModal3, setShowModal3] = useState(false);
+  const [upiId, setUpiId] = useState("");
+  const [upiList, setUpiList] = useState([]);
+
+
+ const handleShow1 = () => setShowModal3(true);
+  const handleClose1 = () => {
+    setShowModal3(false);
+    setUpiId("");
+  };
+
+// Fetch all UPI details
+  const fetchUpiDetails = async () => {
+    try {
+      const response = await axios.get("/bankDetails/getAllUpiDetails");
+      setUpiList(response.data.upiIds || []);
+    } catch (error) {
+      toast.error("Failed to fetch UPI details");
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUpiDetails();
+  }, []);
+
+  // Handle form submit
+  const handleSubmitUpi = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/bankDetails/registerUpiDetails", { upiId });
+      toast.success("UPI ID added successfully!");
+      handleClose();
+      fetchUpiDetails(); // refresh list
+    } catch (error) {
+      toast.error("Failed to add UPI ID");
+      console.error(error);
+    }
+  };
+
+
+ const [receiptList, setReceiptList] = useState([]);
+ const fetchReceipts = async () => {
+    try {
+      const response = await axios.post(
+        "/panditReceipt/getAllReceiptByPandit"
+      );
+      if (response.data.success) {
+        setReceiptList(response.data.data);
+      } else {
+        toast.error("Failed to fetch payment data.");
+      }
+    } catch (error) {
+      console.error("Error fetching payment data:", error);
+      toast.error("Something went wrong while fetching payments.");
+    }
+  };
+
+  useEffect(() => {
+    fetchReceipts();
+  }, []);
+
+
+
   const renderContent = () => {
     switch (activeNavItem) {
       case 'dashboard':
@@ -426,6 +604,10 @@ const PanditDashboard = () => {
         return renderPoojaLink();
       case 'notifications':
         return renderNotifications();
+         case 'bankDetails':
+        return rendorAccountDetails();
+        case 'paymentRecived':
+        return rendorPaymentRecived();
       case 'punditProfile':
         return renderPunditProfile();
       default:
@@ -498,6 +680,310 @@ const PanditDashboard = () => {
         </Card.Body>
       </Card>
     </Container>
+  );
+
+
+const rendorAccountDetails = () => {
+  return (
+    <>
+      <div className="container-fluid py-4">
+        <div className="d-flex justify-content-between align-items-center">
+          <h2 className="text-center">All Bank Details</h2>
+          <Button variant="success" onClick={handleShow}>
+            + Add New
+          </Button>
+        </div>
+
+        <Card className="col-md-12 bg-transparent border border-0 mt-3">
+          <div className="table-responsive">
+            <table className="table table-bordered custom-table table-striped">
+              <thead className="table-header">
+                <tr>
+                  <th>Account Name</th>
+                  <th>Account Number</th>
+                  <th>IFSC Code</th>
+                  <th>Bank Name</th>
+                  <th>Bank Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bankDetails.length === 0 ? (
+                  <tr>
+                    <td colSpan="8" className="text-center">
+                      No bank details found.
+                    </td>
+                  </tr>
+                ) : (
+                  bankDetails.map((item) => (
+                    <tr key={item._id}>
+                      {editingId === item._id ? (
+                        <>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="accountName"
+                              value={editFormData.accountName}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="accountNumber"
+                              value={editFormData.accountNumber}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="IFSCCode"
+                              value={editFormData.IFSCCode}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="bankName"
+                              value={editFormData.bankName}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="bankAddress"
+                              value={editFormData.bankAddress}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="city"
+                              value={editFormData.city}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="state"
+                              value={editFormData.state}
+                              onChange={handleEditChange}
+                            />
+                          </td>
+                          <td>
+                            <Button 
+                              variant="secondary" 
+                              size="sm" 
+                              onClick={() => setEditingId(null)}
+                            >
+                              Cancel
+                            </Button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td>{item.accountName}</td>
+                          <td>{item.accountNumber}</td>
+                          <td>{item.IFSCCode}</td>
+                          <td>{item.bankName}</td>
+                          <td>{item.bankAddress}</td>
+                          <td>{item.city}</td>
+                          <td>{item.state}</td>
+                          <td>
+                           
+                            <Button 
+                              variant="danger" 
+                              size="sm" 
+                              onClick={() => handleDelete(item._id)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {/* Modal */}
+        <Modal show={showModal2} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Bank Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleSubmit}>
+              {[
+                { label: "Account Name", name: "accountName" },
+                { label: "Account Number", name: "accountNumber" },
+                { label: "IFSC Code", name: "IFSCCode" },
+                { label: "Bank Name", name: "bankName" },
+                { label: "Bank Address", name: "bankAddress" },
+                { label: "City", name: "city" },
+                { label: "State", name: "state" },
+              ].map((field, idx) => (
+                <Form.Group key={idx} className="mb-3">
+                  <Form.Label>{field.label}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name={field.name}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              ))}
+              <div className="d-flex justify-content-end">
+                <Button variant="secondary" onClick={handleClose} className="me-2">
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </div>
+
+      <div className='mt-4'>
+        <div className="container-fluid py-4">
+          <div className="d-flex justify-content-between align-items-center">
+            <h2 className="text-center">All UPI Details</h2>
+            <Button variant="success" onClick={handleShow1}>
+              + Add UPI
+            </Button>
+          </div>
+
+          <Card className="col-md-12 bg-transparent border border-0 mt-3">
+            <div className="table-responsive">
+              <table className="table table-bordered custom-table table-striped">
+                <thead className="table-header">
+                  <tr>
+                    <th>UPI ID</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {upiList.length === 0 ? (
+                    <tr>
+                      <td colSpan="2" className="text-center">No UPI IDs found.</td>
+                    </tr>
+                  ) : (
+                    upiList.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.upiId}</td>
+                        <td>
+                          <Button 
+                            variant="danger" 
+                            size="sm" 
+                            onClick={() => handleDeleteUpi(item._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+
+          {/* Modal */}
+          <Modal show={showModal3} onHide={handleClose1} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Add UPI ID</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handleSubmitUpi}>
+                <Form.Group className="mb-3">
+                  <Form.Label>UPI ID</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="upiId"
+                    value={upiId}
+                    onChange={(e) => setUpiId(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <div className="d-flex justify-content-end">
+                  <Button variant="secondary" onClick={handleClose1} className="me-2">
+                    Cancel
+                  </Button>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        </div>
+      </div>
+    </>
+  );
+};
+
+    const rendorPaymentRecived = () => (
+    <div className="container-fluid py-4">
+    <h2 className="text-center">Payment Recived</h2>
+    <Card className="col-md-12 bg-transparent border border-0">
+      <div>
+        <div className="table-responsive">
+          <table className="table table-bordered custom-table table-striped">
+            <thead className="table-header">
+              <tr>
+                <th>Pandit Name</th>
+                <th>Client Name</th>
+                <th>Pooja Mode</th>
+                <th>Pooja Amount</th>
+                <th>Amount Currency</th>
+                <th>Date of Pooja</th>
+                <th>Note</th>
+                <th>Status</th>
+                <th>Payment Date</th>
+                <th>Transaction Id</th>
+              </tr>
+            </thead>
+            <tbody>
+              {receiptList.length === 0 ? (
+                <tr>
+                  <td colSpan="10" className="text-center">
+                    No payment records found.
+                  </td>
+                </tr>
+              ) : (
+                receiptList.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.panditId?.name || "-"}</td>
+                    <td>{item.userId?.fullName || "-"}</td>
+                    <td>{item.poojaMode}</td>
+                    <td>{item.amount}</td>
+                    <td>{item.currency}</td>
+                    <td>{moment(item.poojaDate).format("DD/MM/YYYY")}</td>
+                    <td>{item.notes || "-"}</td>
+                    <td>{item.status}</td>
+                    <td>{moment(item.paymentDate).format("DD/MM/YYYY")}</td>
+                    <td>{item.transactionId}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Card>
+  </div>
   );
 
   const renderDashboardContent = () => (
@@ -863,7 +1349,7 @@ const PanditDashboard = () => {
         </Card.Body>
       </Card>
     </Container>
-  );;
+  );
 
   return (
     <>
@@ -915,6 +1401,20 @@ const PanditDashboard = () => {
             >
               <MdNotifications size={20} />
               <span>Notifications</span>
+            </div>
+             <div
+              className={`menu-item ${activeNavItem === 'bankDetails' ? 'active' : ''}`}
+              onClick={() => handleNavItemClick('bankDetails')}
+            >
+              <MdAccountBalance  size={20} />
+              <span>Bank Details</span>
+            </div>
+             <div
+              className={`menu-item ${activeNavItem === 'paymentRecived' ? 'active' : ''}`}
+              onClick={() => handleNavItemClick('paymentRecived')}
+            >
+              <MdPayment  size={20} />
+              <span>Payment Recived</span>
             </div>
             <div className="menu-item logout mt-auto" onClick={handleLogout}>
               <MdLogout size={22} />

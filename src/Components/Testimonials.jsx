@@ -128,7 +128,7 @@ const Testimonial = () => {
                                         <p className="testimonial-text" >
                                             {testimonial.text}
                                         </p>
-                                    </div>
+                                    {/* </div> */}
                                     <div className="testimonial-rating">
                                         {[...Array(5)].map((_, index) => (
                                             <FaStar
@@ -140,7 +140,9 @@ const Testimonial = () => {
                                     <div className="testimonial-pooja">
                                         {testimonial.pooja}
                                     </div>
-                                    <div className="testimonial-author" style={{ justifyContent: "start" }}>
+                                    </div>
+
+                                    <div className="testimonial-author" >
                                         {/* <div className="author-image">
                                             <img
                                                 src={testimonial.image}

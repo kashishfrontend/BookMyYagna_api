@@ -43,7 +43,7 @@ const WhyChooseUs = () => {
         {
             id: 3,
             icon: <FaCalendarAlt />,
-            title: "Flexible Scheduling",
+            title: "Adaptive Scheduling",
             description: "Book your puja at your convenience — morning, evening, or weekend slots. We offer flexible timing to suit your family's comfort and schedule.",
             animation: "fade-left"
         },
@@ -157,7 +157,7 @@ const WhyChooseUs = () => {
                         </p>
                         <div className="testimonial-author">
 
-                            <div className="author-info ">
+                            <div className="author-info" style={{color:"brown"}}>
                                 <h4>– Priya Mehta</h4>
                                 <span>Bangalore, India</span>
                             </div>
