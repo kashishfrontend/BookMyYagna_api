@@ -187,9 +187,11 @@ const PoojaSlider = () => {
                       </div>
                       <div className="pooja-tile-back">
                         <span className="tile-icon">{pooja.icon}</span>
-                        <h4>{pooja.heading}</h4>
-                        <h5>{pooja.subHeading}</h5>
-                        <p>{pooja.description}</p>
+                        <div className="pooja-tile-back-content">
+                          <h4>{pooja.heading}</h4>
+                          <h5>{pooja.subHeading}</h5>
+                          <p>{pooja.description}</p>
+                        </div>
                         <button
                           className="tile-book-btn"
                           onClick={() => isAuthenticated ? navigate('/pujaBookingDetails', { state: { poojaId: pooja._id } }) : navigate('/login')}

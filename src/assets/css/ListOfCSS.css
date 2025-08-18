@@ -343,6 +343,8 @@
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: auto; /* This pushes the button to the bottom */
+    flex-shrink: 0; 
 }
 
 .tile-book-btn:hover {
@@ -350,6 +352,38 @@
     transform: scale(1.05);
 }
 
+
+.pooja-tile {
+    position: relative;
+    height: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.pooja-tile-back-content {
+    max-height: calc(100% - 100px); /* Adjust based on your content */
+    overflow-y: auto;
+    padding-right: 5px; /* Prevents text from touching scrollbar */
+}
+
+/* Custom scrollbar for the content */
+.pooja-tile-back-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.pooja-tile-back-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.pooja-tile-back-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.pooja-tile-back-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
 /* Temple decorations */
 .temple-decoration {
     position: absolute;
