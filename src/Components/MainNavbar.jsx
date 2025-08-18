@@ -196,7 +196,7 @@ const MainNavbar = ({ isHeroVisible }) => {
               )}
 
               {/* Language Selector */}
-              <Dropdown className="ms-3">
+              {/* <Dropdown className="ms-3">
                 <Dropdown.Toggle variant="outline-secondary" size="md">
                   🌐 Language
                 </Dropdown.Toggle>
@@ -206,7 +206,25 @@ const MainNavbar = ({ isHeroVisible }) => {
                   <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
 
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+
+               <motion.div>
+                <NavDropdown
+                  title={
+                    <>
+                      <span className={`icon me-1 ${navTextColor}`}>🌐</span>
+                      <span className={navTextColor}>Language</span>
+                    </>
+                  }
+                  id="nav-dropdown-services"
+                  className="m-auto"
+                >
+                  <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
+                  <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
+                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
+                </NavDropdown>
+              </motion.div>
+
               <div id="google_translate_element" style={{ display: 'none' }}></div>
 
 
