@@ -100,7 +100,7 @@ const ScaredBooking = () => {
                     <p className="fs-5" style={{ color: "#555" }}>
                       Go to our official website <a href="https://bookmyyagna.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FF7722" }}>https://bookmyyagna.com</a> and explore our services. You'll find information about various pujas, yagnas, and our verified pandits.
                     </p>
-                  </div>
+                  </div> 
 
                   <div className="step mb-4 p-4 rounded" style={{ backgroundColor: "#FFF5EE", borderLeft: "4px solid #FF7722" }}>
                     <div className="d-flex align-items-center mb-3">
@@ -217,7 +217,7 @@ const ScaredBooking = () => {
 
                 <div className="text-center mt-5">
                   <Link 
-                    to="/" 
+                    to="/listofpuja" 
                     className="btn btn-lg fw-bold" 
                     style={{ 
                       backgroundColor: "#FF7722", 
