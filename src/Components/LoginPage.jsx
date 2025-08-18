@@ -130,7 +130,7 @@
       const newErrors = validateForm();
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
-        toast.error('Please fix the errors in the form');
+        toast.error('there might me some in your credentials');
         return;
       }
 
