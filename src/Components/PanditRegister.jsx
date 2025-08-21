@@ -188,7 +188,8 @@ const PanditRegistration = () => {
         setTermsAgreed(false);
         setShowPopup(true);
       } else {
-        setError(data.message || 'Registration failed, try again.');
+        // Display backend error message
+        setError(data.error || data.message || 'Registration failed, try again.');
       }
     } catch (err) {
       setError('Network server error.');
