@@ -1,69 +1,92 @@
 import axios from 'axios';
 
 // Action Types
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const RESET_LOGIN = 'LOGIN_RESET';
-export const AUTH_LOADED = 'AUTH_LOADED';
-export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+export const RESET_USER_LOGIN = 'RESET_USER_LOGIN';
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
-export const RESET_LOGOUT_STATE = 'RESET_LOGOUT_STATE';
+export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
+export const RESET_USER_LOGOUT_STATE = 'RESET_USER_LOGOUT_STATE';
 
-// Login action
+export const SET_USER_AUTHENTICATED = 'SET_USER_AUTHENTICATED';
+export const AUTH_USER_LOADED = 'AUTH_USER_LOADED';
+
+// Login User
 export const login = (email, password) => async (dispatch) => {
-  dispatch({ type: LOGIN_REQUEST });
+  dispatch({ type: LOGIN_USER_REQUEST });
 
   try {
     const response = await axios.post(
-      `https://api.bookmyyagna.com/user/loginUser`,
+      'https://api.bookmyyagna.com/user/loginUser',
       { email, password },
-      {
-        withCredentials: true,
-      }
+      { withCredentials: true }
     );
+    console.log("Login Response:", response.data);
+    dispatch({ type: LOGIN_USER_SUCCESS, payload: response.data });
 
-    dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+    // Dispatch auth with user and role from response.data.user
+    dispatch({
+      type: SET_USER_AUTHENTICATED,
+      payload: {
+        user: response.data.user,
+        role: response.data.user?.role,
+      },
+    });
 
-    setTimeout(() => {
-      dispatch({ type: SET_AUTHENTICATED });
-    }, 1000);
-
+    return { success: true, data: response.data };
   } catch (error) {
     dispatch({
-      type: LOGIN_FAILURE,
-      payload: error.response?.data?.error,
+      type: LOGIN_USER_FAILURE,
+      payload: error.response?.data?.error || 'Login failed',
     });
+
+    return {
+      success: false,
+      error: error.response?.data?.error || 'Login failed',
+    };
   }
 };
 
+// Reset login state
 export const resetLogin = () => ({
-  type: RESET_LOGIN,
+  type: RESET_USER_LOGIN,
 });
 
+// Logout User
 export const logout = () => async (dispatch) => {
+  dispatch({ type: LOGOUT_USER_REQUEST });
+
   try {
-    dispatch({ type: LOGOUT_REQUEST });
-    const response = await axios.get(
+    const { data } = await axios.get(
       'https://api.bookmyyagna.com/user/logoutUser',
       { withCredentials: true }
     );
 
-    dispatch({ type: LOGOUT_SUCCESS, payload: response.data });
+    dispatch({ type: LOGOUT_USER_SUCCESS, payload: data });
+
+    return { success: true, message: data.message };
   } catch (error) {
-    dispatch({ type: LOGOUT_FAILURE });
+    dispatch({
+      type: LOGOUT_USER_FAILURE,
+      payload: error.response?.data?.error || 'Logout failed',
+    });
+
+    return {
+      success: false,
+      error: error.response?.data?.error || 'Logout failed',
+    };
   }
 };
 
-export const resetLogoutState = () => {
-  return {
-    type: RESET_LOGOUT_STATE,
-  };
-};
+// Reset logout state
+export const resetLogoutState = () => ({
+  type: RESET_USER_LOGOUT_STATE,
+});
 
+// Check User Authentication
 export const checkAuth = () => async (dispatch) => {
   try {
     const response = await axios.get(
@@ -71,10 +94,16 @@ export const checkAuth = () => async (dispatch) => {
       { withCredentials: true }
     );
 
-    dispatch({ type: SET_AUTHENTICATED });
+    dispatch({
+      type: SET_USER_AUTHENTICATED,
+      payload: {
+        role: response.data.role,
+        user: response.data.user,
+      },
+    });
   } catch (error) {
-    dispatch({ type: LOGOUT_SUCCESS });
+    dispatch({ type: LOGOUT_USER_SUCCESS });
   } finally {
-    dispatch({ type: AUTH_LOADED });
+    dispatch({ type: AUTH_USER_LOADED });
   }
 };
