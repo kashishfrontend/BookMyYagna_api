@@ -1,14 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
-
-/* Prevent scrollbars from appearing due to overflow */
 body,
 html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* 🔧 Prevent horizontal overflow */
 }
 
 .dashbord {
@@ -43,7 +39,7 @@ html {
   background: rgba(255, 109, 0, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-}Contact BookMyYagn
+}
 
 .brand-text {
   font-family: 'Poppins', sans-serif;
