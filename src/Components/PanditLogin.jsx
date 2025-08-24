@@ -7,7 +7,8 @@ import '../assets/css/PanditLogin.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginPandit, resetLoginPandit } from '../redux/action/panditAuthAction';
 import bg from "../assets/img/bg-panditLogin.jpg";
-import img from "../assets/img/favicon.png"; // Replace with your logo image path
+import img from "../assets/img/favicon.png";
+// import img1 from '../assets/img/login-bg-new.png';
 
 const PanditLogin = () => {
   const navigate = useNavigate();
@@ -57,7 +58,6 @@ const PanditLogin = () => {
           <div className="logo-section text-center mb-2">
             <div className="logo-circle-1 ">
               <img src={img} alt="Logo" className="logo-image" />
-
             </div>
           </div>
           <div className="welcome-text text-center mb-2">

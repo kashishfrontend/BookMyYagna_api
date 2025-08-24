@@ -137,15 +137,13 @@ function AppRoutes() {
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
         <Route path="/all-pandits" element={<AllPandits />} />
-    <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blog/:id" element={<SingleBlogPage />} />
-
-
         <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />
         <Route path="gallery" element={<GalleryPage />} />
-         <Route path="favicon.png" element={<FaviconImage/>} />
+        <Route path="favicon.png" element={<FaviconImage />} />
         {/* <Route path="panditregistration" element={<PanditRegistration />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
