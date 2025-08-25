@@ -40,7 +40,7 @@ const Booking = () => {
   console.log("Selected Plan ID:", selectedPlanId);
 
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate()
   useEffect(() => {
     if (poojaId) {
       axios
