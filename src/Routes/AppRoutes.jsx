@@ -34,6 +34,8 @@ import FaviconImage from '../Page/FaviconImage';
 import AllPandits from '../Components/SeeAllPandits';
 import SingleBlogPage from '../Components/BlogsSection/SingleBlogPage';
 import BlogsPage from '../Components/BlogsSection/BlogPage';
+import ThankYouPage from '../Page/ThankyouPage';
+import PaymentFailedPage from '../Page/FailedPage';
 
 // ✅ User Protected Route
 const ProtectedUserRoute = ({ children }) => {
@@ -134,6 +136,10 @@ function AppRoutes() {
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="termsofservice" element={<TermsOfService />} />
+        <Route path="/ThankyouPage" element={<ThankYouPage />} />
+        <Route path="/FailedPage" element={<PaymentFailedPage />} />
+
+
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
         <Route path="/all-pandits" element={<AllPandits />} />

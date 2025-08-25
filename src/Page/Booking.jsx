@@ -42,7 +42,7 @@ const Booking = () => {
 
 
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate()
   useEffect(() => {
     if (poojaId) {
       axios
