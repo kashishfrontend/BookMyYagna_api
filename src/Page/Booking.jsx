@@ -15,6 +15,7 @@ import gf from "../assets/img/pandit-1.webp";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
