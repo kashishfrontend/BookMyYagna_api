@@ -35,9 +35,9 @@ const ScaredBooking = () => {
           content="Step-by-step guide to booking authentic puja services at BookMyYagna. Connect with trusted pandits for your spiritual needs."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://api.bookmyyagna.com/how-to-book" />
-        <meta property="og:image" content="https://api.bookmyyagna.com/images/puja-booking-steps.jpg" />
-        <link rel="canonical" href="https://api.bookmyyagna.com/how-to-book" />
+        <meta property="og:url" content="https://bookmyyogna.onrender.com/how-to-book" />
+        <meta property="og:image" content="https://bookmyyogna.onrender.com/images/puja-booking-steps.jpg" />
+        <link rel="canonical" href="https://bookmyyogna.onrender.com/how-to-book" />
       </Helmet>
     
       <section
