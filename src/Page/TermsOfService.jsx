@@ -16,7 +16,7 @@ const TermsOfService = () => {
     return (
         <>
             <Helmet>
-                <title>Terms of Service | BookMyYagna - Online Puja Booking Platform</title>
+                <title> of Service | BookMyYagna - Online Puja Booking Platform</title>
                 <meta
                     name="description"
                     content="Read the Terms of Service for BookMyYagna, your trusted platform for booking online pujas and Vedic rituals. Understand our policies, user responsibilities, and service terms before you book a yagna."
@@ -36,11 +36,11 @@ const TermsOfService = () => {
                 <link rel="canonical" href="https://bookmyyagna.com/termsofservice" />
             </Helmet>
 
-            <section className="terms-of-service-page" style={{ 
+            <section className="terms-of-service-page" style={{
                 padding: '80px 0 60px',
                 backgroundColor: '#f9f5f0',
                 minHeight: '100vh',
-                marginTop:"50px"
+                marginTop: "50px"
             }}>
                 <Container>
                     {/* Header Section */}
@@ -126,9 +126,9 @@ const TermsOfService = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        Welcome to BookMyYagna. These Terms of Service govern your use of our platform 
-                                        and services. By accessing or using BookMyYagna, you agree to be bound by these 
-                                        terms and our Privacy Policy. If you disagree with any part, you may not access 
+                                        Welcome to BookMyYagna. These Terms of Service govern your use of our platform
+                                        and services. By accessing or using BookMyYagna, you agree to be bound by these
+                                        terms and our Privacy Policy. If you disagree with any part, you may not access
                                         our services.
                                     </p>
                                 </div>
@@ -285,7 +285,7 @@ const TermsOfService = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        BookMyYagna shall not be liable for any indirect, incidental, special, 
+                                        BookMyYagna shall not be liable for any indirect, incidental, special,
                                         consequential or punitive damages resulting from:<br />
                                         • Your use or inability to use our services<br />
                                         • Any unauthorized access to our systems<br />
@@ -321,15 +321,15 @@ const TermsOfService = () => {
                                         color: '#2c3e50',
                                         marginBottom: '15px'
                                     }}>Amendments</h3>
-                                    <p  style={{
+                                    <p style={{
                                         fontSize: '1rem',
                                         color: '#555',
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        We reserve the right to modify these terms at any time. When we make changes, 
-                                        we will revise the "last updated" date at the top of this page. Your continued 
-                                        use of our services after changes constitutes acceptance of the new terms. 
+                                        We reserve the right to modify these terms at any time. When we make changes,
+                                        we will revise the "last updated" date at the top of this page. Your continued
+                                        use of our services after changes constitutes acceptance of the new terms.
                                         We encourage you to periodically review this page for updates.
                                     </p>
                                 </div>

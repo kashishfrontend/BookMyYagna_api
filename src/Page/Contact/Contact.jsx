@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Contact = () => {
   // WhatsApp URL
-  const whatsappUrl = "https://wa.me/8569977795";
+  const whatsappUrl = "https://wa.me/8569977705";
 
   // Social media URLs
   const socialLinks = {

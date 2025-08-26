@@ -93,14 +93,14 @@ const Services = () => {
                         </Col>
 
                     ))}
-                    <Card.Footer className="bg-transparent border-0 text-center py-3 overflow-hidden" style={{
+                    {/* <Card.Footer className="bg-transparent border-0 text-center py-3 overflow-hidden" style={{
                         animation: 'zoomInOut 2s infinite ease-in-out',
                         transformOrigin: 'center',
                     }}>
                         <Link to="/panchang" className="text-decoration-none border border-danger p-2  fw-bold">
                             Lets see Calender→
                         </Link>
-                    </Card.Footer>
+                    </Card.Footer> */}
                 </Row>
             </Container>
         </section>

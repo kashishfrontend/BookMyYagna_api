@@ -49,7 +49,7 @@ const MainNavbar = ({ isHeroVisible }) => {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: 'en',
-          includedLanguages: 'en,hi,ar',
+          includedLanguages: 'en,hi',
           autoDisplay: false
         },
         'google_translate_element'
@@ -196,18 +196,17 @@ const MainNavbar = ({ isHeroVisible }) => {
               )}
 
               {/* Language Selector */}
-              {/* <Dropdown className="ms-3">
+              <Dropdown className="ms-3">
                 <Dropdown.Toggle variant="outline-secondary" size="md">
                   🌐 Language
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
                   <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
-                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
 
                 </Dropdown.Menu>
-              </Dropdown> */}
-
+              </Dropdown>
+{/* 
                <motion.div>
                 <NavDropdown
                   title={
@@ -223,7 +222,7 @@ const MainNavbar = ({ isHeroVisible }) => {
                   <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
                   <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
                 </NavDropdown>
-              </motion.div>
+              </motion.div> */}
 
               <div id="google_translate_element" style={{ display: 'none' }}></div>
 

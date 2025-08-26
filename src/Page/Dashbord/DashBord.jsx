@@ -39,8 +39,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { CCloseButton } from "@coreui/react";
 import { GiClosedBarbute } from "react-icons/gi";
 import { Download } from "lucide-react";
-import jsPDF from "jspdf";
-import { autoTable } from "jspdf-autotable"; // Updated import
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
 import toast from "react-hot-toast";
 
 const Dashboard = () => {
