@@ -167,7 +167,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://bookmyyogna.onrender.com/contactUs/createContactMessage', {
+      const response = await fetch('https://api.bookmyyagna.com/contactUs/createContactMessage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

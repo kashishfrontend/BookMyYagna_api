@@ -5,8 +5,36 @@ import {
   FaMapMarkerAlt, FaOm, FaPrayingHands, FaLinkedinIn, FaTelegramPlane
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import axios from '../Api/axios/axios_config'
+ import toast from 'react-hot-toast';
+ import { useState } from 'react';
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      toast.warn("Please enter an email address.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/newsletter/subscribe", { email });
+
+      if (response.status === 200) {
+        toast.success("🎉 Thank you for subscribing to Book My Yagna!");
+        setEmail("");
+      }
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.info("📩 This email is already subscribed.");
+      } else {
+        toast.error("❌ Something went wrong. Please try again.");
+      }
+    }
+  };
   return (
     <footer className="footer-section" style={{ backgroundImage: "#e3e3e3" }}>
       <div className="footer-top">
@@ -83,11 +111,13 @@ const Footer = () => {
                 <p className="small text-muted mb-2">
                   Stay updated on auspicious muhurats, Vedic tips & festival discounts.
                 </p>
-                <form className="d-flex flex-column flex-sm-row gap-2">
+                <form className="d-flex flex-column flex-sm-row gap-2" onSubmit={handleSubmit}>
                   <input
                     type="email"
                     placeholder="Enter your email"
                     className="form-control"
+                     value={email}
+                      onChange={(e) => setEmail(e.target.value)}  
                   />
                   <button type="submit" className="btn text-white px-3" style={{ backgroundColor: "#FF7722" }}>
                     Subscribe

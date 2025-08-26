@@ -36,7 +36,7 @@ const PoojaSlider = () => {
 
   useEffect(() => {
     axios
-      .get("https://bookmyyogna.onrender.com/pooja/getAllPoojas")
+      .get("https://api.bookmyyagna.com/pooja/getAllPoojas")
       .then((response) => {
         if (response.data.success) {
           setListPooja(response.data.poojas);

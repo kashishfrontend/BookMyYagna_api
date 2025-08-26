@@ -163,7 +163,7 @@ const PanditRegistration = () => {
     formDataToSend.append('panditImage', formData.panditImage);
 
     try {
-      const response = await fetch('https://bookmyyogna.onrender.com/pandit/createPanditCard', {
+      const response = await fetch('https://api.bookmyyagna.com/pandit/createPanditCard', {
         method: 'POST',
         body: formDataToSend
       });

@@ -47,7 +47,7 @@ const Booking = () => {
   useEffect(() => {
     if (poojaId) {
       axios
-        .get(`https://bookmyyogna.onrender.com/pooja/getPooja/${poojaId}`)
+        .get(`https://api.bookmyyagna.com/pooja/getPooja/${poojaId}`)
         .then((response) => {
           console.log(response);
           if (response.data.success) {
@@ -138,7 +138,7 @@ const Booking = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get(
-          "https://bookmyyogna.onrender.com/user/getUserProfile",
+          "https://api.bookmyyagna.com/user/getUserProfile",
           {
             withCredentials: true,
           }
@@ -209,7 +209,7 @@ const handleOrderedSubmit = async (e) => {
   try {
     setIsSubmitting(true);
     const res = await axios.post(
-      "https://bookmyyogna.onrender.com/cashfree/createPayment",
+      "https://api.bookmyyagna.com/cashfree/createPayment",
       { name, phone, amount: selectedPlan?.amount || 0, orderData, email },
       { withCredentials: true }
     );

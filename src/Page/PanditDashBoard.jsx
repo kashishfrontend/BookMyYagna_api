@@ -468,6 +468,8 @@ const PanditDashboard = () => {
 
 
 
+
+
     const [editingId, setEditingId] = useState(null);
   const [editFormData, setEditFormData] = useState({
     accountName: '',
@@ -592,6 +594,31 @@ const PanditDashboard = () => {
     fetchReceipts();
   }, []);
 
+
+    const [selectedBankId, setSelectedBankId] = useState("");
+  const [selectedUpiId, setSelectedUpiId] = useState("");
+   const [method, setMethod] = useState(""); 
+
+   const handleSubmitMethod = async () => {
+    const payload = {
+      method,
+      bankDeatilsId: method === "bank" ? selectedBankId : "",
+      upiId: method === "upi" ? selectedUpiId : ""
+    };
+
+    if ((method === "bank" && !selectedBankId) || (method === "upi" && !selectedUpiId)) {
+      toast.error("Please select a valid option.");
+      return;
+    }
+
+    try {
+      const response = await axios.patch("/pandit/setDefaultPaymentMethod", payload);
+      toast.success("Primary payment method set successfully");
+    } catch (error) {
+      console.error("Failed to set payment method:", error);
+      toast.error("Something went wrong.");
+    }
+  };
 
 
   const renderContent = () => {
@@ -930,6 +957,60 @@ const rendorAccountDetails = () => {
           </Modal>
         </div>
       </div>
+
+     <div className="mt-4">
+      <Form.Group className="mb-3 container-fluid py-4">
+        <h2 className="text-center">Set Primary Payment Method</h2>
+
+        {/* Method selection */}
+        <Form.Select
+          required
+          value={method}
+          onChange={(e) => setMethod(e.target.value)}
+        >
+          <option value="">Select Method</option>
+          <option value="bank">Bank</option>
+          <option value="upi">UPI ID</option>
+        </Form.Select>
+
+        {/* Bank dropdown */}
+        {method === "bank" && (
+          <Form.Select
+            className="mt-3"
+            value={selectedBankId}
+            onChange={(e) => setSelectedBankId(e.target.value)}
+          >
+            <option value="">Select Bank</option>
+            {bankDetails.map((bank) => (
+              <option key={bank._id} value={bank._id}>
+                {bank.bankName} - {bank.accountNumber}
+              </option>
+            ))}
+          </Form.Select>
+        )}
+
+        {/* UPI dropdown */}
+        {method === "upi" && (
+          <Form.Select
+            className="mt-3"
+            value={selectedUpiId}
+            onChange={(e) => setSelectedUpiId(e.target.value)}
+          >
+            <option value="">Select UPI ID</option>
+            {upiList.map((upi) => (
+              <option key={upi._id} value={upi._id}>
+                {upi.upiId}
+              </option>
+            ))}
+          </Form.Select>
+        )}
+
+        {/* Submit button */}
+        <div className="text-center mt-4">
+          <Button onClick={handleSubmitMethod}>Set as Primary</Button>
+        </div>
+      </Form.Group>
+    </div>
     </>
   );
 };
