@@ -3861,3 +3861,255 @@ html {
   position: relative;
   padding: 0.75rem;
 }
+
+
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(212, 167, 106, 0.3);
+}
+
+
+
+.login-decorative-content {
+  text-align: center;
+  color: white;
+  z-index: 1;
+  position: relative;
+}
+
+.login-decorative-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin: 20px 0 15px;
+  font-weight: 600;
+}
+
+.login-decorative-content p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.om-symbol {
+  font-size: 60px !important;
+  opacity: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.login-mandala {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path fill="%23ffffff" opacity="0.3" d="M100 0C44.8 0 0 44.8 0 100s44.8 100 100 100 100-44.8 100-100S155.2 0 100 0zm0 180c-44.2 0-80-35.8-80-80S55.8 20 100 20s80 35.8 80 80-35.8 80-80 80zm0-140C66.8 40 40 66.8 40 100s26.8 60 60 60 60-26.8 60-60-26.8-60-60-60zm0 100c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.login-form-container {
+  padding: 30px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-header h3 {
+  font-family: 'Playfair Display', serif;
+  color: #8b5e3c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.login-header p {
+  color: #777;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper .input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8b5e3c;
+  z-index: 2;
+}
+
+.input-icon-wrapper .form-control {
+  padding-left: 45px;
+  border-radius: 8px;
+  height: 50px;
+  border: 1px solid #ddd;
+  transition: all 0.3s;
+}
+
+.input-icon-wrapper .form-control:focus {
+  border-color: #d4a76a;
+  box-shadow: 0 0 0 0.2rem rgba(212, 167, 106, 0.25);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #8b5e3c;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.remember-me {
+  color: #666;
+}
+
+.remember-me .form-check-input:checked {
+  background-color: #8b5e3c;
+  border-color: #8b5e3c;
+}
+
+.forgot-password {
+  background: none;
+  border: none;
+  color: #8b5e3c;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #6d4a2f;
+}
+
+.login-button {
+  background: linear-gradient(135deg, #8b5e3c 0%, #d4a76a 100%);
+  border: none;
+  border-radius: 8px;
+  height: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 94, 60, 0.3);
+}
+
+.toggle-form {
+  margin-top: 20px;
+}
+
+.toggle-form p {
+  margin-bottom: 0;
+  color: #666;
+}
+
+.toggle-link {
+  padding: 0;
+  margin-left: 5px;
+  color: #8b5e3c !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.toggle-link:hover {
+  text-decoration: underline;
+}
+
+/* Method toggle buttons */
+.btn-group .btn {
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.btn-group .btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.btn-group .btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Modal styles */
+.modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #8b5e3c 0%, #d4a76a 100%);
+  color: white;
+  border-bottom: none;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .login-container {
+    margin: 0 15px;
+  }
+  
+  .login-form-container {
+    padding: 20px;
+  }
+  
+  .login-image-container {
+    padding: 30px 20px;
+  }
+  
+  .login-decorative-content h2 {
+    font-size: 24px;
+  }
+}
+
+/* Animation enhancements */
+.login-form-wrapper {
+  transition: all 0.3s ease;
+}
+
+/* Form text adjustments */
+.form-text {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Invalid feedback styling */
+.invalid-feedback {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+/* Success modal styling */
+.modal-success .modal-header {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+}

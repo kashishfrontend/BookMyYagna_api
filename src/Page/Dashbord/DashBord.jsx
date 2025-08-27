@@ -129,7 +129,7 @@ const Dashboard = () => {
             ['Pending', 'Confirmed', 'Cancelled'].includes(booking.status)
           );
           const completed = allBookings.filter(booking =>
-            booking.status === 'completed'
+            booking.status === 'Completed'
           );
           setBookedPuja(pendingOrActive);
           setCompletePuja(completed);
@@ -254,7 +254,51 @@ const Dashboard = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error("New passwords don't match");
+      return;
+    }
+
+    try {
+      const response = await axios.patch("/user/changeUserPassword", {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
+
+      if (response.data.success) {
+        toast.success("Password changed successfully!");
+        setShowChangePasswordModal(false);
+        setPasswordData({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+      } else {
+        toast.error(response.data.message || "Failed to change password");
+      }
+    } catch (error) {
+      console.error("Password change error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
+  }
 
   const handleDeleteNotification = async (id) => {
     try {
@@ -455,163 +499,359 @@ const Dashboard = () => {
         <div
           className={`main-content col-12 col-lg-10 ${showSidebar ? "" : "expanded"}`}
         >
-          <div className="top-nav">
-            <div className="search-bar d-none d-md-flex">
-              <button type="submit" className="home-back-button">
-                <Link className="text-decoration-none text-dark" to={'/'}>
-                  <FaArrowLeft className="me-2" /> Back
-                  Home
-                </Link>
-              </button>
-              <button type="submit" className="home-back-button">
-                <Link className="text-decoration-none text-dark" to={'/contact'}>
-                  Contact
-                </Link>
-              </button>
-            </div>
-            <div className="nav-right">
-              <div
-                className="user-profile me-2 me-md-3"
-                onClick={() => setShowProfileModal(true)}
-              >
-                <span className="user-name">
-                  {user?.fullName}
-                </span>
-              </div>
-              <div
-                className="notification-bell"
-                ref={bellRef}
-                onClick={() => setShowNotifications(!showNotifications)}
-              >
-                <MdNotifications size={24} />
-                {Array.isArray(notifications) && notifications.length > 0 && (
-                  <span className="notification-badge">{notifications.length}</span>
+         <div className="top-nav">
+
+  {/* Left Side - Navigation */}
+  <div className="search-bar d-none d-md-flex">
+    <button type="submit" className="home-back-button">
+      <Link className="text-decoration-none text-dark" to={'/'}>
+        <FaArrowLeft className="me-2" /> Back Home
+      </Link>
+    </button>
+
+   
+    <button
+      type="button"
+      onClick={() => setShowChangePasswordModal(true)}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '0.5rem 1rem',
+        borderRadius: '4px',
+        marginLeft: '10px'
+      }}
+    >
+      Change Password
+    </button>
+  </div>
+
+  {/* Right Side - Profile + Notifications */}
+  <div className="nav-right">
+    {/* Profile */}
+    <div
+      className="user-profile me-2 me-md-3"
+      onClick={() => setShowProfileModal(true)}
+    >
+      <span className="user-name">{user?.fullName}</span>
+    </div>
+
+    {/* Notifications */}
+    <div
+      className="notification-bell"
+      ref={bellRef}
+      onClick={() => setShowNotifications(!showNotifications)}
+    >
+      <MdNotifications size={24} />
+      {Array.isArray(notifications) && notifications.length > 0 && (
+        <span className="notification-badge">{notifications.length}</span>
+      )}
+      {showNotifications && (
+        <div className="notification-popup">
+          {Array.isArray(notifications) && notifications.length > 0 ? (
+            notifications.slice(0, 3).map((item, index) => (
+              <div key={index} className="notification-item">
+                <div>
+                  <h4 className="popup-heading border-0">{item.heading}</h4>
+                  <p className="popup-time">
+                    {new Date(item.createdAt).toLocaleString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                      timeZone: "Asia/Kolkata",
+                    })}
+                  </p>
+                </div>
+                {index !== notifications.slice(0, 3).length - 1 && (
+                  <hr className="notification-separator" />
                 )}
-                {showNotifications && (
-                  <div className="notification-popup">
-                    {Array.isArray(notifications) && notifications.length > 0 ? (
-                      notifications.slice(0, 3).map((item, index) => (
-                        <div key={index} className="notification-item">
-                          <div>
-                            <h4 className="popup-heading border-0">{item.heading}</h4>
-                            <p className="popup-time">
-                              {new Date(item.createdAt).toLocaleString("en-IN", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                                timeZone: "Asia/Kolkata",
-                              })}
-                            </p>
-                          </div>
-                          {index !== notifications.slice(0, 3).length - 1 && <hr className="notification-separator" />}
-                        </div>
-                      ))
-                    ) : (
-                      <p className="popup-message">No new notifications.</p>
-                    )}
-                    <div className="text-center">
-                      <button
-                        className="view-all-btn"
-                        onClick={() => {
-                          setShowNotifications(false);
-                          handleNavItemClick("notifications");
-                        }}
-                      >
-                        View All
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>
+            ))
+          ) : (
+            <p className="popup-message">No new notifications.</p>
+          )}
+          <div className="text-center">
+            <button
+              className="view-all-btn"
+              onClick={() => {
+                setShowNotifications(false);
+                handleNavItemClick("notifications");
+              }}
+            >
+              View All
+            </button>
           </div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+{/* Change Password Modal */}
+<Modal
+  show={showChangePasswordModal}
+  onHide={() => setShowChangePasswordModal(false)}
+  centered
+  size="sm"
+  className="simple-password-modal"
+>
+  <Modal.Header closeButton style={{ borderBottom: "none", padding: "10px 15px" }}>
+    <Modal.Title style={{ fontSize: "16px", fontWeight: "600" }}>Change Password</Modal.Title>
+  </Modal.Header>
+  <Modal.Body style={{ padding: "15px 20px" }}>
+    <Form onSubmit={handlePasswordSubmit}>
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Current Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="currentPassword"
+          value={passwordData.currentPassword}
+          onChange={handlePasswordChange}
+          required
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>New Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="newPassword"
+          value={passwordData.newPassword}
+          onChange={handlePasswordChange}
+          required
+          minLength={6}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Confirm Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="confirmPassword"
+          value={passwordData.confirmPassword}
+          onChange={handlePasswordChange}
+          required
+          minLength={6}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <div className="d-flex justify-content-end">
+        <Button
+          variant="light"
+          className="me-2"
+          style={{ fontSize: "13px", padding: "5px 12px", border: "1px solid #ddd" }}
+          onClick={() => setShowChangePasswordModal(false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          style={{
+            fontSize: "13px",
+            padding: "5px 12px",
+            background: "#ff8c00",
+            border: "none",
+          }}
+        >
+          Update
+        </Button>
+      </div>
+    </Form>
+  </Modal.Body>
+</Modal>
+
+{/* Profile Modal */}
+<Modal
+  show={showProfileModal}
+  onHide={() => setShowProfileModal(false)}
+  centered
+  className="profile-modal"
+  size="md"
+>
+  <Modal.Header closeButton style={{ borderBottom: "none", padding: "10px 15px" }}>
+    <Modal.Title style={{ fontSize: "16px", fontWeight: "600" }}>My Profile</Modal.Title>
+  </Modal.Header>
+  <Modal.Body style={{ padding: "15px 20px" }}>
+    <Form onSubmit={handleProfileSubmit}>
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Full Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="fullName"
+          value={user?.fullName}
+          onChange={handleInputChange}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Email Address</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          value={user?.email}
+          onChange={handleInputChange}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Phone Number</Form.Label>
+        <Form.Control
+          type="text"
+          name="phoneNumber"
+          value={user?.phoneNumber || ""}
+          onChange={handleInputChange}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Address</Form.Label>
+        <Form.Control
+          type="text"
+          name="address"
+          value={user?.address || ""}
+          onChange={handleInputChange}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Country</Form.Label>
+        <Form.Control
+          type="text"
+          name="country"
+          value={user?.country || ""}
+          onChange={handleInputChange}
+          style={{ fontSize: "14px", padding: "6px 10px" }}
+        />
+      </Form.Group>
+
+      <div className="d-flex justify-content-end">
+        <Button
+          variant="light"
+          className="me-2"
+          style={{ fontSize: "13px", padding: "5px 12px", border: "1px solid #ddd" }}
+          onClick={() => setShowProfileModal(false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          style={{
+            fontSize: "13px",
+            padding: "5px 12px",
+            background: "#ff8c00",
+            border: "none",
+          }}
+        >
+          Save
+        </Button>
+      </div>
+    </Form>
+  </Modal.Body>
+</Modal>
+
           {renderContent()}
           <Modal
             show={showProfileModal}
             onHide={() => setShowProfileModal(false)}
             centered
             className="profile-modal"
-            size="lg"
+            size="md"
           >
-            <Modal.Header closeButton>
-              <Modal.Title>My Profile</Modal.Title>
+            <Modal.Header closeButton style={{ borderBottom: "none", padding: "10px 15px" }}>
+              <Modal.Title style={{ fontSize: "16px", fontWeight: "600" }}>My Profile</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              <div>
-                <Col>
-                  <Form onSubmit={handleProfileSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Full Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="fullName"
-                        value={user?.fullName}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+            <Modal.Body style={{ padding: "15px 20px" }}>
+              <Form onSubmit={handleProfileSubmit}>
+                <Form.Group className="mb-2">
+                  <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Full Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="fullName"
+                    value={user?.fullName}
+                    onChange={handleInputChange}
+                    style={{ fontSize: "14px", padding: "6px 10px" }}
+                  />
+                </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email Address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        value={user?.email}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Email Address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={user?.email}
+                    onChange={handleInputChange}
+                    style={{ fontSize: "14px", padding: "6px 10px" }}
+                  />
+                </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Phone Number</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="phoneNumber"
-                        value={user?.phoneNumber || ''}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Phone Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="phoneNumber"
+                    value={user?.phoneNumber || ""}
+                    onChange={handleInputChange}
+                    style={{ fontSize: "14px", padding: "6px 10px" }}
+                  />
+                </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="address"
-                        value={user?.address || ''}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="address"
+                    value={user?.address || ""}
+                    onChange={handleInputChange}
+                    style={{ fontSize: "14px", padding: "6px 10px" }}
+                  />
+                </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Country</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="country"
-                        value={user?.country || ''}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="country"
+                    value={user?.country || ""}
+                    onChange={handleInputChange}
+                    style={{ fontSize: "14px", padding: "6px 10px" }}
+                  />
+                </Form.Group>
 
-                    <div className="d-flex justify-content-end mt-4">
-                      <Button variant="danger" className="me-2" onClick={() => setShowProfileModal(false)}>
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        style={{
-                          backgroundImage: 'linear-gradient(15deg, #ff8c00, #b22222, #fdd835)',
-                          border: 'none',
-                        }}
-                      >
-                        Save Changes
-                      </Button>
-                    </div>
-                  </Form>
-                </Col>
-              </div>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="light"
+                    className="me-2"
+                    style={{ fontSize: "13px", padding: "5px 12px", border: "1px solid #ddd" }}
+                    onClick={() => setShowProfileModal(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    style={{
+                      fontSize: "13px",
+                      padding: "5px 12px",
+                      background: "#ff8c00",
+                      border: "none",
+                    }}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </Form>
             </Modal.Body>
           </Modal>
+
         </div>
       </div>
       <footer className="dashboard-footer position-fixed bottom-0 w-100">
@@ -955,7 +1195,7 @@ const Dashboard = () => {
               <thead className="table-warning">
                 <tr>
                   <th>Date Of Puja</th>
-                  <th>Puja Id</th>
+                  <th>Puja Name</th>
                   <th>Puja Time</th>
                   <th>Link Puja</th>
                 </tr>
@@ -965,7 +1205,7 @@ const Dashboard = () => {
                   confirmedPoojas.map((p) => (
                     <tr key={p.id}>
                       <td>{new Date(p.dateOfDelivery).toLocaleDateString()}</td>
-                      <td>{p.id}</td>
+                      <td>{p.heading}</td>
                       <td>{p.poojaLinkTime || '—'}</td>
                       <td className="pooja-link-cell">
                         {p.poojaLink ? (
