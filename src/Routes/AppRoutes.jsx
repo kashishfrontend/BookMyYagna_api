@@ -136,8 +136,8 @@ function AppRoutes() {
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="termsofservice" element={<TermsOfService />} />
-        <Route path="/ThankyouPage" element={<ThankYouPage />} />
-        <Route path="/FailedPage" element={<PaymentFailedPage />} />
+        <Route path="thankyou" element={<ThankYouPage />} />
+        <Route path="failed" element={<PaymentFailedPage />} />
 
 
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />

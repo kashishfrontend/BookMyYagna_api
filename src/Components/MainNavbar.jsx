@@ -196,7 +196,7 @@ const MainNavbar = ({ isHeroVisible }) => {
               )}
 
               {/* Language Selector */}
-              <Dropdown className="ms-3">
+              <Dropdown className="d-flex align-items-center justify-content-center ">
                 <Dropdown.Toggle variant="outline-secondary" size="md">
                   🌐 Language
                 </Dropdown.Toggle>
@@ -206,8 +206,8 @@ const MainNavbar = ({ isHeroVisible }) => {
 
                 </Dropdown.Menu>
               </Dropdown>
-{/* 
-               <motion.div>
+
+               {/* <motion.div>
                 <NavDropdown
                   title={
                     <>
@@ -220,7 +220,6 @@ const MainNavbar = ({ isHeroVisible }) => {
                 >
                   <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
                   <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
-                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
                 </NavDropdown>
               </motion.div> */}
 
