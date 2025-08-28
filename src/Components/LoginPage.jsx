@@ -342,7 +342,7 @@ const LoginPage = () => {
                         <div className="login-mandala"></div>
                       </div>
                     </Col>
-                    <Col xs={12} md={6} className="login-form-container">
+                    <Col xs={12} md={6} className="login-form-container position-relative responsive-right-shift">
                       <AnimatePresence mode="wait">
                         {resetStep === 'login' && (
                           <motion.div
@@ -356,7 +356,22 @@ const LoginPage = () => {
                           >
                             <div className="login-header">
                               <h3>{isLogin ? 'Sign In' : 'Create Account'}</h3>
-                              <p>{isLogin ? 'Access your account' : 'Register to start'}</p>
+                              <p>
+  {isLogin ? (
+    <>
+      Welcome back to BookMyYagna !🕉️ <br />
+      Reconnect with your spiritual journey.<br />
+      Your next Yagna awaits...
+    </>
+  ) : (
+    <>
+      Begin your sacred journey with BookMyYagna. 🕉️<br />
+      Create your account to explore rituals, blessings,
+      and personalized spiritual services.
+    </>
+  )}
+</p>
+
                             </div>
                             <Form onSubmit={handleSubmit}>
                               {!isLogin && (
