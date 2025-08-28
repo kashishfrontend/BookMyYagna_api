@@ -6,13 +6,13 @@ import {
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import axios from '../Api/axios/axios_config'
- import toast from 'react-hot-toast';
- import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const Footer = () => {
   const [email, setEmail] = useState("");
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -82,7 +82,7 @@ const Footer = () => {
                 <li><Link to={'/listofpuja'}>Services</Link></li>
                 <li><Link to={'/gallery'}>Gallery</Link></li>
                 <li><Link to={'/contact'}>Contact</Link></li>
-                  <li><Link to={'/faq'}>FAQ</Link></li>
+                <li><Link to={'/faq'}>FAQ</Link></li>
               </ul>
             </div>
 
@@ -101,9 +101,9 @@ const Footer = () => {
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0 footer-contact mt-0 mt-md-3">
               <h4>Contact Us</h4>
               <div className="contact-info">
-                <p><FaMapMarkerAlt className="contact-icon me-2" />Prem Plaza, 252, Opp. Subhash Park,<br />Subhash Nagar, Rohtak, Haryana - 124001</p>
+                {/* <p><FaMapMarkerAlt className="contact-icon me-2" />Prem Plaza, 252, Opp. Subhash Park,<br />Subhash Nagar, Rohtak, Haryana - 124001</p> */}
                 <p><FaPhoneAlt className="contact-icon me-2" />+91 8569977705</p>
-                <p><FaEnvelope className="contact-icon me-2" />support@bookmyyagna.com</p>
+                <p><FaEnvelope className="contact-icon me-2" />bookmyyagna@gmail.com</p>
               </div>
 
               <div className="newsletter mt-4">
@@ -116,8 +116,8 @@ const Footer = () => {
                     type="email"
                     placeholder="Enter your email"
                     className="form-control"
-                     value={email}
-                      onChange={(e) => setEmail(e.target.value)}  
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <button type="submit" className="btn text-white px-3" style={{ backgroundColor: "#FF7722" }}>
                     Subscribe

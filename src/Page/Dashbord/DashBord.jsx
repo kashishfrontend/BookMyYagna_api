@@ -254,12 +254,7 @@ const Dashboard = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  });
+
 
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
@@ -269,36 +264,7 @@ const Dashboard = () => {
     }));
   };
 
-  const handlePasswordSubmit = async (e) => {
-    e.preventDefault();
-
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast.error("New passwords don't match");
-      return;
-    }
-
-    try {
-      const response = await axios.patch("/user/changeUserPassword", {
-        currentPassword: passwordData.currentPassword,
-        newPassword: passwordData.newPassword
-      });
-
-      if (response.data.success) {
-        toast.success("Password changed successfully!");
-        setShowChangePasswordModal(false);
-        setPasswordData({
-          currentPassword: '',
-          newPassword: '',
-          confirmPassword: ''
-        });
-      } else {
-        toast.error(response.data.message || "Failed to change password");
-      }
-    } catch (error) {
-      console.error("Password change error:", error);
-      toast.error(error.response?.data?.message || "Something went wrong!");
-    }
-  }
+  
 
   const handleDeleteNotification = async (id) => {
     try {
@@ -510,20 +476,7 @@ const Dashboard = () => {
     </button>
 
    
-    <button
-      type="button"
-      onClick={() => setShowChangePasswordModal(true)}
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        padding: '0.5rem 1rem',
-        borderRadius: '4px',
-        marginLeft: '10px'
-      }}
-    >
-      Change Password
-    </button>
+    
   </div>
 
   {/* Right Side - Profile + Notifications */}
@@ -590,81 +543,7 @@ const Dashboard = () => {
   </div>
 </div>
 
-{/* Change Password Modal */}
-<Modal
-  show={showChangePasswordModal}
-  onHide={() => setShowChangePasswordModal(false)}
-  centered
-  size="sm"
-  className="simple-password-modal"
->
-  <Modal.Header closeButton style={{ borderBottom: "none", padding: "10px 15px" }}>
-    <Modal.Title style={{ fontSize: "16px", fontWeight: "600" }}>Change Password</Modal.Title>
-  </Modal.Header>
-  <Modal.Body style={{ padding: "15px 20px" }}>
-    <Form onSubmit={handlePasswordSubmit}>
-      <Form.Group className="mb-2">
-        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Current Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="currentPassword"
-          value={passwordData.currentPassword}
-          onChange={handlePasswordChange}
-          required
-          style={{ fontSize: "14px", padding: "6px 10px" }}
-        />
-      </Form.Group>
 
-      <Form.Group className="mb-2">
-        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>New Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="newPassword"
-          value={passwordData.newPassword}
-          onChange={handlePasswordChange}
-          required
-          minLength={6}
-          style={{ fontSize: "14px", padding: "6px 10px" }}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3">
-        <Form.Label style={{ fontSize: "13px", marginBottom: "4px" }}>Confirm Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="confirmPassword"
-          value={passwordData.confirmPassword}
-          onChange={handlePasswordChange}
-          required
-          minLength={6}
-          style={{ fontSize: "14px", padding: "6px 10px" }}
-        />
-      </Form.Group>
-
-      <div className="d-flex justify-content-end">
-        <Button
-          variant="light"
-          className="me-2"
-          style={{ fontSize: "13px", padding: "5px 12px", border: "1px solid #ddd" }}
-          onClick={() => setShowChangePasswordModal(false)}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          style={{
-            fontSize: "13px",
-            padding: "5px 12px",
-            background: "#ff8c00",
-            border: "none",
-          }}
-        >
-          Update
-        </Button>
-      </div>
-    </Form>
-  </Modal.Body>
-</Modal>
 
 {/* Profile Modal */}
 <Modal

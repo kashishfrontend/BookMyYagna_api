@@ -36,14 +36,14 @@ const CancellationRefund = () => {
                 <link rel="canonical" href="https://bookmyyagna.com/cancellation-refund" />
             </Helmet>
 
-            <section className="cancellation-refund-page" style={{ 
+            <section className="cancellation-refund-page" style={{
                 padding: '80px 0 60px',
                 backgroundColor: '#f9f5f0',
                 minHeight: '100vh'
             }}>
                 <Container>
                     {/* Header Section */}
-                    <div className="policy-header text-center mb-5" data-aos="fade-down" style={{marginTop:"50px"}}>
+                    <div className="policy-header text-center mb-5" data-aos="fade-down" style={{ marginTop: "50px" }}>
                         <div className="divider" style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -125,8 +125,8 @@ const CancellationRefund = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        Bookings can be cancelled up to 48 hours before the scheduled puja time for a full refund. 
-                                        Cancellations made within 48 hours of the scheduled time will incur a 30% cancellation fee 
+                                        Bookings can be cancelled up to 48 hours before the scheduled puja time for a full refund.
+                                        Cancellations made within 48 hours of the scheduled time will incur a 30% cancellation fee
                                         to cover preparatory costs and priest arrangements.
                                     </p>
                                 </div>
@@ -162,8 +162,8 @@ const CancellationRefund = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        Approved refunds will be processed within 7-10 business days to the original payment method. 
-                                        For bank transfers, processing may take additional 2-3 business days to reflect in your account. 
+                                        Approved refunds will be processed within 7-10 business days to the original payment method.
+                                        For bank transfers, processing may take additional 2-3 business days to reflect in your account.
                                         You will receive email confirmation once the refund is initiated.
                                     </p>
                                 </div>
@@ -199,8 +199,8 @@ const CancellationRefund = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        You may reschedule your puja up to 24 hours before the appointment at no additional cost, 
-                                        subject to priest availability. Rescheduling requests made within 24 hours may incur a 
+                                        You may reschedule your puja up to 24 hours before the appointment at no additional cost,
+                                        subject to priest availability. Rescheduling requests made within 24 hours may incur a
                                         15% service fee. Each booking can be rescheduled a maximum of two times.
                                     </p>
                                 </div>
@@ -236,8 +236,8 @@ const CancellationRefund = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        Customized or personalized puja items (including specific samagri, homa kundas, or yantras) 
-                                        cannot be refunded once ordered. Digital products like personalized mantras or horoscope 
+                                        Customized or personalized puja items (including specific samagri, homa kundas, or yantras)
+                                        cannot be refunded once ordered. Digital products like personalized mantras or horoscope
                                         reports are also non-refundable once delivered.
                                     </p>
                                 </div>
@@ -273,8 +273,8 @@ const CancellationRefund = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        In rare cases where we cannot arrange a priest for your scheduled puja, we will notify you 
-                                        immediately and offer either a full refund or alternative dates with priority booking. 
+                                        In rare cases where we cannot arrange a priest for your scheduled puja, we will notify you
+                                        immediately and offer either a full refund or alternative dates with priority booking.
                                         We guarantee 100% refund if cancellation is initiated from our side.
                                     </p>
                                 </div>
@@ -306,7 +306,7 @@ const CancellationRefund = () => {
                             For cancellation requests or any questions about our policy, please contact our support team.
                         </p>
                         <div className="contact-methods">
-                            <a href="mailto:support@bookmyyagna.com" style={{
+                            <a href="mailto:bookmyyagna@gmail.com" style={{
                                 display: 'inline-block',
                                 backgroundColor: '#d4a762',
                                 color: '#fff',
@@ -316,8 +316,8 @@ const CancellationRefund = () => {
                                 fontWeight: '500',
                                 margin: '0 10px 10px 0',
                                 transition: 'all 0.3s ease'
-                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#c1914a'} 
-                               onMouseOut={(e) => e.target.style.backgroundColor = '#d4a762'}>
+                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#c1914a'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#d4a762'}>
                                 Email Support
                             </a>
                             <a href="tel:+91 8569977705" style={{
@@ -330,8 +330,8 @@ const CancellationRefund = () => {
                                 fontWeight: '500',
                                 margin: '0 0 10px 10px',
                                 transition: 'all 0.3s ease'
-                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'} 
-                               onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
+                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
                                 Call Support
                             </a>
                         </div>

@@ -361,7 +361,7 @@ const TermsOfService = () => {
                             Our team is available to clarify any aspect of these Terms of Service.
                         </p>
                         <div className="contact-methods">
-                            <a href="mailto:support@bookmyyagna.com" style={{
+                            <a href="mailto:bookmyyagna@gmail.com" style={{
                                 display: 'inline-block',
                                 backgroundColor: '#d4a762',
                                 color: '#fff',

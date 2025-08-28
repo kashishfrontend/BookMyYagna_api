@@ -55,10 +55,10 @@ const Contact = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     // Mark field as touched
     setTouched(prev => ({ ...prev, [name]: true }));
-    
+
     // Clear error for the field being edited if it's now valid
     if (errors[name]) {
       const newErrors = { ...errors };
@@ -77,7 +77,7 @@ const Contact = () => {
   // Validate individual field
   const validateField = (fieldName, value) => {
     let error = '';
-    
+
     switch (fieldName) {
       case 'fullName':
         if (!value.trim()) error = 'Full name is required';
@@ -105,7 +105,7 @@ const Contact = () => {
       default:
         break;
     }
-    
+
     if (error) {
       setErrors(prev => ({ ...prev, [fieldName]: error }));
     } else {
@@ -118,7 +118,7 @@ const Contact = () => {
   // Validate entire form
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
@@ -132,14 +132,14 @@ const Contact = () => {
     }
     if (!formData.subject) newErrors.subject = 'Please select a subject';
     if (!formData.message.trim()) newErrors.message = 'Message is required';
-    
+
     return newErrors;
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Mark all fields as touched
     setTouched({
       fullName: true,
@@ -148,10 +148,10 @@ const Contact = () => {
       subject: true,
       message: true
     });
-    
+
     const validationErrors = validateForm();
     setErrors(validationErrors);
-    
+
     if (Object.keys(validationErrors).length > 0) {
       toast.error('Please fix the errors in the form.', {
         position: "top-center",
@@ -180,7 +180,7 @@ const Contact = () => {
       }
 
       const data = await response.json();
-      
+
       // Reset form
       setFormData({
         fullName: '',
@@ -197,7 +197,7 @@ const Contact = () => {
         subject: false,
         message: false
       });
-      
+
       // Show success message
       toast.success('Message sent successfully! We will contact you soon.', {
         position: "top-center",
@@ -207,9 +207,9 @@ const Contact = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      
+
       setShowSuccessModal(true);
-      
+
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Failed to send message. Please try again later.', {
@@ -238,7 +238,7 @@ const Contact = () => {
           content="BookMyYagna contact, online puja booking, book yagna, Vedic rituals, pandit online, religious ceremony help, puja customer support, spiritual inquiries"
         />
       </Helmet>
-      
+
       <Container className="py-5">
         <div className="text-center mb-5" data-aos="fade-down">
           <h2 className="fw-bold border-bottom d-inline-block pb-2 mb-3" style={{ marginTop: "90px" }}>
@@ -249,7 +249,7 @@ const Contact = () => {
           </p>
         </div>
 
-       <Row className="g-4 py-5">
+        <Row className="g-4 py-5">
           {/* Email Card */}
           <Col xs={12} md={6} lg={4}>
             <ContactCard
@@ -257,8 +257,8 @@ const Contact = () => {
               title="Email"
               content={
                 <>
-                  <a href="mailto:support@bookmyyagna.com" className="text-decoration-none text-warning fw-semibold">
-                    support@bookmyyagna.com
+                  <a href="mailto:bookmyyagna@gmail.com" className="text-decoration-none text-warning fw-semibold">
+                    bookmyyagna@gmail.com
                   </a>
                   <p className="mb-0">Response within 12–24 hours</p>
                 </>
@@ -383,7 +383,7 @@ const Contact = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  
+
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="formPhone">
@@ -424,7 +424,7 @@ const Contact = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  
+
                   <Form.Group className="mb-3" controlId="formMessage">
                     <Form.Label>Message <span className="text-danger">*</span></Form.Label>
                     <Form.Control
@@ -441,11 +441,11 @@ const Contact = () => {
                       {errors.message}
                     </Form.Control.Feedback>
                   </Form.Group>
-                  
+
                   <div className="text-center mt-4">
                     <Button
                       type="submit"
-                      style={{ 
+                      style={{
                         backgroundColor: '#8B5A2B',
                         borderColor: '#8B5A2B',
                         padding: '0.5rem 2rem',
@@ -482,8 +482,8 @@ const Contact = () => {
               Your message has been sent successfully. We'll get back to you within 12-24 hours.
             </p>
             <Button
-              style={{ 
-                backgroundColor: '#8B5A2B', 
+              style={{
+                backgroundColor: '#8B5A2B',
                 borderColor: '#8B5A2B',
                 padding: '0.375rem 1.5rem'
               }}

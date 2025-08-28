@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 const PrivacyPolicy = () => {
     useEffect(() => {
         AOS.init({
-           duration: 300,
+            duration: 300,
             offset: 10,
             once: false,
             mirror: true
@@ -78,7 +78,7 @@ const PrivacyPolicy = () => {
                         </p>
 
                         <p>
-                            If you have any questions or concerns about our privacy practices, please contact us at <strong>support@bookmyyagna.com</strong>.
+                            If you have any questions or concerns about our privacy practices, please contact us at <strong>bookmyyagna@gmail.com</strong>.
                         </p>
                     </div>
                 </Container>
