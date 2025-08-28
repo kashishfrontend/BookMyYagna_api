@@ -43,27 +43,26 @@ const PopularPriests = () => {
     expandedDetails: {
       maxHeight: '100px',
       overflowY: 'auto',
-    },
+    }
+    ,
     truncate: {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       maxWidth: '100%',
     }
+
   };
+
 
   useEffect(() => {
     const fetchPandits = async () => {
       try {
         const res = await axios.get('/pandit/getAllPandits');
         if (res.data.success && res.data.pandits) {
-          // Sort by newest first
+          // Sort by newest first and take first 4
           const sortedPandits = res.data.pandits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          
-          // Skip the first 2 and take the next 5 (positions 2-6)
-          const filteredPandits = sortedPandits.slice(2, 7);
-          
-          setPriests(filteredPandits);
+          setPriests(sortedPandits.slice(0, 4));
         } else {
           console.error('No pandits data found');
         }
@@ -104,6 +103,7 @@ const PopularPriests = () => {
       },
     },
   };
+
 
   return (
     <section className="priests-section section-title">
@@ -151,17 +151,26 @@ const PopularPriests = () => {
                         className="priest-image h-100 w-100 object-fit-cover"
                         alt={priest.name}
                       />
+
+
                     </div>
 
                     <Card.Body className="d-flex flex-column">
+
+
                       <Card.Title className="priest-name" style={styles.truncate} title={priest.name}>
                         {priest.name}
                       </Card.Title>
 
+
+                      {/* <Card.Title className="priest-name">{priest.name}</Card.Title> */}
                       <div className="priest-specialization mb-2" style={styles.truncate} title={priest.poojaTypes?.join(', ')}>
                         {priest.poojaTypes?.slice(0, 2).join(', ')}
                         {priest.poojaTypes?.length > 2 && '...'}
                       </div>
+
+
+
 
                       <div className="priest-rating mb-2">
                         <div className="stars">
@@ -175,6 +184,7 @@ const PopularPriests = () => {
                         <div className="rating-text" style={styles.truncate}>
                           {priest.rating} Stars
                         </div>
+
                       </div>
 
                       <div className="priest-details mb-3">
@@ -183,17 +193,21 @@ const PopularPriests = () => {
                           <span style={styles.truncate}>
                             Exp: {priest.experience}+ years
                           </span>
+
                         </div>
                         <div className="detail-item">
                           <FaLanguage className="detail-icon" />
+
                           <span style={styles.truncate}>
                             Speaks: {priest.language?.slice(0, 2).join(', ')}
                             {priest.language?.length > 2 && '...'}
                           </span>
+
                         </div>
                       </div>
 
                       <div className="mt-auto">
+
                         {expandedCards[priest._id] && (
                           <div className="expanded-details mt-2">
                             <p className="mb-1"><strong>Specializations:</strong> {priest.poojaTypes?.join(', ')}</p>
