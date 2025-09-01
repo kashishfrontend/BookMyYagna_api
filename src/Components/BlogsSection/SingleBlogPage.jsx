@@ -1,19 +1,61 @@
-// SingleBlogPage.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import blog1 from '../../assets/img/bg--2.webp';
-import '../../assets/css/SingleBlogPage.css'; // We'll create this CSS file
+import '../../assets/css/SingleBlogPage.css';
+import axios from '../../Api/axios/axios_config'; // Import your axios service
 
 const SingleBlogPage = () => {
   const { id } = useParams();
-  
-  // Sample blog data with more content
-  const blog = {
-    id: 1,
-    title: "मंगल दोष शांति के 5 आसान उपाय",
-    image: blog1,
-    content: `
-      <p class="blog-intro">ज्योतिष शास्त्र में मंगल दोष को एक गंभीर समस्या माना जाता है जो व्यक्ति के जीवन के विभिन्न पहलुओं को प्रभावित कर सकता है। कुंडली में मंगल ग्रह के अशुभ प्रभाव को दर्शाने वाला यह दोष विशेष रूप से विवाहित जीवन और स्वास्थ्य पर बुरा असर डाल सकता है।</p>
+  const [blog, setBlog] = useState(null);
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchBlog();
+    fetchRelatedBlogs();
+  }, [id]);
+
+  const fetchBlog = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/blogs/getBlog/${id}`);
+      
+      if (response.data.success) {
+        setBlog(response.data.blog);
+      } else {
+        throw new Error(response.data.message || 'Failed to fetch blog');
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('Error fetching blog:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRelatedBlogs = async () => {
+    try {
+      const response = await axios.get('/blogs/getAllBlogs');
+      
+      if (response.data.success) {
+        // Filter current blog and get 3 random related blogs
+        const filteredBlogs = response.data.data
+          .filter(b => b._id !== id)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3);
+        
+        setRelatedBlogs(filteredBlogs);
+      }
+    } catch (err) {
+      console.error('Error fetching related blogs:', err);
+    }
+  };
+
+  // Sample blog content template (you might want to store this in your database)
+  const blogContentTemplate = (blogData) => {
+    return `
+      <p class="blog-intro">${blogData.description || 'ज्योतिष शास्त्र में मंगल दोष को एक गंभीर समस्या माना जाता है जो व्यक्ति के जीवन के विभिन्न पहलुओं को प्रभावित कर सकता है।'}</p>
       
       <div class="highlight-box">
         <h3>क्या आप जानते हैं?</h3>
@@ -31,7 +73,7 @@ const SingleBlogPage = () => {
       </ul>
       
       <div class="image-with-caption">
-        <img src="${blog1}" alt="मंगल दोष शांति" />
+        <img src="${blogData.image}" alt="${blogData.heading}" />
         <p class="caption">हनुमान जी की पूजा मंगल दोष शांति में विशेष लाभकारी</p>
       </div>
       
@@ -75,40 +117,39 @@ const SingleBlogPage = () => {
           <p>मंगल दोष वैवाहिक जीवन में कठिनाइयाँ ला सकता है, लेकिन सही उपाय और समझदारी से इस स्थिति को संभाला जा सकता है।</p>
         </div>
       </div>
-    `,
-    author: "पंडित रामदेव",
-    date: "15 अगस्त 2023",
-    category: "ज्योतिष",
-    readTime: "5 मिनट"
+    `;
   };
 
-  // Related blogs data
-  const relatedBlogs = [
-    {
-      id: 2,
-      title: "कुंडली में शनि दोष और उसके निवारण",
-      image: blog1,
-      category: "ज्योतिष",
-      date: "10 अगस्त 2023",
-      readTime: "4 मिनट"
-    },
-    {
-      id: 3,
-      title: "राहु-केतु की शांति के उपाय",
-      image: blog1,
-      category: "ज्योतिष",
-      date: "5 अगस्त 2023",
-      readTime: "6 मिनट"
-    },
-    {
-      id: 4,
-      title: "वास्तु दोष दूर करने के 10 आसान तरीके",
-      image: blog1,
-      category: "वास्तु",
-      date: "1 अगस्त 2023",
-      readTime: "7 मिनट"
-    }
-  ];
+  if (loading) {
+    return (
+      <div className="single-blog-page" style={{marginTop:"110px"}}>
+        <div className="container">
+          <div className="loading">Loading blog...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="single-blog-page" style={{marginTop:"110px"}}>
+        <div className="container">
+          <div className="error">Error: {error}</div>
+          <button onClick={fetchBlog} className="retry-button">Try Again</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <div className="single-blog-page" style={{marginTop:"110px"}}>
+        <div className="container">
+          <div className="error">Blog not found</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="single-blog-page" style={{marginTop:"110px"}}>
@@ -118,7 +159,7 @@ const SingleBlogPage = () => {
             <a href="/">होम</a> &gt; 
             <a href="/blogs">ब्लॉग्स</a> &gt; 
             <a href={`/blogs/${blog.category}`}>{blog.category}</a> &gt; 
-            <span>{blog.title}</span>
+            <span>{blog.heading}</span>
           </nav>
         </div>
       </div>
@@ -127,13 +168,19 @@ const SingleBlogPage = () => {
         <article className="blog-article">
           <div className="article-header">
             <span className="category-badge">{blog.category}</span>
-            <h1>{blog.title}</h1>
+            <h1>{blog.heading}</h1>
             <div className="author-meta">
               <div className="author-info">
                 <div className="author-avatar"></div>
                 <div>
-                  <span className="author-name">{blog.author}</span>
-                  <span className="post-date">{blog.date} · {blog.readTime} पढ़ने का समय</span>
+                  <span className="author-name">{blog.author || "पंडित रामदेव"}</span>
+                  <span className="post-date">
+                    {new Date(blog.date || blog.createdAt).toLocaleDateString('hi-IN', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })} · {blog.readTime || '5 मिनट'} पढ़ने का समय
+                  </span>
                 </div>
               </div>
               <div className="share-buttons">
@@ -145,10 +192,13 @@ const SingleBlogPage = () => {
           </div>
 
           <div className="featured-image">
-            <img style={{ height:"500px"}} src={blog.image} alt={blog.title} />
+            <img style={{ height:"500px"}} src={blog.image} alt={blog.heading} />
           </div>
 
-          <div className="article-content" dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <div 
+            className="article-content" 
+            dangerouslySetInnerHTML={{ __html: blogContentTemplate(blog) }} 
+          />
 
           <div className="article-footer">
             <div className="tags">
@@ -169,8 +219,6 @@ const SingleBlogPage = () => {
             </div>
           </div>
         </article>
-
-      
       </div>
 
       <section className="related-blogs">
@@ -178,18 +226,24 @@ const SingleBlogPage = () => {
           <h2>संबंधित ब्लॉग्स</h2>
           <div className="related-blogs-grid">
             {relatedBlogs.map(blog => (
-              <div className="blog-card" key={blog.id}>
+              <div className="blog-card" key={blog._id}>
                 <div className="card-image">
-                  <img src={blog.image} alt={blog.title} />
+                  <img src={blog.image} alt={blog.heading} />
                   <span className="category-tag">{blog.category}</span>
                 </div>
                 <div className="card-content">
-                  <h3>{blog.title}</h3>
+                  <h3>{blog.heading}</h3>
                   <div className="card-meta">
-                    <span>{blog.date}</span>
-                    <span>{blog.readTime}</span>
+                    <span>
+                      {new Date(blog.date || blog.createdAt).toLocaleDateString('hi-IN', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
+                    </span>
+                    <span>{blog.readTime || '5 मिनट'}</span>
                   </div>
-                  <a href={`/blog/${blog.id}`} className="read-more">पढ़ना जारी रखें</a>
+                  <a href={`/blog/${blog._id}`} className="read-more">पढ़ना जारी रखें</a>
                 </div>
               </div>
             ))}

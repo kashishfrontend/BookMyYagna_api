@@ -143,8 +143,8 @@ function AppRoutes() {
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
         <Route path="/all-pandits" element={<AllPandits />} />
-        <Route path="/blogs" element={<BlogsPage />} />
-        <Route path="/blog/:id" element={<SingleBlogPage />} />
+        {/* <Route path="/blogs" element={<BlogsPage />} /> */}
+        {/* <Route path="/blog/:id" element={<SingleBlogPage />} /> */}
         <Route path="faq" element={<FAQPage />} />
         <Route path="panchang" element={<PanchangCalendar />} />
         <Route path="about-us" element={<AboutUs />} />

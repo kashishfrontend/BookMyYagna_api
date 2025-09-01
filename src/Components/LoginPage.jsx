@@ -421,7 +421,7 @@ const LoginPage = () => {
                                       <Form.Control
                                         type="text"
                                         name="phoneNumber"
-                                        placeholder="Phone Number (optional)"
+                                        placeholder="Phone Number "
                                         value={formData.phoneNumber}
                                         onChange={handleInputChange}
                                         isInvalid={!!errors.phoneNumber}

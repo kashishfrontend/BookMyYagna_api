@@ -203,7 +203,7 @@ const PanditDashboard = () => {
         const response = await axios.post('/bookings/allBookingPandit', {
           startDate: '',
           endDate: '',
-          status: 'Cancelled',
+          status: '',
           panditId: user.id,
         }, { withCredentials: true });
         // console.log('Booked Poojas Response:', response.data);

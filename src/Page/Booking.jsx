@@ -87,7 +87,6 @@ const Booking = () => {
         setSelectedPuja(null);
         setNumberOfPeople(5);
         setAddress("");
-
         setPhone("");
         setEmail("");
         setSpecialRequirements("");
@@ -159,86 +158,86 @@ const Booking = () => {
 
   console.log("user data", user);
   const userId = user?._id || "";
-  
-
- useEffect(() => {
-  const script = document.createElement("script");
-  script.src = "https://sdk.cashfree.com/js/v3/cashfree.js";
-  script.async = true;
-
-  script.onload = () => {
-    console.log("✅ Cashfree SDK successfully loaded.");
-    setIsCashfreeLoaded(true);
-  };
-
-  script.onerror = () => {
-    console.error("❌ Failed to load Cashfree SDK.");
-    setIsCashfreeLoaded(false);
-  };
-
-  document.body.appendChild(script);
-  return () => document.body.removeChild(script);
-}, []);
 
 
-const handleOrderedSubmit = async (e) => {
-  e.preventDefault();
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://sdk.cashfree.com/js/v3/cashfree.js";
+    script.async = true;
 
-  if (!specialRequirements) {
-    alert("Please enter your address");
-    return;
-  }
-  if (!selectedDate) {
-    alert("Please select a puja date");
-    return;
-  }
+    script.onload = () => {
+      console.log("✅ Cashfree SDK successfully loaded.");
+      setIsCashfreeLoaded(true);
+    };
 
-  const orderData = {
-    poojaId,
-    planId: selectedPlanId,
-    name,
-    phoneNumber: phone,
-    address: specialRequirements,
-    description,
-    amount: selectedPlan?.amount || 0,
-    poojaMode: "online",
-    dateOfDelivery: selectedDate?.toISOString().split("T")[0],
-    userId
-  };
+    script.onerror = () => {
+      console.error("❌ Failed to load Cashfree SDK.");
+      setIsCashfreeLoaded(false);
+    };
 
-  try {
-    setIsSubmitting(true);
-    const res = await axios.post(
-      "https://api.bookmyyagna.com/cashfree/createPayment",
-      { name, phone, amount: selectedPlan?.amount || 0, orderData, email },
-      { withCredentials: true }
-    );
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  }, []);
 
-    const paymentSessionId = res?.data?.order?.payment_session_id;
-    if (!paymentSessionId) {
-      alert("Failed to get payment session ID");
+
+  const handleOrderedSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!specialRequirements) {
+      alert("Please enter your address");
+      return;
+    }
+    if (!selectedDate) {
+      alert("Please select a puja date");
       return;
     }
 
-   if (isCashfreeLoaded && window.Cashfree) {
-  const cashfree = new window.Cashfree({ mode: "sandbox" }); 
-  
-  console.log("Launching Cashfree with session ID:", paymentSessionId);
-  cashfree.checkout({
-    paymentSessionId,
-    redirectTarget: "_self",
-  });
-} else {
-  alert("Cashfree SDK not ready yet. Please wait a moment and try again.");
-}
+    const orderData = {
+      poojaId,
+      planId: selectedPlanId,
+      name,
+      phoneNumber: phone,
+      address: specialRequirements,
+      description,
+      amount: selectedPlan?.amount || 0,
+      poojaMode: "online",
+      dateOfDelivery: selectedDate?.toISOString().split("T")[0],
+      userId
+    };
 
-  } catch (error) {
-    console.error("Cashfree Error:", error);
-    alert("Something went wrong during payment.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    try {
+      setIsSubmitting(true);
+      const res = await axios.post(
+        "https://api.bookmyyagna.com/cashfree/createPayment",
+        { name, phone, amount: selectedPlan?.amount || 0, orderData, email },
+        { withCredentials: true }
+      );
+
+      const paymentSessionId = res?.data?.order?.payment_session_id;
+      if (!paymentSessionId) {
+        alert("Failed to get payment session ID");
+        return;
+      }
+
+      if (isCashfreeLoaded && window.Cashfree) {
+        const cashfree = new window.Cashfree({ mode: "sandbox" });
+
+        console.log("Launching Cashfree with session ID:", paymentSessionId);
+        cashfree.checkout({
+          paymentSessionId,
+          redirectTarget: "_self",
+        });
+      } else {
+        alert("Cashfree SDK not ready yet. Please wait a moment and try again.");
+      }
+
+    } catch (error) {
+      console.error("Cashfree Error:", error);
+      alert("Something went wrong during payment.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
   return (
@@ -332,9 +331,9 @@ const handleOrderedSubmit = async (e) => {
                     <div style={{ fontSize: "20px" }}>
                       {poojaData?.subHeading}
                     </div>
-                    <div>{poojaData?.rating}</div>
+                    <div>Ratings for this pooja - {poojaData?.rating} </div>
                     <div>
-                      <h6>Benifites</h6>
+                      <h6>Benefits</h6>
                       <ul>
                         {poojaData?.benefitsOfPooja?.map((benefit) => (
                           <li>{benefit}</li>
@@ -423,36 +422,6 @@ const handleOrderedSubmit = async (e) => {
                     </div>
                   </div>
 
-
-                  <div className="form-row">
-                    <div className="form-group col-6">
-                      <label>Type:</label>
-                      <select
-                        className="form-control"
-                        name="type"
-                        value="online"
-                        disabled
-                      >
-                        <option value="online">Online</option>
-                      </select>
-                      <input type="hidden" name="type" value="online" />
-                    </div>
-                    <div className="form-group col-6">
-                      <label>Pay by:</label>
-                      <select
-                        className="form-control"
-                        name="type"
-                        value="online"
-                        disabled
-                      >
-                        <option value="online">Razorpay</option>
-                      </select>
-                      <input type="hidden" name="type" value="online" />
-                    </div>
-
-
-
-                  </div>
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label>Address:</label>
@@ -466,13 +435,11 @@ const handleOrderedSubmit = async (e) => {
                       <label>Description:</label>
                       <textarea
                         value={description}
-                        onChange={(e) => setDescription (e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                         placeholder="Enter Your Description"
                       ></textarea>
                     </div>
                   </div>
-
-
                   <motion.button
                     type="submit"
                     className="book-now-btn"

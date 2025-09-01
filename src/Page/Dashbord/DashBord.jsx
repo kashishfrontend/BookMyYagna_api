@@ -264,7 +264,36 @@ const Dashboard = () => {
     }));
   };
 
-  
+  // const handlePasswordSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (passwordData.newPassword !== passwordData.confirmPassword) {
+  //     toast.error("New passwords don't match");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.patch("/user/changeUserPassword", {
+  //       currentPassword: passwordData.currentPassword,
+  //       newPassword: passwordData.newPassword
+  //     });
+
+  //     if (response.data.success) {
+  //       toast.success("Password changed successfully!");
+  //       setShowChangePasswordModal(false);
+  //       setPasswordData({
+  //         currentPassword: '',
+  //         newPassword: '',
+  //         confirmPassword: ''
+  //       });
+  //     } else {
+  //       toast.error(response.data.message || "Failed to change password");
+  //     }
+  //   } catch (error) {
+  //     console.error("Password change error:", error);
+  //     toast.error(error.response?.data?.message || "Something went wrong!");
+  //   }
+  // }
 
   const handleDeleteNotification = async (id) => {
     try {
@@ -346,6 +375,8 @@ const Dashboard = () => {
               <p>
                 This section is coming soon. We're working on bringing you the
                 best spiritual experience.
+
+                
               </p>
             </div>
           </div>

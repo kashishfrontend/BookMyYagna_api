@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap');
+
+
+
 body,
 html {
   margin: 0;
@@ -12,22 +15,23 @@ html {
 }
 
 
-/* Navbar.css */
+/* navbar css  */
+/* Navbar.css - Improved Version */
 .dropdown-item:hover {
   background: none !important;
 }
 
 .custom-navbar {
   background: rgba(255, 255, 255, 0.1);
-  padding: 15px 0;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding-right: 10% !important;
+}
 
-  .dropdown-menu {
-    background: rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-  }
+.custom-navbar .dropdown-menu {
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  border: none;
 }
 
 .dropdown-toggle::after {
@@ -63,10 +67,6 @@ html {
   display: flex;
   border: 0.2px solid rgba(0, 0, 0, 0.5) !important;
   align-items: center;
-}
-
-.hover_class :hover {
-  transform: translateY(-2px);
 }
 
 .nav-link:hover {
@@ -123,26 +123,149 @@ html {
   background: transparent !important;
 }
 
-/* Responsive adjustments */
+/* Language dropdown specific styling */
+.language-dropdown .dropdown-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  background: transparent !important;
+  color: white !important;
+}
+
+.language-dropdown .dropdown-menu {
+  min-width: 120px !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 1199px) {
+  .custom-navbar {
+    padding-right: 5% !important;
+  }
+}
+
 @media (max-width: 991px) {
-  .nav-link {
-    padding: 12px 5px !important;
-    margin: 5px 0;
-    border: none !important;
-  }
-
-  .book-now-btn {
-    margin-top: 10px;
-    width: 100%;
-  }
-
   .custom-navbar {
     padding: 15px 0 !important;
-
+    background: rgba(255, 255, 255, 0.95) !important;
   }
-
+  
   .padding-class {
     padding: 0px 20px !important;
+  }
+  
+  .nav-link {
+    padding: 12px 15px !important;
+    margin: 5px 0;
+    border: none !important;
+    color: #333 !important;
+  }
+  
+  .nav-link .icon {
+    color: #333 !important;
+  }
+  
+  .navbar-nav .dropdown-menu {
+    position: static !important;
+    float: none;
+    width: 100%;
+    margin-top: 0;
+    /* background: rgba(255, 255, 255, 0.9) !important; */
+    border: none;
+    box-shadow: none;
+  }
+  
+  .navbar-nav .dropdown-item {
+    padding: 10px 25px;
+    color: #333 !important;
+  }
+  
+  .navbar-nav .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  .book-now-btn {
+    margin: 10px 0;
+    width: 100%;
+    color: #333 !important;
+    border-color: #333 !important;
+  }
+  
+  .book-now-btn:hover {
+    color: #ff6700 !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Language dropdown mobile styling */
+  .language-dropdown {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .language-dropdown .dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    color: #333 !important;
+    border-color: #ddd !important;
+  }
+  
+  .language-dropdown .dropdown-menu {
+    width: 100%;
+  }
+  
+  /* Ensure text is visible in mobile view */
+  .dropdown-toggle span {
+    color: #333 !important;
+  }
+  
+  /* Account dropdown styling for mobile */
+  .nav-dropdown-account .dropdown-item {
+    padding-left: 30px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-section {
+    padding: 50px 0;
+  }
+  
+  .booking-header h2 {
+    font-size: 28px;
+  }
+  
+  .booking-form {
+    padding: 20px;
+  }
+  
+  .puja-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .navbar-brand img {
+    height: 80px;
+    width: 80px;
+  }
+  
+  /* Improve spacing for mobile navbar */
+  .navbar-collapse {
+    padding: 15px;
+    /* background: white; */
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 576px) {
+  .padding-class {
+    padding: 0px 15px !important;
+  }
+  
+  .navbar-brand img {
+    height: 70px;
+    width: 70px;
+  }
+  
+  .nav-link {
+    padding: 10px 15px !important;
+    font-size: 0.95rem;
   }
 }
 
@@ -3639,64 +3762,7 @@ html {
   }
 }
 
-@media (max-width: 768px) {
-  .booking-section {
-    padding: 50px 0;
-  }
 
-  .booking-header h2 {
-    font-size: 28px;
-  }
-
-  .booking-form {
-    padding: 20px;
-  }
-
-  .puja-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .custom-navbar {
-
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px 0;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-    .dropdown-menu {
-      background: rgba(255, 255, 255, 0.7) !important;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-      color: black !important;
-    }
-  }
-
-  .navbar-nav .dropdown-menu {
-    position: static !important;
-    /* Avoid absolute position */
-    float: none;
-    width: 100%;
-    margin-top: 0;
-    /* background-color: white; */
-    /* Or your theme */
-    box-shadow: none;
-    border: none;
-  }
-
-  .navbar-nav .dropdown-menu .dropdown-item {
-    /* background: transparent !important; */
-    padding: 10px 20px;
-    /* color: #000 !important; */
-    /* Adjust if needed */
-  }
-
-  .navbar-nav .dropdown-menu .dropdown-item:hover {
-    background-color: transparent !important;
-    /* color: black !important; */
-  }
-
-
-
-}
 
 /* =========popup css================ */
 /* Container for the View button and info icon */

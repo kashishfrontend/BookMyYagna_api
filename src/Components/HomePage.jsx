@@ -45,7 +45,7 @@ function HomePage() {
       </Helmet>
       <div>
 
-        <MainNavbar isHeroVisible={isHeroVisible} />
+        {/* <MainNavbar isHeroVisible={isHeroVisible} /> */}
         <HeroSection onHeroVisibleChange={setIsHeroVisible} />
         <AdBanner />
         <Services />

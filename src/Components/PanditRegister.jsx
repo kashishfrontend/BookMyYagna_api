@@ -158,8 +158,9 @@ const PanditRegistration = () => {
     formDataToSend.append('password', formData.password);
     formDataToSend.append('experience', parseInt(formData.experience));
     formDataToSend.append('rating', parseInt(formData.rating) || 0);
-    formDataToSend.append('poojaTypes', JSON.stringify(formData.poojaTypes));
-    formDataToSend.append('language', JSON.stringify(formData.language));
+    formDataToSend.append('poojaTypes', formData.poojaTypes);
+    formDataToSend.append('language', formData.language);
+
     formDataToSend.append('panditImage', formData.panditImage);
 
     try {

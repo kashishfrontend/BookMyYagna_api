@@ -29,11 +29,7 @@ const PopularPriests = () => {
       width: '100%',
       objectFit: 'cover',
     },
-    truncate: {
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
+   
     detailText: {
       fontSize: '14px',
       whiteSpace: 'nowrap',

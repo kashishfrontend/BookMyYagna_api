@@ -6,10 +6,6 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { Container, Row, Col, Card, Form, Button, Alert, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Contact = () => {
   // WhatsApp URL
@@ -240,7 +236,7 @@ const Contact = () => {
       </Helmet>
 
       <Container className="py-5">
-        <div className="text-center mb-5" data-aos="fade-down">
+        <div className="text-center mb-5" >
           <h2 className="fw-bold border-bottom d-inline-block pb-2 mb-3" style={{ marginTop: "90px" }}>
             Contact BookMyYagna – We're Here to Help
           </h2>
@@ -339,7 +335,7 @@ const Contact = () => {
         </Row>
 
         {/* Contact Form */}
-        <Row className="mt-5" data-aos="fade-up">
+        <Row className="mt-5" >
           <Col xs={12} lg={8} className="mx-auto">
             <Card className="shadow-sm border-0">
               <Card.Body style={{ padding: '2rem' }}>
