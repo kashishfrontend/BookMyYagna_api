@@ -206,24 +206,7 @@ const MainNavbar = ({ isHeroVisible }) => {
 
                 </Dropdown.Menu>
               </Dropdown>
-              {/* 
-               <motion.div>
-                <NavDropdown
-                  title={
-                    <>
-                      <span className={`icon me-1 ${navTextColor}`}>🌐</span>
-                      <span className={navTextColor}>Language</span>
-                    </>
-                  }
-                  id="nav-dropdown-services"
-                  className="m-auto"
-                >
-                  <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
-                  <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
-                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
-                </NavDropdown>
-              </motion.div> */}
-
+             
               <div id="google_translate_element" style={{ display: 'none' }}></div>
 
 
