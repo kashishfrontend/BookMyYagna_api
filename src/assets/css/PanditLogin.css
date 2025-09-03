@@ -1,41 +1,10 @@
-.pandit-login-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: #333;
-}
-
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg,
-      rgba(250, 197, 105, 0.6) 50%,
-      rgba(255, 230, 198, 0.2) 50%);
-  clip-path: polygon(0 0, 100% 0, 0 100%);
   z-index: 1;
-}
-
-.login-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-}
-
-.login-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .logo-image {
@@ -44,8 +13,8 @@
 }
 
 .logo-circle-1 {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   background: #FFECCA;
   border-radius: 50%;
   display: flex;
@@ -68,9 +37,9 @@
 }
 
 .welcome-description {
-  font-size: 10px;
-  color: black;
-  /* margin-bottom: 10px; */
+  font-size: 14px;
+  line-height: 1.4;
+  color: #444;
 }
 
 .login-form .form-group {
@@ -98,7 +67,6 @@
 
 .password-input {
   padding-right: 40px;
-  /* Space for the eye icon */
 }
 
 .password-toggle {
@@ -123,9 +91,10 @@
   background-color: #ff6b35;
   border: none;
   padding: 12px;
-  font-size: 16px;
-  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .login-btn:hover {
@@ -151,13 +120,38 @@
 }
 
 .testimonial-text-pandit-login {
-  font-size: 10px;
-  color: black;
   margin-top: 10px;
+  font-size: 13px;
+  color: #333;
 }
 
 .testimonial-author {
   font-size: 12px;
   color: #FD7530;
   font-style: italic;
+}
+
+.pandit-login-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 500px;
+  padding: 0;
+}
+
+.login-card {
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
+  padding: 17px;
+  box-shadow: 0 9px 11px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
