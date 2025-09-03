@@ -49,7 +49,7 @@ const MainNavbar = ({ isHeroVisible }) => {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: 'en',
-          includedLanguages: 'en,hi,ar',
+          includedLanguages: 'en,hi',
           autoDisplay: false
         },
         'google_translate_element'
@@ -108,9 +108,9 @@ const MainNavbar = ({ isHeroVisible }) => {
   };
 
   return (
-    <div className='container' style={{ padding: "0px" }}>
+    <div style={{ padding: "0px" }}>
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        // initial={{ opacity: 0, y: -20 }}f
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
@@ -159,15 +159,15 @@ const MainNavbar = ({ isHeroVisible }) => {
                 >
                   <Dropdown.Item href="./listOfPuja">List of Pooja</Dropdown.Item>
                   <Dropdown.Item href="/panchang">Panchang</Dropdown.Item>
-                  <Dropdown.Item href="/blogs">Blogs</Dropdown.Item>
+                  {/* <Dropdown.Item href="/blogs">Blogs</Dropdown.Item> */}
                 </NavDropdown>
               </motion.div>
 
-              <motion.div>
+              <Navbar>
                 <Nav.Link href="/about-us" className={`nav-link ${navTextColor}`}>
                   <CalendarCheck className="icon" /> About Us
                 </Nav.Link>
-              </motion.div>
+              </Navbar>
 
               {isAuthenticated && !isPanditAuthenticated ? (
                 <NavDropdown
@@ -203,10 +203,10 @@ const MainNavbar = ({ isHeroVisible }) => {
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
                   <Dropdown.Item onClick={() => changeLanguage('hi')}>हिंदी</Dropdown.Item>
-                  <Dropdown.Item onClick={() => changeLanguage('ar')}>arabic</Dropdown.Item>
 
                 </Dropdown.Menu>
               </Dropdown>
+             
               <div id="google_translate_element" style={{ display: 'none' }}></div>
 
 

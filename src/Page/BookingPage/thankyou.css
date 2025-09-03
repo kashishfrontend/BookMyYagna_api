@@ -1,0 +1,80 @@
+.booking-success,
+.booking-success.failed {
+  margin-top: 130px;
+
+
+  text-align: center;
+  padding: 40px 20px; /* Add horizontal padding for mobile */
+  margin-top: 130px;
+  margin-bottom: 40px;
+
+  .success-icon {
+    font-size: 60px;
+    color: green;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .mandala-animation {
+    margin-top: 30px;
+    /* Add animation/styling here */
+  }
+
+  &.failed {
+    .failed-icon {
+      color: red;
+    }
+
+    h3 {
+      color: red;
+    }
+  }
+}
+
+/* ✅ Responsive Media Queries */
+@media (max-width: 768px) {
+  .booking-success {
+    margin-top: 100px;
+    padding: 30px 16px;
+
+    .success-icon {
+      font-size: 50px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-success {
+    margin-top: 80px;
+    padding: 20px 12px;
+
+    .success-icon {
+      font-size: 40px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

@@ -9,6 +9,7 @@ const AllPandits = () => {
     const styles = {
   card: {
     borderRadius: '20px',
+    padding:"20px",
     display: 'flex',
     flexDirection: 'column',
     height: '100%',

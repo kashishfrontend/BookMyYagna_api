@@ -11,7 +11,8 @@ import DiwaliLampCeremony from '../assets/img/Diwali- Lamp-Ceremony.webp';
 import MorningPrayerRitual from '../assets/img/Morning-Prayer-Ritual.webp'
 import DivineAartiCeremony from '../assets/img/Divine-Aarti-Ceremony.webp'
 import VibrantHoliFestival from '../assets/img/Vibrant-Holi-Festival.webp'
-import SacredTempleRituals from '../assets/img/Sacred-Temple-Rituals.webp'
+import SacredTempleRituals from '../assets/img/gallery-puja.webp';   
+
 import TraditionalWeddingDecorations from '../assets/img/Traditional-Wedding-Decorations.webp'
 import Ganeshestival from '../assets/img/Ganesh-Festival.webp'
 
@@ -22,7 +23,7 @@ const GalleryPage = () => {
 
     useEffect(() => {
         AOS.init({
-           duration: 300,
+            duration: 300,
             offset: 10,
             once: false,
             mirror: true
@@ -181,7 +182,7 @@ const GalleryPage = () => {
                 <meta property="og:image" content="https://bookmyyagna.com/images/gallery-og-image.jpg" />
                 <link rel="canonical" href="https://bookmyyagna.com/gallery" />
             </Helmet>
-            <section className="gallery-section" style={{marginTop:"5%"}}>
+            <section className="gallery-section" style={{ marginTop: "5%" }}>
                 <Container>
                     <div className="section-header" data-aos="fade-up">
                         <div className="ornament-line " data-aos="zoom-in" duration="1000">
@@ -224,7 +225,7 @@ const GalleryPage = () => {
                         </button>
                         <button
                             className={`filter-btn ${filterCategory === 'decorations' ? 'active' : ''}`}
-                        onClick={() => setFilterCategory('decorations')}
+                            onClick={() => setFilterCategory('decorations')}
                         >
                             Decorations
                         </button>

@@ -1,76 +1,122 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, RESET_LOGIN, SET_AUTHENTICATED, AUTH_LOADED, LOGOUT_SUCCESS, LOGOUT_FAILURE, RESET_LOGOUT_STATE, LOGOUT_REQUEST } from '../action/authAction';
+import {
+  LOGIN_USER_REQUEST,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
+  RESET_USER_LOGIN,
+  SET_USER_AUTHENTICATED,
+  AUTH_USER_LOADED,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAILURE,
+  RESET_USER_LOGOUT_STATE,
+} from '../action/authAction';
 
+// Initial State
 const initialState = {
   loading: false,
   isAuthenticated: false,
   user: null,
+  role: null,
   error: null,
   success: false,
   logoutSuccess: false,
-  authLoaded: false
+  authLoaded: false,
 };
 
+// Reducer
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    // Login Flow
+    case LOGIN_USER_REQUEST:
       return {
         ...state,
         loading: true,
+        error: null,
+        success: false,
       };
-    case LOGIN_SUCCESS:
+
+    case LOGIN_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: action.payload.affiliate,
-         isAuthenticated: true,
+        user: action.payload?.user || null,
+        role: action.payload?.user?.role || null,
         success: true,
-        logoutSuccess: false
+        logoutSuccess: false,
+        error: null,
       };
-      case SET_AUTHENTICATED:
-        return {
-          ...state,
-          isAuthenticated: true,
-          authLoaded: true
-      };
-    case LOGIN_FAILURE:
+
+    case LOGIN_USER_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        success: false
+        success: false,
+        user: null,
+        role: null,
       };
-    case LOGOUT_REQUEST:
-      return { ...state, loading: true, error: null, logoutSuccess: false };
-    case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        error:null,
-        loading: false,
-        logoutSuccess: true,
-         isAuthenticated: false,
-      };
-    case LOGOUT_FAILURE:
-      return { ...state, loading: false, error: action.payload, logoutSuccess: false };
-      case RESET_LOGOUT_STATE:
-        return {
-          ...state,
-          logoutSuccess: false,
-          loading: false,
-          error: null,
-          isAuthenticated: false,
-        };      
-      
-    case RESET_LOGIN:
+
+    case RESET_USER_LOGIN:
       return {
         ...state,
         success: false,
-        error: null
+        error: null,
+        loading: false,
       };
-    case AUTH_LOADED:
+
+    // Auth Check
+    case SET_USER_AUTHENTICATED:
       return {
         ...state,
-        authLoaded: true
+        isAuthenticated: true,
+        authLoaded: true,
+        user: action.payload?.user || null,
+        role: action.payload?.role || null,
       };
+
+    case AUTH_USER_LOADED:
+      return {
+        ...state,
+        authLoaded: true,
+      };
+
+    // Logout Flow
+    case LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        logoutSuccess: false,
+      };
+
+    case LOGOUT_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        logoutSuccess: true,
+        user: null,
+        role: null,
+        error: null,
+      };
+
+    case LOGOUT_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        logoutSuccess: false,
+        error: action.payload,
+      };
+
+    case RESET_USER_LOGOUT_STATE:
+      return {
+        ...state,
+        logoutSuccess: false,
+        error: null,
+        loading: false,
+      };
+
+    // Default
     default:
       return state;
   }

@@ -37,21 +37,23 @@
   function googleTranslateElementInit() {
     new google.translate.TranslateElement(
       { pageLanguage: 'en',
-      includedLanguages: 'en,hi,ar',
+      includedLanguages: 'en,hi',
 
       layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
       'google_translate_element'
     );
   }
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
 
 </head>
 
 <body>
   <div id="root"></div>
   
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
   <!-- ✅ Main JS & AOS -->
   <script type="module" src="/src/main.jsx"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" crossorigin="anonymous"

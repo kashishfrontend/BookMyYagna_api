@@ -36,11 +36,11 @@ const ShippingDelivery = () => {
                 <link rel="canonical" href="https://bookmyyagna.com/shipping-delivery" />
             </Helmet>
 
-            <section className="shipping-delivery-page" style={{ 
+            <section className="shipping-delivery-page" style={{
                 padding: '80px 0 60px',
                 backgroundColor: '#f9f5f0',
                 minHeight: '100vh',
-                marginTop:'50px'
+                marginTop: '50px'
             }}>
                 <Container>
                     {/* Header Section */}
@@ -126,8 +126,8 @@ const ShippingDelivery = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        For bookings that include physical puja materials, we ensure delivery 2-3 business days before your scheduled puja date. 
-                                        All items are carefully packed with sacred protection and include a checklist of contents. 
+                                        For bookings that include physical puja materials, we ensure delivery 2-3 business days before your scheduled puja date.
+                                        All items are carefully packed with sacred protection and include a checklist of contents.
                                         Samagri is sourced directly from authorized vendors to ensure authenticity.
                                     </p>
                                 </div>
@@ -241,7 +241,7 @@ const ShippingDelivery = () => {
                                         lineHeight: '1.7',
                                         marginBottom: '0'
                                     }}>
-                                        You'll receive tracking information via SMS and email once your order is shipped. 
+                                        You'll receive tracking information via SMS and email once your order is shipped.
                                         Our tracking portal provides real-time updates including:<br />
                                         • Package location<br />
                                         • Estimated delivery date<br />
@@ -328,7 +328,7 @@ const ShippingDelivery = () => {
                                         color: '#555',
                                         lineHeight: '1.7'
                                     }}>
-                                        All sacred items are packed according to Vedic traditions. 
+                                        All sacred items are packed according to Vedic traditions.
                                         Please handle with clean hands and store in a pure space until puja time.
                                     </p>
                                 </div>
@@ -351,7 +351,7 @@ const ShippingDelivery = () => {
                                         color: '#555',
                                         lineHeight: '1.7'
                                     }}>
-                                        If any items arrive damaged or missing, please notify us within 24 hours of delivery 
+                                        If any items arrive damaged or missing, please notify us within 24 hours of delivery
                                         for immediate replacement at no additional cost.
                                     </p>
                                 </div>
@@ -383,7 +383,7 @@ const ShippingDelivery = () => {
                             Our customer support team is available to assist with any delivery-related questions.
                         </p>
                         <div className="contact-methods">
-                            <a href="mailto:support@bookmyyagna.com" style={{
+                            <a href="mailto:bookmyyagna@gmail.com" style={{
                                 display: 'inline-block',
                                 backgroundColor: '#d4a762',
                                 color: '#fff',
@@ -393,8 +393,8 @@ const ShippingDelivery = () => {
                                 fontWeight: '500',
                                 margin: '0 10px 10px 0',
                                 transition: 'all 0.3s ease'
-                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#c1914a'} 
-                               onMouseOut={(e) => e.target.style.backgroundColor = '#d4a762'}>
+                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#c1914a'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#d4a762'}>
                                 Email Support
                             </a>
                             <a href="tel:+91 8569977705" style={{
@@ -407,8 +407,8 @@ const ShippingDelivery = () => {
                                 fontWeight: '500',
                                 margin: '0 0 10px 10px',
                                 transition: 'all 0.3s ease'
-                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'} 
-                               onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
+                            }} onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
                                 Call Support
                             </a>
                         </div>
