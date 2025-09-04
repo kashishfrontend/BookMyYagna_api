@@ -2663,6 +2663,10 @@ html {
   background: linear-gradient(to right, transparent, #FF9800, transparent);
 }
 
+.row.no-divider::after {
+  content: none !important;
+}
+
 /* Responsive adjustments */
 
 @media (max-width: 767px) {

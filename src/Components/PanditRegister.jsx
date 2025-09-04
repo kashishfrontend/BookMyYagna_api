@@ -223,23 +223,12 @@ const PanditRegistration = () => {
   const isStep2Complete = formData.password && formData.confirmPassword && formData.experience;
 
   return (
-    <div className="min-vh-100 position-relative overflow-hidden py-2" style={{ backgroundImage: `url(${PanditRegistrationBg})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}>
-      <div className="position-absolute w-100 h-100 top-0 start-0" style={{ background: 'rgba(255, 248, 240, 0.85)', zIndex: -1 }}>
-        <div className="floating-elements">
-          <div className="floating-lotus lotus-1"><Flower size={25} color="#ff6b35" /></div>
-          <div className="floating-lotus lotus-2"><Flower size={30} color="#ff8c42" /></div>
-          <div className="floating-lotus lotus-3"><Flower size={28} color="#ff6b35" /></div>
-          <div className="floating-sparkle sparkle-1"><Sparkles size={18} color="#ffb347" /></div>
-          <div className="floating-sparkle sparkle-2"><Sparkles size={22} color="#ff8c42" /></div>
-          <div className="floating-sparkle sparkle-3"><Sparkles size={20} color="#ff6b35" /></div>
-        </div>
-      </div>
-
-      <div className="container">
-        <div className="row mb-3">
-          <div className="col-lg-6 d-flex justify-content-end align-items-center">
+    <div className="min-vh-100 position-relative overflow-hidden " style={{ backgroundImage: `url(${PanditRegistrationBg})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}>
+      <div className="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div className="row mb-3 " >
+          <div className="col-lg-6 ">
             <div
-              className="side-image h-75"
+              className="side-image h-100"
               style={{
                 backgroundImage: `url(${step === 1 ? step1 : step === 2 ? step2 : step3})`,
                 backgroundSize: "cover",
@@ -252,8 +241,8 @@ const PanditRegistration = () => {
           </div>
 
           <div className="col-lg-6">
-            <div className="registration-card">
-              <div className="progress-container">
+            <div className="registration-card ">
+              <div className="progress-container ">
                 <div className="progress-steps">
                   {[1, 2, 3].map((s) => (
                     <div key={s} className={`step ${step === s ? 'active' : (s < step || (s === 1 && isStep1Complete)) ? 'completed' : ''}`}>
@@ -288,8 +277,8 @@ const PanditRegistration = () => {
 
               <form onSubmit={handleSubmit} className="registration-form">
                 {step === 1 && (
-                  <div className="row">
-                    <div className="form-group mb-4" style={{ textAlign: "center" }}>
+                  <div className="row no-divider" >
+                    <div className="form-group mb-2" style={{ textAlign: "center" }}>
                       <div
                         style={{
                           position: "relative",
@@ -375,7 +364,7 @@ const PanditRegistration = () => {
                 )}
 
                 {step === 2 && (
-                  <div className="row">
+                  <div className="row no-divider" >
                     <div className="form-group mb-4 placeholder-text-color">
                       <div className="input-group">
                         <input type={showPassword ? 'text' : 'password'} name="password" className="form-control" placeholder="Enter Your Password" value={formData.password} onChange={handleInputChange} required />
@@ -395,11 +384,11 @@ const PanditRegistration = () => {
                     </div>
 
                     <div className="col-12 text-end">
-                      <div className='row'>
-                        <div className='col-md-6 text-center'>
+                      <div className='row no-divider' >
+                        <div className='col-6 text-center'>
                           <button type="button" className="btn btn-secondary w-75" style={{ padding: '10px 25px' }} onClick={prevStep}><span className="me-2">&larr;</span> Back</button>
                         </div>
-                        <div className='col-md-6 text-center'>
+                        <div className='col-6 text-center'>
                           <button type="button" className="btn btn-primary next-btn w-75" onClick={nextStep} disabled={isLoading}>Next <span className="ms-2">&rarr;</span></button>
                         </div>
                       </div>
@@ -408,7 +397,7 @@ const PanditRegistration = () => {
                 )}
 
                 {step === 3 && (
-                  <div className="row">
+                  <div className="row no-divider" >
                     <div className="form-group mb-4 placeholder-text-color">
                       <div className="input-group mb-2">
                         <input type="text" className="form-control" placeholder="Enter Pooja Type" value={poojaInput} onChange={(e) => { setPoojaInput(e.target.value); setShowPoojaSuggestions(true); }} onBlur={() => setTimeout(() => setShowPoojaSuggestions(false), 200)} onKeyPress={(e) => { if (e.key === 'Enter' && poojaInput) addPoojaType(poojaInput); }} />
@@ -449,16 +438,16 @@ const PanditRegistration = () => {
                         </div>
                       )}
                     </div>
-                    <div className="form-check mb-4 position-relative" style={{ left: '20px' }}>
-                      <input className="form-check-input me-3" type="checkbox" id="terms" checked={termsAgreed} onChange={(e) => setTermsAgreed(e.target.checked)} required />
+                    <div className="form-check d-flex mb-4 position-relative justify-content-center align-content-center" style={{ left: '20px' }}>
+                      <input className="form-check-input me-3  " type="checkbox" id="terms" checked={termsAgreed} onChange={(e) => setTermsAgreed(e.target.checked)} required />
                       <label className="form-check-label" htmlFor="terms">I agree to the <Link to="/termsofservice" className="terms-link">Terms & Conditions</Link> and <Link to="/privacy-policy" className="terms-link">Privacy Policy</Link></label>
                     </div>
                     <div className="col-12 text-end">
-                      <div className='row d-flex justify-content-center align-content-center'>
-                        <div className='col-md-6 text-center'>
+                      <div className='row no-divider  d-flex justify-content-center align-content-center' >
+                        <div className='col-6 text-center'>
                           <button type="button" className="btn btn-secondary  me-2 w-75" style={{ padding: "10px 25px" }} onClick={prevStep}><span className="me-2">&larr;</span> Back</button>
                         </div>
-                        <div className='col-md-6'>
+                        <div className='col-6'>
                           <button type="submit" className="btn btn-primary register-btn w-100" disabled={isLoading}>{isLoading ? (<><span className="spinner-border spinner-border-sm me-2" /> Creating Account...</>) : 'Register as Pandit'}</button>
                         </div>
                       </div>
@@ -467,7 +456,7 @@ const PanditRegistration = () => {
                 )}
               </form>
               <div className="text-center w-100 position-absolute" style={{ bottom: '10px' }}>
-                <p className="login-text m-0" style={{ color: '#009B27', fontSize: 'small' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></p>
+                <p className="login-text mb-1" style={{ color: '#009B27', fontSize: 'small' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></p>
               </div>
             </div>
           </div>
