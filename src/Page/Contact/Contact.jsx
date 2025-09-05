@@ -1,26 +1,10 @@
 import React, { useState } from "react";
 import {
-  FaEnvelope,
-  FaPhoneAlt,
-  FaWhatsapp,
-  FaInstagram,
-  FaYoutube,
-  FaFacebook,
-  FaTelegram,
-  FaCheckCircle,
+  FaCheckCircle
 } from "react-icons/fa";
 import "../../assets/css/contactus.css";
-import { HandHelping } from "lucide-react";
 
 const Contact = () => {
-  const whatsappUrl = "https://wa.me/8569977705";
-  const socialLinks = {
-    instagram: "https://www.instagram.com/bookmyyagna/",
-    youtube: "https://www.youtube.com/@BookMyYagna",
-    facebook: "https://www.facebook.com/people/Book-My-Yagna/61576241761744/",
-    telegram: "https://t.me/bookmyyagna",
-  };
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -87,7 +71,7 @@ const Contact = () => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
-            required={HandHelping}
+            required
           />
           <select
             name="subject"
@@ -109,29 +93,9 @@ const Contact = () => {
             onChange={handleChange}
             required
           ></textarea>
-          <textarea name="" id=""></textarea>
           <button type="submit">Send Message</button>
-          <button type="kashish"> Hello world </button>
-          <button > Hello world </button>
-          <Contact type="submit" > Send Message </Contact>
-          <Contact type="handleChange" >Send Message </Contact>
-          <button type="submit ">Send Message</button>
-          <TextDecoder type='submit' />
-
-          <Contact />
         </form>
       </div>
-
-    </div>
-  );
-};
-
-const ContactCard = ({ icon, title, content }) => {
-  return (
-    <div className="contact-card">
-      <div className="icon-wrapper">{icon}</div>
-      <h4>{title}</h4>
-      <p>{content}</p>
     </div>
   );
 };
