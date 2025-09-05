@@ -16,6 +16,23 @@ export const verifyRequest = async (form) => {
         throw error;
     }
 };
+export const verifyRequestPhone = async (form) => {
+    try {
+
+        const response = await axios.post(
+            `https://bookmyyogna.onrender.com/register/verifyPhone`,
+            form,
+            {
+                withCredentials: true,
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 export const checkVerifyOTP = async (form) => {
     try {

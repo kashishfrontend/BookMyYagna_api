@@ -239,7 +239,7 @@ const PanditRegistration = () => {
         <div className="row mb-3">
           <div className="col-lg-6 d-flex justify-content-end align-items-center">
             <div
-              className="side-image h-75"
+              className="side-image "
               style={{
                 backgroundImage: `url(${step === 1 ? step1 : step === 2 ? step2 : step3})`,
                 backgroundSize: "cover",
@@ -247,6 +247,7 @@ const PanditRegistration = () => {
                 borderRadius: "20px",
                 boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
                 width: "100%",
+                height:"94%"
               }}
             ></div>
           </div>
@@ -466,8 +467,8 @@ const PanditRegistration = () => {
                   </div>
                 )}
               </form>
-              <div className="text-center w-100 position-absolute" style={{ bottom: '10px' }}>
-                <p className="login-text m-0" style={{ color: '#009B27', fontSize: 'small' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></p>
+              <div className="text-center w-100 position-absolute" style={{ bottom: '13px' }}>
+                <h2 className="login-text m-0" style={{ color: '#009B27', fontSize: 'medium' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></h2>
               </div>
             </div>
           </div>

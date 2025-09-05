@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
 import axios from "../Api/axios/axios_config";
-import { verifyRequest, checkVerifyOTP } from '../Api/verify/verifyRequest';
+import { verifyRequest , verifyRequestPhone } from '../Api/verify/verifyRequest';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import VerifyCred from './VerifyCred';
@@ -70,7 +70,11 @@ const LoginPage = () => {
       const payload =
         type === 'phone' ? { phoneNumber: formData.phoneNumber } : { email: formData.email };
 
-      const response = await verifyRequest(payload);
+       const response =
+      type === 'phone'
+        ? await verifyRequestPhone(payload)
+        : await verifyRequest(payload);
+
 
       if (response.success) {
         toast.success(`OTP sent to ${type === 'phone' ? formData.phoneNumber : formData.email}`);
@@ -159,6 +163,8 @@ const LoginPage = () => {
       type: "user" // Add the type parameter
     });
     console.log('Send OTP Response:', response.data);
+
+    
     if (response.data.success) {
       toast.success('OTP sent to your email');
       setResetStep('otp');
