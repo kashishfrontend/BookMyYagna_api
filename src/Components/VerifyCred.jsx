@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { checkVerifyOTP } from '../Api/verify/verifyRequest' 
+import { checkVerifyOTP } from '../Api/verify/verifyRequest'
 import '../assets/css/ForgetPassword.css';
 
 const VerifyCred = ({ onClose, type, onVerified }) => {
@@ -52,8 +52,8 @@ const VerifyCred = ({ onClose, type, onVerified }) => {
         <button className="close-btn-fp" onClick={onClose}>
           ×
         </button>
-
-        <div className="popup-content-fp">
+      
+        <div className="popup-content-fp" style={{ backgroundColor: "cornsilk", margin: "-4px", border: '1px solid', padding: '10px', borderRadius: "20px" }}>
           <h3>Enter OTP</h3>
           <div className="otp-container-fp">
             {otp.map((data, index) => (
@@ -73,6 +73,7 @@ const VerifyCred = ({ onClose, type, onVerified }) => {
             style={{
               opacity: loading ? 0.6 : 1,
               cursor: loading ? 'not-allowed' : 'pointer',
+              border: "1px solid"
             }}
           >
             Confirm OTP
