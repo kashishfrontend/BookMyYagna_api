@@ -6,7 +6,7 @@ import { GiLotus } from 'react-icons/gi';
 import '../assets/css/PanditLogin.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginPandit, resetLoginPandit } from '../redux/action/panditAuthAction';
-import bg from "../assets/img/panditloginbg.png";
+import bg from "../assets/img/bg-panditLogin.jpg";
 import img from "../assets/img/favicon.png";
 // import img1 from '../assets/img/login-bg-new.png';
 
@@ -51,7 +51,7 @@ const PanditLogin = () => {
   }, [successPandit, isPanditAuthenticated, error, dispatch, navigate]);
 
   return (
-    <div className="pandit-login-container" style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', minHeight: '100vh', position: 'relative' }}>
+    <div className="pandit-login-container" style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh', position: 'relative' }}>
       <div className="overlay"></div>
       <div className="login-wrapper">
         <div className="login-card">
