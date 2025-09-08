@@ -1,4 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
 
+# Disallow sensitive or duplicate paths
+Disallow: /dashboard
+Disallow: /panditdashboard
+Disallow: /booking
+
+# Sitemap location
 Sitemap: https://bookmyyagna.com/sitemap.xml

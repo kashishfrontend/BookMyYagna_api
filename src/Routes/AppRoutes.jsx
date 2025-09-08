@@ -131,7 +131,12 @@ function AppRoutes() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="listofpuja" element={<ListOfPooja />} />
-        <Route path="pujaBookingDetails" element={<PoojaBookingDetails />} />
+        <Route path="pujaBookingDetails"
+          element={
+            <ProtectedUserRoute>
+              <PoojaBookingDetails />
+            </ProtectedUserRoute>}
+        />
         <Route path="scaredbooking" element={<ScaredBooking />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
