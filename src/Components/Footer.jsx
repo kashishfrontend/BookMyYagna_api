@@ -91,9 +91,9 @@ const Footer = () => {
               <h4>Our Services</h4>
               <ul>
                 <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Ganesh Puja</Link></li>
-                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Satyanarayan Katha</Link></li>
-                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Griha Pravesh</Link></li>
-                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Vivah Sanskar</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Navagraha Pooja</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> Lakshmi Pooja</Link></li>
+                <li><Link to={"/listofpuja"}><FaPrayingHands className="service-icon" /> RudraAbhishek Pooja</Link></li>
               </ul>
             </div>
 

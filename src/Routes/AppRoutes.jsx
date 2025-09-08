@@ -138,8 +138,6 @@ function AppRoutes() {
         <Route path="termsofservice" element={<TermsOfService />} />
         <Route path="/ThankyouPage" element={<ThankYouPage />} />
         <Route path="/FailedPage" element={<PaymentFailedPage />} />
-
-
         <Route path="shippingAndDelivery" element={<ShippingDelivery />} />
         <Route path="cancellationAndRefund" element={<CancellationRefund />} />
         <Route path="/all-pandits" element={<AllPandits />} />

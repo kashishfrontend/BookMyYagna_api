@@ -10,14 +10,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetLogin } from '../redux/action/authAction';
 import toast from 'react-hot-toast';
 import axios from "../Api/axios/axios_config";
-
+import { verifyRequest , verifyRequestPhone } from '../Api/verify/verifyRequest';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+import VerifyCred from './VerifyCred';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { success, error, loading } = useSelector((state) => state.auth);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState('');
 
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -38,51 +44,101 @@ const LoginPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isOtpLoading, setIsOtpLoading] = useState(false);
 
-  const handleGoogleLoginSuccess = async (credentialResponse) => {
+  const handleVerified = (verifiedType) => {
+    if (verifiedType === 'email') {
+      setEmailVerified(true);
+    } else if (verifiedType === 'phone') {
+      setPhoneVerified(true);
+    }
+  };
+
+  const handleSendOTP = async (type) => {
+    if (loading2) return;
+
+    if (type === 'email' && !formData.email) {
+      toast.error('Please enter an email to verify!');
+      return;
+    }
+
+    if (type === 'phone' && formData.phoneNumber.length < 10) {
+      toast.error('Please enter a valid phone number to verify!');
+      return;
+    }
+
     try {
-      console.log('Google Login Success:', credentialResponse)
+      setLoading2(true);
+      const payload =
+        type === 'phone' ? { phoneNumber: formData.phoneNumber } : { email: formData.email };
 
-      // Decode the JWT token to get user info
-      const decodedToken = JSON.parse(atob(credentialResponse.credential.split('.')[1]))
-      console.log('Decoded token:', decodedToken)
+       const response =
+      type === 'phone'
+        ? await verifyRequestPhone(payload)
+        : await verifyRequest(payload);
 
-      // Extract first and last name from the full name
-      const fullName = decodedToken.name || ''
-      const nameParts = fullName.split(' ')
-      const firstName = nameParts[0] || ''
-      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : ''
 
-      const response = await axios.post("/user/registerUserWithGoogle", {
-      
-          firstName: firstName,
-          lastName: lastName,
-          email: decodedToken.email,
-          picture: decodedToken.picture,
-          googleId: decodedToken.sub,
-        },
-        { withCredentials: true }
-      )
-
-      if (response.data.success) {
-        toast.success('Google Login Successful!')
-        setTimeout(() => {
-          navigate('/', { replace: true })
-        }, 1000)
-      } else {
-        toast.error(response.data.message || 'Google Login Failed')
+      if (response.success) {
+        toast.success(`OTP sent to ${type === 'phone' ? formData.phoneNumber : formData.email}`);
+        setType(type);
+        setShowPopup(true);
       }
     } catch (error) {
-      console.error('Error during Google login:', error)
-      toast.error(error.response?.data?.message || 'Google Login Failed')
+      console.log("no", error.response);
+      toast.error(error?.response?.data?.error || 'Something went wrong');
+    } finally {
+      setLoading2(false);
     }
-  }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    if (name === 'email') setEmailVerified(false);
+    if (name === 'phoneNumber') setPhoneVerified(false);
+  };
+
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    try {
+      console.log('Google Login Success:', credentialResponse);
+
+      // Decode the JWT token to get user info
+      const decodedToken = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
+      console.log('Decoded token:', decodedToken);
+
+      // Extract first and last name from the full name
+      const fullName = decodedToken.name || '';
+      const nameParts = fullName.split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+      const response = await axios.post("/user/registerUserWithGoogle", {
+        firstName: firstName,
+        lastName: lastName,
+        email: decodedToken.email,
+        picture: decodedToken.picture,
+        googleId: decodedToken.sub,
+      },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        toast.success('Google Login Successful!');
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 1000);
+      } else {
+        toast.error(response.data.message || 'Google Login Failed');
+      }
+    } catch (error) {
+      console.error('Error during Google login:', error);
+      toast.error(error.response?.data?.message || 'Google Login Failed');
+    }
+  };
 
   const handleGoogleLoginError = () => {
-    console.log('Google Login Failed')
-    toast.error('Google Login Failed')
-  }
-
-
+    console.log('Google Login Failed');
+    toast.error('Google Login Failed');
+  };
 
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
@@ -93,119 +149,120 @@ const LoginPage = () => {
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const handleSendOtp = async (e) => {
-    e.preventDefault();
-    if (!resetEmail) {
-      toast.error('Please fix the errors in the form');
-      return;
-    }
+ const handleSendOtp = async (e) => {
+  e.preventDefault();
+  if (!resetEmail) {
+    toast.error('Please enter your email address');
+    return;
+  }
 
-    setIsOtpLoading(true);
-    try {
-      const response = await axios.post("/user/forgetPassword", { email: resetEmail });
-      console.log('Send OTP Response:', response.data);
-      if (response.data.success) {
-        toast.success('OTP sent to your email');
-        setResetStep('otp');
-      } else {
-        toast.error(response.data.message || 'Failed to send OTP. Try again.');
-      }
-    } catch (error) {
-      console.error('Error sending OTP:', error);
-      toast.error(error.response?.data?.message || 'Failed to send OTP. Check your email and try again.');
-    } finally {
-      setIsOtpLoading(false);
-    }
-  };
+  setIsOtpLoading(true);
+  try {
+    const response = await axios.post("/user/forgetPassword", { 
+      email: resetEmail,
+      type: "user" // Add the type parameter
+    });
+    console.log('Send OTP Response:', response.data);
 
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-
-    if (!otp || otp.length < 6) {
-      toast.error('Invalid OTP');
-      return;
-    }
-    try {
-      const response = await axios.post('/user/matchOtp', {
-        email: resetEmail,
-        otp: otp,
-      });
-
-      console.log('Verify OTP Response:', response.data);
-
-      if (response.data.success) {
-        toast.success('OTP verified!');
-        setResetStep('reset');
-      } else {
-        toast.error(response.data.message || 'Incorrect OTP');
-      }
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-      toast.error(error.response?.data?.message || 'OTP verification failed');
-    } finally {
-      setIsOtpLoading(false);
-    }
-  };
-
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      toast.error('there might me some in your credentials');
-      return;
-    }
-
-    setIsOtpLoading(true);
-    try {
-      const response = await axios.patch("/user/resetPassword", {
-        otp: otp,
-        email: resetEmail,
-        newPassword: formData.newPassword,
-      });
-      console.log('Reset Password Response:', response.data);
-      if (response.data.success) {
-        toast.success('Password reset successfully');
-        setShowSuccessModal(true);
-      } else {
-        toast.error(response.data.message || 'Failed to reset password');
-      }
-    } catch (error) {
-      console.error('Reset password error:', error);
-      toast.error(error.response?.data?.message || 'Error resetting password');
-    } finally {
-      setIsOtpLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-
-      if (newErrors.passwordMismatch) {
-        toast.error('Passwords do not match');
-      } else {
-        toast.error('Please fill all required fields');
-      }
-      return;
-    }
-
-    if (isLogin) {
-      const toastId = toast.loading('Loading...');
-      try {
-        const identifier = formData.email || formData.phoneNumber;
-        await dispatch(login(identifier, formData.password));
-        toast.dismiss(toastId);
-      } catch {
-        toast.dismiss(toastId);
-      }
+    
+    if (response.data.success) {
+      toast.success('OTP sent to your email');
+      setResetStep('otp');
     } else {
-      handleRegister(e);
+      toast.error(response.data.message || 'Failed to send OTP. Try again.');
     }
-  };
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    toast.error(error.response?.data?.message || 'Failed to send OTP. Check your email and try again.');
+  } finally {
+    setIsOtpLoading(false);
+  }
+};
+
+const handleVerifyOtp = async (e) => {
+  e.preventDefault();
+
+  if (!otp || otp.length < 6) {
+    toast.error('Invalid OTP');
+    return;
+  }
+  try {
+    const response = await axios.post('/user/matchOtp', {
+      email: resetEmail,
+      otp: otp,
+      type: "user" // Add the type parameter
+    });
+
+    console.log('Verify OTP Response:', response.data);
+
+    if (response.data.success) {
+      toast.success('OTP verified!');
+      setResetStep('reset');
+    } else {
+      toast.error(response.data.message || 'Incorrect OTP');
+    }
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    toast.error(error.response?.data?.message || 'OTP verification failed');
+  } finally {
+    setIsOtpLoading(false);
+  }
+};
+
+const validateResetForm = () => {
+  const newErrors = {};
+
+  if (!otp?.trim()) newErrors.otp = "OTP is required";
+  if (!formData.newPassword?.trim()) newErrors.newPassword = "New password is required";
+  if (!formData.confirmNewPassword?.trim()) {
+    newErrors.confirmNewPassword = "Confirm password is required";
+  }
+
+  if (
+    formData.newPassword &&
+    formData.confirmNewPassword &&
+    formData.newPassword !== formData.confirmNewPassword
+  ) {
+    newErrors.passwordMismatch = "Passwords do not match";
+  }
+
+  return newErrors;
+};
+
+
+
+const handleResetPassword = async (e) => {
+  e.preventDefault();
+  const newErrors = validateResetForm();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    toast.error('again fill ');
+    return;
+  }
+
+  setIsOtpLoading(true);
+  try {
+    const response = await axios.patch("/user/resetPassword", {
+      otp: otp,
+      email: resetEmail,
+      newPassword: formData.newPassword,
+      type: "user" 
+      
+    });
+    console.log('Reset Password Response:', response.data);
+    if (response.data.success) {
+      toast.success('Password reset successfully');
+      setShowSuccessModal(true);
+    } else {
+      toast.error(response.data.message || 'Failed to reset password');
+    }
+  } catch (error) {
+    console.error('Reset password error:', error);
+    toast.error(error.response?.data?.message || 'Error resetting password');
+  } finally {
+    setIsOtpLoading(false);
+  }
+};
 
   const validateForm = () => {
     const newErrors = {};
@@ -232,6 +289,42 @@ const LoginPage = () => {
     }
 
     return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newErrors = validateForm() || {};
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+
+      if (newErrors.passwordMismatch) {
+        toast.error('Passwords do not match');
+      } else {
+        toast.error('Please fill all required fields');
+      }
+      return;
+    }
+
+    // Check if email and phone are verified (for registration only)
+    if (!isLogin && (!emailVerified || !phoneVerified)) {
+      toast.error('Please verify your email and phone number before registering');
+      return;
+    }
+
+    if (isLogin) {
+      const toastId = toast.loading('Loading...');
+      try {
+        const identifier = formData.email || formData.phoneNumber;
+        await dispatch(login(identifier, formData.password));
+        toast.dismiss(toastId);
+      } catch {
+        toast.dismiss(toastId);
+      }
+    } else {
+      handleRegister(e);
+    }
   };
 
   const handleRegister = async (e) => {
@@ -445,7 +538,25 @@ const LoginPage = () => {
                                           value={formData.email}
                                           onChange={handleInputChange}
                                           isInvalid={!!errors.email}
+                                          style={{ paddingRight: "70px" }}
                                         />
+                                        <p
+                                          style={{
+                                            position: 'absolute',
+
+                                            right: 10,
+                                            top: 10,
+                                            color: emailVerified ? 'green' : '#f2b870',
+                                            cursor: loading2 || emailVerified ? 'default' : 'pointer',
+                                            fontSize: '12px',
+                                            fontWeight: 'bold'
+                                          }}
+                                          onClick={() => {
+                                            if (!emailVerified && !loading2) handleSendOTP('email')
+                                          }}
+                                        >
+                                          {emailVerified ? 'Verified' : 'Verify'}
+                                        </p>
                                       </div>
                                       <Form.Control.Feedback type="invalid">
                                         {errors.email}
@@ -457,11 +568,29 @@ const LoginPage = () => {
                                         <Form.Control
                                           type="text"
                                           name="phoneNumber"
-                                          placeholder="Phone Number "
+                                          placeholder="Phone Number"
                                           value={formData.phoneNumber}
                                           onChange={handleInputChange}
                                           isInvalid={!!errors.phoneNumber}
+                                          style={{ paddingRight: "70px" }}
                                         />
+                                        <p
+                                          style={{
+                                            position: 'absolute',
+                                            right: 10,
+
+                                            top: 10,
+                                            color: phoneVerified ? 'green' : '#f2b870',
+                                            cursor: loading2 || phoneVerified ? 'default' : 'pointer',
+                                            fontSize: '12px',
+                                            fontWeight: 'bold'
+                                          }}
+                                          onClick={() => {
+                                            if (!phoneVerified && !loading2) handleSendOTP('phone')
+                                          }}
+                                        >
+                                          {phoneVerified ? 'Verified' : 'Verify'}
+                                        </p>
                                       </div>
                                       <Form.Control.Feedback type="invalid">
                                         {errors.phoneNumber}
@@ -539,7 +668,7 @@ const LoginPage = () => {
                                   {isLogin ? 'Sign In' : 'Register'}
                                 </Button>
 
-                                {/* Social Login Section - यहाँ जोड़ा गया है */}
+                                {/* Social Login Section */}
                                 {resetStep === 'login' && (
                                   <div className="social-login-section mt-4">
                                     <div className="divider">
@@ -585,6 +714,7 @@ const LoginPage = () => {
                               variants={variants}
                               transition={{ duration: 0.3 }}
                             >
+
                               <div className="login-header">
                                 <h3>Reset Password</h3>
                                 <p>Enter your email to receive an OTP</p>
@@ -618,7 +748,7 @@ const LoginPage = () => {
                                   <Button
                                     variant="link"
                                     onClick={() => setResetStep('login')}
-                                    className="btn btn-outline-primary"
+                                    className="btn "
                                   >
                                     Back to Login
                                   </Button>
@@ -780,6 +910,15 @@ const LoginPage = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
+
+            {/* VerifyCred Popup */}
+            {showPopup && (
+              <VerifyCred
+                onClose={() => setShowPopup(false)}
+                type={type}
+                onVerified={handleVerified}
+              />
+            )}
           </section>
         </div>
       </GoogleOAuthProvider>

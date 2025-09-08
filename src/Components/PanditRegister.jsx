@@ -25,8 +25,17 @@ import PanditRegistrationBg from '../assets/img/PanditRegistrationBg.png';
 import step1 from '../assets/img/pandit-pic1.png';
 import step2 from '../assets/img/pandit-pic2.png';
 import step3 from '../assets/img/pandit-pic3.png';
+import { verifyRequest, verifyRequestPhone } from '../Api/verify/verifyRequest';
+import toast from 'react-hot-toast';
+import VerifyCred from './VerifyCred';
 
 const PanditRegistration = () => {
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [showVerifyPopup, setShowVerifyPopup] = useState(false);
+  const [verificationType, setVerificationType] = useState('');
+  
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -67,8 +76,58 @@ const PanditRegistration = () => {
     'Tamil', 'Telugu', 'Kannada', 'Malayalam', 'Punjabi', 'Urdu'
   ];
 
+  const handleVerified = (verifiedType) => {
+    if (verifiedType === 'email') {
+      setEmailVerified(true);
+    } else if (verifiedType === 'phone') {
+      setPhoneVerified(true);
+    }
+  };
+
+  const handleSendOTP = async (type) => {
+    if (loading2) return;
+
+    if (type === 'email' && !formData.email) {
+      toast.error('Please enter an email to verify!');
+      return;
+    }
+
+    if (type === 'phone' && formData.contactNumber.length < 10) {
+      toast.error('Please enter a valid phone number to verify!');
+      return;
+    }
+
+    try {
+      setLoading2(true);
+      const payload =
+        type === 'phone' ? { phoneNumber: formData.contactNumber } : { email: formData.email };
+
+      const response =
+        type === 'phone'
+          ? await verifyRequestPhone(payload)
+          : await verifyRequest(payload);
+
+      if (response.success) {
+        toast.success(`OTP sent to ${type === 'phone' ? formData.contactNumber : formData.email}`);
+        setVerificationType(type);
+        setShowVerifyPopup(true);
+      }
+    } catch (error) {
+      console.log("Error sending OTP:", error.response);
+      toast.error(error?.response?.data?.error || 'Something went wrong');
+    } finally {
+      setLoading2(false);
+    }
+  };
+
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Reset verification status when email or phone changes
+    if (name === 'email') setEmailVerified(false);
+    if (name === 'contactNumber') setPhoneVerified(false);
+    
     setError(null);
   };
 
@@ -131,6 +190,12 @@ const PanditRegistration = () => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
+
+    // Check if email and phone are verified
+    if (!emailVerified || !phoneVerified) {
+      setError('Please verify your email and phone number before registering');
+      return;
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setError('Password and confirm password do not match!');
@@ -228,7 +293,7 @@ const PanditRegistration = () => {
         <div className="row mb-3 " >
           <div className="col-lg-6 ">
             <div
-              className="side-image h-100"
+              className="side-image "
               style={{
                 backgroundImage: `url(${step === 1 ? step1 : step === 2 ? step2 : step3})`,
                 backgroundSize: "cover",
@@ -236,6 +301,7 @@ const PanditRegistration = () => {
                 borderRadius: "20px",
                 boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
                 width: "100%",
+                height:"94%"
               }}
             ></div>
           </div>
@@ -347,18 +413,56 @@ const PanditRegistration = () => {
                       </div>
                     </div>
                     <div className="form-group mb-4">
-                      <div className="input-group placeholder-text-color">
+                      <div className="input-group placeholder-text-color" style={{ position: 'relative' }}>
                         <input type="email" name="email" className="form-control" placeholder="Enter Your Email Address" value={formData.email} onChange={handleInputChange} required />
+                        <span
+                          style={{
+                            position: 'absolute',
+                            right: '10px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            color: emailVerified ? 'green' : '#f2b870',
+                            cursor: loading2 || emailVerified ? 'default' : 'pointer',
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            zIndex: 10
+                          }}
+                          onClick={() => {
+                            if (!emailVerified && !loading2) handleSendOTP('email')
+                          }}
+                        >
+                          {emailVerified ? 'Verified' : 'Verify'}
+                        </span>
                       </div>
                     </div>
                     <div className="form-group mb-4">
-                      <div className="input-group placeholder-text-color">
+                      <div className="input-group placeholder-text-color" style={{ position: 'relative' }}>
                         <input type="tel" name="contactNumber" className="form-control" placeholder="Enter Your Contact Number" value={formData.contactNumber} onChange={handleInputChange} required />
+                        <span
+                          style={{
+                            position: 'absolute',
+                            right: '10px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            color: phoneVerified ? 'green' : '#f2b870',
+                            cursor: loading2 || phoneVerified ? 'default' : 'pointer',
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            zIndex: 10
+                          }}
+                          onClick={() => {
+                            if (!phoneVerified && !loading2) handleSendOTP('phone')
+                          }}
+                        >
+                          {phoneVerified ? 'Verified' : 'Verify'}
+                        </span>
                       </div>
                     </div>
 
                     <div className="col-12 text-end">
-                      <button type="button" className="btn btn-primary next-btn w-100" onClick={nextStep} disabled={isLoading}>Next Step <span className="ms-2">&rarr;</span></button>
+                      <button type="button" className="btn btn-primary next-btn w-100" onClick={nextStep} disabled={isLoading || !emailVerified || !phoneVerified}>
+                        {!emailVerified || !phoneVerified ? 'Verify Email & Phone First' : 'Next Step'} <span className="ms-2">&rarr;</span>
+                      </button>
                     </div>
                   </div>
                 )}
@@ -455,8 +559,8 @@ const PanditRegistration = () => {
                   </div>
                 )}
               </form>
-              <div className="text-center w-100 position-absolute" style={{ bottom: '10px' }}>
-                <p className="login-text mb-1" style={{ color: '#009B27', fontSize: 'small' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></p>
+              <div className="text-center w-100 position-absolute" style={{ bottom: '13px' }}>
+                <h2 className="login-text m-0" style={{ color: '#009B27', fontSize: 'medium' }}>Already have an account? <Link to="/panditlogin" className="login-link">Sign In Here</Link></h2>
               </div>
             </div>
           </div>
@@ -470,6 +574,13 @@ const PanditRegistration = () => {
             <button className="btn btn-primary popup-btn" onClick={() => { setShowPopup(false); setStep(1); }}>OK</button>
           </div>
         </div>
+      )}
+      {showVerifyPopup && (
+        <VerifyCred
+          onClose={() => setShowVerifyPopup(false)}
+          type={verificationType}
+          onVerified={handleVerified}
+        />
       )}
     </div>
   );
